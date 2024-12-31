@@ -333,7 +333,9 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
         Optional("sharex"): Bool(),
         Optional("mark_peaks"): Bool(),
         Optional("ylim"): FixedSeq([Float(), Float()]),
+        Optional("auto_ylim"): Bool(),
         Optional("y_offset"): Float(),
+        Optional("normalisation"): NormalisationValidator(),
     }
 
     axes_definition_dict = axes_params_dict | {

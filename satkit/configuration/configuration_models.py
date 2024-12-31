@@ -393,7 +393,9 @@ class AxesParams(UpdatableBaseModel):
     mark_peaks: bool | None = None
     sharex: bool | None = None
     ylim: tuple[float, float] | None = None
+    auto_ylim: bool = False
     y_offset: float | None = None
+    normalisation: TimeseriesNormalisation | None = None
 
 
 class AxesDefinition(AxesParams):
