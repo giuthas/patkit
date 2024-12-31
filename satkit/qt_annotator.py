@@ -190,6 +190,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         go_validator = QIntValidator(1, self.max_index + 1, self)
         self.goLineEdit.setValidator(go_validator)
         self.goButton.clicked.connect(self.go_to_recording)
+        self.goLineEdit.returnPressed.connect(self.go_to_recording)
 
         # TODO: add recording list to the display and highlight current
         # recording
