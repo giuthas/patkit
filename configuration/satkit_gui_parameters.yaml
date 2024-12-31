@@ -59,7 +59,7 @@ data_axes:
     sharex: True
     ylim:
       - 500
-      - 4000
+      - 2000
   PD normalised:
     modalities:
       - PD l1 on RawUltrasound
