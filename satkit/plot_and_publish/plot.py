@@ -182,10 +182,11 @@ def plot_timeseries(axes: Axes,
         axes.set_ylim(ylim)
     else:
         y_limits = list(axes.get_ylim())
-        if normalise.peak:
-            y_limits[1] = 1.05
-        elif normalise.bottom:
-            y_limits[0] = -0.05
+        if normalise:
+            if normalise.peak:
+                y_limits[1] = 1.05
+            elif normalise.bottom:
+                y_limits[0] = -0.05
         axes.set_ylim(y_limits)
 
     if ylabel:
