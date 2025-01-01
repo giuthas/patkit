@@ -51,19 +51,26 @@ data_axes:
   PD l1:
     modalities:
       - PD l1 on RawUltrasound
+#    modality_names:
+#      - l1
     sharex: True
     auto_ylim: True
   PD l2:
     modalities:
       - PD l2 on RawUltrasound
+#    modality_names:
+#      - l2
     sharex: True
     ylim:
-      - 500
+      - 100
       - 2000
   PD normalised:
     modalities:
       - PD l1 on RawUltrasound
       - PD l2 on RawUltrasound
+    modality_names:
+      - l1
+      - l2
     sharex: True
     normalisation: both # none, peak, bottom, both
   spectrogram2:
