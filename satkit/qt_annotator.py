@@ -390,10 +390,17 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         plot_modality_names = axes_params.modalities
 
         if ylim is None:
-            if data_axes_params is None or data_axes_params.ylim is None:
+            if data_axes_params is None and axes_params is None:
                 ylim = (-0.05, 1.05)
-            else:
+            elif data_axes_params.ylim is None and axes_params.ylim is None:
+                if not data_axes_params.auto_ylim and not axes_params.auto_ylim:
+                    ylim = (-0.05, 1.05)
+                else:
+                    ylim = None
+            elif axes_params.ylim is None:
                 ylim = data_axes_params.ylim
+            else:
+                ylim = axes_params.ylim
 
         y_offset = 0
         if axes_params.y_offset is not None:
@@ -418,10 +425,9 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
                 ylim=ylim,
                 color=colors[i],
                 linestyle=(0, (i + 1, i + 1)),
-                normalise=TimeseriesNormalisation(peak=False, bottom=False),
+                normalise=axes_params.normalisation,
                 y_offset=i * y_offset,
                 sampling_step=i + 1,
-                label=f"{modality.sampling_rate / (i + 1):.2f} Hz"
             )
             if axes_params.mark_peaks:
                 mark_peaks(self.data_axes[axes_number],
@@ -430,6 +436,17 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
                            display_prominence_values=True,
                            time_offset=zero_offset)
             self.data_axes[axes_number].set_ylabel(axes_name)
+
+        if axes_params.modality_names:
+            self.data_axes[axes_number].legend(
+                loc='upper left',
+                labels=axes_params.modality_names
+            )
+        else:
+            self.data_axes[axes_number].legend(
+                loc='upper left',
+                labels=axes_params.modalities
+            )
 
     def display_exclusion(self):
         """
@@ -549,8 +566,8 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
                         )
             axes_counter += 1
 
-        self.data_axes[0].legend(
-            loc='upper left')
+        # self.data_axes[0].legend(
+        #     loc='upper left')
 
         # TODO: the sync is iffy with this one, but plotting a pd spectrum is
         # still a good idea. Just need to get the FFT parameters tuned - if

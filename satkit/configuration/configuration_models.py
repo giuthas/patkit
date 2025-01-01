@@ -408,6 +408,7 @@ class AxesDefinition(AxesParams):
         List of the modalities to be plotted on these axes, by default None
     """
     modalities: list[str] | None = None
+    modality_names: list[str] | None = None
     sharex: bool = True
 
 

@@ -340,7 +340,10 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
     }
 
     axes_definition_dict = axes_params_dict | {
-        Optional("modalities"): Seq(Str())}
+        Optional("modalities"): Seq(Str()),
+        Optional("modality_names"): Seq(Str()),
+    }
+
 
     if filepath.is_file():
         with closing(
@@ -376,25 +379,6 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
 
     gui_params.update(_raw_gui_params_dict.data)
 
-    if 'xlim' in gui_params and 'auto_xlim' in gui_params:
-        gui_params['auto_xlim'] = False
-
-    number_of_data_axes = 0
-    if 'data_axes' in gui_params:
-        if 'global' in gui_params['data_axes']:
-            number_of_data_axes = len(gui_params['data_axes']) - 1
-        else:
-            number_of_data_axes = len(gui_params['data_axes'])
-    if 'general_axes_params' in gui_params:
-        if 'normalisation' not in gui_params['general_axes_params']:
-            gui_params['general_axes_params']['normalisation'] = (
-                TimeseriesNormalisation.build('none'))
-    if 'data_axes' in gui_params:
-        for axes in gui_params['data_axes']:
-            if 'normalisation' not in gui_params['data_axes'][axes]:
-                gui_params['data_axes'][axes]['normalisation'] = (
-                    TimeseriesNormalisation.build('none'))
-    gui_params.update({'number_of_data_axes': number_of_data_axes})
     return _raw_gui_params_dict
 
 
