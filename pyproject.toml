@@ -35,7 +35,7 @@ homepage = "github.com/giuthas/satkit"
 repository = "github.com"
 
 [project.scripts]
-satkit-cli = "satkit:main_cli"
+satkit = "satkit:run_cli"
 
-[project.gui-scripts]
-satkit-gui = "satkit:main_gui"
+#[project.gui-scripts]
+#satkit-gui = "satkit:main_gui"
