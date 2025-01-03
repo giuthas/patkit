@@ -43,13 +43,19 @@ from . import satkit_click
 @click.pass_context
 def run_cli(context: click.Context) -> None:
     """
-    CAST - Computer Assisted Segmentation Tools
+    SATKIT - Speech Analysis ToolKIT
 
-    Cast is mainly used to add new Tiers to TextGrids. See documentation for
+    Satkit collects tools for phonetic analysis of speech data. It includes
+    tools for analysing audio and articulatory data, a commandline interface, an
+    annotator GUI, and a Python programming API. See documentation for more
     details.
+
+    By default, Satkit will run the annotator GUI.
     """
-    pass
+    satkit_click.annotator()
 
 
+# noinspection PyTypeChecker
+run_cli.add_command(satkit_click.annotator)
 # noinspection PyTypeChecker
 run_cli.add_command(satkit_click.interact)

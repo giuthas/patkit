@@ -33,9 +33,41 @@
 SATKIT command line commands.
 """
 
+import code
 from pathlib import Path
 
 import click
+
+from . import (
+    add_derived_data, initialise_satkit, run_annotator
+)
+from .utility_functions import log_elapsed_time
+
+
+@click.command()
+@click.argument(
+    "path",
+    type=click.Path(exists=True, dir_okay=True, file_okay=True), )
+@click.argument("config_file")
+def annotator():
+    """
+    Run SATKIT annotator GUI.
+
+    \b
+    PATH to the data - maybe be a file or a directory.
+    CONFIG_FILE configuration .yaml file.
+
+    NOT IMPLEMENTED YET.
+    """
+    # TODO 0.13: remove the dependency on argparse
+    # TODO 0.13: move add_derived_data into initialise_satkit
+    cli, configuration, logger, session = initialise_satkit()
+    log_elapsed_time(logger)
+
+    add_derived_data(session=session, config=configuration)
+    log_elapsed_time(logger)
+
+    run_annotator(session, configuration, cli.args)
 
 
 @click.command()
@@ -53,4 +85,20 @@ def interact():
 
     NOT IMPLEMENTED YET.
     """
-    pass
+    # TODO 0.13: remove the dependency on argparse
+    cli, configuration, logger, session = initialise_satkit()
+    log_elapsed_time(logger)
+
+    add_derived_data(session=session, config=configuration)
+    log_elapsed_time(logger)
+
+    # TODO 1.0: Probably better doing this with IPython than the history-less
+    # standard library version
+    # import IPython
+    # IPython.embed()
+    code.interact(
+        banner="SATKIT Interactive Console",
+        local=locals(),
+        exitmsg="Exiting SATKIT Interactive Console",
+    )
+
