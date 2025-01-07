@@ -2,7 +2,7 @@
 
 ## Code conventions
 
-These are a guidelines, not a ruleset.
+These are guidelines, not a ruleset.
 
 First things first: write in good pythonic style.
 
