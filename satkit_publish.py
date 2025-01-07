@@ -35,7 +35,6 @@
 import sys
 from pathlib import Path
 
-# from icecream import ic
 from matplotlib.backends.backend_pdf import PdfPages
 
 import numpy as np
@@ -162,7 +161,7 @@ def main():
     if data_run_config.peaks:
         modality_pattern = data_run_config.peaks.modality_pattern
         for recording in recording_session:
-            excluded = [prompt in recording.meta_data.prompt
+            excluded = [prompt in recording.metadata.prompt
                         for prompt in exclusion_list]
             if any(excluded):
                 print(

@@ -55,8 +55,6 @@ from matplotlib.gridspec import GridSpec
 import pandas
 import seaborn as sns
 
-# from icecream import ic
-
 from satkit.data_structures import Recording, Session
 
 from .plot import (plot_1d_modality, plot_satgrid_tier)
@@ -329,7 +327,7 @@ def recording_timeseries_figure(
                     ax, tier, time_offset=time_offset,
                     draw_text=True, text_y=.45)
 
-    figure.suptitle(f"{recording.basename} {recording.meta_data.prompt}")
+    figure.suptitle(f"{recording.basename} {recording.metadata.prompt}")
     figure.text(0.5, 0.04, 'Time (s), go-signal at 0 s.',
                 ha='center', va='center', fontsize=10)
     plt.xlabel(' ', fontsize=10)

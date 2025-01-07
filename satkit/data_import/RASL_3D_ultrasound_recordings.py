@@ -141,7 +141,7 @@ def generate_rasl_recording_list(
             add_modalities(recording=recording, detect_beep=detect_beep)
 
     return sorted(recordings, key=lambda
-                  token: token.meta_data.time_of_recording)
+                  token: token.metadata.time_of_recording)
 
     # return sorted(recordings, key=lambda token: token.meta['date_and_time'])
 
@@ -293,13 +293,13 @@ def generate_3D_ultrasound_recording(
 
     if textgrid.is_file():
         recording = Recording(
-            meta_data=meta,
+            metadata=meta,
             file_info=file_info,
             textgrid_path=textgrid
         )
     else:
         recording = Recording(
-            meta_data=meta,
+            metadata=meta,
             file_info=file_info,
         )
 

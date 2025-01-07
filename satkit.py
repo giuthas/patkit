@@ -41,6 +41,7 @@ proper access point.
 from satkit import (
     add_derived_data, initialise_satkit, run_annotator
 )
+
 from satkit.utility_functions import log_elapsed_time
 
 

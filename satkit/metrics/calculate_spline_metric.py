@@ -37,7 +37,6 @@ import logging
 from typing import Optional
 
 import numpy as np
-# from icecream import ic
 
 from satkit.data_structures import ModalityData, Recording
 from satkit.modalities import Splines
@@ -184,8 +183,8 @@ def calculate_spline_metric(
     data = splines.data
     sampling_rate = splines.sampling_rate
 
-    basename = splines.recording.meta_data.basename
-    prompt = splines.recording.meta_data.prompt
+    basename = splines.recording.metadata.basename
+    prompt = splines.recording.metadata.prompt
     notice_base = basename + " " + prompt
 
     # TODO: This should be handled where iterating over recordings.
