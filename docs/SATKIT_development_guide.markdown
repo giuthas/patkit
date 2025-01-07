@@ -40,6 +40,10 @@ two purposes: Defining the public API of the module and running any
 initialization that is needed. For an example have a look at
 `satkit/__init__.py`.
 
+We'll try to do imports mainly as absolute imports with the exception that
+`__init__.py` files will import modules from the local directory with `from
+.local_module import functions_to_be_part_of_public_interface`.
+
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning under the rules as set out
