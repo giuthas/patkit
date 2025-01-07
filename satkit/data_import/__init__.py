@@ -33,6 +33,7 @@
 Data and metadata importing.
 """
 
+from .AAA_raw_ultrasound import parse_ultrasound_meta_aaa
 from .AAA_recordings import (generate_aaa_recording_list,
                              generate_ultrasound_recording)
 from .RASL_3D_ultrasound_recordings import (generate_3D_ultrasound_recording,

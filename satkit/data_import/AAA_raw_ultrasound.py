@@ -82,7 +82,7 @@ def parse_recording_meta_from_aaa_prompt_file(
     return meta
 
 
-def _parse_ultrasound_meta_aaa(filename):
+def parse_ultrasound_meta_aaa(filename):
     """
     Parse metadata from an AAA export file into a dictionary.
 
@@ -176,7 +176,7 @@ def add_aaa_raw_ultrasound(
             "to preload ultrasound data. This may lead to Python's " +
             "memory running out or the whole computer crashing.")
 
-    meta_dict = _parse_ultrasound_meta_aaa(meta_path)
+    meta_dict = parse_ultrasound_meta_aaa(meta_path)
     # We pop the time_offset from the meta dict so that people will not
     # accidentally rely on setting that to alter the time_offset of the
     # ultrasound data in the Recording. This throws KeyError if the meta
