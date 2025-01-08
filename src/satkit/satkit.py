@@ -40,6 +40,7 @@ from pathlib import Path
 
 from PyQt6 import QtWidgets
 
+# TODO 0.14: import configuration and import from configuration: remove one.
 from satkit import configuration
 from satkit.annotations import add_peaks
 from satkit.argument_parser import SatkitArgumentParser
