@@ -38,7 +38,7 @@ import sys
 from argparse import Namespace
 from pathlib import Path
 
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 from satkit import configuration
 from satkit.annotations import add_peaks

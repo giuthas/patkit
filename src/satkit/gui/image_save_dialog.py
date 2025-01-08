@@ -33,9 +33,9 @@
 import os
 from pathlib import Path
 
-from PyQt5 import QtCore
-from PyQt5.QtGui import QFontMetrics, QIcon
-from PyQt5.QtWidgets import (
+from PyQt6 import QtCore
+from PyQt6.QtGui import QFontMetrics, QIcon
+from PyQt6.QtWidgets import (
     QCheckBox, QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout, QLabel,
     QLineEdit, QPushButton, QVBoxLayout, QWidget
 )

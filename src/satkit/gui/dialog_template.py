@@ -31,9 +31,9 @@
 #
 """This is not a functional dialog window, only a template."""
 
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QDialog, QVBoxLayout, QLabel, QDialogButtonBox, QApplication)
-from PyQt5.QtCore import Qt
+from PyQt6.QtCore import Qt
 
 
 class DialogTemplate(QDialog):

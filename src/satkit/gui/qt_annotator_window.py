@@ -40,8 +40,8 @@ from matplotlib.backends.backend_qt5agg import \
     FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 # GUI functionality
-from PyQt5.QtGui import QIntValidator
-from PyQt5.uic import loadUiType
+from PyQt6.QtGui import QIntValidator
+from PyQt6.uic import loadUiType
 # Local modules
 from satkit.plot_and_publish import plot_timeseries, plot_wav
 
