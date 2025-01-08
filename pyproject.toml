@@ -42,6 +42,7 @@ dependencies = [
   "virtualenv>=20.28.1",
 ]
 
+
 [project.urls]
 bug_tracker = "https://github.com/giuthas/satkit/issues"
 changelog = "https://github.com/giuthas/satkit/blob/main/docs/Release_notes.markdown"
@@ -50,7 +51,7 @@ homepage = "github.com/giuthas/satkit"
 repository = "github.com"
 
 [project.scripts]
-satkit = "src.satkit:run_cli"
+satkit = "satkit:run_cli"
 
 #[project.gui-scripts]
 #satkit-gui = "satkit:main_gui"
