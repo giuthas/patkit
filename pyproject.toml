@@ -7,7 +7,7 @@ authors = [
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python",
-  "Intended Audience :: Speech researchers and students",
+#  "Intended Audience :: Speech researchers and students",
 ]
 description = "Speech Articulation ToolKit: tools for processing ultrasound speech data"
 keywords = ["speech", "articulation", "textgrid", "ultrasound", "splines"]
@@ -22,6 +22,7 @@ version = "0.14"
 dependencies = [
   "build>=1.2.2.post1",
   "dipy>=1.10.0",
+  "icecream>=2.1.3",
   "licenseheaders>=0.8.8",
   "matplotlib>=3.10.0",
   "more-itertools>=10.5.0",
