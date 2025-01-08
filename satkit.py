@@ -38,11 +38,11 @@ This file will be removed when the main method of running SATKIT will move to a
 proper access point.
 """
 
-from satkit import (
+from src.satkit import (
     add_derived_data, initialise_satkit, run_annotator
 )
 
-from satkit.utility_functions import log_elapsed_time
+from src.satkit.utility_functions import log_elapsed_time
 
 
 def main():
