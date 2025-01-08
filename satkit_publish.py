@@ -40,7 +40,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
 
 # For running a Qt GUI
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 # local modules
 from satkit import log_elapsed_time, set_logging_level
