@@ -41,18 +41,18 @@ import sys
 from contextlib import closing
 from pathlib import Path
 
-from icecream import ic
-# import numpy as np
 from strictyaml import (
     Bool, FixedSeq, Float, Int, Map,
     MapPattern, Optional, ScalarValidator, Seq, Str,
     UniqueSeq, YAML, YAMLError, load
 )
 
-from satkit.constants import DEFAULT_ENCODING
+from src.satkit.constants import (
+    DEFAULT_ENCODING, IntervalBoundary, IntervalCategory
+)
 
 from .configuration_models import (
-    IntervalBoundary, IntervalCategory, TimeseriesNormalisation)
+    TimeseriesNormalisation)
 
 config_dict = {}
 data_run_params = {}
