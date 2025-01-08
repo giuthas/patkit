@@ -42,8 +42,8 @@ from strictyaml import (Map, Optional, Seq, Str,
                         YAMLError, load)
 
 from .configuration_models import ExclusionList
-from src.satkit.constants import SatkitSuffix, SourceSuffix
-from src.satkit.data_structures import Recording, Session
+from satkit.constants import SatkitSuffix, SourceSuffix
+from satkit.data_structures import Recording, Session
 
 _logger = logging.getLogger('satkit.configuration')
 

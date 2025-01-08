@@ -47,7 +47,7 @@ from strictyaml import (
     UniqueSeq, YAML, YAMLError, load
 )
 
-from src.satkit.constants import (
+from satkit.constants import (
     DEFAULT_ENCODING, IntervalBoundary, IntervalCategory
 )
 

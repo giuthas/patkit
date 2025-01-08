@@ -40,23 +40,23 @@ from pathlib import Path
 
 from PyQt6 import QtWidgets
 
-from src.satkit import configuration
-from src.satkit.annotations import add_peaks
-from src.satkit.argument_parser import SatkitArgumentParser
-from src.satkit.configuration import apply_exclusion_list, load_exclusion_list
-from src.satkit.data_loader import load_data
-from src.satkit.data_processor import (
+from satkit import configuration
+from satkit.annotations import add_peaks
+from satkit.argument_parser import SatkitArgumentParser
+from satkit.configuration import apply_exclusion_list, load_exclusion_list
+from satkit.data_loader import load_data
+from satkit.data_processor import (
     process_modalities,
     process_statistics_in_recordings
 )
-from src.satkit.data_structures import Session
-from src.satkit.metrics import (
+from satkit.data_structures import Session
+from satkit.metrics import (
     add_aggregate_images, add_distance_matrices, add_pd,
     add_spline_metric, downsample_metrics_in_session
 )
-from src.satkit.modalities import RawUltrasound, Splines
-from src.satkit.qt_annotator import PdQtAnnotator
-from src.satkit.utility_functions import set_logging_level
+from satkit.modalities import RawUltrasound, Splines
+from satkit.qt_annotator import PdQtAnnotator
+from satkit.utility_functions import set_logging_level
 
 
 def initialise_satkit(path: Path | str | None = None):

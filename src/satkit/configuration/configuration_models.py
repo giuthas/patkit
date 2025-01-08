@@ -48,12 +48,12 @@ from typing import Any, NewType
 import numpy as np
 from pydantic import conlist
 
-from src.satkit.constants import (
+from satkit.constants import (
     CoordinateSystems, Datasource,
     IntervalBoundary, IntervalCategory,
     SplineDataColumn, SplineMetaColumn
 )
-from src.satkit.external_class_extensions import UpdatableBaseModel
+from satkit.external_class_extensions import UpdatableBaseModel
 
 _logger = logging.getLogger('satkit.configuration_models')
 

@@ -54,29 +54,29 @@ from PyQt6.QtGui import QIntValidator, QKeySequence
 from PyQt6.QtWidgets import QFileDialog, QShortcut
 from PyQt6.uic import loadUiType
 
-from src.satkit.data_structures import Session
-from src.satkit.configuration import (
+from satkit.data_structures import Session
+from satkit.configuration import (
     Configuration
 )
-from src.satkit.export import (
+from satkit.export import (
     export_aggregate_image_and_meta,
     export_distance_matrix_and_meta,
     export_session_and_recording_meta, export_ultrasound_frame_and_meta
 )
-from src.satkit.gui import (
+from satkit.gui import (
     BoundaryAnimator, ImageSaveDialog, ListSaveDialog,
     ReplaceDialog
 )
-from src.satkit.plot_and_publish import (
+from satkit.plot_and_publish import (
     get_colors_in_sequence,
     mark_peaks, plot_spline, plot_satgrid_tier, plot_spectrogram,
     plot_timeseries, plot_wav
 )
-from src.satkit.plot_and_publish.plot import plot_spectrogram2
-from src.satkit.save_and_load import (
+from satkit.plot_and_publish.plot import plot_spectrogram2
+from satkit.save_and_load import (
     save_recording_session, load_recording_session
 )
-from src.satkit.ui_callbacks import UiCallbacks
+from satkit.ui_callbacks import UiCallbacks
 
 # Load the GUI layout generated with QtDesigner.
 Ui_MainWindow, QMainWindow = loadUiType('satkit/gui/qt_annotator.ui')
