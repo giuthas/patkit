@@ -43,11 +43,11 @@ import numpy as np
 from PyQt6 import QtWidgets
 
 # local modules
-from satkit import log_elapsed_time, set_logging_level
 from satkit.annotations import (
     add_peaks, count_number_of_peaks, nearest_neighbours_in_downsampling,
     prominences_in_downsampling)
 from satkit.annotations.peaks import annotations_to_dataframe
+from satkit.argument_parser import SatkitArgumentParser
 import satkit.configuration as config
 
 from satkit.metrics import (
@@ -57,11 +57,10 @@ from satkit.plot_and_publish import (
     publish_session_pdf, publish_distribution_data)
 from satkit.plot_and_publish.publish import publish_distribution_data_seaborn
 from satkit.qt_annotator import PdQtAnnotator
-from satkit.scripting_interface import (
-    # Operation,
-    SatkitArgumentParser,
-    load_data,  # multi_process_data,
-    process_modalities, save_data)
+from satkit.data_loader import load_data
+from satkit.data_processor import process_modalities
+from satkit.scripting_interface import save_data # this got deleted
+from satkit.utility_functions import log_elapsed_time, set_logging_level
 
 
 def main():
