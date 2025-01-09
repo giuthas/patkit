@@ -278,7 +278,7 @@ def main():
 
     log_elapsed_time()
 
-    if cli.args.annotator:
+    if cli.args.open_in_annotator:
         # Get the GUI running.
         app = QtWidgets.QApplication(sys.argv)
         # Apparently the assignment to an unused variable is needed

@@ -69,7 +69,7 @@ def main():
 
     log_elapsed_time(logger)
 
-    if cli.args.annotator:
+    if cli.args.open_in_annotator:
         run_annotator(session, configuration, cli.args)
 
 
