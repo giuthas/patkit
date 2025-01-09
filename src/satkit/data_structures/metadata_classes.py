@@ -39,8 +39,9 @@ from pathlib import Path
 import numpy as np
 from pydantic import PositiveInt
 
-from satkit.configuration import PointAnnotationParams
-from satkit.configuration import ExclusionList, SplineConfig
+from satkit.configuration import (
+    ExclusionList, PointAnnotationParams, SplineConfig
+)
 from satkit.constants import AnnotationType, Datasource
 from satkit.external_class_extensions import SatkitBaseModel
 from satkit.utility_functions.types import is_sequence_form
