@@ -50,8 +50,8 @@ from matplotlib.figure import Figure
 from matplotlib.widgets import MultiCursor
 # GUI functionality
 from PyQt6.QtCore import QCoreApplication, Qt
-from PyQt6.QtGui import QIntValidator, QKeySequence
-from PyQt6.QtWidgets import QFileDialog, QShortcut
+from PyQt6.QtGui import QIntValidator, QKeySequence, QShortcut
+from PyQt6.QtWidgets import QFileDialog
 from PyQt6.uic import loadUiType
 
 from satkit.data_structures import Session
@@ -79,7 +79,7 @@ from satkit.save_and_load import (
 from satkit.ui_callbacks import UiCallbacks
 
 # Load the GUI layout generated with QtDesigner.
-Ui_MainWindow, QMainWindow = loadUiType('satkit/gui/qt_annotator.ui')
+Ui_MainWindow, QMainWindow = loadUiType('src/satkit/gui/qt_annotator.ui')
 
 _logger = logging.getLogger('satkit.qt_annotator')
 
