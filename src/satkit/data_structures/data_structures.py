@@ -36,7 +36,6 @@ from __future__ import annotations
 import abc
 import logging
 from collections import OrderedDict, UserDict, UserList
-from difflib import get_close_matches
 from pathlib import Path
 
 import numpy as np
@@ -53,7 +52,6 @@ from .metadata_classes import (
     FileInformation, ModalityData, ModalityMetaData, PointAnnotations,
     RecordingMetaData, SessionConfig
 )
-from ..utility_functions import split_by
 
 _logger = logging.getLogger('satkit.data_structures')
 
@@ -785,100 +783,3 @@ class Modality(DataContainer, OrderedDict):
             return True
         return False
 
-    def process_format_directive(
-            self,
-            directive: str,
-            index: int
-    ) -> str:
-        """
-        Process a string formatting directive.
-
-        Fills the string with requested information form this Modality.
-
-        Parameters
-        ----------
-        directive : str
-            The directive in the format "[field_name]:[format]" where field_name
-            is an accepted field name either from this Modality or its
-            metadata.
-        index : int
-            Index within the legend being created. Currently discarded.
-
-        Returns
-        -------
-        str
-            The filled and formatted string.
-        """
-        if ":" in directive:
-            field_name, format_specifier = directive.split(sep=":", maxsplit=1)
-        else:
-            field_name = directive
-            format_specifier = None
-
-        if field_name == "sampling_rate":
-            if format_specifier is not None:
-                return format(self.sampling_rate, format_specifier)
-            return str(self.sampling_rate)
-        elif field_name in self.metadata.__dict__:
-            if format_specifier is not None:
-                return format(
-                    self.metadata.__dict__[field_name], format_specifier)
-            return str(self.metadata.__dict__[field_name])
-        else:
-            _logger.error(
-                "Field name '%s' not found in metadata of %s.",
-                field_name, self.name)
-            _logger.error(
-                "Valid names are\n'%s', and 'sampling_rate'.",
-                str("', '".join(list(self.metadata.__dict__.keys()))))
-            _logger.error(
-                "Did you mean '%s'?",
-                "', '".join(get_close_matches(field_name,
-                                              self.metadata.__dict__.keys()))
-            )
-            # DO NOT add the field_name to the below. It is a variable read from
-            # a file and using it in an f-string is a very serious security
-            # risk.
-            raise ValueError(
-                f"Missing field name in {self.name} and its metadata.",
-            )
-
-    def format_legend(
-            self,
-            index: int,
-            format_strings: list[str] | None,
-            delimiters: str = "{}"
-    ) -> str:
-        """
-        Fill and format a legend string from this Modality.
-
-        If the format_strings are None, then we return the name of this
-        Modality.
-
-        Parameters
-        ----------
-        index : int
-            Index within the legend being created. Currently discarded.
-        format_strings : list[str]
-            The combined format strings for the whole plot, possibly None.
-        delimiters :
-            The delimiter character(s) for the fields.
-
-        Returns
-        -------
-        str
-            The filled and formatted legend string.
-        """
-        if format_strings is None:
-            return self.name
-
-        result = ""
-        format_string = format_strings[index]
-        for chunk, is_directive in split_by(format_string, delimiters):
-            if not is_directive:
-                result += chunk
-            else:
-                result += self.process_format_directive(
-                    directive=chunk, index=index)
-
-        return result

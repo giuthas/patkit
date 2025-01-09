@@ -36,6 +36,7 @@ All of the functions here are independent of rendering backends and such. Those
 and sizing and other contextual matters should be taken care of by the caller.
 """
 
+from .legend_generation import format_legend
 from .plot import (
     mark_peaks, plot_satgrid_tier, plot_spectrogram, plot_spline,
     plot_timeseries, plot_wav)

@@ -68,7 +68,7 @@ from satkit.gui import (
     ReplaceDialog
 )
 from satkit.plot_and_publish import (
-    get_colors_in_sequence,
+    format_legend, get_colors_in_sequence,
     mark_peaks, plot_spline, plot_satgrid_tier, plot_spectrogram,
     plot_timeseries, plot_wav
 )
@@ -426,7 +426,8 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
                 linestyle=(0, (i + 1, i + 1)),
                 normalise=axes_params.normalisation,
                 y_offset=i * y_offset,
-                label=modality.format_legend(
+                label=format_legend(
+                    modality=modality,
                     index=i,
                     format_strings=axes_params.modality_names
                 )
