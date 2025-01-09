@@ -59,8 +59,8 @@ def annotator():
 
     NOT IMPLEMENTED YET.
     """
-    # TODO 0.13: remove the dependency on argparse
-    # TODO 0.13: move add_derived_data into initialise_satkit
+    # TODO 0.14: remove the dependency on argparse
+    # TODO 0.14: move add_derived_data into initialise_satkit
     cli, configuration, logger, session = initialise_satkit()
     log_elapsed_time(logger)
 
@@ -85,7 +85,7 @@ def interact():
 
     NOT IMPLEMENTED YET.
     """
-    # TODO 0.13: remove the dependency on argparse
+    # TODO 0.14: remove the dependency on argparse
     cli, configuration, logger, session = initialise_satkit()
     log_elapsed_time(logger)
 
