@@ -44,14 +44,16 @@ from .initialise import (
 from .utility_functions import log_elapsed_time
 
 
-@click.command()
+@click.command(name="open")
 @click.argument(
     "path",
     type=click.Path(exists=True, dir_okay=True, file_okay=True), )
-@click.argument("config_file")
-def annotator():
+@click.argument(
+    "config_file",
+    type=click.Path(exists=True, dir_okay=False, file_okay=True), )
+def open_in_annotator(path: Path, config_file: Path):
     """
-    Run SATKIT annotator GUI.
+    Open the PATH in the annotator GUI.
 
     \b
     PATH to the data - maybe be a file or a directory.
@@ -61,7 +63,8 @@ def annotator():
     """
     # TODO 0.14: remove the dependency on argparse
     # TODO 0.14: move add_derived_data into initialise_satkit
-    cli, configuration, logger, session = initialise_satkit()
+    cli, configuration, logger, session = initialise_satkit(
+        path=path, config_file=config_file)
     log_elapsed_time(logger)
 
     add_derived_data(session=session, config=configuration)
@@ -77,7 +80,7 @@ def annotator():
 @click.argument("config_file")
 def interact():
     """
-    Run SATKIT in interactive mode.
+    Open the PATH in interactive commandline mode.
 
     \b
     PATH to the data - maybe be a file or a directory.

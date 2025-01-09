@@ -60,7 +60,10 @@ from satkit.qt_annotator import PdQtAnnotator
 from satkit.utility_functions import set_logging_level
 
 
-def initialise_satkit(path: Path | str | None = None):
+def initialise_satkit(
+        path: Path | str | None = None,
+        config_file: Path | str | None = None,
+):
     """
     Initialise the basic structures for running SATKIT.
 

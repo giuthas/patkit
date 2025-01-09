@@ -41,7 +41,11 @@ from . import satkit_click
 @click.group()
 @click.version_option()
 @click.pass_context
-def run_cli(context: click.Context) -> None:
+@click.argument(
+    "path",
+    type=click.Path(exists=True, dir_okay=True, file_okay=True), )
+@click.argument("config_file")
+def run_cli(context: click.Context, path, config_file) -> None:
     """
     SATKIT - Speech Analysis ToolKIT
 
@@ -50,12 +54,13 @@ def run_cli(context: click.Context) -> None:
     annotator GUI, and a Python programming API. See documentation for more
     details.
 
-    By default, Satkit will run the annotator GUI.
+    By default, Satkit will open the given path in the annotator GUI.
     """
-    satkit_click.annotator()
+    print("in run_cli")
+    satkit_click.open_in_annotator(path, config_file)
 
 
 # noinspection PyTypeChecker
-run_cli.add_command(satkit_click.annotator)
+run_cli.add_command(satkit_click.open_in_annotator)
 # noinspection PyTypeChecker
 run_cli.add_command(satkit_click.interact)
