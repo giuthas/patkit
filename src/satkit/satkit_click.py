@@ -38,7 +38,7 @@ from pathlib import Path
 
 import click
 
-from . import (
+from .initialise import (
     add_derived_data, initialise_satkit, run_annotator
 )
 from .utility_functions import log_elapsed_time

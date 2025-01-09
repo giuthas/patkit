@@ -50,6 +50,7 @@ graphical annotation tools derive from Annotator.
 import json
 import logging.config
 
+from .cli import run_cli
 from .initialise import add_derived_data, initialise_satkit, run_annotator
 
 __all__ = ['add_derived_data', 'initialise_satkit', 'run_annotator']
