@@ -52,11 +52,20 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Command line is now implemented with `click` rather than `argparse`.
   Neater look, easier maintenance and with the new installation also working
   command line tool with subcommands.
+- SATKIT now uses PyQt6 instead of 5 for the GUI.
 
 ### Docs
 
 - Docs are now again correctly generated.
 
+### Deprecated
+
+- One of the next updates - probably the next one - will move from centralised
+  single config system to per-dataset config system.
+- 
+- Another soon to happen change is the expansion of the classes derived from 
+  DataAggregator. Recording will be split to Source and Trial, and DataSet added
+  as a class that contains Sessions.
 
 ## [0.13.0] 2025-01-07
 
