@@ -31,6 +31,33 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   speech_analysis_toolkit.
 - See [Roadmap](Roadmap.markdown) for an overview of what to expect in 1.0.
 
+## [0.14.0]
+
+### Highlights
+
+- There's a new and shiny command line interface. With the new installation
+  procedure, SATKIT can be run as any regular command line tool.
+- New installation procedure with uv. Fast, neat, gives us the previous easily.
+
+### Added
+
+- 
+
+### Changed and Refactored
+
+- Moved the project directory to src layout. Updated pyproject.toml to reflect
+  this. 
+- Moved to installation with uv and updated pyproject.toml to work with
+  this too. 
+- Command line is now implemented with `click` rather than `argparse`.
+  Neater look, easier maintenance and with the new installation also working
+  command line tool with subcommands.
+
+### Docs
+
+- Docs are now again correctly generated.
+
+
 ## [0.13.0] 2025-01-07
 
 ### Highlights
