@@ -38,7 +38,9 @@ from pathlib import Path
 _logger = logging.getLogger('satkit.utility_functions')
 
 
-def path_from_name(filename: str | Path) -> Path:
+def path_from_name(filename: str | Path | None) -> Path:
+    if filename is None:
+        return Path(".")
     if not isinstance(filename, Path):
         return Path(filename)
     return filename
