@@ -1,24 +1,24 @@
 
 [project]
+name = "speech-articulation-toolkit"
+version = "0.14"
+description = "Speech Articulation ToolKit: tools for processing ultrasound speech data"
 authors = [
   {email = "giuthas@gmail.com"},
   {name = "Pertti Palo, Scott Moisik, Matthew Faytak, Motoki Saito"},
 ]
+license = {file = "LICENSE.markdown"}
+readme = "README.md"
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python",
 #  "Intended Audience :: Speech researchers and students",
 ]
-description = "Speech Articulation ToolKit: tools for processing ultrasound speech data"
 keywords = ["speech", "articulation", "textgrid", "ultrasound", "splines"]
-license = {file = "LICENSE.markdown"}
 maintainers = [
   {name = "Pertti Palo", email = "giuthas@gmail.com"},
 ]
-name = "satkit"
-readme = "README.md"
 requires-python = ">=3.10.13"
-version = "0.14"
 dependencies = [
   "build>=1.2.2.post1",
   "click>=8.1.8",
