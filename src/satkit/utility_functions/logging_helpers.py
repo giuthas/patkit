@@ -32,7 +32,6 @@
 
 import logging
 import time
-from typing import Optional
 
 start_time = time.time()
 last_log_time = time.time()
@@ -45,7 +44,7 @@ last_log_time = time.time()
 # _satkit_logger = logging.getLogger('satkit')
 
 
-def set_logging_level(verbosity: Optional[int]):
+def set_logging_level(verbosity: int | None) -> logging.Logger:
     """
     Set up logging with the logging module.
 
