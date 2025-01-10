@@ -30,15 +30,15 @@
 # citations.bib in BibTeX format.
 #
 """
-General purpose utility functions.
+Path utilities.
 """
+import logging
+from pathlib import Path
 
-from .computational import (
-    cartesian_to_polar, polar_to_cartesian, mean_squared_error,
-    normalise_timeseries
-)
-from .logging_helpers import log_elapsed_time, set_logging_level
-from .path import path_from_name
-from .processing_helpers import camel_to_snake, product_dict
-from .string_formatters import split_by
-from .types import is_sequence_form
+_logger = logging.getLogger('satkit.utility_functions')
+
+
+def path_from_name(filename: str | Path) -> Path:
+    if not isinstance(filename, Path):
+        return Path(filename)
+    return filename
