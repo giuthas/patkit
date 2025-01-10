@@ -50,8 +50,10 @@ from .utility_functions import log_elapsed_time
     type=click.Path(exists=True, dir_okay=True, file_okay=True), )
 @click.argument(
     "config_file",
-    type=click.Path(exists=True, dir_okay=False, file_okay=True), )
-def open_in_annotator(path: Path, config_file: Path):
+    type=click.Path(exists=True, dir_okay=False, file_okay=True),
+    required=False,
+)
+def open_in_annotator(path: Path, config_file: Path | None):
     """
     Open the PATH in the annotator GUI.
 
@@ -63,14 +65,18 @@ def open_in_annotator(path: Path, config_file: Path):
     """
     # TODO 0.14: remove the dependency on argparse
     # TODO 0.14: move add_derived_data into initialise_satkit
-    cli, configuration, logger, session = initialise_satkit(
+    # TODO 0.14: update the other commands too
+
+    if config_file is None:
+        config_file = Path("configuration/configuration.yaml")
+    configuration, logger, session = initialise_satkit(
         path=path, config_file=config_file)
     log_elapsed_time(logger)
 
     add_derived_data(session=session, config=configuration)
     log_elapsed_time(logger)
 
-    run_annotator(session, configuration, cli.args)
+    run_annotator(session, configuration)
 
 
 @click.command()
@@ -88,8 +94,7 @@ def interact():
 
     NOT IMPLEMENTED YET.
     """
-    # TODO 0.14: remove the dependency on argparse
-    cli, configuration, logger, session = initialise_satkit()
+    configuration, logger, session = initialise_satkit()
     log_elapsed_time(logger)
 
     add_derived_data(session=session, config=configuration)

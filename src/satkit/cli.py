@@ -30,22 +30,24 @@
 # citations.bib in BibTeX format.
 #
 """
-SATKIT Commandline.
+SATKIT Commandline main command.
 """
 
 import click
+from click_default_group import DefaultGroup
 
-from . import satkit_click
+from satkit import satkit_click
 
 
-@click.group()
-@click.version_option()
+@click.group(
+    cls=DefaultGroup, default='open', default_if_no_args=False)
 @click.pass_context
-@click.argument(
-    "path",
-    type=click.Path(exists=True, dir_okay=True, file_okay=True), )
-@click.argument("config_file")
-def run_cli(context: click.Context, path, config_file) -> None:
+@click.option('--verbosity', '-v', default=1, show_default=True)
+@click.version_option()
+def run_cli(
+        context: click.Context,
+        verbosity: int
+) -> None:
     """
     SATKIT - Speech Analysis ToolKIT
 
@@ -57,7 +59,7 @@ def run_cli(context: click.Context, path, config_file) -> None:
     By default, Satkit will open the given path in the annotator GUI.
     """
     print("in run_cli")
-    satkit_click.open_in_annotator(path, config_file)
+    # satkit_click.open_in_annotator(path, config_file)
 
 
 # noinspection PyTypeChecker

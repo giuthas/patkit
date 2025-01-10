@@ -36,14 +36,14 @@ Main interface for running SATKIT.
 
 import sys
 from argparse import Namespace
+from logging import Logger
 from pathlib import Path
 
 from PyQt6 import QtWidgets
 
 from satkit.annotations import add_peaks
-from satkit.argument_parser import SatkitArgumentParser
 from satkit.configuration import (
-    apply_exclusion_list, load_exclusion_list, parse_config, Configuration
+    apply_exclusion_list, load_exclusion_list, Configuration
 )
 from satkit.data_loader import load_data
 from satkit.data_processor import (
@@ -57,13 +57,15 @@ from satkit.metrics import (
 )
 from satkit.modalities import RawUltrasound, Splines
 from satkit.qt_annotator import PdQtAnnotator
-from satkit.utility_functions import set_logging_level
+from satkit.utility_functions import path_from_name, set_logging_level
 
 
 def initialise_satkit(
         path: Path | str | None = None,
         config_file: Path | str | None = None,
-):
+        exclusion_file: Path | str | None = None,
+        logging_level: int | None = None,
+) -> tuple[Configuration, Logger, Session]:
     """
     Initialise the basic structures for running SATKIT.
 
@@ -73,35 +75,23 @@ def initialise_satkit(
 
     Returns
     -------
-    tuple[cli, config, logger, session] where
-        cli is an instance of SatkitArgumentParser,
+    tuple[config, logger, session] where
         config is an instance of Configuration,
         logger is an instance of logging.Logger, and
         session is an instance of Session.
     """
-    if path is not None:
-        if path is isinstance(path, Path):
-            path = str(path)
-        if sys.argv[0] == '':
-            sys.argv[0] = './satkit.py'
-        sys.argv.append(path)
+    path = path_from_name(path)
+    config_file = path_from_name(config_file)
+    exclusion_file = path_from_name(exclusion_file)
 
-    # Arguments need to be parsed before setting up logging so that we have
-    # access to the verbosity argument.
-    cli = SatkitArgumentParser("SATKIT")
-    logger = set_logging_level(cli.args.verbose)
-    # TODO: this should be done in one:
-    if cli.args.configuration_filename:
-        parse_config(cli.args.configuration_filename)
-    else:
-        parse_config()
-    config = Configuration(cli.args.configuration_filename)
+    logger = set_logging_level(logging_level)
+    config = Configuration(config_file)
     exclusion_list = None
-    if cli.args.exclusion_filename:
-        exclusion_list = load_exclusion_list(cli.args.exclusion_filename)
-    session = load_data(Path(cli.args.load_path), config)
+    if exclusion_file is not None:
+        exclusion_list = load_exclusion_list(exclusion_file)
+    session = load_data(path, config)
     apply_exclusion_list(session, exclusion_list=exclusion_list)
-    return cli, config, logger, session
+    return config, logger, session
 
 
 def add_derived_data(
@@ -195,7 +185,6 @@ def add_derived_data(
 def run_annotator(
         session: Session,
         config: Configuration,
-        args: Namespace
 ) -> None:
     """
     Start the Annotator GUI.
@@ -215,6 +204,6 @@ def run_annotator(
     # to avoid a segfault.
     app.annotator = PdQtAnnotator(
         recording_session=session,
-        args=args,
+        display_tongue=True,
         config=config)
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
