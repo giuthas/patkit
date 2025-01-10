@@ -41,9 +41,10 @@ and never are stored. In effect, they function as look-up tables.
 """
 from dataclasses import dataclass
 from enum import Enum
+from importlib.metadata import version
 
 # TODO 1.0: Decouple program and file format versions at version 1.0.
-SATKIT_VERSION = '0.14'
+SATKIT_VERSION = version('satkit')
 SATKIT_FILE_VERSION = SATKIT_VERSION
 
 DEFAULT_ENCODING = 'utf-8'

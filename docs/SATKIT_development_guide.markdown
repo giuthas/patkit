@@ -99,13 +99,10 @@ A release of SATKIT is created as follows:
 2. Send a pull request to the main repo either before or after the next stage.
    After the pull request has been processed rest of the release tasks are done
    in the main repo.
-3. Update documentation and version numbers
-   - Version number lives in at least:
-     - [README](../README.md),
-     - [constants.py](../satkit/constants.py), and
-     - [pyproject.toml](../pyproject.toml).
+3. Update documentation and bump version number.
+   - Version number lives in [pyproject.toml](../pyproject.toml).
      - File version number will be different from program version number after
-       1.0.
+       1.0 and this is set in constants.py.
    - [Changelog](Changelog.markdown)
    - [Generated documentation](../devel/doc_generation_commands)
    - [License headers](../devel/licenseheaders_command)
