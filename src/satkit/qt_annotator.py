@@ -33,7 +33,6 @@
 This is the main GUI class for SATKIT.
 """
 
-from argparse import Namespace
 import csv
 import logging
 from contextlib import closing
@@ -110,7 +109,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
     def __init__(
             self,
             recording_session: Session,
-            args: Namespace,
+            display_tongue: bool,
             config: Configuration,
             xlim: tuple[float, float] = (-0.25, 1.5),
             categories: list[str] | None = None,
@@ -126,8 +125,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         self.index = 0
         self.max_index = len(self.recordings)
 
-        self.commandline_args = args
-        self.display_tongue = args.displayTongue
+        self.display_tongue = display_tongue
 
         self.main_config = config.main_config
         self.gui_config = config.gui_config
