@@ -67,4 +67,4 @@ figures/
 
 # Distribution and build files
 dist/
-satkit/satkit.egg-info/
+*.egg-info
