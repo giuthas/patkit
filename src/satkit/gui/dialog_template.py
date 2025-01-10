@@ -57,9 +57,11 @@ class DialogTemplate(QDialog):
 
         # OK and Cancel buttons
         buttons = QDialogButtonBox(
-            (QDialogButtonBox.Ok | QDialogButtonBox.YesToAll |
-             QDialogButtonBox.Cancel | QDialogButtonBox.NoToAll),
-            Qt.Horizontal, self)
+            (QDialogButtonBox.StandardButton.Ok |
+             QDialogButtonBox.StandardButton.YesToAll |
+             QDialogButtonBox.StandardButton.Cancel |
+             QDialogButtonBox.StandardButton.NoToAll),
+            Qt.Orientation.Horizontal, self)
         buttons.accepted.connect(self.accept)
         buttons.rejected.connect(self.reject)
         layout.addWidget(buttons)
@@ -72,8 +74,8 @@ class DialogTemplate(QDialog):
     @staticmethod
     def getDateTime(filename: str, parent=None):
         dialog = DialogTemplate(filename, parent)
-        result = dialog.exec_()
-        return (result == QDialog.Accepted, result)
+        result = dialog.exec()
+        return result == QDialog.DialogCode.Accepted, result
 
 
 app = QApplication([])

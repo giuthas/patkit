@@ -50,21 +50,24 @@ class ReplaceDialog(QDialog):
         layout.addWidget(self.question)
 
         buttons = QDialogButtonBox(
-            (QDialogButtonBox.Yes | QDialogButtonBox.YesToAll |
-             QDialogButtonBox.No | QDialogButtonBox.NoToAll),
-            Qt.Horizontal, self)
+            (QDialogButtonBox.StandardButton.Yes |
+             QDialogButtonBox.StandardButton.YesToAll |
+             QDialogButtonBox.StandardButton.No |
+             QDialogButtonBox.StandardButton.NoToAll),
+            Qt.Orientation.Horizontal, self)
         layout.addWidget(buttons)
 
         buttons.accepted.connect(self.accept)
         buttons.rejected.connect(self.reject)
 
-        button_yes = buttons.button(QDialogButtonBox.Yes)
+        button_yes = buttons.button(QDialogButtonBox.StandardButton.Yes)
         button_yes.clicked.connect(self._handle_yes)
-        button_yes_all = buttons.button(QDialogButtonBox.YesToAll)
+        button_yes_all = buttons.button(
+            QDialogButtonBox.StandardButton.YesToAll)
         button_yes_all.clicked.connect(self._handle_yes_all)
-        button_no = buttons.button(QDialogButtonBox.No)
+        button_no = buttons.button(QDialogButtonBox.StandardButton.No)
         button_no.clicked.connect(self._handle_no)
-        button_no_all = buttons.button(QDialogButtonBox.NoToAll)
+        button_no_all = buttons.button(QDialogButtonBox.StandardButton.NoToAll)
         button_no_all.clicked.connect(self._handle_no_all)
 
         self.pressed_button = None
@@ -84,6 +87,6 @@ class ReplaceDialog(QDialog):
     @staticmethod
     def confirm_overwrite(filename: str, parent=None) -> OverwriteConfirmation:
         dialog = ReplaceDialog(filename, parent)
-        dialog.exec_()
+        dialog.exec()
         pressed_button = dialog.pressed_button
         return pressed_button

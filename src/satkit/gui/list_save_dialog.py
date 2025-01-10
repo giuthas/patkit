@@ -37,9 +37,7 @@ from PyQt6 import QtCore
 from PyQt6.QtGui import QIcon, QStandardItem, QStandardItemModel
 from PyQt6.QtWidgets import (
     QCheckBox, QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout, QLabel,
-    QLineEdit,
-    QListView,
-    QPushButton, QVBoxLayout, QWidget
+    QLineEdit, QListView, QPushButton, QVBoxLayout, QWidget
 )
 
 
@@ -71,12 +69,13 @@ class ListSaveDialog(QDialog):
         # The checklist
         self.list_view = QListView()
         self.list_view.setHorizontalScrollBarPolicy(
-            QtCore.Qt.ScrollBarAlwaysOff)
+            QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.model = QStandardItemModel()
         for item_name in item_names:
             item = QStandardItem(item_name)
             item.setCheckable(True)
-            check = QtCore.Qt.Checked if checked else QtCore.Qt.Unchecked
+            check = (QtCore.Qt.CheckState.Checked
+                     if checked else QtCore.Qt.CheckState.Unchecked)
             item.setCheckState(check)
             self.model.appendRow(item)
         self.list_view.setModel(self.model)
@@ -120,10 +119,12 @@ class ListSaveDialog(QDialog):
         path_and_name_box.addWidget(self.browse_button)
 
         # The cancel, ok buttons
-        dialog_buttons = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+        dialog_buttons = (QDialogButtonBox.StandardButton.Ok |
+                          QDialogButtonBox.StandardButton.Cancel)
         self.ok_cancel_buttons = QDialogButtonBox(dialog_buttons)
         self.ok_cancel_buttons.accepted.connect(self.accept)
-        self.ok_cancel_buttons.button(QDialogButtonBox.Ok).clicked.connect(
+        self.ok_cancel_buttons.button(
+            QDialogButtonBox.StandardButton.Ok).clicked.connect(
             self._on_accepted)
         self.ok_cancel_buttons.rejected.connect(self.reject)
 
@@ -148,7 +149,7 @@ class ListSaveDialog(QDialog):
             parent=self,
             caption="Select Directory to Export to",
             directory=self.path_field.text(),
-            options=QFileDialog.DontResolveSymlinks
+            options=QFileDialog.Option.DontResolveSymlinks
         )
         if directory:
             self.path_field.setText(directory)
@@ -156,7 +157,7 @@ class ListSaveDialog(QDialog):
     def _on_accepted(self):
         self.chosen_item_names = [
             self.model.item(i).text() for i in range(self.model.rowCount())
-            if self.model.item(i).checkState() == QtCore.Qt.Checked
+            if self.model.item(i).checkState() == QtCore.Qt.CheckState.Checked
         ]
         if self.option is not None:
             self.option = self.option_checkbox.isChecked()
@@ -166,20 +167,20 @@ class ListSaveDialog(QDialog):
     def _reverse_selection(self):
         for i in range(self.model.rowCount()):
             item = self.model.item(i)
-            if item.checkState() == QtCore.Qt.Unchecked:
-                item.setCheckState(QtCore.Qt.Checked)
-            elif item.checkState() == QtCore.Qt.Checked:
-                item.setCheckState(QtCore.Qt.Unchecked)
+            if item.checkState() == QtCore.Qt.CheckState.Unchecked:
+                item.setCheckState(QtCore.Qt.CheckState.Checked)
+            elif item.checkState() == QtCore.Qt.CheckState.Checked:
+                item.setCheckState(QtCore.Qt.CheckState.Unchecked)
 
     def _select(self):
         for i in range(self.model.rowCount()):
             item = self.model.item(i)
-            item.setCheckState(QtCore.Qt.Checked)
+            item.setCheckState(QtCore.Qt.CheckState.Checked)
 
     def _unselect(self):
         for i in range(self.model.rowCount()):
             item = self.model.item(i)
-            item.setCheckState(QtCore.Qt.Unchecked)
+            item.setCheckState(QtCore.Qt.CheckState.Unchecked)
 
     @staticmethod
     def get_selection(
@@ -200,6 +201,6 @@ class ListSaveDialog(QDialog):
             parent=parent,
             option_label=option_label,
         )
-        if dialog.exec_() == QDialog.Rejected:
+        if dialog.exec() == QDialog.DialogCode.Rejected:
             return None, None, None
         return dialog.chosen_item_names, dialog.save_path, dialog.option

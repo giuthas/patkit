@@ -71,7 +71,8 @@ class ImageSaveDialog(QDialog):
             self.option_checkboxes = {}
             for option, checked in options.items():
                 checkbox = QCheckBox(option)
-                check = QtCore.Qt.Checked if checked else QtCore.Qt.Unchecked
+                check = (QtCore.Qt.CheckState.Checked
+                         if checked else QtCore.Qt.CheckState.Unchecked)
                 checkbox.setCheckState(check)
                 self.option_checkboxes[option] = checkbox
                 option_box.addWidget(self.option_checkboxes[option])
@@ -94,10 +95,12 @@ class ImageSaveDialog(QDialog):
         path_and_name_box.addWidget(self.browse_button)
 
         # The cancel, ok buttons
-        dialog_buttons = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
+        dialog_buttons = (QDialogButtonBox.StandardButton.Ok |
+                          QDialogButtonBox.StandardButton.Cancel)
         self.ok_cancel_buttons = QDialogButtonBox(dialog_buttons)
         self.ok_cancel_buttons.accepted.connect(self.accept)
-        self.ok_cancel_buttons.button(QDialogButtonBox.Ok).clicked.connect(
+        self.ok_cancel_buttons.button(
+            QDialogButtonBox.StandardButton.Ok).clicked.connect(
             self._on_accepted)
         self.ok_cancel_buttons.rejected.connect(self.reject)
 
@@ -119,7 +122,7 @@ class ImageSaveDialog(QDialog):
             parent=self,
             caption="Select Directory to Export to",
             directory=self.path_field.text(),
-            options=QFileDialog.DontResolveSymlinks
+            options=QFileDialog.Option.DontResolveSymlinks
         )
         if directory:
             self.path_field.setText(directory)
@@ -146,6 +149,6 @@ class ImageSaveDialog(QDialog):
             parent=parent,
             options=options,
         )
-        if dialog.exec_() == QDialog.Rejected:
+        if dialog.exec() == QDialog.DialogCode.Rejected:
             return None, None
         return dialog.save_path, dialog.options

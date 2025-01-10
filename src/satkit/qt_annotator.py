@@ -1177,9 +1177,9 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
 
         QtPy is silly and wants the callback to have this specific name.
         """
-        if event.key() == Qt.Key_Shift:
+        if event.key() == Qt.Key.Key_Shift:
             self.shift_is_held = True
-        if event.key() == Qt.Key_I:
+        if event.key() == Qt.Key.Key_I:
             self.gui_config.auto_xlim = False
             if self.current.annotations['selection_index'] >= 0:
                 center = self.current.annotations['selected_time']
@@ -1190,7 +1190,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
             if self.gui_config.xlim is not None:
                 self.gui_config.xlim = self.xlim
             self.update()
-        elif event.key() == Qt.Key_O:
+        elif event.key() == Qt.Key.Key_O:
             self.gui_config.auto_xlim = False
             center = (self.xlim[0] + self.xlim[1]) / 2.0
             length = self.xlim[1] - self.xlim[0]
@@ -1198,7 +1198,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
             if self.gui_config.xlim is not None:
                 self.gui_config.xlim = self.xlim
             self.update()
-        elif event.key() == Qt.Key_A:
+        elif event.key() == Qt.Key.Key_A:
             self.gui_config.auto_xlim = True
             self.gui_config.xlim = None
             self.update()
@@ -1210,5 +1210,5 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
 
         QtPy is silly and wants the callback to have this specific name.
         """
-        if event.key() == Qt.Key_Shift:
+        if event.key() == Qt.Key.Key_Shift:
             self.shift_is_held = False
