@@ -35,6 +35,7 @@ This is the main GUI class for SATKIT.
 
 import csv
 import logging
+import sys
 from contextlib import closing
 from copy import deepcopy
 from pathlib import Path
@@ -42,11 +43,12 @@ from pathlib import Path
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import \
+from matplotlib.backends.backend_qtagg import \
     FigureCanvasQTAgg as FigureCanvas
 # Plotting functions and hooks for GUI
 from matplotlib.figure import Figure
 from matplotlib.widgets import MultiCursor
+from PyQt6 import QtWidgets
 # GUI functionality
 from PyQt6.QtCore import QCoreApplication, Qt
 from PyQt6.QtGui import QIntValidator, QKeySequence, QShortcut
@@ -328,6 +330,12 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         text += ', Speaker: ' + str(self.current.metadata.participant_id)
         text += ', prompt: ' + self.current.metadata.prompt
         return text
+
+    def _release_modality_memory(self):
+        # TODO 1.0: make it possible to select which modalities get their
+        # memory released
+        if 'RawUltrasound' in self.current.modalities:
+            self.current.modalities['RawUltrasound'].data = None
 
     def clear_axes(self):
         """Clear data axes of this annotator."""
@@ -730,10 +738,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         Increases cursor index, updates the view.
         """
         if self.index < self.max_index - 1:
-            # TODO: make it possible to select which modalities get their
-            # memory released
-            if 'RawUltrasound' in self.current.modalities:
-                self.current.modalities['RawUltrasound'].data = None
+            self._release_modality_memory()
             self.index += 1
             self.update()
             self.update_ui()
@@ -789,7 +794,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         Decreases cursor index, updates the view.
         """
         if self.index > 0:
-            self.current.modalities['RawUltrasound'].data = None
+            self._release_modality_memory()
             self.index -= 1
             self.update()
             self.update_ui()
@@ -801,7 +806,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         index_to_jump_to = int(self.goLineEdit.text()) - 1
 
         if 0 <= index_to_jump_to < len(self.session):
-            self.current.modalities['RawUltrasound'].data = None
+            self._release_modality_memory()
             self.index = index_to_jump_to
             self.update()
             self.update_ui()
@@ -1212,3 +1217,28 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         """
         if event.key() == Qt.Key.Key_Shift:
             self.shift_is_held = False
+
+
+def run_annotator(
+        session: Session,
+        config: Configuration,
+) -> None:
+    """
+    Start the Annotator GUI.
+
+    Parameters
+    ----------
+    session : Session
+        The Session to run the Annotator on.
+    config : config.Configuration
+        Configuration mainly for the GUI, but passing the complete
+        Configuration, because other things are occasionally needed.
+    """
+    app = QtWidgets.QApplication(sys.argv)
+    # Apparently the assignment to an unused variable is needed
+    # to avoid a segfault.
+    app.annotator = PdQtAnnotator(
+        recording_session=session,
+        display_tongue=True,
+        config=config)
+    sys.exit(app.exec())

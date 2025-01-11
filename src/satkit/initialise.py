@@ -34,12 +34,8 @@
 Main interface for running SATKIT.
 """
 
-import sys
-from argparse import Namespace
 from logging import Logger
 from pathlib import Path
-
-from PyQt6 import QtWidgets
 
 from satkit.annotations import add_peaks
 from satkit.configuration import (
@@ -56,8 +52,9 @@ from satkit.metrics import (
     add_spline_metric, downsample_metrics_in_session
 )
 from satkit.modalities import RawUltrasound, Splines
-from satkit.qt_annotator import PdQtAnnotator
-from satkit.utility_functions import path_from_name, set_logging_level
+from satkit.utility_functions import (
+    path_from_name, set_logging_level, log_elapsed_time
+)
 
 
 def initialise_satkit(
@@ -91,6 +88,11 @@ def initialise_satkit(
         exclusion_list = load_exclusion_list(exclusion_file)
     session = load_data(path, config)
     apply_exclusion_list(session, exclusion_list=exclusion_list)
+    log_elapsed_time(logger)
+
+    add_derived_data(session=session, config=config)
+    log_elapsed_time(logger)
+
     return config, logger, session
 
 
@@ -182,28 +184,3 @@ def add_derived_data(
                     )
 
 
-def run_annotator(
-        session: Session,
-        config: Configuration,
-) -> None:
-    """
-    Start the Annotator GUI.
-
-    Parameters
-    ----------
-    session : Session
-        The Session to run the Annotator on.
-    config : config.Configuration
-        Configuration mainly for the GUI, but passing the complete
-        Configuration, because other things are occasionally needed.
-    args : Namespace
-        The command line arguments from SatkitArgumentParser.
-    """
-    app = QtWidgets.QApplication(sys.argv)
-    # Apparently the assignment to an unused variable is needed
-    # to avoid a segfault.
-    app.annotator = PdQtAnnotator(
-        recording_session=session,
-        display_tongue=True,
-        config=config)
-    sys.exit(app.exec())

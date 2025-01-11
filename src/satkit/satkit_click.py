@@ -33,15 +33,13 @@
 SATKIT command line commands.
 """
 
-import code
 from pathlib import Path
 
 import click
 
-from .initialise import (
-    add_derived_data, initialise_satkit, run_annotator
-)
-from .utility_functions import log_elapsed_time
+from satkit.initialise import initialise_satkit
+from satkit.qt_annotator import run_annotator
+from satkit.interpreter import run_interpreter
 
 
 @click.command(name="open")
@@ -71,10 +69,6 @@ def open_in_annotator(path: Path, config_file: Path | None):
         config_file = Path("configuration/configuration.yaml")
     configuration, logger, session = initialise_satkit(
         path=path, config_file=config_file)
-    log_elapsed_time(logger)
-
-    add_derived_data(session=session, config=configuration)
-    log_elapsed_time(logger)
 
     run_annotator(session, configuration)
 
@@ -95,18 +89,7 @@ def interact():
     NOT IMPLEMENTED YET.
     """
     configuration, logger, session = initialise_satkit()
-    log_elapsed_time(logger)
 
-    add_derived_data(session=session, config=configuration)
-    log_elapsed_time(logger)
+    run_interpreter(session=session, configuration=configuration)
 
-    # TODO 1.0: Probably better doing this with IPython than the history-less
-    # standard library version
-    # import IPython
-    # IPython.embed()
-    code.interact(
-        banner="SATKIT Interactive Console",
-        local=locals(),
-        exitmsg="Exiting SATKIT Interactive Console",
-    )
 

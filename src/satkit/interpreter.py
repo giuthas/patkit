@@ -29,42 +29,29 @@
 # articles listed in README.markdown. They can also be found in
 # citations.bib in BibTeX format.
 #
-
 """
-SATKIT -- The Speech Articulation ToolKIT
-
-# TODO 1.0 Add an example of running SATKIT from the interactive command line.
-
-SATKIT consists of several interdependent modules.
-
-![SATKIT Module hierarchy](packages_satkit.png "SATKIT Module hierarchy")
-
-SATKIT's data structures are built around two class hierarchies: 
-The Recording and the Modality. Similarly, the commandline interface -- and
-the batch processing of data -- is handled by classes that extend CLI and 
-graphical annotation tools derive from Annotator.
-
-![SATKIT Class hierarchies](classes_satkit.png "SATKIT Class hierarchies")
+SATKIT interactive interpreter.
 """
+import code
+import readline
+import rlcompleter
 
-import json
-import logging.config
+from satkit.configuration import Configuration
+from satkit.data_structures import Session
 
-from .cli import run_cli
-from .initialise import add_derived_data, initialise_satkit
-from .qt_annotator import run_annotator
 
-__all__ = ['add_derived_data', 'initialise_satkit']
+def run_interpreter(session: Session, configuration: Configuration):
+    # TODO 1.0: Probably better doing this with IPython than the history-less
+    # standard library version
+    # import IPython
+    # IPython.embed()
+    variables = globals()
+    variables.update(locals())
 
-# Load logging config from json file.
-LOG_CONFIG = "configuration/satkit_logging_configuration.json"
-with open(LOG_CONFIG, 'r', encoding='utf-8') as configuration_file:
-    config_dict = json.load(configuration_file)
-    logging.config.dictConfig(config_dict)
-
-# Create the module logger.
-_satkit_logger = logging.getLogger('satkit')
-
-# Log that the logger was configured.
-_satkit_logger.info('Completed configuring logger.')
-
+    readline.set_completer(rlcompleter.Completer(variables).complete)
+    readline.parse_and_bind("tab: complete")
+    code.interact(
+        banner="SATKIT Interactive Console",
+        local=locals(),
+        exitmsg="Exiting SATKIT Interactive Console",
+    )
