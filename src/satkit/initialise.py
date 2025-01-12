@@ -77,6 +77,9 @@ def initialise_satkit(
         logger is an instance of logging.Logger, and
         session is an instance of Session.
     """
+    if config_file is None:
+        config_file = Path("configuration/configuration.yaml")
+
     path = path_from_name(path)
     config_file = path_from_name(config_file)
     exclusion_file = path_from_name(exclusion_file)

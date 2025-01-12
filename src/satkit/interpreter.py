@@ -32,26 +32,45 @@
 """
 SATKIT interactive interpreter.
 """
+import atexit
 import code
+import os
 import readline
 import rlcompleter
 
 from satkit.configuration import Configuration
+from satkit.constants import SATKIT_HISTORY_FILE
 from satkit.data_structures import Session
 
 
 def run_interpreter(session: Session, configuration: Configuration):
-    # TODO 1.0: Probably better doing this with IPython than the history-less
+    """
+    Run the SATKIT interactive interpreter on the command line.
+
+    Parameters
+    ----------
+    session : Session
+        The loaded Session.
+    configuration : Configuration
+        The Configuration for this run.
+    """
+    # TODO 1.0: Might be better doing this with IPython than the history-less
     # standard library version
     # import IPython
     # IPython.embed()
-    variables = globals()
-    variables.update(locals())
 
+    variables = locals()
     readline.set_completer(rlcompleter.Completer(variables).complete)
-    readline.parse_and_bind("tab: complete")
-    code.interact(
+    # readline.parse_and_bind("tab: complete")
+    readline.parse_and_bind("bind ^I rl_complete")
+
+    python_history_file = os.path.expanduser(SATKIT_HISTORY_FILE)
+    print(python_history_file)
+    if os.path.exists(python_history_file):
+        readline.read_history_file(python_history_file)
+    atexit.register(readline.write_history_file, python_history_file)
+
+    code.InteractiveConsole(variables).interact(
         banner="SATKIT Interactive Console",
-        local=locals(),
         exitmsg="Exiting SATKIT Interactive Console",
     )

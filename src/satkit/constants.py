@@ -49,6 +49,8 @@ SATKIT_FILE_VERSION = SATKIT_VERSION
 
 DEFAULT_ENCODING = 'utf-8'
 
+SATKIT_HISTORY_FILE = "~/.satkit_history"
+
 
 class ImageMask(Enum):
     """

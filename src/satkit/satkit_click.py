@@ -62,11 +62,7 @@ def open_in_annotator(path: Path, config_file: Path | None):
     NOT IMPLEMENTED YET.
     """
     # TODO 0.14: remove the dependency on argparse
-    # TODO 0.14: move add_derived_data into initialise_satkit
-    # TODO 0.14: update the other commands too
 
-    if config_file is None:
-        config_file = Path("configuration/configuration.yaml")
     configuration, logger, session = initialise_satkit(
         path=path, config_file=config_file)
 
@@ -77,8 +73,12 @@ def open_in_annotator(path: Path, config_file: Path | None):
 @click.argument(
     "path",
     type=click.Path(exists=True, dir_okay=True, file_okay=True), )
-@click.argument("config_file")
-def interact():
+@click.argument(
+    "config_file",
+    type=click.Path(exists=True, dir_okay=False, file_okay=True),
+    required=False,
+)
+def interact(path: Path, config_file: Path | None):
     """
     Open the PATH in interactive commandline mode.
 
@@ -88,7 +88,9 @@ def interact():
 
     NOT IMPLEMENTED YET.
     """
-    configuration, logger, session = initialise_satkit()
+    configuration, logger, session = initialise_satkit(
+        path=path, config_file=config_file
+    )
 
     run_interpreter(session=session, configuration=configuration)
 
