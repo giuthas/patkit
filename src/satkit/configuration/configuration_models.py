@@ -152,7 +152,7 @@ class SearchPattern(UpdatableBaseModel):
         Match this pattern to the argument string.
 
         If this pattern is not a regexp then this method will return True only
-        when the pattern is found verbatim in the argument string.
+        when the pattern is verbatim the argument string.
 
         Parameters
         ----------
@@ -166,6 +166,28 @@ class SearchPattern(UpdatableBaseModel):
         """
         if self.is_regexp:
             return bool(re.match(self.pattern, string))
+
+        return self.pattern == string
+
+    def search(self, string: str) -> bool:
+        """
+        Search for this pattern in the argument string.
+
+        If this pattern is not a regexp then this method will return True only
+        when the pattern is found verbatim in the argument string.
+
+        Parameters
+        ----------
+        string : str
+            The string to match to.
+
+        Returns
+        -------
+        bool
+            True if this pattern is found in the argument.
+        """
+        if self.is_regexp:
+            return bool(re.search(self.pattern, string))
 
         return self.pattern in string
 
