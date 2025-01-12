@@ -11,6 +11,8 @@ are set by files in the user's `~/.satkit` (on Linux/macOS) or
 `%userprofile%\.satkit` (on Windows) folder. The local options live with the
 data as is explained below in [Local Configuration](#local-configuration).
 
+There are examples of configuration files in the GitHub repository in the
+`example_configs` folder.
 
 ## Command history
 
