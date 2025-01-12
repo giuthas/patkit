@@ -251,7 +251,7 @@ def main():
         with PdfPages('figures/seaborn_test.pdf') as pdf:
             dataframe = annotations_to_dataframe(
                 recording_session.recordings,
-                modality_name="RawUltrasound",
+                modality_name=["RawUltrasound"],
                 metrics=metrics,
                 downsampling_ratios=downsampling_ratios,)
             publish_distribution_data_seaborn(

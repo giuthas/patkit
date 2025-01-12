@@ -129,7 +129,6 @@ def add_peaks(
         annotations.apply_lower_time_limit(time_min)
 
     if peak_parameters.time_max and recording.satgrid:
-        time_max = None
         tier_name = peak_parameters.time_max.tier
         tier = recording.satgrid[tier_name]
 
@@ -209,9 +208,10 @@ def find_gesture_peaks(
         properties=properties)
     return annotations
 
+
 def _setup_peak_extraction_variables(
         recordings: list[Recording],
-        metrics: tuple[str],
+        metrics: list[str],
 ) -> tuple[list[Recording], list[str], ]:
     """
     Local helper function to capture some boilerplate setup code.
@@ -234,8 +234,8 @@ def annotations_to_dataframe(
         # annotation_statistic:
         recordings: list[Recording],
         modality_name: list[str],
-        metrics: tuple[str],
-        downsampling_ratios: tuple[int],
+        metrics: list[str],
+        downsampling_ratios: list[int],
         annotations: dict[str, tuple[str]] = None
 ) -> pandas.DataFrame:
     recordings, reference_names = _setup_peak_extraction_variables(
@@ -302,8 +302,8 @@ def annotations_to_dataframe(
 
 def prominences_in_downsampling(
         recordings: list[Recording],
-        metrics: tuple[str],
-        downsampling_ratios: tuple[int]
+        metrics: list[str],
+        downsampling_ratios: list[int]
 ) -> np.ndarray:
     recordings, reference_names = _setup_peak_extraction_variables(
         recordings, metrics)
@@ -343,8 +343,8 @@ def prominences_in_downsampling(
 
 def nearest_neighbours_in_downsampling(
         recordings: list[Recording],
-        metrics: tuple[str],
-        downsampling_ratios: tuple[int]
+        metrics: list[str],
+        downsampling_ratios: list[int]
 ) -> np.ndarray:
     recordings, reference_names = _setup_peak_extraction_variables(
         recordings, metrics)
@@ -386,8 +386,8 @@ def nearest_neighbours_in_downsampling(
 
 def count_number_of_peaks(
         recordings: list[Recording],
-        metrics: tuple[str],
-        downsampling_ratios: tuple[int]
+        metrics: list[str],
+        downsampling_ratios: list[int]
 ) -> np.ndarray:
     exclusion = ("water swallow", "bite plate")
     recordings = [

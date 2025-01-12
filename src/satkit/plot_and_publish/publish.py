@@ -70,7 +70,7 @@ class PublishParameters:
     legend_loc: str = "upper right"
     common_xlabel: Optional[str] = None
     common_ylabel: Optional[str] = None
-    suptitle: Optional[str] = None
+    subtitle: Optional[str] = None
     horizontal_line: Optional[float] = None
 
 
