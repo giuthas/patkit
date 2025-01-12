@@ -93,7 +93,7 @@ def initialise_satkit(
     apply_exclusion_list(session, exclusion_list=exclusion_list)
     log_elapsed_time(logger)
 
-    add_derived_data(session=session, config=config)
+    add_derived_data(session=session, config=config, logger=logger)
     log_elapsed_time(logger)
 
     return config, logger, session
@@ -102,6 +102,7 @@ def initialise_satkit(
 def add_derived_data(
         session: Session,
         config: Configuration,
+        logger: Logger,
 ) -> None:
     """
     Add derived data to the Session according to the Configuration.
@@ -118,6 +119,9 @@ def add_derived_data(
         The Session to add derived data to.
     config : Configuration
         The configuration parameters to use in deriving the new derived data.
+    logger : Logger
+        The logger is passed as an argument since the initialise module is the
+        one responsible for setting it up.
 
     Returns
     -------
@@ -174,16 +178,13 @@ def add_derived_data(
         modality_pattern = data_run_config.peaks.modality_pattern
         for recording in session:
             if recording.excluded:
-                print(
-                    f"in satkit.py: jumping over {recording.basename}")
+                logger.info(
+                    "Recording excluded from peak finding: %s",
+                    recording.name)
                 continue
             for modality_name in recording:
-                # TODO make this deal with both strings and regexps as the
-                # modality pattern
                 if modality_pattern.search(modality_name):
                     add_peaks(
                         recording[modality_name],
                         config.data_run_config.peaks,
                     )
-
-
