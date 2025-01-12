@@ -54,6 +54,7 @@ from PyQt6.QtCore import QCoreApplication, Qt
 from PyQt6.QtGui import QIntValidator, QKeySequence, QShortcut
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.uic import loadUiType
+from qbstyles import mpl_style
 
 from satkit.data_structures import Session
 from satkit.configuration import (
@@ -83,6 +84,7 @@ from satkit.ui_callbacks import UiCallbacks
 Ui_MainWindow, QMainWindow = loadUiType('src/satkit/gui/qt_annotator.ui')
 
 _logger = logging.getLogger('satkit.qt_annotator')
+mpl_style(dark=True)
 
 
 def setup_qtannotator_ui_callbacks():

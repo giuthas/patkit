@@ -63,6 +63,6 @@ def run_cli(
 
 
 # noinspection PyTypeChecker
-run_cli.add_command(satkit_click.open_in_annotator)
+run_cli.add_command(cli_commands.open_in_annotator)
 # noinspection PyTypeChecker
-run_cli.add_command(satkit_click.interact)
+run_cli.add_command(cli_commands.interact)
