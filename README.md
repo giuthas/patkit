@@ -58,10 +58,24 @@ $PYTHONPATH.
 
 ### Requisites
 
-See the `.yml` files in `environments/` for a more list. Before 1.0 only the
-satkit-devel environment is maintained, so read that one.
+A computer with a relatively new operating system which has a fairly regular
+file system. While pads and phones and watches are computers, SATKIT sadly does
+not run on them. ChromeOS may work, but it is a borderline case. A Linux, a Mac,
+or a Windows machine should be fine as long as it is capable of running the
+latest Python. If issues crop up, get in touch, and we'll see what can be done. 
+
+Currently, SATKIT is tested to work on
+- PopOS 24.04, which means any recent Ubuntu-like system should be fine.
+
+You only need to care about the dependencies if you do not use uv for
+installing. In that case see the `pyproject.toml` file for a full list or the
+`uv.lock` for an even fuller list. If you do decide to use some other system for
+installation, please get in touch -- we'd love to have the recipe in case others
+need/want it.
 
 ### Installing for regular use
+
+TODO 0.14: Update this
 
 An installation through pypi is in the works. Do get in touch if you would like
 to *test* it. Do also get in touch if you would like to *build* it.
@@ -70,6 +84,8 @@ A downloadable executable will hopefully also become reality. Do get in touch if
 you would like to *develop* it.
 
 ### Installing for development
+
+TODO 0.14: Update this
 
 To install all of the above and create a conda environment to run SATKIT in
 first install anaconda from the link above. Then install mamba because anaconda
