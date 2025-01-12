@@ -59,7 +59,6 @@ from satkit.plot_and_publish.publish import publish_distribution_data_seaborn
 from satkit.qt_annotator import PdQtAnnotator
 from satkit.data_loader import load_data
 from satkit.data_processor import process_modalities
-from satkit.scripting_interface import save_data # this got deleted
 from satkit.utility_functions import log_elapsed_time, set_logging_level
 
 
@@ -265,10 +264,6 @@ def main():
                 common_xlabel="Data sampling frequency (Hz)",
             )
     logger.info('Data run ended.')
-
-    # save before plotting just in case.
-    if cli.args.output_filename:
-        save_data(Path(cli.args.output_filename), recording_session)
 
     # Plot the data into files if asked to.
     if cli.args.publish:
