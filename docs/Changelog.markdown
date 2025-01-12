@@ -37,7 +37,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 - There's a new and shiny command line interface. With the new installation
   procedure, SATKIT can be run as any regular command line tool.
-- New installation procedure with uv. Fast, neat, gives us the previous easily.
+- There's a new installation procedure with uv. Fast, neat, gives us the
+  previous easily.
 
 ### Added
 
@@ -57,6 +58,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Docs
 
 - Docs are now again correctly generated.
+- Some preliminary docs on configuration. Only command line history is actually
+  properly up to date in there.
 
 ### Deprecated
 
