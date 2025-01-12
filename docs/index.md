@@ -35,7 +35,7 @@ long run than gains in execution speed.
   - [Database Classes](DatabaseClasses.markdown)
 - Extending SATKIT
   - Before starting, please read Coding conventions in [SATKIT development
-    guide](SATKIT_development_guide.markdown).
+    guide](Development_guide).
   - Implementing a New Datasource
   - [Writing a New Modality](WritingNewModality.markdown)
 
