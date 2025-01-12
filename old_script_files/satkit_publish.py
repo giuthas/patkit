@@ -77,9 +77,10 @@ def main():
         config.parse_config()
     configuration = config.Configuration(cli.args.configuration_filename)
 
-    recording_session = load_data(Path(cli.args.load_path))
+    recording_session = load_data(
+        Path(cli.args.load_path), configuration=configuration)
 
-    log_elapsed_time()
+    log_elapsed_time(logger)
 
     # function_dict = {'pd':pd.pd, 'annd':annd.annd}
     # pd_arguments = {
@@ -182,14 +183,11 @@ def main():
         reference = number_of_peaks[:, :, 0]
 
         # reference = reference.reshape(list(reference.shape).append(1))
-        # ic(reference.shape)
         referees = number_of_peaks.copy()
         referees = np.moveaxis(referees, (0, 1, 2), (1, 2, 0))
         peak_number_ratio = referees/reference
-        # ic(peak_number_ratio.shape)
         peak_number_ratio = np.moveaxis(
             peak_number_ratio, (0, 1, 2), (2, 1, 0))
-        # ic(peak_number_ratio.shape)
 
         frequency_table = [recording['RawUltrasound'].sampling_rate
                            for recording in recording_session
@@ -209,7 +207,6 @@ def main():
         with PdfPages('figures/peak_numbers2.pdf') as pdf:
             number_of_peaks = np.moveaxis(
                 number_of_peaks, (0, 1, 2), (1, 0, 2))
-            # ic(number_of_peaks.shape)
             publish_distribution_data(
                 number_of_peaks,
                 plot_categories=metrics,
