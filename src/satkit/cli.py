@@ -36,7 +36,7 @@ SATKIT Commandline main command.
 import click
 from click_default_group import DefaultGroup
 
-from satkit import satkit_click
+from satkit import cli_commands
 
 
 @click.group(
