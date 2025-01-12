@@ -31,152 +31,42 @@
 # citations.bib in BibTeX format.
 #
 
-# built-in modules
-import sys
-from pathlib import Path
-
 from matplotlib.backends.backend_pdf import PdfPages
 
 import numpy as np
 
-# For running a Qt GUI
-from PyQt6 import QtWidgets
-
-# local modules
 from satkit.annotations import (
-    add_peaks, count_number_of_peaks, nearest_neighbours_in_downsampling,
+    count_number_of_peaks, nearest_neighbours_in_downsampling,
     prominences_in_downsampling)
 from satkit.annotations.peaks import annotations_to_dataframe
-from satkit.argument_parser import SatkitArgumentParser
-import satkit.configuration as config
 
-from satkit.metrics import (
-    add_pd, add_spline_metric, downsample_metrics)
-from satkit.modalities import RawUltrasound, Splines
+from satkit.metrics import downsample_metrics
 from satkit.plot_and_publish import (
     publish_session_pdf, publish_distribution_data)
 from satkit.plot_and_publish.publish import publish_distribution_data_seaborn
-from satkit.qt_annotator import PdQtAnnotator
-from satkit.data_loader import load_data
-from satkit.data_processor import process_modalities
-from satkit.utility_functions import log_elapsed_time, set_logging_level
+from satkit.utility_functions import log_elapsed_time
 
 
 def main():
     """Simple main to run some publishing functions."""
 
-    # Arguments need to be parsed before setting up logging so that we have
-    # access to the verbosity argument.
-    cli = SatkitArgumentParser("SATKIT")
-
-    logger = set_logging_level(cli.args.verbose)
-
-    if cli.args.configuration_filename:
-        config.parse_config(cli.args.configuration_filename)
-    else:
-        config.parse_config()
-    configuration = config.Configuration(cli.args.configuration_filename)
-
-    recording_session = load_data(
-        Path(cli.args.load_path), configuration=configuration)
-
-    log_elapsed_time(logger)
-
-    # function_dict = {'pd':pd.pd, 'annd':annd.annd}
-    # pd_arguments = {
-    #     # 'norms': ['l0', 'l0.01', 'l0.1', 'l0.5', 'l1', 'l2',
-    #     # 'l4', 'l10', 'l_inf', 'd'],
-    #     'norms': ['l0', 'l0.5', 'l1', 'l2', 'l5', 'l_inf'],
-    #     'timesteps': [1, 2, 3, 4, 5, 6, 7],
-    #     # 'timesteps': [1],
-    #     'mask_images': False,
-    #     'pd_on_interpolated_data': False,
-    #     'release_data_memory': True,
-    #     'preload': True}
+    configuration, logger, session = initialise_satkit(
+        path=path, config_file=config_file
+    )
 
     data_run_config = configuration.data_run_config
-
-    function_dict = {}
-    if data_run_config.pd_arguments:
-        pd_arguments = data_run_config.pd_arguments
-        function_dict["PD"] = (
-            add_pd,
-            [RawUltrasound],
-            pd_arguments.model_dump()
-        )
-
-    if data_run_config.spline_metric_arguments:
-        spline_metric_args = data_run_config.spline_metric_arguments
-        function_dict["SplineMetric"] = (
-            add_spline_metric,
-            [Splines],
-            spline_metric_args.model_dump()
-        )
-
-    # TODO: turn these commented out bits into an example script of how to do
-    # things programmatically.
-    # spline_config = recording_session.config.spline_config
-    # spline_metric_arguments = {
-    #     'metrics': ['annd', 'mpbpd', 'modified_curvature', 'fourier'],
-    #     'timesteps': [3],
-    #     'exclude_points': spline_config.data_config.ignore_points,
-    #     'release_data_memory': False,
-    #     'preload': True}
-
-    # function_dict = {
-    #     'PD': (add_pd,
-    #            [RawUltrasound],
-    #            pd_arguments.model_dump()),
-
-    #     'SplineMetric': (add_spline_metric,
-    #                      [Splines],
-    #                      spline_metric_args.model_dump())  # ,
-    # }
-
-    process_modalities(recordings=recording_session.recordings,
-                       processing_functions=function_dict)
-
-    # if data_run_config.peaks is not None:
-    #     peaks, properties = find_gesture_peaks(
-    #         data, data_run_config.peaks)
-    # else:
-    #     peaks, properties = find_gesture_peaks(data)
-
-    # operation = Operation(processing_function=pd.add_pd,
-    #                       modality=RawUltrasound,
-    #                       arguments={'mask_images': True,
-    #                                  'pd_on_interpolated_data': True,
-    #                                  'release_data_memory': True,
-    #                                  'preload': True})
-    # multi_process_data(recordings, operation)
 
     if data_run_config.downsample:
         downsample_config = data_run_config.downsample
 
-        for recording in recording_session:
+        for recording in session:
             downsample_metrics(recording, **downsample_config.model_dump())
 
-    exclusion_list = ("water swallow", "bite plate")
     if data_run_config.peaks:
-        modality_pattern = data_run_config.peaks.modality_pattern
-        for recording in recording_session:
-            excluded = [prompt in recording.metadata.prompt
-                        for prompt in exclusion_list]
-            if any(excluded):
-                print(
-                    f"in satkit_publish.py: jumping over {recording.basename}")
-                continue
-            for modality_name in recording:
-                if modality_pattern in modality_name:
-                    add_peaks(
-                        recording[modality_name],
-                        configuration.data_run_config.peaks,
-                    )
-
         metrics = data_run_config.pd_arguments.norms
         downsampling_ratios = data_run_config.downsample.downsampling_ratios
         number_of_peaks = count_number_of_peaks(
-            recording_session.recordings,
+            session.recordings,
             metrics=metrics,
             downsampling_ratios=downsampling_ratios)
 
@@ -190,7 +80,7 @@ def main():
             peak_number_ratio, (0, 1, 2), (2, 1, 0))
 
         frequency_table = [recording['RawUltrasound'].sampling_rate
-                           for recording in recording_session
+                           for recording in session
                            if 'RawUltrasound' in recording]
         frequency = np.average(frequency_table)
         frequencies = [f"{frequency/(i+1):.0f}" for i in range(7)]
@@ -219,7 +109,7 @@ def main():
         with PdfPages('figures/peak_distances2.pdf') as pdf:
             publish_distribution_data(
                 nearest_neighbours_in_downsampling(
-                    recording_session.recordings,
+                    session.recordings,
                     metrics=metrics,
                     downsampling_ratios=downsampling_ratios,),
                 plot_categories=metrics,
@@ -233,7 +123,7 @@ def main():
         with PdfPages('figures/peak_prominences2.pdf') as pdf:
             publish_distribution_data(
                 prominences_in_downsampling(
-                    recording_session.recordings,
+                    session.recordings,
                     metrics=metrics,
                     downsampling_ratios=downsampling_ratios,),
                 plot_categories=metrics,
@@ -246,7 +136,7 @@ def main():
 
         with PdfPages('figures/seaborn_test.pdf') as pdf:
             dataframe = annotations_to_dataframe(
-                recording_session.recordings,
+                session.recordings,
                 modality_name=["RawUltrasound"],
                 metrics=metrics,
                 downsampling_ratios=downsampling_ratios,)
@@ -265,21 +155,10 @@ def main():
     # Plot the data into files if asked to.
     if cli.args.publish:
         publish_session_pdf(
-            recording_session=recording_session,
+            recording_session=session,
             timeseries_params=configuration.publish_config.timeseries_plot)
 
-    log_elapsed_time()
-
-    if cli.args.open_in_annotator:
-        # Get the GUI running.
-        app = QtWidgets.QApplication(sys.argv)
-        # Apparently the assignment to an unused variable is needed
-        # to avoid a segfault.
-        app.annotator = PdQtAnnotator(
-            recording_session=recording_session,
-            args=cli.args,
-            config=configuration)
-        sys.exit(app.exec_())
+    log_elapsed_time(logger)
 
 
 if __name__ == '__main__':
