@@ -1109,6 +1109,18 @@ wheels = [
 ]
 
 [[package]]
+name = "qbstyles"
+version = "0.1.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "matplotlib" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/56/65/b0a2f4b8ba3a110276c7d74b1e901f7ae4046b11ea2d493471a2e1858c73/qbstyles-0.1.4.tar.gz", hash = "sha256:03bf00a6c03559cb2d62cbebef4c105989e9addd64df79980c373fb17dce6d80", size = 7910 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/14/0c/d8221102dfb6090f0dae54b34d99eca4fb9bfaa880aaca39ca7741a55023/qbstyles-0.1.4-py3-none-any.whl", hash = "sha256:30aa0cafdd1445c421298e295c1f85bb6c09185fee70b1226b28fb3fbd628eb5", size = 10062 },
+]
+
+[[package]]
 name = "regex"
 version = "2024.11.6"
 source = { registry = "https://pypi.org/simple" }
@@ -1308,6 +1320,7 @@ dependencies = [
     { name = "pydicom" },
     { name = "pylint" },
     { name = "pyqt6" },
+    { name = "qbstyles" },
     { name = "scipy" },
     { name = "seaborn" },
     { name = "setuptools" },
@@ -1335,6 +1348,7 @@ requires-dist = [
     { name = "pydicom", specifier = ">=3.0.1" },
     { name = "pylint", specifier = ">=3.3.3" },
     { name = "pyqt6", specifier = ">=6.8.0" },
+    { name = "qbstyles", specifier = ">=0.1.4" },
     { name = "scipy", specifier = ">=1.15.0" },
     { name = "seaborn", specifier = ">=0.13.2" },
     { name = "setuptools", specifier = ">=75.7.0" },
