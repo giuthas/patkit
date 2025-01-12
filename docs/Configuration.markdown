@@ -134,6 +134,12 @@ auto_xlim: True
 default_font_size: 10
 ```
 
+Dark vs light mode. Accepted values are `dark`, `follow_system`, and `light`.
+```yaml
+gui_color_scheme: dark
+```
+
+
 # Local configuration
 
 All of the global parameters can be set locally by using the same file names
