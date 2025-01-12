@@ -53,36 +53,6 @@ SATKIT_CONFIG_DIR = "~/.satkit/"
 SATKIT_HISTORY_FILE = SATKIT_CONFIG_DIR + "history"
 
 
-class ImageMask(Enum):
-    """
-    Accepted image masking options in calculating PD.
-    """
-    TOP = "top"
-    BOTTOM = "bottom"
-    WHOLE = "whole"
-
-    def __str__(self):
-        return self.value
-
-
-class IntervalBoundary(Enum):
-    """
-    Begin and end for import type checking.
-    """
-    BEGIN = 'begin'
-    END = 'end'
-
-
-class IntervalCategory(Enum):
-    """
-    Rule-based interval selection categories for import type checking.
-    """
-    FIRST_NON_EMPTY = 'first non-empty'
-    LAST_NON_EMPTY = 'last non-empty'
-    FIRST_LABELED = 'first labeled'
-    LAST_LABELED = 'last labeled'
-
-
 class AnnotationType(Enum):
     """
     Enum to differentiate Modality annotation types
@@ -113,44 +83,45 @@ class Datasource(Enum):
     RASL = "RASL"
 
 
-class SplineDataColumn(Enum):
+class GuiStyle(Enum):
     """
-    Basic data columns that any Spline should reasonably have.
+    GUI styles.
 
-    Accepted values: 'r' with 'phi', 'x' with 'y', and 'confidence'
+    FOLLOW_SYSTEM means SATKIT will
     """
-    R = "r"
-    PHI = "phi"
-    X = "x"
-    Y = "y"
-    CONFIDENCE = "confidence"
+    DARK = "dark"
+    FOLLOW_SYSTEM = "follow_system"
+    LIGHT = "light"
 
 
-class SplineMetaColumn(Enum):
+class ImageMask(Enum):
     """
-    Basic metadata that any Spline should reasonably have.
+    Accepted image masking options in calculating PD.
+    """
+    TOP = "top"
+    BOTTOM = "bottom"
+    WHOLE = "whole"
 
-    Accepted values:
-    - ignore: marks a column to be ignored, unlike the others below, 
-        can be used several times
-    - id: used to identify the speaker, 
-        often contained in a csv field called 'family name'
-    - given names: appended to 'id' if not marked 'ignore'
-    - date and time: dat3 and time of recording
-    - prompt: prompt of recording, used to identify the recording with 'id'
-    - annotation label: optional field containing annotation information
-    - time in recording: timestamp of the frame this spline belongs to
-    - number of spline points: number of sample points in the spline used 
-        to parse the coordinates and possible confidence information    
+    def __str__(self):
+        return self.value
+
+
+class IntervalBoundary(Enum):
     """
-    IGNORE = "ignore"
-    ID = "id"
-    GIVEN_NAMES = "given names"
-    DATE_AND_TIME = "date and time"
-    PROMPT = "prompt"
-    ANNOTATION_LABEL = "annotation label"
-    TIME_IN_RECORDING = "time in recording"
-    NUMBER_OF_SPLINE_POINTS = "number of spline points"
+    Begin and end for import type checking.
+    """
+    BEGIN = 'begin'
+    END = 'end'
+
+
+class IntervalCategory(Enum):
+    """
+    Rule-based interval selection categories for import type checking.
+    """
+    FIRST_NON_EMPTY = 'first non-empty'
+    LAST_NON_EMPTY = 'last non-empty'
+    FIRST_LABELED = 'first labeled'
+    LAST_LABELED = 'last labeled'
 
 
 @dataclass(frozen=True)
@@ -198,7 +169,7 @@ class SourceSuffix:
     by pathlib and Path as such. Instead, do this
     ```python
     directory_path = Path(from_some_source)
-    directory_path/(name_string + SourceSuffix.AAA_ULTRA_META_OLD) 
+    directory_path/(name_string + SourceSuffix.AAA_ULTRA_META_OLD)
     ```
     """
     AAA_ULTRA = ".ult"
@@ -237,3 +208,45 @@ class SourceSuffix:
 #     elif satkit_type == Modality:
 #         suffix = ''
 #     return suffix
+
+
+class SplineDataColumn(Enum):
+    """
+    Basic data columns that any Spline should reasonably have.
+
+    Accepted values: 'r' with 'phi', 'x' with 'y', and 'confidence'
+    """
+    R = "r"
+    PHI = "phi"
+    X = "x"
+    Y = "y"
+    CONFIDENCE = "confidence"
+
+
+class SplineMetaColumn(Enum):
+    """
+    Basic metadata that any Spline should reasonably have.
+
+    Accepted values:
+    - ignore: marks a column to be ignored, unlike the others below, 
+        can be used several times
+    - id: used to identify the speaker, 
+        often contained in a csv field called 'family name'
+    - given names: appended to 'id' if not marked 'ignore'
+    - date and time: dat3 and time of recording
+    - prompt: prompt of recording, used to identify the recording with 'id'
+    - annotation label: optional field containing annotation information
+    - time in recording: timestamp of the frame this spline belongs to
+    - number of spline points: number of sample points in the spline used 
+        to parse the coordinates and possible confidence information    
+    """
+    IGNORE = "ignore"
+    ID = "id"
+    GIVEN_NAMES = "given names"
+    DATE_AND_TIME = "date and time"
+    PROMPT = "prompt"
+    ANNOTATION_LABEL = "annotation label"
+    TIME_IN_RECORDING = "time in recording"
+    NUMBER_OF_SPLINE_POINTS = "number of spline points"
+
+

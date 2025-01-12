@@ -65,3 +65,6 @@ auto_xlim: True
 
 # Font parameters
 default_font_size: 10
+
+# Dark vs light mode
+gui_style: dark

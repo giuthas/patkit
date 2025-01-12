@@ -46,7 +46,7 @@ from scipy.signal import ShortTimeFFT
 from scipy.signal.windows import kaiser
 
 from satkit.configuration import TimeseriesNormalisation
-from satkit.constants import AnnotationType
+from satkit.constants import AnnotationType, GuiStyle
 from satkit.data_structures import Modality
 from satkit.gui.boundary_animation import AnimatableBoundary
 from satkit.satgrid import SatTier
@@ -373,7 +373,9 @@ def plot_spectrogram2(
         cmap: str = 'Greys',
         ylim: tuple[float, float] = (0, 10000),
         ylabel: str = "Spectrogram",
-        picker=None) -> AxesImage:
+        picker=None,
+        mode: GuiStyle = GuiStyle.FOLLOW_SYSTEM,
+) -> AxesImage:
     """
     Plot a spectrogram with background noise removal.
 
@@ -403,6 +405,8 @@ def plot_spectrogram2(
         Y label, by default "Spectrogram"
     picker : _type_, optional
         The picker for selecting points, by default None
+    mode : GuiStyle, optional
+        Dark or light mode plot, by default GuiStyle.FOLLOW_SYSTEM
 
     Returns
     -------
@@ -425,6 +429,18 @@ def plot_spectrogram2(
     spectrogram = 20*np.log(abs(spectrogram))
     # Make the median white/background colour.
     min_value = np.median(spectrogram)
+
+    match mode:
+        case GuiStyle.DARK:
+            cmap = "Greys_r"
+        case GuiStyle.LIGHT:
+            cmap = "Greys"
+        case GuiStyle.FOLLOW_SYSTEM:
+            _logger.warning("GuiStyle FOLLOW_SYSTEM encountered in plot.")
+            _logger.warning(
+                "Can't actually deal with following the system in plot, "
+                "so just going dark.")
+
     image = axes.imshow(spectrogram, origin='lower', aspect='auto',
                         extent=extent, cmap=cmap, vmin=min_value,
                         picker=picker)

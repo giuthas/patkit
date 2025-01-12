@@ -56,6 +56,7 @@ from PyQt6.QtWidgets import QFileDialog
 from PyQt6.uic import loadUiType
 from qbstyles import mpl_style
 
+from satkit.constants import GuiStyle
 from satkit.data_structures import Session
 from satkit.configuration import (
     Configuration
@@ -84,7 +85,6 @@ from satkit.ui_callbacks import UiCallbacks
 Ui_MainWindow, QMainWindow = loadUiType('src/satkit/gui/qt_annotator.ui')
 
 _logger = logging.getLogger('satkit.qt_annotator')
-mpl_style(dark=True)
 
 
 def setup_qtannotator_ui_callbacks():
@@ -142,6 +142,23 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         self._add_annotations()
 
         self.pickle_filename = pickle_filename
+
+        match config.gui_config.gui_style:
+            case GuiStyle.DARK:
+                mpl_style(dark=True)
+            case GuiStyle.LIGHT:
+                mpl_style(dark=False)
+            case GuiStyle.FOLLOW_SYSTEM:
+                _logger.warning(
+                    "Don't yet know how to follow system with GUI style, "
+                    "so just going dark and setting mode to dark.")
+                config.gui_config.gui_style = GuiStyle.DARK
+                mpl_style(dark=True)
+            case _:
+                _logger.warning(
+                    "Unrecognised gui style %s.",
+                    config.gui_config.gui_style)
+
 
         #
         # Menu actions and shortcuts
@@ -545,7 +562,9 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
                         waveform=wav,
                         ylim=ylim,
                         sampling_frequency=audio.sampling_rate,
-                        extent_on_x=(wav_time[0], wav_time[-1]))
+                        extent_on_x=(wav_time[0], wav_time[-1]),
+                        mode=self.gui_config.gui_style
+                    )
                 # TODO: figure out if this should be just completely removed.
                 # looks like some old experiment.
                 # add `image =` to spectrogram2 to make this work:

@@ -49,7 +49,7 @@ import numpy as np
 from pydantic import conlist
 
 from satkit.constants import (
-    CoordinateSystems, Datasource,
+    CoordinateSystems, Datasource, GuiStyle,
     IntervalBoundary, IntervalCategory,
     SplineDataColumn, SplineMetaColumn
 )
@@ -449,6 +449,7 @@ class GuiConfig(UpdatableBaseModel):
     xlim: FloatPair | str | None = None
     auto_xlim: bool | None = None
     default_font_size: int
+    gui_style: GuiStyle = GuiStyle.FOLLOW_SYSTEM
 
     def plotted_modality_names(self) -> set[str]:
         """
