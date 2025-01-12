@@ -58,8 +58,6 @@ def open_in_annotator(path: Path, config_file: Path | None):
     \b
     PATH to the data - maybe be a file or a directory.
     CONFIG_FILE configuration .yaml file.
-
-    NOT IMPLEMENTED YET.
     """
     # TODO 0.14: remove the dependency on argparse
 
@@ -85,6 +83,35 @@ def interact(path: Path, config_file: Path | None):
     \b
     PATH to the data - maybe be a file or a directory.
     CONFIG_FILE configuration .yaml file.
+    """
+    configuration, logger, session = initialise_satkit(
+        path=path, config_file=config_file
+    )
+
+    run_interpreter(session=session, configuration=configuration)
+
+
+@click.command()
+@click.argument(
+    "path",
+    type=click.Path(exists=True, dir_okay=True, file_okay=True), )
+@click.argument(
+    "config_file",
+    type=click.Path(exists=True, dir_okay=False, file_okay=True),
+    required=False,
+)
+@click.argument(
+    "output_dir",
+    type=click.Path(dir_okay=True, file_okay=False),
+    required=False,
+)
+def publish(path: Path, config_file: Path | None, output_dir: Path | None):
+    """
+    Publish plots from the data in PATH.
+
+    \b
+    PATH to the data - maybe be a file or a directory.
+    CONFIG_FILE configuration .yaml file.
 
     NOT IMPLEMENTED YET.
     """
@@ -92,6 +119,5 @@ def interact(path: Path, config_file: Path | None):
         path=path, config_file=config_file
     )
 
-    run_interpreter(session=session, configuration=configuration)
 
 
