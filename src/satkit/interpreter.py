@@ -39,7 +39,7 @@ import readline
 import rlcompleter
 
 from satkit.configuration import Configuration
-from satkit.constants import SATKIT_HISTORY_FILE
+from satkit.constants import SATKIT_CONFIG_DIR, SATKIT_HISTORY_FILE
 from satkit.data_structures import Session
 
 
@@ -65,7 +65,9 @@ def run_interpreter(session: Session, configuration: Configuration):
     readline.parse_and_bind("bind ^I rl_complete")
 
     python_history_file = os.path.expanduser(SATKIT_HISTORY_FILE)
-    print(python_history_file)
+    config_dir = os.path.expanduser(SATKIT_CONFIG_DIR)
+    if not os.path.exists(config_dir):
+        os.makedirs(config_dir)
     if os.path.exists(python_history_file):
         readline.read_history_file(python_history_file)
     atexit.register(readline.write_history_file, python_history_file)
