@@ -449,7 +449,7 @@ class GuiConfig(UpdatableBaseModel):
     xlim: FloatPair | str | None = None
     auto_xlim: bool | None = None
     default_font_size: int
-    gui_color_scheme: GuiColorScheme = GuiColorScheme.FOLLOW_SYSTEM
+    color_scheme: GuiColorScheme = GuiColorScheme.FOLLOW_SYSTEM
 
     def plotted_modality_names(self) -> set[str]:
         """

@@ -136,7 +136,7 @@ default_font_size: 10
 
 Dark vs light mode. Accepted values are `dark`, `follow_system`, and `light`.
 ```yaml
-gui_color_scheme: dark
+color_scheme: dark
 ```
 
 

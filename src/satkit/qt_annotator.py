@@ -51,7 +51,7 @@ from matplotlib.widgets import MultiCursor
 from PyQt6 import QtWidgets
 # GUI functionality
 from PyQt6.QtCore import QCoreApplication, Qt
-from PyQt6.QtGui import QIntValidator, QKeySequence, QShortcut
+from PyQt6.QtGui import QIntValidator, QKeySequence, QShortcut, QStyleHints
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.uic import loadUiType
 from qbstyles import mpl_style
@@ -143,21 +143,30 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
 
         self.pickle_filename = pickle_filename
 
-        match config.gui_config.gui_color_scheme:
+        match config.gui_config.color_scheme:
             case GuiColorScheme.DARK:
                 mpl_style(dark=True)
             case GuiColorScheme.LIGHT:
                 mpl_style(dark=False)
             case GuiColorScheme.FOLLOW_SYSTEM:
-                _logger.warning(
-                    "Don't yet know how to follow system with GUI color scheme, "
-                    "so just going dark and setting mode to dark.")
-                config.gui_config.gui_color_scheme = GuiColorScheme.DARK
-                mpl_style(dark=True)
+                match QStyleHints.colorScheme():
+                    case Qt.ColorScheme.Dark:
+                        mpl_style(dark=True)
+                        config.gui_config.color_scheme = GuiColorScheme.DARK
+                    case Qt.ColorScheme.Light:
+                        mpl_style(dark=True)
+                        config.gui_config.color_scheme = GuiColorScheme.LIGHT
+                    case Qt.ColorScheme.Unknown:
+                        mpl_style(dark=True)
+                        _logger.warning(
+                            "Unkown system level color scheme. "
+                            "So just setting mode to dark.")
+                        config.gui_config.color_scheme = GuiColorScheme.DARK
+                        mpl_style(dark=True)
             case _:
                 _logger.warning(
                     "Unrecognised gui style %s.",
-                    config.gui_config.gui_color_scheme)
+                    config.gui_config.color_scheme)
 
 
         #
@@ -563,7 +572,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
                         ylim=ylim,
                         sampling_frequency=audio.sampling_rate,
                         extent_on_x=(wav_time[0], wav_time[-1]),
-                        mode=self.gui_config.gui_color_scheme
+                        mode=self.gui_config.color_scheme
                     )
                 # TODO: figure out if this should be just completely removed.
                 # looks like some old experiment.
