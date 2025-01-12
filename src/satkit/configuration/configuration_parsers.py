@@ -367,7 +367,7 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
                 Optional("xlim"): FixedSeq([Float(), Float()]),
                 Optional('auto_xlim', default=False): Bool(),
                 "default_font_size": Int(),
-                Optional("gui_style", default="follow system"): Str(),
+                Optional("gui_color_scheme", default="follow_system"): Str(),
             })
             try:
                 _raw_gui_params_dict = load(yaml_file.read(), schema)

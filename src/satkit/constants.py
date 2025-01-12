@@ -83,7 +83,7 @@ class Datasource(Enum):
     RASL = "RASL"
 
 
-class GuiStyle(Enum):
+class GuiColorScheme(Enum):
     """
     GUI styles.
 
