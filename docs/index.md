@@ -49,7 +49,8 @@ long run than gains in execution speed.
   - [Guidelines for Data Directory Structure](DirectoryStructure.markdown)
   - Importing and Exporting
   - [Saving and Loading](Saving_and_loading.markdown)
-- Configuration
+- [Configuration files](Configuration.markdown)
+  - Command history
   - Global configuration
     - General parameters
     - GUI parameters
