@@ -51,7 +51,7 @@ from matplotlib.widgets import MultiCursor
 from PyQt6 import QtWidgets
 # GUI functionality
 from PyQt6.QtCore import QCoreApplication, Qt
-from PyQt6.QtGui import QIntValidator, QKeySequence, QShortcut, QStyleHints
+from PyQt6.QtGui import QGuiApplication, QIntValidator, QKeySequence, QShortcut, QStyleHints
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.uic import loadUiType
 from qbstyles import mpl_style
@@ -149,17 +149,17 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
             case GuiColorScheme.LIGHT:
                 mpl_style(dark=False)
             case GuiColorScheme.FOLLOW_SYSTEM:
-                match QStyleHints.colorScheme():
+                match QGuiApplication.styleHints().colorScheme():
                     case Qt.ColorScheme.Dark:
                         mpl_style(dark=True)
                         config.gui_config.color_scheme = GuiColorScheme.DARK
                     case Qt.ColorScheme.Light:
                         mpl_style(dark=True)
                         config.gui_config.color_scheme = GuiColorScheme.LIGHT
-                    case Qt.ColorScheme.Unknown:
+                    case _:
                         mpl_style(dark=True)
                         _logger.warning(
-                            "Unkown system level color scheme. "
+                            "Unknown system level color scheme. "
                             "So just setting mode to dark.")
                         config.gui_config.color_scheme = GuiColorScheme.DARK
                         mpl_style(dark=True)
