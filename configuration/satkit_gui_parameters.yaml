@@ -67,4 +67,4 @@ auto_xlim: True
 default_font_size: 10
 
 # Dark vs light mode
-color_scheme: dark
+color_scheme: follow_system
