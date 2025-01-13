@@ -58,8 +58,6 @@ def run_cli(
 
     By default, Satkit will open the given path in the annotator GUI.
     """
-    print("in run_cli")
-    # satkit_click.open_in_annotator(path, config_file)
 
 
 # noinspection PyTypeChecker
