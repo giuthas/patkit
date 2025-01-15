@@ -59,7 +59,7 @@ from qbstyles import mpl_style
 from satkit.constants import GuiColorScheme
 from satkit.data_structures import Session
 from satkit.configuration import (
-    Configuration
+    Configuration, GuiConfig
 )
 from satkit.export import (
     export_aggregate_image_and_meta,
@@ -145,29 +145,30 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
 
         match config.gui_config.color_scheme:
             case GuiColorScheme.DARK:
-                mpl_style(dark=True)
+                self.change_to_dark()
             case GuiColorScheme.LIGHT:
-                mpl_style(dark=False)
+                self.change_to_light()
             case GuiColorScheme.FOLLOW_SYSTEM:
                 match QGuiApplication.styleHints().colorScheme():
                     case Qt.ColorScheme.Dark:
-                        mpl_style(dark=True)
                         config.gui_config.color_scheme = GuiColorScheme.DARK
+                        self.change_to_dark()
                     case Qt.ColorScheme.Light:
-                        mpl_style(dark=True)
                         config.gui_config.color_scheme = GuiColorScheme.LIGHT
+                        self.change_to_light()
                     case _:
-                        mpl_style(dark=True)
+                        config.gui_config.color_scheme = GuiColorScheme.DARK
+                        self.change_to_dark()
                         _logger.warning(
                             "Unknown system level color scheme. "
                             "So just setting mode to dark.")
-                        config.gui_config.color_scheme = GuiColorScheme.DARK
-                        mpl_style(dark=True)
             case _:
                 _logger.warning(
                     "Unrecognised gui style %s.",
                     config.gui_config.color_scheme)
 
+        QGuiApplication.styleHints().colorSchemeChanged.connect(
+            self.on_color_scheme_changed)
 
         #
         # Menu actions and shortcuts
@@ -316,6 +317,12 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         self.show()
         self.ultra_canvas.draw()
         self.update()
+
+    def change_to_dark(self):
+        mpl_style(dark=True)
+
+    def change_to_light(self):
+        mpl_style(dark=False)
 
     @property
     def current(self):
@@ -1247,6 +1254,17 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         """
         if event.key() == Qt.Key.Key_Shift:
             self.shift_is_held = False
+
+    def on_color_scheme_changed(self, scheme: Qt.ColorScheme):
+        """
+        Call back to change from light to dark/vice versa with the system.
+        """
+        if scheme == Qt.ColorScheme.Light:
+            print(scheme)
+            self.change_to_light()
+        else:
+            print(scheme)
+            self.change_to_dark()
 
 
 def run_annotator(
