@@ -51,16 +51,16 @@ from matplotlib.widgets import MultiCursor
 from PyQt6 import QtWidgets
 # GUI functionality
 from PyQt6.QtCore import QCoreApplication, Qt
-from PyQt6.QtGui import QGuiApplication, QIntValidator, QKeySequence, QShortcut, QStyleHints
+from PyQt6.QtGui import (
+    QGuiApplication, QIntValidator, QKeySequence, QShortcut
+)
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.uic import loadUiType
 from qbstyles import mpl_style
 
 from satkit.constants import GuiColorScheme
 from satkit.data_structures import Session
-from satkit.configuration import (
-    Configuration, GuiConfig
-)
+from satkit.configuration import Configuration
 from satkit.export import (
     export_aggregate_image_and_meta,
     export_distance_matrix_and_meta,
@@ -319,9 +319,11 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         self.update()
 
     def change_to_dark(self):
+        """Activate dark mode."""
         mpl_style(dark=True)
 
     def change_to_light(self):
+        """Activate light mode."""
         mpl_style(dark=False)
 
     @property
