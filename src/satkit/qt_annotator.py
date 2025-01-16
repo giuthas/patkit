@@ -1262,10 +1262,8 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         Call back to change from light to dark/vice versa with the system.
         """
         if scheme == Qt.ColorScheme.Light:
-            print(scheme)
             self.change_to_light()
         else:
-            print(scheme)
             self.change_to_dark()
 
 

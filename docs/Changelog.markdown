@@ -42,7 +42,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Added
 
-- 
+- Dark/Light mode support. See bugs below, though.
 
 ### Changed and Refactored
 
@@ -65,10 +65,15 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 - One of the next updates - probably the next one - will move from centralised
   single config system to per-dataset config system.
-- 
 - Another soon to happen change is the expansion of the classes derived from 
   DataAggregator. Recording will be split to Source and Trial, and DataSet added
   as a class that contains Sessions.
+
+### Bugs
+
+- Switching the operating system between dark/light mode while the annotator is
+  running may or may not update the plots, and may even break them. However,
+  restarting the annotator will update the plots.
 
 ## [0.13.0] 2025-01-07
 
