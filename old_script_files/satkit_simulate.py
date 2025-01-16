@@ -87,7 +87,7 @@ def main() -> None:
     annd_call = partial(spline_nnd_metric,
                         metric=SplineNNDsEnum.ANND,
                         timestep=1,
-                        notice_base="ISSP 2024 simulation: "
+                        notice_base="Ultrafest 2024 simulation: "
                         )
     comparisons = [
         Comparison(first='æ', second='æ', perturbed='second'),
@@ -117,7 +117,7 @@ def main() -> None:
 
     mci_call = partial(spline_shape_metric,
                        metric=SplineShapesEnum.MODIFIED_CURVATURE,
-                       notice_base="ISSP 2024 simulation: "
+                       notice_base="Ultrafest 2024 simulation: "
                        )
     mci_results = calculate_metric_series_for_contours(
         metric=mci_call,
