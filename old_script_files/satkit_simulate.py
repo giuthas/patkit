@@ -70,6 +70,7 @@ def main() -> None:
     Main to create plots for the Ultrafest 2024 paper.
     """
     # TODO 0.14: move this to config, remove references to ultrafest 2024
+    # TODO 0.14: SETUP
     save_path = Path("ultrafest2024/")
     if not save_path.exists():
         save_path.mkdir()
@@ -105,6 +106,9 @@ def main() -> None:
         ComparisonSoundPair(first='æ', second='i'),
         ComparisonSoundPair(first='i', second='æ'),
     ]
+
+
+    # TODO 0.14: SIMULATION RUN
     annd_results = calculate_metric_series_for_comparisons(
         metric=annd_call,
         contours=contours,
@@ -129,6 +133,7 @@ def main() -> None:
         contours=contours,
     )
 
+    # TODO 0.14: RESULTS
     with PdfPages(save_path/"annd_contours.pdf") as pdf:
         distance_metric_rays_on_contours(contours=contours,
                                          metrics=annd_results,
