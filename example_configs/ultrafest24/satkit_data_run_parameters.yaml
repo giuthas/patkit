@@ -3,53 +3,40 @@
 # available and represented by None. If you want to specify current working
 # directory, use '.'
 
-flags:
-  detect_beep: True # Should onset beep detection be run?
-  test: False # Run on only the first 10 recordings.
+# This is where SATKIT will save results of data processing. 
+output_directory: "ultrafest2024/"
+logging_notice_base: "Ultrafest 2024 simulation: "
 
-# This is where SATKIT will save results of data processing. Please note that
-# once exclusion list or similar things can be edited in SATKIT, they will by
-# default be saved at their original locations.
-output_directory:
+sounds: 
+  - 'æ'
+  - 'i'
+    
+perturbations: 
+  - -2 
+  - -1 
+  - -.5 
+  - .5 
+  - 1 
+  - 2
 
-aggregate_image_arguments:
-  metrics:
-    - 'mean'
-  run_on_interpolated_data: False
-  preload: True
-  release_data_memory: True
+spline_nnd_params:
+  metric: "annd"
+  timestep: 1
+  sound_pair_params:
+    sounds:
+      - 'æ'
+      - 'i'
+    perturbed:
+      - 'second'
+      - 'first'
+    combinations: full_cartesian # only_cross, only_self
 
-pd_arguments:
-  'norms':
-    - 'l1'
-    - 'l2'
-  'timesteps':
-    - 1
-  mask_images: False
-  pd_on_interpolated_data: False
-  release_data_memory: True
-  preload: True
+spline_shape_params:
+  metric: 'mci'
 
-#spline_metric_arguments:
-#  'metrics':
-#    - 'annd'
-#    - 'mpbpd'
-#    - 'modified_curvature'
-#    - 'fourier'
-#  'timesteps':
-#    - 3
-#  'release_data_memory': False
-#  'preload': True
-
-#distance_matrix_arguments:
-#  exclusion_list: "alignment/data/satkit_exclusion_list.yaml"
-#  metrics:
-#    - 'mean_squared_error'
-#  preload: True
-#  release_data_memory: False
-##  slice_max_step: 6
-#  slice_step_to: 6
-#  sort: True
-#  sort_criteria:
-#    - 'i'
-#    - 'o'
+plotting_params:
+  sound_pair_params:
+    sounds:
+      - 'æ'
+      - 'i'
+    combinations: full_cartesian # only_cross, only_self
