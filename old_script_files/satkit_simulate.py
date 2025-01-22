@@ -71,11 +71,11 @@ def main() -> None:
     """
     # TODO 0.14: move this to config, remove references to ultrafest 2024
     # TODO 0.14: SETUP
-    annd_call, comparisons, contours, perturbations, save_path, sound_pairs = setup_simulation()
+    comparisons, contours, perturbations, save_path, sound_pairs = setup_simulation()
 
     # TODO 0.14: SIMULATION RUN
     annd_baselines, annd_results, mci_baselines, mci_results = run_simulation(
-        annd_call, comparisons, contours, perturbations)
+        comparisons, contours, perturbations)
 
     # TODO 0.14: RESULTS
     with PdfPages(save_path/"annd_contours.pdf") as pdf:
@@ -126,8 +126,16 @@ def main() -> None:
         # plt.tight_layout()
         pdf.savefig(plt.gcf())
 
+    # make_demonstration_contour_plot(
+    #     contour_1=contours['æ'], contour_2=contours['i'])
 
-def run_simulation(annd_call, comparisons, contours, perturbations):
+
+def run_simulation(comparisons, contours, perturbations):
+    annd_call = partial(spline_nnd_metric,
+                        metric=SplineNNDsEnum.ANND,
+                        timestep=1,
+                        notice_base="Ultrafest 2024 simulation: "
+                        )
     annd_results = calculate_metric_series_for_comparisons(
         metric=annd_call,
         contours=contours,
@@ -137,6 +145,7 @@ def run_simulation(annd_call, comparisons, contours, perturbations):
     )
     annd_baselines = get_distance_metric_baselines(
         metric=annd_call, contours=contours)
+
     mci_call = partial(spline_shape_metric,
                        metric=SplineShapesEnum.MODIFIED_CURVATURE,
                        notice_base="Ultrafest 2024 simulation: "
@@ -161,15 +170,8 @@ def setup_simulation():
     contours = {
         sound: generate_contour(sound) for sound in sounds
     }
-    # make_demonstration_contour_plot(
-    #     contour_1=contours['æ'], contour_2=contours['i'])
     perturbations = [-2, -1, -.5, .5, 1, 2]
-    # perturbations = [-2, -1, -.5, -.25, .25, .5, 1, 2]
-    annd_call = partial(spline_nnd_metric,
-                        metric=SplineNNDsEnum.ANND,
-                        timestep=1,
-                        notice_base="Ultrafest 2024 simulation: "
-                        )
+
     comparisons = [
         Comparison(first='æ', second='æ', perturbed='second'),
         Comparison(first='æ', second='æ', perturbed='first'),
@@ -186,7 +188,7 @@ def setup_simulation():
         ComparisonSoundPair(first='æ', second='i'),
         ComparisonSoundPair(first='i', second='æ'),
     ]
-    return annd_call, comparisons, contours, perturbations, save_path, sound_pairs
+    return comparisons, contours, perturbations, save_path, sound_pairs
 
 
 if __name__ == '__main__':
