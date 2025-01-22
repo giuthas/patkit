@@ -24,9 +24,9 @@ because the SATKIT interactive interpreter is actually just a Python interpreter
 with SATKIT data preloaded. However, this is only recommended if you know what
 you are doing.
 
-# Global configuration
+## Global configuration
 
-## General parameters
+### General parameters
 
 These are set globally so that they may be omitted locally. They can be
 overridden locally though and should be when, for example, different parts of
@@ -40,11 +40,11 @@ epsilon: 0.00001
 mains_frequency: 50
 ```
 
-## GUI parameters
+### GUI parameters
 
 Most of these parameters deal with data display.
 
-### General parameters for axes in the main plot
+#### General parameters for axes in the main plot
 
 Height ratio of data display area vs textgrid tier display area. This does not
 control directly the height of individual data displays nor individual tier
@@ -68,7 +68,7 @@ general_axes_params:
     sharex: True
 ```
 
-### Axes definitions for the main plot
+#### Axes definitions for the main plot
 
 ```yaml
 data_axes:
@@ -105,7 +105,7 @@ data_axes:
   #   sharex: False
 ```
 
-### TextGrid display parameters
+#### TextGrid display parameters
 
 ```yaml
 # Tiers drawn on the data axes. Ignored if not found.  
@@ -117,7 +117,7 @@ pervasive_tiers:
   - phoneme
 ```
 
-### X (time) axis parameters
+#### X (time) axis parameters
 
 ```yaml
 # Initial limits for x-axis
@@ -127,7 +127,7 @@ pervasive_tiers:
 auto_xlim: True
 ```
 
-### General display style parameters
+#### General display style parameters
 
 ```yaml
 # Font parameters
@@ -140,18 +140,74 @@ color_scheme: dark
 ```
 
 
-# Local configuration
+## Local configuration
 
 All of the global parameters can be set locally by using the same file names
 within the data directories. In addition, [Data processing
 parameters](#data-processing-parameters) are only set locally with the data.
 They may -- however -- be overridden for parts of the data.
 
-## GUI parameters
+### GUI parameters
 
 It is especially useful to override global GUI parameters at the data to
 guarantee a given set of display settings is used for segmentation or other
 analysis.
 
-## Data processing parameters
+### Data processing parameters
+
+
+### Simulation parameters
+
+
+
+```yaml
+output_directory: "ultrafest2024/"
+logging_notice_base: "Ultrafest 2024 simulation: "
+```
+
+```yaml
+sounds: 
+  - 'æ'
+  - 'i'
+```
+
+```yaml 
+perturbations: 
+  - -2 
+  - -1 
+  - -.5 
+  - .5 
+  - 1 
+  - 2
+```
+
+```yaml
+spline_nnd_params:
+  metric: "annd"
+  timestep: 1
+  sound_pair_params:
+    sounds:
+      - 'æ'
+      - 'i'
+    perturbed:
+      - 'second'
+      - 'first'
+    combinations: full_cartesian # only_cross, only_self
+```
+
+```yaml
+spline_shape_params:
+  metric: 'mci'
+```
+
+```yaml
+plotting_params:
+  sound_pair_params:
+    sounds:
+      - 'æ'
+      - 'i'
+    combinations: full_cartesian # only_cross, only_self
+```
+
+
 
