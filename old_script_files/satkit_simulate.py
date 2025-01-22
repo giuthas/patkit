@@ -191,5 +191,17 @@ def setup_simulation():
     return comparisons, contours, perturbations, save_path, sound_pairs
 
 
+def generate_sound_pairs(
+         sounds: list[str]
+) -> list[ComparisonSoundPair] | list[Comparison]:
+    sound_pairs = [
+        ComparisonSoundPair(first='æ', second='æ'),
+        ComparisonSoundPair(first='i', second='i'),
+        ComparisonSoundPair(first='æ', second='i'),
+        ComparisonSoundPair(first='i', second='æ'),
+    ]
+    return sound_pairs
+
+
 if __name__ == '__main__':
     main()
