@@ -71,67 +71,11 @@ def main() -> None:
     """
     # TODO 0.14: move this to config, remove references to ultrafest 2024
     # TODO 0.14: SETUP
-    save_path = Path("ultrafest2024/")
-    if not save_path.exists():
-        save_path.mkdir()
-
-    sounds = ['æ', 'i']
-    contours = {
-        sound: generate_contour(sound) for sound in sounds
-    }
-
-    # make_demonstration_contour_plot(
-    #     contour_1=contours['æ'], contour_2=contours['i'])
-
-    perturbations = [-2, -1, -.5, .5, 1, 2]
-    # perturbations = [-2, -1, -.5, -.25, .25, .5, 1, 2]
-    annd_call = partial(spline_nnd_metric,
-                        metric=SplineNNDsEnum.ANND,
-                        timestep=1,
-                        notice_base="Ultrafest 2024 simulation: "
-                        )
-    comparisons = [
-        Comparison(first='æ', second='æ', perturbed='second'),
-        Comparison(first='æ', second='æ', perturbed='first'),
-        Comparison(first='i', second='i', perturbed='second'),
-        Comparison(first='i', second='i', perturbed='first'),
-        Comparison(first='æ', second='i', perturbed='second'),
-        Comparison(first='æ', second='i', perturbed='first'),
-        Comparison(first='i', second='æ', perturbed='second'),
-        Comparison(first='i', second='æ', perturbed='first'),
-    ]
-    sound_pairs = [
-        ComparisonSoundPair(first='æ', second='æ'),
-        ComparisonSoundPair(first='i', second='i'),
-        ComparisonSoundPair(first='æ', second='i'),
-        ComparisonSoundPair(first='i', second='æ'),
-    ]
-
+    annd_call, comparisons, contours, perturbations, save_path, sound_pairs = setup_simulation()
 
     # TODO 0.14: SIMULATION RUN
-    annd_results = calculate_metric_series_for_comparisons(
-        metric=annd_call,
-        contours=contours,
-        comparisons=comparisons,
-        perturbations=perturbations,
-        interleave=True
-    )
-    annd_baselines = get_distance_metric_baselines(
-        metric=annd_call, contours=contours)
-
-    mci_call = partial(spline_shape_metric,
-                       metric=SplineShapesEnum.MODIFIED_CURVATURE,
-                       notice_base="Ultrafest 2024 simulation: "
-                       )
-    mci_results = calculate_metric_series_for_contours(
-        metric=mci_call,
-        contours=contours,
-        perturbations=perturbations
-    )
-    mci_baselines = get_shape_metric_baselines(
-        metric=mci_call,
-        contours=contours,
-    )
+    annd_baselines, annd_results, mci_baselines, mci_results = run_simulation(
+        annd_call, comparisons, contours, perturbations)
 
     # TODO 0.14: RESULTS
     with PdfPages(save_path/"annd_contours.pdf") as pdf:
@@ -181,6 +125,68 @@ def main() -> None:
         # plt.show()
         # plt.tight_layout()
         pdf.savefig(plt.gcf())
+
+
+def run_simulation(annd_call, comparisons, contours, perturbations):
+    annd_results = calculate_metric_series_for_comparisons(
+        metric=annd_call,
+        contours=contours,
+        comparisons=comparisons,
+        perturbations=perturbations,
+        interleave=True
+    )
+    annd_baselines = get_distance_metric_baselines(
+        metric=annd_call, contours=contours)
+    mci_call = partial(spline_shape_metric,
+                       metric=SplineShapesEnum.MODIFIED_CURVATURE,
+                       notice_base="Ultrafest 2024 simulation: "
+                       )
+    mci_results = calculate_metric_series_for_contours(
+        metric=mci_call,
+        contours=contours,
+        perturbations=perturbations
+    )
+    mci_baselines = get_shape_metric_baselines(
+        metric=mci_call,
+        contours=contours,
+    )
+    return annd_baselines, annd_results, mci_baselines, mci_results
+
+
+def setup_simulation():
+    save_path = Path("ultrafest2024/")
+    if not save_path.exists():
+        save_path.mkdir()
+    sounds = ['æ', 'i']
+    contours = {
+        sound: generate_contour(sound) for sound in sounds
+    }
+    # make_demonstration_contour_plot(
+    #     contour_1=contours['æ'], contour_2=contours['i'])
+    perturbations = [-2, -1, -.5, .5, 1, 2]
+    # perturbations = [-2, -1, -.5, -.25, .25, .5, 1, 2]
+    annd_call = partial(spline_nnd_metric,
+                        metric=SplineNNDsEnum.ANND,
+                        timestep=1,
+                        notice_base="Ultrafest 2024 simulation: "
+                        )
+    comparisons = [
+        Comparison(first='æ', second='æ', perturbed='second'),
+        Comparison(first='æ', second='æ', perturbed='first'),
+        Comparison(first='i', second='i', perturbed='second'),
+        Comparison(first='i', second='i', perturbed='first'),
+        Comparison(first='æ', second='i', perturbed='second'),
+        Comparison(first='æ', second='i', perturbed='first'),
+        Comparison(first='i', second='æ', perturbed='second'),
+        Comparison(first='i', second='æ', perturbed='first'),
+    ]
+    sound_pairs = [
+        ComparisonSoundPair(first='æ', second='æ'),
+        ComparisonSoundPair(first='i', second='i'),
+        ComparisonSoundPair(first='æ', second='i'),
+        ComparisonSoundPair(first='i', second='æ'),
+    ]
+    return annd_call, comparisons, contours, perturbations, save_path, sound_pairs
 
 
 if __name__ == '__main__':
