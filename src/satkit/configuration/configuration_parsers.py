@@ -185,6 +185,7 @@ def load_main_config(filepath: Path | str | None = None) -> YAML:
                 "mains_frequency": Float(),
                 "gui_parameter_file": PathValidator(),
                 Optional("data_run_parameter_file"): PathValidator(),
+                Optional("simulation_parameter_file"): PathValidator(),
                 Optional("publish_parameter_file"): PathValidator()
             })
             try:
@@ -212,7 +213,7 @@ def load_run_params(filepath: Path | str | None = None) -> YAML:
     exist, report this and exit.
     """
     if filepath is None:
-        print("Fatal error in loading run parameters: filepath is None")
+        print("Fatal error in loading data run parameters: filepath is None")
         sys.exit()
     elif isinstance(filepath, str):
         filepath = Path(filepath)
@@ -310,6 +311,69 @@ def load_run_params(filepath: Path | str | None = None) -> YAML:
             data_run_params['peaks']['normalisation'] = (
                 TimeseriesNormalisation.build('none'))
     return _raw_data_run_params_dict
+
+
+def load_simulation_params(filepath: Path | str) -> YAML:
+    """
+
+
+    Parameters
+    ----------
+    filepath :
+
+    Returns
+    -------
+    YAML
+        The parsed simulation parameters as a YAML object.
+    """
+    if isinstance(filepath, str):
+        filepath = Path(filepath)
+
+    _logger.info("Loading simulation configuration from %s.",
+                 str(filepath))
+
+    sound_pair_params = Map({
+        "sounds": Seq(Str()),
+        Optional("perturbed"): Seq(Str()),
+        "combinations": Str,
+    })
+
+    schema = Map({
+        "output_directory": PathValidator(),
+        Optional("logging_notice_base"): Str(),
+        "sounds": Seq(Str()),
+        "perturbations": Seq(Float()),
+        "spline_nnd_params": Map({
+            "metric": Str(),
+            "timestep": Int(),
+            "sound_pair_params": sound_pair_params,
+        }),
+        "spline_shape_params": Map({
+            "metric": Str(),
+        }),
+        "plotting_params": Map({
+            "sound_pair_params": sound_pair_params,
+        })
+    })
+
+    if filepath.is_file():
+        with closing(
+                open(filepath, 'r', encoding=DEFAULT_ENCODING)) as yaml_file:
+            try:
+                simulation_params_dict = load(yaml_file.read(), schema)
+            except YAMLError as error:
+                _logger.fatal("Fatal error in reading %s.",
+                              str(filepath))
+                _logger.fatal(str(error))
+                raise
+    else:
+        _logger.fatal(
+            "Didn't find simulation parameter file at %s.",
+            str(filepath))
+        sys.exit()
+
+    return simulation_params_dict
+
 
 
 def load_gui_params(filepath: Path | str | None = None) -> YAML:

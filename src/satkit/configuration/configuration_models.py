@@ -41,12 +41,14 @@ we can implement configuration round tripping with preserved comments.
 """
 
 import logging
+from enum import Enum
 from pathlib import Path
 import re
 from typing import Any, NewType
 
 import numpy as np
 from pydantic import conlist
+from pydantic.v1 import PositiveInt
 
 from satkit.constants import (
     CoordinateSystems, Datasource, GuiColorScheme,
@@ -54,6 +56,7 @@ from satkit.constants import (
     SplineDataColumn, SplineMetaColumn
 )
 from satkit.external_class_extensions import UpdatableBaseModel
+from satkit.metrics import SplineNNDsEnum, SplineShapesEnum
 
 _logger = logging.getLogger('satkit.configuration_models')
 
@@ -383,6 +386,42 @@ class DataRunConfig(UpdatableBaseModel):
     peaks: PeakDetectionParams | None = None
     downsample: DownsampleParams | None = None
     cast: CastParams | None = None
+
+
+class SoundCombinationsType(Enum):
+    FULL_CARTESIAN = "full_cartesian"
+    ONLY_CROSS = "only_cross"
+    ONLY_SELF = "only_self"
+
+
+class SoundPairParams(UpdatableBaseModel):
+    sounds: list[str]
+    combinations: SoundCombinationsType
+    perturbed: list[str] | None = None
+
+
+class SplineNndParams(UpdatableBaseModel):
+    metric: SplineNNDsEnum
+    timestep: PositiveInt
+    sound_pair_params: SoundPairParams
+
+
+class SplineShapeParams(UpdatableBaseModel):
+    metric: SplineShapesEnum
+
+
+class SimulationPlottingParams(UpdatableBaseModel):
+    sound_pair_params: SoundPairParams
+
+
+class SimulationConfig(UpdatableBaseModel):
+    output_directory: Path
+    logging_notice_base: str = ""
+    sounds: list[str]
+    perturbations: list[float]
+    spline_nnd_params: SplineNndParams
+    spline_shape_params: SplineShapeParams
+    plotting_params: SimulationPlottingParams
 
 
 class HeightRatios(UpdatableBaseModel):

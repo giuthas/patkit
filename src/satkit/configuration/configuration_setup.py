@@ -75,9 +75,16 @@ class Configuration:
         self._main_config_yaml = load_main_config(configuration_file)
         self._main_config = MainConfig(**self._main_config_yaml.data)
 
-        self._data_run_yaml = load_run_params(
-            self._main_config.data_run_parameter_file)
-        self._data_run_config = DataRunConfig(**self._data_run_yaml.data)
+        if self._main_config.data_run_parameter_file is not None:
+            self._data_run_yaml = load_run_params(
+                self._main_config.data_run_parameter_file)
+            self._data_run_config = DataRunConfig(**self._data_run_yaml.data)
+
+        if self._main_config.simulation_parameter_file is not None:
+            self._simulation_yaml = load_simulation_params(
+                self._main_config.simulation_param_file)
+            self._simulation_config = SimulationConfig(
+                **self._simulation_yaml.data)
 
         self._gui_yaml = load_gui_params(self._main_config.gui_parameter_file)
         self._gui_config = GuiConfig(**self._gui_yaml.data)
@@ -117,6 +124,11 @@ class Configuration:
     def publish_config(self) -> PublishConfig:
         """Result publishing configuration options."""
         return self._publish_config
+
+    @property
+    def simulation_config(self) -> SimulationConfig:
+        """Simulation configuration options."""
+        return self._simulation_config
 
     def update_from_file(
             self, configuration_file: Path | str
