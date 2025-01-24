@@ -36,7 +36,7 @@ Extensions to Pydantic BaseModel.
 import logging
 from typing import Optional
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, ConfigDict, model_validator
 
 _logger = logging.getLogger('satkit.base_model_extensions')
 
@@ -49,7 +49,12 @@ _logger = logging.getLogger('satkit.base_model_extensions')
 class SatkitBaseModel(BaseModel):
     """
     A BaseModel which accepts empty strings for any field as None.
+
+    Additionally, trying to parse undefined fields will raise an exception.
     """
+
+    model_config = ConfigDict(extra="forbid")
+
     @model_validator(mode="before")
     @classmethod
     def empty_str_to_none(cls, input_string: str) -> Optional[str]:
