@@ -44,9 +44,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
-from satkit.metrics import (
-    SplineNNDsEnum, SplineShapesEnum
-)
+from satkit.constants import SplineNNDsEnum, SplineShapesEnum
 from satkit.metrics.calculate_spline_metric import (
     # spline_diff_metric,
     spline_nnd_metric, spline_shape_metric

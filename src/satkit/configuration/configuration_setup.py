@@ -39,7 +39,7 @@ from .configuration_parsers import (
     load_run_params  # , load_plot_params
 )
 from .configuration_models import (
-    GuiConfig, MainConfig, DataRunConfig, PublishConfig
+    GuiConfig, MainConfig, DataRunConfig, PublishConfig, SimulationConfig
 )
 
 _logger = logging.getLogger('satkit.configuration_setup')

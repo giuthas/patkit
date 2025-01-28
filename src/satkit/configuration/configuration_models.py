@@ -47,16 +47,14 @@ import re
 from typing import Any, NewType
 
 import numpy as np
-from pydantic import conlist
-from pydantic.v1 import PositiveInt
+from pydantic import conlist, PositiveInt
 
 from satkit.constants import (
     CoordinateSystems, Datasource, GuiColorScheme,
     IntervalBoundary, IntervalCategory,
-    SplineDataColumn, SplineMetaColumn
+    SplineDataColumn, SplineMetaColumn, SplineNNDsEnum, SplineShapesEnum
 )
 from satkit.external_class_extensions import UpdatableBaseModel
-from satkit.metrics import SplineNNDsEnum, SplineShapesEnum
 
 _logger = logging.getLogger('satkit.configuration_models')
 
@@ -133,6 +131,7 @@ class MainConfig(UpdatableBaseModel):
     mains_frequency: float
     gui_parameter_file: Path
     data_run_parameter_file: Path | None = None
+    simulation_parameter_file: Path | None = None
     publish_parameter_file: Path | None = None
 
 
