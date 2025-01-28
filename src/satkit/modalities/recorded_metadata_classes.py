@@ -57,3 +57,4 @@ class RawUltrasoundMeta(ModalityMetaData):
     zero_offset: float
     kind: int
     bits_per_pixel: int
+    time_in_secs_of_first_frame: float

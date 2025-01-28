@@ -40,8 +40,8 @@ from .downsample_metric import downsample_metrics_in_session, downsample_metrics
 from .aggregate_image import AggregateImage, AggregateImageParameters
 from .distance_matrix import DistanceMatrix, DistanceMatrixParameters
 from .pd import PD, PdParameters, ImageMask
-from .spline_metric import (SplineMetric, SplineMetricParameters,
-                            SplineDiffsEnum, SplineNNDsEnum, SplineShapesEnum)
+from .spline_metric import (SplineMetric, SplineMetricParameters)
+from ..constants import SplineDiffsEnum, SplineNNDsEnum, SplineShapesEnum
 
 # TODO: Decide if it is worth it to use typing.Annotated to document this
 # metrics is a mapping between a modality name and its actual type and the

@@ -40,7 +40,7 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-from satkit.metrics.spline_metric import SplineShapesEnum
+from ..constants import SplineShapesEnum
 from satkit.metrics.tongue_shape_analysis import spline_shape_metric
 from satkit.plot_and_publish.plot_utilities import get_colors_in_sequence
 

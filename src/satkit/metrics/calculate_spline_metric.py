@@ -43,8 +43,10 @@ from satkit.modalities import Splines
 
 from .metrics_helpers import calculate_timevector
 from .spline_metric import (
-    SplineMetric, SplineMetricParameters, SplineDiffsEnum,
-    SplineMetricEnum, SplineNNDsEnum, SplineShapesEnum)
+    SplineMetric, SplineMetricParameters
+)
+from ..constants import SplineDiffsEnum, SplineMetricEnum, SplineNNDsEnum, \
+    SplineShapesEnum
 from .tongue_shape_analysis import spline_shape_metric
 
 _logger = logging.getLogger('satkit.gen_spline_metric')

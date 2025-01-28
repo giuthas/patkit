@@ -43,6 +43,9 @@ from dataclasses import dataclass
 from enum import Enum
 from importlib.metadata import version
 
+from satkit.external_class_extensions import enum_union, ListablePrintableEnum, \
+    ValueComparedEnumMeta
+
 # TODO 1.0: Decouple program and file format versions at version 1.0.
 SATKIT_VERSION = version('satkit')
 SATKIT_FILE_VERSION = SATKIT_VERSION
@@ -250,3 +253,38 @@ class SplineMetaColumn(Enum):
     NUMBER_OF_SPLINE_POINTS = "number of spline points"
 
 
+class SplineDiffsEnum(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
+    """
+    Spline metrics that use distance between corresponding points.
+    """
+    APBPD = 'apbpd'
+    MPBPD = 'mpbpd'
+    SPLINE_L1 = 'spline_l1'
+    SPLINE_L2 = 'spline_l2'
+
+
+class SplineNNDsEnum(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
+    """
+    Spline metrics that use nearest neighbour distance.
+    """
+    ANND = 'annd'
+    MNND = 'mnnd'
+
+
+class SplineShapesEnum(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
+    """
+    Spline metrics that characterise shape.
+    """
+    CURVATURE = 'curvature'
+    FOURIER = 'fourier'
+    MODIFIED_CURVATURE = 'modified_curvature'
+    PROCRUSTES = 'procrustes'
+
+
+SplineMetricEnum = enum_union(
+    [SplineDiffsEnum, SplineNNDsEnum, SplineShapesEnum], "SplineMetricEnum")
+"""
+Enum of all valid spline metrics.
+
+This is formed as a UnionEnum of the subtypes.
+"""

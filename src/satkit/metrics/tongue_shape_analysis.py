@@ -49,7 +49,7 @@ import numpy as np
 from scipy.integrate import simpson
 from scipy.signal import butter, filtfilt
 
-from .spline_metric import SplineShapesEnum
+from satkit.constants import SplineShapesEnum
 
 _logger = logging.getLogger('satkit.spline_shape')
 

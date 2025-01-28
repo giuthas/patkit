@@ -33,58 +33,18 @@
 SplineMetric and supporting classes.
 """
 
-# Built in packages
 import logging
 from typing import Optional, Tuple
 
-# Numpy and scipy
 import numpy as np
 from pydantic import PositiveInt
 
+from satkit.constants import SplineDiffsEnum, SplineMetricEnum, SplineShapesEnum
 from satkit.data_structures import (
     FileInformation, Modality, ModalityData, ModalityMetaData, Recording)
-from satkit.external_class_extensions import (
-    enum_union, ListablePrintableEnum, ValueComparedEnumMeta)
 from satkit.utility_functions import product_dict
 
 _logger = logging.getLogger('satkit.spline_metric')
-
-
-class SplineDiffsEnum(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
-    """
-    Spline metrics that use distance between corresponding points.
-    """
-    APBPD = 'apbpd'
-    MPBPD = 'mpbpd'
-    SPLINE_L1 = 'spline_l1'
-    SPLINE_L2 = 'spline_l2'
-
-
-class SplineNNDsEnum(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
-    """
-    Spline metrics that use nearest neighbour distance.
-    """
-    ANND = 'annd'
-    MNND = 'mnnd'
-
-
-class SplineShapesEnum(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
-    """
-    Spline metrics that characterise shape.
-    """
-    CURVATURE = 'curvature'
-    FOURIER = 'fourier'
-    MODIFIED_CURVATURE = 'modified_curvature'
-    PROCRUSTES = 'procrustes'
-
-
-SplineMetricEnum = enum_union(
-    [SplineDiffsEnum, SplineNNDsEnum, SplineShapesEnum], "SplineMetricEnum")
-"""
-Enum of all valid spline metrics.
-
-This is formed as a UnionEnum of the subtypes.
-"""
 
 
 class SplineMetricParameters(ModalityMetaData):

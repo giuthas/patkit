@@ -39,10 +39,9 @@ from typing import Union
 
 from pydantic import BaseModel, DirectoryPath
 
-from satkit.constants import Datasource, SavedObjectTypes
+from satkit.constants import Datasource, SavedObjectTypes, SplineDiffsEnum, \
+    SplineNNDsEnum, SplineShapesEnum
 from satkit.data_structures import RecordingMetaData
-from satkit.metrics import (SplineDiffsEnum, SplineNNDsEnum, SplineShapesEnum)
-
 
 nested_text_converters = {
     datetime: str,
