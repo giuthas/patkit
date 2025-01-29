@@ -32,6 +32,7 @@
 """
 Metadata for recorded (external) data.
 """
+from pathlib import Path
 
 from satkit.data_structures import ModalityMetaData
 
@@ -40,21 +41,37 @@ class RawUltrasoundMeta(ModalityMetaData):
     """
     Metadata for RawUltrasound data.
 
-    num_vectors -- number of scanlines in a frame
-    pix_Ver_vector -- number of pixels in a scanline
-    zero_offset --
-    bits_per_pixel -- byte length of a single pixel in the .ult file
-    angle -- angle in radians between two scanlines
-    kind -- type of probe used
-    pixels_per_mm -- depth resolution of a scanline
-    frames_per_sec -- frame rate of ultrasound recording
+    Note that we do not include time_offset from the meta file here so that
+    people do not accidentally rely on setting it here to alter the time_offset
+    of the ultrasound data which is instead a member of Recording/Source.
+
+    Parameters
+    ----------
+    angle : float
+        angle between two scanlines in radians
+    bits_per_pixel : int
+        byte length of a single pixel in the .ult file
+    frames_per_sec : float
+        frame rate of ultrasound recording
+    kind : int
+        type of probe used. 0 = radial
+    meta_file : Path
+        Path of the `US.txt` or `.param` file
+    num_vectors : int
+        number of scanlines in a frame
+    pix_per_vector : int
+        number of pixels in a scanline
+    pixels_per_mm : float
+        depth resolution of a scanline
+    zero_offset : float
+        offset of the first pixel from the probe origin in pixels
     """
     angle: float
+    bits_per_pixel: int
     frames_per_sec: float
+    kind: int
+    meta_file: Path
     num_vectors: int
     pix_per_vector: int
     pixels_per_mm: float
     zero_offset: float
-    kind: int
-    bits_per_pixel: int
-    time_in_secs_of_first_frame: float
