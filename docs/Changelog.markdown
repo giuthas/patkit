@@ -125,6 +125,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 - A lot of functionality that lived in `satkit.py` is now in regular satkit
   library functions and in the new `satkit/satkit.py` module.
+- Undefined fields are no longer allowed in config files.
 
 ### Removed
 
@@ -139,6 +140,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Same as previous versions.
 - Command history does not yet work when running SATKIT as an interactive
   interpreter with `satkit_interactive.py`.
+- Undefined fields in config files should have a clearer error message. And so
+  should errors in config files in general.
 
 
 ## [0.11.0] 2024-11-20
