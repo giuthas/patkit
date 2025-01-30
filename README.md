@@ -1,11 +1,6 @@
-# Speech Articulation ToolKIT - SATKIT
+# PATKIT - Phonetic Analysis ToolKIT 
 
-**Please note that this is a fork of the original SATKIT.**
-
-**Unless Pertti told you to use this repository, you should be using
-[the official one](https://github.com/giuthas/satkit) instead.**
-
-![SATKIT GUI](docs/SATKIT_UI.png)
+![PATKIT GUI](docs/SATKIT_UI.png)
 
 Tools for processing speech data. While currently these tools mainly work on
 tongue and larynx ultrasound as well as audio, in the future, the toolkit will
@@ -25,7 +20,7 @@ thesis](https://eresearch.qmu.ac.uk/handle/20.500.12289/10163).
 There will be incremental 0.x releases until the codebase reaches milestones for
 version 1.0 (See [Roadmap](docs/Roadmap.markdown)). While this notice is here in
 the main branch, that update is not yet complete. In the meanwhile, if you wish
-to try SATKIT or contribute to the code or as an alpha/beta tester, please
+to try PATKIT or contribute to the code or as an alpha/beta tester, please
 contact Pertti for instructions.
 
 2024-11-11: As the timeline has drawn out quite a bit from the originally
@@ -59,12 +54,12 @@ $PYTHONPATH.
 ### Requisites
 
 A computer with a relatively new operating system which has a fairly regular
-file system. While pads and phones and watches are computers, SATKIT sadly does
+file system. While pads and phones and watches are computers, PATKIT sadly does
 not run on them. ChromeOS may work, but it is a borderline case. A Linux, a Mac,
 or a Windows machine should be fine as long as it is capable of running the
 latest Python. If issues crop up, get in touch, and we'll see what can be done. 
 
-Currently, SATKIT is tested to work on
+Currently, PATKIT is tested to work on
 - PopOS 24.04, which means any recent Ubuntu-like system should be fine.
 
 You only need to care about the dependencies if you do not use uv for
@@ -85,20 +80,11 @@ you would like to *develop* it.
 
 ### Installing for development
 
-TODO 0.14: Update this
+TODO 0.14: Write new instructions.
 
-To install all of the above and create a conda environment to run SATKIT in
-first install anaconda from the link above. Then install mamba because anaconda
-is unlikely to solve the dependencies correctly. Do this on the command line
-with: `conda install mamba -n base -c conda-forge`
+#### Using PATKIT as a library in program development
 
-After you've (possibly forked and) cloned the repository from github with your
-favourite git tool, cd into the repository root. There you should find the file
-called `satkit_devel_conda_env.yaml` and `satkit_stable_conda_env.yaml`.
-
-#### Using SATKIT as a library in program development
-
-If you are not going to work on SATKIT itself, you should setup the stable
+If you are not going to work on PATKIT itself, you should setup the stable
 environment. To install the required packages and create the environment, run:
 `mamba env create -f satkit_stable_conda_env.yaml`
 
@@ -107,7 +93,7 @@ set up. If you want to have an editable install (changing code in the repo
 changes behaviour of the installed SATKIT immediately) run finally `pip install
 -e .` or `python3 -m pip install --editable .` if you prefer being explicit.
 
-#### Working on SATKIT
+#### Working on PATKIT
 
 If you plan on working on SATKIT, run the commands
 `mamba env create -f satkit_devel_conda_env.yaml` and
@@ -115,11 +101,15 @@ If you plan on working on SATKIT, run the commands
 
 ### What's included
 
+TODO 0.14: delete manifest and give a quick description here.
+
 See
 [MANIFEST.markdown](https://github.com/giuthas/satkit/blob/master/MANIFEST.markdown)
 for a description of the contents.
 
 ### Running the examples
+
+TODO 0.14: update this
 
 There are three small datasets included in the distribution. You can
 run tests on them with the test script `pd_test.py`. Currently the
@@ -160,7 +150,7 @@ repository](https://github.com/giuthas/satkit/tags).
 
 ## Authors
 
-* **Pertti Palo** - *The core of SATKIT* - [giuthas](https://github.com/giuthas)
+* **Pertti Palo** - *The core of PATKIT* - [giuthas](https://github.com/giuthas)
 * **Scott Moisik** - *Optic flow* - [ScottMoisik](https://github.com/ScottMoisik)
 * **Matthew Faytak** - *Dimensionaliity reduction with PCA and LDA*
   [mfaytak](https://github.com/mfaytak)
@@ -172,15 +162,15 @@ will be updated once there are more people working on this project.
 
 ## Copyright and License
 
-The Speech Articulation ToolKIT (SATKIT for short) and examples is a
-tool box for analysing articulatory data.
+The Phonetic Analysis ToolKIT (PATKIT or patkit for short) and examples is a
+tool box for analysing phonetic data.
 
-SATKIT Copyright (C) 2019-2023 Pertti Palo, Scott Moisik, Matthew
+PATKIT Copyright (C) 2019-2025 Pertti Palo, Scott Moisik, Matthew
 Faytak and Motoki Saito.
 
-Optical Flow tools Copyright (C) 2020-2023 Scott Moisik
+Optical Flow tools Copyright (C) 2020-2025 Scott Moisik
 
-Pixel Difference tools Copyright (C) 2019-2023 Pertti Palo
+Pixel Difference tools Copyright (C) 2019-2025 Pertti Palo
 
 Laryngeal example data Copyright (C) 2020 Scott Moisik
 
@@ -188,7 +178,7 @@ Tongue and tongue spline example data Copyright (C) 2013-2020 Pertti Palo
 
 ### Program license
 
-SATKIT is licensed under [GPL 3.0](https://github.com/giuthas/satkit/blob/master/LICENSE.markdown).
+PATKIT is licensed under [GPL 3.0](https://github.com/giuthas/satkit/blob/master/LICENSE.markdown).
 
 This program (see below for data) is free software: you can
 redistribute it and/or modify it under the terms of the GNU General
@@ -216,7 +206,7 @@ BY-NC-SA 4.0) License. See link above or
 
 ### Citing the code
 
-When using any part of SATKIT, please cite:
+When using any part of PATKIT, please cite:
 
 1. Palo, P., Moisik, S. R., and Faytak, M. (2023). “Analysing Speech Data with
 SATKIT”. In: International Conference of Phonetic Sciences (ICPhS 2023).
