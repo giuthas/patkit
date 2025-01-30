@@ -1,6 +1,6 @@
 
 [project]
-name = "phonetic-analysis-toolkit"
+name = "patkit"
 version = "0.14"
 description = "Phonetic Analysis ToolKit: tools for processing phonetic data"
 authors = [

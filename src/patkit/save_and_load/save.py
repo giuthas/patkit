@@ -40,7 +40,7 @@ from pathlib import Path
 import nestedtext
 import numpy as np
 
-from patkit.constants import SATKIT_FILE_VERSION, SatkitSuffix
+from patkit.constants import PATKIT_FILE_VERSION, SatkitSuffix
 from patkit.data_structures import Modality, Recording, Session, Statistic
 from patkit.ui_callbacks import UiCallbacks, OverwriteConfirmation
 
@@ -126,7 +126,7 @@ def save_modality_meta(
     meta = OrderedDict()
     meta['object_type'] = type(modality).__name__
     meta['name'] = modality.name
-    meta['format_version'] = SATKIT_FILE_VERSION
+    meta['format_version'] = PATKIT_FILE_VERSION
 
     parameters = modality.get_meta().copy()
     meta['parameters'] = parameters
@@ -172,7 +172,7 @@ def save_recording_meta(
     meta = OrderedDict()
     meta['object_type'] = type(recording).__name__
     meta['name'] = recording.basename
-    meta['format_version'] = SATKIT_FILE_VERSION
+    meta['format_version'] = PATKIT_FILE_VERSION
     meta['parameters'] = recording.metadata.model_dump()
     meta['modalities'] = modalities_saves
     meta['statistics'] = statistics_saves
@@ -275,7 +275,7 @@ def save_statistic_meta(
     meta = OrderedDict()
     meta['object_type'] = type(statistic).__name__
     meta['name'] = statistic.name
-    meta['format_version'] = SATKIT_FILE_VERSION
+    meta['format_version'] = PATKIT_FILE_VERSION
 
     parameters = statistic.get_meta().copy()
     meta['parameters'] = parameters
@@ -374,7 +374,7 @@ def save_session_meta(
     meta = OrderedDict()
     meta['object_type'] = type(session).__name__
     meta['name'] = session.name
-    meta['format_version'] = SATKIT_FILE_VERSION
+    meta['format_version'] = PATKIT_FILE_VERSION
 
     parameters = OrderedDict()
     parameters['path'] = str(session.paths.root)

@@ -39,7 +39,7 @@ from typing import TextIO
 
 import nestedtext
 
-from patkit.constants import SATKIT_VERSION
+from patkit.constants import PATKIT_VERSION
 from patkit.data_structures import FileInformation, Modality, Recording, Session
 from patkit.metrics import AggregateImageParameters, DistanceMatrixParameters
 from patkit.save_and_load import nested_text_converters
@@ -75,7 +75,7 @@ def _export_header(
 ) -> None:
     file.write(
         f"Metadata for {object_name} exported by "
-        f"SATKIT {SATKIT_VERSION} to\n")
+        f"SATKIT {PATKIT_VERSION} to\n")
     file.write(f"\t{filename}.\n\n")
     if file_info is not None:
         file.write(f"{file_info}\n\n")
