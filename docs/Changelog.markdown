@@ -27,7 +27,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Added
 
-- SATKIT will soon be available on pypi, probably under the long name:
+- PATKIT will soon be available on pypi, probably under the long name:
   speech_analysis_toolkit.
 - See [Roadmap](Roadmap.markdown) for an overview of what to expect in 1.0.
 
@@ -35,8 +35,11 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Highlights
 
+- New name! This program and library are now called PATKIT for Phonetic Analysis
+  ToolKIT.
+- PyPi package will be available very shortly after release of 0.14.
 - There's a new and shiny command line interface. With the new installation
-  procedure, SATKIT can be run as any regular command line tool.
+  procedure, PATKIT can be run as any regular command line tool.
 - There's a new installation procedure with uv. Fast, neat, gives us the
   previous easily.
 
@@ -53,7 +56,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Command line is now implemented with `click` rather than `argparse`.
   Neater look, easier maintenance and with the new installation also working
   command line tool with subcommands.
-- SATKIT now uses PyQt6 instead of 5 for the GUI.
+- PATKIT now uses PyQt6 instead of 5 for the GUI.
 
 ### Docs
 
@@ -68,6 +71,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Another soon to happen change is the expansion of the classes derived from 
   DataAggregator. Recording will be split to Source and Trial, and DataSet added
   as a class that contains Sessions.
+- There maybe references to the old name (SATKIT) in documentation and source
+  code. These will be updated as they are found.
 
 ### Bugs
 
