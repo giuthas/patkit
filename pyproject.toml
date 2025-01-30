@@ -1,8 +1,8 @@
 
 [project]
-name = "speech-articulation-toolkit"
+name = "phonetic-analysis-toolkit"
 version = "0.14"
-description = "Speech Articulation ToolKit: tools for processing ultrasound speech data"
+description = "Phonetic Analysis ToolKit: tools for processing phonetic data"
 authors = [
   {email = "giuthas@gmail.com"},
   {name = "Pertti Palo, Scott Moisik, Matthew Faytak, Motoki Saito"},
@@ -14,7 +14,7 @@ classifiers = [
   "Programming Language :: Python",
 #  "Intended Audience :: Speech researchers and students",
 ]
-keywords = ["speech", "articulation", "textgrid", "ultrasound", "splines"]
+keywords = ["phonetics", "speech", "articulation", "textgrid", "ultrasound", "splines"]
 maintainers = [
   {name = "Pertti Palo", email = "giuthas@gmail.com"},
 ]
@@ -55,7 +55,7 @@ homepage = "github.com/giuthas/satkit"
 repository = "github.com"
 
 [project.scripts]
-satkit = "satkit:run_cli"
+patkit = "patkit:run_cli"
 
 #[project.gui-scripts]
 #satkit-gui = "satkit:main_gui"
@@ -65,7 +65,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.sdist]
-packages = ["src/satkit"]
+packages = ["src/patkit"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/satkit"]
+packages = ["src/patkit"]
