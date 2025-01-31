@@ -33,7 +33,7 @@
 This module contains functions used to apply metrics to simulated data.
 """
 
-from typing import Annotated, Callable, Optional
+from typing import Annotated, Callable
 
 import numpy as np
 from pydantic import BaseModel
@@ -105,7 +105,7 @@ class Comparison(BaseModel, frozen=True):
 def get_distance_metric_baselines(
         metric: MetricFunction,
         contours: dict[str, np.ndarray]
-) -> dict[Comparison, float]:
+) -> dict[Comparison, np.ndarray]:
     """
     Get the metric evaluated between each pair of the contours.
 
@@ -147,7 +147,7 @@ def get_distance_metric_baselines(
 def get_shape_metric_baselines(
         metric: MetricFunction,
         contours: dict[str, np.ndarray]
-) -> dict[Comparison, float]:
+) -> dict[str, np.ndarray]:
     """
     Get the metric evaluated between each pair of the contours.
 
@@ -178,10 +178,10 @@ def get_shape_metric_baselines(
 def calculate_perturbed_metric_series(
         metric: MetricFunction,
         contour_to_perturb: np.ndarray,
-        reference_contour: Optional[np.ndarray] = None,
-        perturbations: Optional[tuple[float]] = (1.0),
-        interleave: Optional[bool] = False,
-        return_even: Optional[bool] = True,
+        reference_contour: np.ndarray | None = None,
+        perturbations: list[float] | tuple[float] = (1.0,),
+        interleave: bool = False,
+        return_even: bool = True,
 ) -> dict[str, np.ndarray]:
     """
     Generate a series of perturbed contours and calculate the metric on them.
@@ -194,23 +194,24 @@ def calculate_perturbed_metric_series(
     ----------
     metric : MetricFunction
         The metric function. Should accept a 2D np.ndarray as its argument and
-        return an np.ndarray. This can be generated with functools.partial from
-        standard SATKIT metrics.
+        return an `np.ndarray`. This can be generated with `functools.partial`
+        from standard SATKIT metrics.
     contour_to_perturb : np.ndarray
         The contour the perturbations will be applied to.
     reference_contour : Optional[np.ndarray], optional
         A reference contour to compare the perturbed ones with. If None, the
-        contour_to_perturb will be used instead. By default None
+        contour_to_perturb will be used instead. By default, None
     perturbations : Optional[tuple[float]], optional
-        Tuple of perturbations to apply in absolute r values, by default (1.0)
+        Tuple of perturbations to apply in absolute r values.
+        By default, `(1.0,)`.
     interleave : Optional[bool], optional
         Should the reference contour be interleaved with the perturbed
         contours. Use this for pairwise metrics like ANND or MPBPD when
-        comparisons with baseline are wanted. By default False
+        comparisons with baseline are wanted. By default, False
     return_even: Optional[bool] optional,
         Whether the even or odd comparisons should be returned. True means
         comparing reference to perturbed, False means comparing perturbed to
-        reference. By default True, Ignored if `interleave` is False.
+        reference. By default, True, Ignored if `interleave` is False.
 
     Returns
     -------
@@ -240,7 +241,7 @@ def calculate_perturbed_metric_series(
 def calculate_metric_series_for_contours(
         metric: MetricFunction,
         contours: dict[str, np.ndarray],
-        perturbations: Optional[tuple[float]] = (1.0)
+        perturbations: list[float] | tuple[float] = (1.0,)
 ) -> dict[str, dict[str, np.ndarray]]:
     """
     Calculate the metric for each contour while perturbing each point.
@@ -252,7 +253,7 @@ def calculate_metric_series_for_contours(
     contours : dict[str, np.ndarray]
         A dict of the contours.
     perturbations : Optional[tuple[float]], optional
-        A tuple of perturbations to apply, by default (1.0)
+        A tuple of perturbations to apply. By default, `(1.0,)`.
 
     Returns
     -------
@@ -276,8 +277,8 @@ def calculate_metric_series_for_comparisons(
         metric: MetricFunction,
         contours: dict[str, np.ndarray],
         comparisons: list[Comparison],
-        perturbations: Optional[list[float]] = (1.0),
-        interleave: Optional[bool] = True
+        perturbations: list[float] | tuple[float] = (1.0,),
+        interleave: bool = True
 ) -> dict[Comparison, dict[str, np.ndarray]]:
     """
     Calculate the metric between the specified comparisons.
@@ -295,7 +296,9 @@ def calculate_metric_series_for_comparisons(
     comparisons : list[Comparison]
         List of which contours to compare with which.
     perturbations : Optional[list[float]], optional
-        Tuple of perturbation sizes to apply, by default (1.0)
+        Tuple of perturbation sizes to apply, By default, (1.0,)
+    interleave : bool
+        Should the reference and result contours be interleaved.
 
     Returns
     -------
