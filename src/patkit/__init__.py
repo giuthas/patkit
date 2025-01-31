@@ -57,14 +57,14 @@ from .qt_annotator import run_annotator
 __all__ = ['add_derived_data', 'initialise_patkit']
 
 # Load logging config from json file.
-LOG_CONFIG = "configuration/satkit_logging_configuration.json"
+LOG_CONFIG = "configuration/patkit_logging_configuration.json"
 with open(LOG_CONFIG, 'r', encoding='utf-8') as configuration_file:
     config_dict = json.load(configuration_file)
     logging.config.dictConfig(config_dict)
 
 # Create the module logger.
-_satkit_logger = logging.getLogger('patkit')
+_patkit_logger = logging.getLogger('patkit')
 
 # Log that the logger was configured.
-_satkit_logger.info('Completed configuring logger.')
+_patkit_logger.info('Completed configuring logger.')
 

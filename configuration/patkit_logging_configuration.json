@@ -11,7 +11,7 @@
     },
     "handlers": {
         "file": {
-            "filename": "satkit.log",
+            "filename": "patkit.log",
             "mode": "w",
             "class": "logging.FileHandler",
             "level": "DEBUG",
