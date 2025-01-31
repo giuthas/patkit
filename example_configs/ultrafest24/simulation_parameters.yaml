@@ -3,7 +3,7 @@
 # available and represented by None. If you want to specify current working
 # directory, use '.'
 
-# This is where SATKIT will save results of data processing. 
+# This is where PATKIT will save results of data processing. 
 output_directory: "ultrafest2024/"
 logging_notice_base: "Ultrafest 2024 simulation: "
 

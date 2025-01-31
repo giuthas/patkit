@@ -12,9 +12,9 @@ mains_frequency: 50
 # Default parameters for a data run. Unless you happen to be running example
 # tongue data, you should probably change these. Do it by copying the file and
 # giving a commandline argument.
-data_run_parameter_file: configuration/satkit_data_run_parameters.yaml
+data_run_parameter_file: configuration/data_run_parameters.yaml
 
 # GUI setup parameters
-gui_parameter_file: configuration/satkit_gui_parameters.yaml
+gui_parameter_file: configuration/gui_parameters.yaml
 
-publish_parameter_file: configuration/satkit_publish_parameters.yaml
+publish_parameter_file: configuration/publish_parameters.yaml

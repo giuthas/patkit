@@ -7,8 +7,8 @@ flags:
   detect_beep: True # Should onset beep detection be run?
   test: False # Run on only the first 10 recordings.
 
-# This is where SATKIT will save results of data processing. Please note that
-# once exclusion list or similar things can be edited in SATKIT, they will by
+# This is where PATKIT will save results of data processing. Please note that
+# once exclusion list or similar things can be edited in PATKIT, they will by
 # default be saved at their original locations.
 output_directory:
 
@@ -42,7 +42,7 @@ pd_arguments:
 #  'preload': True
 
 #distance_matrix_arguments:
-#  exclusion_list: "alignment/data/satkit_exclusion_list.yaml"
+#  exclusion_list: "alignment/data/patkit_exclusion_list.yaml"
 #  metrics:
 #    - 'mean_squared_error'
 #  preload: True

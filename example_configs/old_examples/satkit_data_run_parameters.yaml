@@ -3,7 +3,7 @@
 ## Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 ##
 ## This file is part of Speech Articulation ToolKIT
-## (see https://github.com/giuthas/satkit/).
+## (see https://github.com/giuthas/patkit/).
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -38,8 +38,8 @@ flags:
   detect_beep: True # Should onset beep detection be run?
   test: False # Run on only the first 10 recordings.
 
-# This is where SATKIT will save results of data processing. Please note that
-# once exclusion list or similar things can be edited in SATKIT, they will by
+# This is where PATKIT will save results of data processing. Please note that
+# once exclusion list or similar things can be edited in PATKIT, they will by
 # default be saved at their original locations.
 output_directory:
 
