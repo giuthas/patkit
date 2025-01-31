@@ -40,7 +40,7 @@ from pathlib import Path
 from patkit.audio_processing import MainsFilter
 from patkit.configuration import Configuration, PathStructure
 from patkit.constants import (
-    Datasource, SourceSuffix, patkitSuffix, patkitConfigFile)
+    Datasource, SourceSuffix, Patkitsuffix, Patkitconfigfile)
 from patkit.data_import import (
     generate_aaa_recording_list, load_session_config)
 from patkit.data_structures import (
@@ -114,9 +114,9 @@ def read_recording_session_from_dir(
     """
     containing_dir = recorded_data_path.parts[-1]
 
-    session_config_path = recorded_data_path / patkitConfigFile.SESSION
+    session_config_path = recorded_data_path / Patkitconfigfile.SESSION
     session_meta_path = recorded_data_path / (containing_dir + '.Session' +
-                                              patkitSuffix.META)
+                                              Patkitsuffix.META)
     if session_meta_path.is_file():
         return load_recording_session(recorded_data_path, session_config_path)
 

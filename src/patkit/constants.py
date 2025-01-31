@@ -43,8 +43,9 @@ from dataclasses import dataclass
 from enum import Enum
 from importlib.metadata import version
 
-from patkit.external_class_extensions import enum_union, ListablePrintableEnum, \
-    ValueComparedEnumMeta
+from patkit.external_class_extensions import (
+    enum_union, ListablePrintableEnum, ValueComparedEnumMeta
+)
 
 # TODO 1.0: Decouple program and file format versions at version 1.0.
 PATKIT_VERSION = version('patkit')
@@ -128,7 +129,7 @@ class IntervalCategory(Enum):
 
 
 @dataclass(frozen=True)
-class patkitConfigFile:
+class Patkitconfigfile:
     """
     Human written yaml files to control importing data.
     """
@@ -137,7 +138,7 @@ class patkitConfigFile:
 
 
 @dataclass(frozen=True)
-class patkitSuffix:
+class Patkitsuffix:
     """
     Suffixes for files saved by patkit.
 

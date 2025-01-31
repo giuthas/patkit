@@ -49,9 +49,9 @@ def run_cli(
         verbosity: int
 ) -> None:
     """
-    patkit - Speech Analysis ToolKIT
+    patkit - Phonetic Analysis ToolKIT
 
-    patkit collects tools for phonetic analysis of speech data. It includes
+    Patkit collects tools for phonetic analysis of speech data. It includes
     tools for analysing audio and articulatory data, a commandline interface, an
     annotator GUI, and a Python programming API. See documentation for more
     details.

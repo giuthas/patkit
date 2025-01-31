@@ -41,7 +41,7 @@ import numpy as np
 import nestedtext
 
 from patkit.configuration import PathStructure
-from patkit.constants import patkitConfigFile, patkitSuffix
+from patkit.constants import Patkitconfigfile, Patkitsuffix
 from patkit.data_import import (
     modality_adders, add_splines, load_session_config
 )
@@ -225,7 +225,7 @@ def load_recording(filepath: Path) -> Recording:
     # based on what is present as the final fall back or as the option tried if
     # no meta and config has the wrong guess.
 
-    meta_path = filepath.with_suffix(patkitSuffix.META)
+    meta_path = filepath.with_suffix(Patkitsuffix.META)
     if meta_path.is_file():
         # this is a list of Modalities, each with a data path and meta path
         meta = read_recording_meta(filepath)
@@ -281,7 +281,7 @@ def load_recordings(
     """
     if not recording_metafiles:
         recording_metafiles = directory.glob(
-            "*.Recording" + str(patkitSuffix.META))
+            "*.Recording" + str(Patkitsuffix.META))
 
     recordings = [load_recording(directory / name)
                   for name in recording_metafiles]
@@ -314,9 +314,9 @@ def load_recording_session(
         directory = Path(directory)
 
     if not session_config_path:
-        session_config_path = directory / patkitConfigFile.SESSION
+        session_config_path = directory / Patkitconfigfile.SESSION
 
-    filename = f"{directory.parts[-1]}{'.Session'}{patkitSuffix.META}"
+    filename = f"{directory.parts[-1]}{'.Session'}{Patkitsuffix.META}"
     filepath = directory / filename
 
     raw_input = nestedtext.load(filepath)

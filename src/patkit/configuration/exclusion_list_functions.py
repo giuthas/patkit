@@ -42,7 +42,7 @@ from strictyaml import (Map, Optional, Seq, Str,
                         YAMLError, load)
 
 from .configuration_models import ExclusionList
-from patkit.constants import patkitSuffix, SourceSuffix
+from patkit.constants import Patkitsuffix, SourceSuffix
 from patkit.data_structures import Recording, Session
 
 _logger = logging.getLogger('patkit.configuration')
@@ -165,7 +165,7 @@ def load_exclusion_list(filepath: Path | str) -> ExclusionList:
     if isinstance(filepath, str):
         filepath = Path(filepath)
 
-    if filepath.suffix == patkitSuffix.CONFIG:
+    if filepath.suffix == Patkitsuffix.CONFIG:
         return _read_exclusion_list_from_yaml(filepath)
 
     if filepath.suffix == SourceSuffix.CSV:
