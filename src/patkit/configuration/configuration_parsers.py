@@ -392,7 +392,7 @@ def load_gui_params(filepath: Path | str | None = None) -> YAML:
 
     _logger.info("Loading GUI configuration from %s", str(filepath))
 
-    # TODO 0.14: make sure that normalise gets included here and in config
+    # TODO 0.15: make sure that normalise gets included here and in config
     # models.
     axes_params_dict = {
         Optional(

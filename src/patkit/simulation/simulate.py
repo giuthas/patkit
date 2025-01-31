@@ -71,13 +71,13 @@ def run_simulations(
     """
     Main to create plots for the Ultrafest 2024 paper.
     """
-    # TODO 0.14: these should run based on config
+    # TODO 0.15: these should run based on config
     annd_baselines, annd_results = simulate_dyadic_metrics(
         comparisons, contours, perturbations)
     mci_baselines, mci_results = simulate_single_contour_metrics(
         contours, perturbations)
 
-    # TODO 0.14: RESULTS
+    # TODO 0.15: RESULTS
     save_result_figures(annd_baselines, annd_results, contours, mci_baselines,
                         mci_results, perturbations, save_path, sound_pairs)
 

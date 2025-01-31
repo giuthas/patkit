@@ -1,5 +1,5 @@
 # Generate docs with pdoc ...
-# TODO 0.14: see about removing the * from below
+# TODO 0.15: see about removing the * from below
 pdoc -d numpy -o docs/api src/patkit/*
 
 # and some diagrams to be linked as well.
