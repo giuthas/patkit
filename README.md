@@ -18,7 +18,7 @@ thesis](https://eresearch.qmu.ac.uk/handle/20.500.12289/10163).
 ## Major update -- version 1.0 -- coming up
 
 There will be incremental 0.x releases until the codebase reaches milestones for
-version 1.0 (See [Roadmap](docs/Roadmap.markdown)). While this notice is here in
+version 1.0 (See [Changelog](docs/Changelog.markdown)). While this notice is here in
 the main branch, that update is not yet complete. In the meanwhile, if you wish
 to try PATKIT or contribute to the code or as an alpha/beta tester, please
 contact Pertti for instructions.
@@ -41,15 +41,11 @@ See [Changelog](docs/Changelog.markdown), for what's new in the current version.
 NOTE: 
 - With version 1.0 getting closer a lot of the instructions below are
   outdated. More up-to-date information can be found in the
-  [Documentation](https://giuthas.github.io/satkit/). See
-  [Roadmap](docs/Roadmap.markdown) for updates on progress towards 1.0.
-- There will also soon be a move to either pixi or uv for package, environment
-  and installation management. This will make a lot of the below automated and
-  easier.
+  [Documentation](https://giuthas.github.io/satkit/)
 
 Download the repository to either a subdirectory of the project you
 want to use the tools on or a suitable place that you then add to your
-$PYTHONPATH.
+`$PYTHONPATH`.
 
 ### Requisites
 
@@ -152,7 +148,7 @@ repository](https://github.com/giuthas/satkit/tags).
 
 * **Pertti Palo** - *The core of PATKIT* - [giuthas](https://github.com/giuthas)
 * **Scott Moisik** - *Optic flow* - [ScottMoisik](https://github.com/ScottMoisik)
-* **Matthew Faytak** - *Dimensionaliity reduction with PCA and LDA*
+* **Matthew Faytak** - *Dimensionality reduction with PCA and LDA*
   [mfaytak](https://github.com/mfaytak)
 * **Motoki Saito** - *Producing interpolated ultrasound images from raw data*
   [msaito8623](https://github.com/msaito8623)

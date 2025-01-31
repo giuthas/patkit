@@ -27,9 +27,19 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Added
 
-- PATKIT will soon be available on pypi, probably under the long name:
-  speech_analysis_toolkit.
-- See [Roadmap](Roadmap.markdown) for an overview of what to expect in 1.0.
+- PATKIT will soon be available on pypi under the name patkit.
+- 0.15 is planned to be a re-implementation of the simulation code that was
+  originally released for Ultrafest 2024.
+- 0.16 is planned to be a general configuration update moving from central to
+  local (stored with data) configuration.
+- 0.17 is planned to be a data structure update giving support for multiple data
+  sources per trial.
+- 0.18 is planned to update the GUI with full TextGrid editing.
+- 0.19 is planned to be a release of automated segmentation exercises.
+- After 0.19 there are planned updates to CLI, GUI, ultrasound frame
+  interpolation, processing speed by implementing multiprocessing, new algorithms
+  (optic flow, LPC for tongues, kymography, ...), new data sources, code
+  testing, documentation and finally a 1.0 release.
 
 ## [0.14.0]
 
@@ -61,12 +71,12 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Docs
 
 - Docs are now again correctly generated.
-- Some preliminary docs on configuration. Only command line history is actually
-  properly up to date in there.
+- Some preliminary docs on configuration. Expect these to update in the next
+  two-three releases.
 
 ### Deprecated
 
-- One of the next updates - probably the next one - will move from centralised
+- One of the next updates - probably 0.16 - will move from centralised
   single config system to per-dataset config system.
 - Another soon to happen change is the expansion of the classes derived from 
   DataAggregator. Recording will be split to Source and Trial, and DataSet added
@@ -79,6 +89,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Switching the operating system between dark/light mode while the annotator is
   running may or may not update the plots, and may even break them. However,
   restarting the annotator will update the plots.
+- Implementing the subcommand `patkit simulate` is still underway. Expected to
+  be available in 0.15.
 
 ## [0.13.0] 2025-01-07
 
