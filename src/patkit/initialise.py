@@ -57,7 +57,7 @@ from patkit.utility_functions import (
 )
 
 
-def initialise_satkit(
+def initialise_patkit(
         path: Path | str | None = None,
         config_file: Path | str | None = None,
         exclusion_file: Path | str | None = None,
