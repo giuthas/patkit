@@ -47,6 +47,8 @@ from .metric_calculations import (
     get_shape_metric_baselines
 )
 
+from .simulate import run_simulations
+
 from .simulation_plots import (
     display_contour, display_fan, display_indeces_on_contours,
     plot_contour_segment, make_demonstration_contour_plot,

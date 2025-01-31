@@ -43,8 +43,10 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
 
 from patkit.plot_and_publish.plot_utilities import get_colors_in_sequence
-from patkit.simulation import (
+from .metric_calculations import (
     Comparison, ComparisonMember, ComparisonSoundPair,
+)
+from .simulation_plots import (
     display_contour,
     contour_ray_plot,
 )
