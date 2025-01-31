@@ -31,7 +31,7 @@
 # citations.bib in BibTeX format.
 #
 """
-Main interface for running SATKIT.
+Initialisation routines for PATKIT.
 """
 
 from logging import Logger
@@ -77,15 +77,14 @@ def initialise_patkit(
         logger is an instance of logging.Logger, and
         session is an instance of Session.
     """
-    if config_file is None:
-        config_file = Path("configuration/configuration.yaml")
-
     path = path_from_name(path)
-    config_file = path_from_name(config_file)
-    exclusion_file = path_from_name(exclusion_file)
+    # TODO 0.15: Move this call to cli_commands like with simulate.
+    config, exclusion_file, logger = initialise_logger_and_config(
+        config_file=config_file,
+        exclusion_file=exclusion_file,
+        logging_level=logging_level
+    )
 
-    logger = set_logging_level(logging_level)
-    config = Configuration(config_file)
     exclusion_list = None
     if exclusion_file is not None:
         exclusion_list = load_exclusion_list(exclusion_file)
@@ -97,6 +96,41 @@ def initialise_patkit(
     log_elapsed_time(logger)
 
     return config, logger, session
+
+
+def initialise_logger_and_config(
+        config_file: Path | str | None = None,
+        exclusion_file: Path | str | None = None,
+        logging_level: int | None = None,
+) -> tuple[Configuration, Path, Logger]:
+    """
+    Initialise logger and configuration.
+
+    Parameters
+    ----------
+    config_file : Path | str | None
+        Main configuration file, by default None. This leads to loading
+        `~/.patkit/`.
+    exclusion_file : Path | str | None
+        Main exclusion file, by default None.
+    logging_level : int | None
+        Logging level, by default None. Which sets the logging level to DEBUG.
+
+    Returns
+    -------
+    tuple[Configuration, Path, Logger]
+        These are the main Configuration, exclusion file as Path, and the
+        logger.
+    """
+    if config_file is None:
+        config_file = Path("configuration/configuration.yaml")
+
+    config_file = path_from_name(config_file)
+    exclusion_file = path_from_name(exclusion_file)
+    logger = set_logging_level(logging_level)
+    config = Configuration(config_file)
+
+    return config, exclusion_file, logger
 
 
 def add_derived_data(
