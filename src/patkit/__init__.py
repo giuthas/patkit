@@ -31,20 +31,20 @@
 #
 
 """
-SATKIT -- The Speech Articulation ToolKIT
+PATKIT -- The Phonetic Analysis ToolKIT
 
-# TODO 1.0 Add an example of running SATKIT from the interactive command line.
+# TODO 1.0 Add an example of running PATKIT from the interactive command line.
 
-SATKIT consists of several interdependent modules.
+PATKIT consists of several interdependent modules.
 
-![SATKIT Module hierarchy](packages_satkit.png "SATKIT Module hierarchy")
+![PATKIT Module hierarchy](packages_patkit.png "PATKIT Module hierarchy")
 
-SATKIT's data structures are built around two class hierarchies: 
+PATKIT's data structures are built around two class hierarchies:
 The Recording and the Modality. Similarly, the commandline interface -- and
 the batch processing of data -- is handled by classes that extend CLI and 
 graphical annotation tools derive from Annotator.
 
-![SATKIT Class hierarchies](classes_satkit.png "SATKIT Class hierarchies")
+![PATKIT Class hierarchies](classes_patkit.png "PATKIT Class hierarchies")
 """
 
 import json
