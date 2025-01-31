@@ -4,7 +4,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,33 +31,33 @@
 # citations.bib in BibTeX format.
 #
 """
-SATKIT example script
+patkit example script
 """
 
 from matplotlib.backends.backend_pdf import PdfPages
 
 import numpy as np
 
-from satkit import initialise_satkit
-from satkit.annotations import (
+from patkit import initialise_patkit
+from patkit.annotations import (
     add_peaks, count_number_of_peaks, nearest_neighbours_in_downsampling,
     prominences_in_downsampling)
-from satkit.annotations.peaks import annotations_to_dataframe
+from patkit.annotations.peaks import annotations_to_dataframe
 
-from satkit.metrics import (
+from patkit.metrics import (
     add_pd, add_spline_metric, downsample_metrics)
-from satkit.modalities import RawUltrasound, Splines
-from satkit.plot_and_publish import (
+from patkit.modalities import RawUltrasound, Splines
+from patkit.plot_and_publish import (
     publish_session_pdf, publish_distribution_data)
-from satkit.plot_and_publish.publish import publish_distribution_data_seaborn
-from satkit.data_processor import process_modalities
-from satkit.utility_functions import log_elapsed_time
+from patkit.plot_and_publish.publish import publish_distribution_data_seaborn
+from patkit.data_processor import process_modalities
+from patkit.utility_functions import log_elapsed_time
 
 
 def main():
     """Simple main to run some publishing functions."""
 
-    configuration, logger, session = initialise_satkit(
+    configuration, logger, session = initialise_patkit(
         path=path, config_file=config_file
     )
 
@@ -108,7 +108,7 @@ def main():
                         for prompt in exclusion_list]
             if any(excluded):
                 print(
-                    f"in satkit_publish.py: jumping over {recording.basename}")
+                    f"in patkit_publish.py: jumping over {recording.basename}")
                 continue
             for modality_name in recording:
                 if modality_pattern in modality_name:

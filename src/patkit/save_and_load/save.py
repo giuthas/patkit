@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 # citations.bib in BibTeX format.
 #
 """
-Functions for saving SATKIT data.
+Functions for saving patkit data.
 """
 
 from collections import OrderedDict
@@ -40,7 +40,7 @@ from pathlib import Path
 import nestedtext
 import numpy as np
 
-from patkit.constants import PATKIT_FILE_VERSION, SatkitSuffix
+from patkit.constants import PATKIT_FILE_VERSION, patkitSuffix
 from patkit.data_structures import Modality, Recording, Session, Statistic
 from patkit.ui_callbacks import UiCallbacks, OverwriteConfirmation
 
@@ -77,7 +77,7 @@ def save_modality_data(
     """
     _logger.debug("Saving data for %s.", modality.name)
     suffix = modality.name_underscored
-    filename = f"{modality.recording.basename}.{suffix}{SatkitSuffix.DATA}"
+    filename = f"{modality.recording.basename}.{suffix}{patkitSuffix.DATA}"
     filepath = modality.recording.path/filename
 
     if filepath.exists():
@@ -112,7 +112,7 @@ def save_modality_meta(
     _logger.debug("Saving meta for %s.", modality.name)
     suffix = modality.name_underscored
     filename = f"{modality.recording.basename}.{suffix}"
-    filename += SatkitSuffix.META
+    filename += patkitSuffix.META
     filepath = modality.recording.path/filename
 
     if filepath.exists():
@@ -158,7 +158,7 @@ def save_recording_meta(
     """
     _logger.debug(
         "Saving meta for recording %s.", recording.basename)
-    filename = f"{recording.basename}{'.Recording'}{SatkitSuffix.META}"
+    filename = f"{recording.basename}{'.Recording'}{patkitSuffix.META}"
     filepath = recording.path/filename
 
     if filepath.exists():
@@ -223,15 +223,15 @@ def save_statistic_data(
     Returns the filename of the
     """
     _logger.debug("Saving data for %s.", statistic.name)
-    if not statistic.satkit_data_name:
+    if not statistic.patkit_data_name:
         suffix = statistic.name_underscored
-        filename = f"{statistic.owner.name}.{suffix}{SatkitSuffix.DATA}"
-        statistic.satkit_data_name = filename
+        filename = f"{statistic.owner.name}.{suffix}{patkitSuffix.DATA}"
+        statistic.patkit_data_name = filename
 
-    filepath = statistic.satkit_data_path
+    filepath = statistic.patkit_data_path
     if filepath.exists():
         if confirmation is OverwriteConfirmation.NO_TO_ALL:
-            return statistic.satkit_data_name, confirmation
+            return statistic.patkit_data_name, confirmation
 
         if confirmation is not OverwriteConfirmation.YES_TO_ALL:
             confirmation = UiCallbacks.get_overwrite_confirmation(
@@ -242,9 +242,9 @@ def save_statistic_data(
         np.savez(
             filepath, data=statistic.data)
 
-        _logger.debug("Wrote file %s.", statistic.satkit_data_path)
+        _logger.debug("Wrote file %s.", statistic.patkit_data_path)
 
-    return statistic.satkit_data_name, confirmation
+    return statistic.patkit_data_name, confirmation
 
 
 def save_statistic_meta(
@@ -257,16 +257,16 @@ def save_statistic_meta(
     needed to reconstruct the Modality.
     """
     _logger.debug("Saving meta for %s.", statistic.name)
-    if not statistic.satkit_meta_name:
+    if not statistic.patkit_meta_name:
         suffix = statistic.name_underscored
-        filename = f"{statistic.owner.name}.{suffix}{SatkitSuffix.META}"
-        statistic.satkit_meta_name = filename
+        filename = f"{statistic.owner.name}.{suffix}{patkitSuffix.META}"
+        statistic.patkit_meta_name = filename
 
-    filepath = statistic.satkit_meta_path
+    filepath = statistic.patkit_meta_path
 
     if filepath.exists():
         if confirmation is OverwriteConfirmation.NO_TO_ALL:
-            return statistic.satkit_meta_name, confirmation
+            return statistic.patkit_meta_name, confirmation
 
         if confirmation is not OverwriteConfirmation.YES_TO_ALL:
             confirmation = UiCallbacks.get_overwrite_confirmation(
@@ -285,13 +285,13 @@ def save_statistic_meta(
         try:
             nestedtext.dump(meta, filepath, converters=nested_text_converters)
             _logger.debug("Wrote file %s.",
-                          statistic.satkit_meta_path)
+                          statistic.patkit_meta_path)
         # except nestedtext.NestedTextError as e:
         #     e.terminate()
         except OSError as e:
             _logger.critical(e)
 
-    return statistic.satkit_meta_name, confirmation
+    return statistic.patkit_meta_name, confirmation
 
 
 def save_statistics(
@@ -306,8 +306,8 @@ def save_statistics(
     for statistic_name in aggregator.statistics:
         statistic_meta = {}
         statistic = aggregator.statistics[statistic_name]
-        if statistic.satkit_path is None:
-            statistic.satkit_path = ""
+        if statistic.patkit_path is None:
+            statistic.patkit_path = ""
         (statistic_meta['data_name'], confirmation) = save_statistic_data(
             statistic, confirmation)
         (statistic_meta['meta_name'], confirmation) = save_statistic_meta(
@@ -327,8 +327,8 @@ def save_recordings(
     metafiles = []
     for recording in recordings:
         if save_excluded or not recording.excluded:
-            if recording.satkit_path is None:
-                recording.satkit_path = ""
+            if recording.patkit_path is None:
+                recording.patkit_path = ""
             modalities_saves, confirmation = save_modalities(
                 recording=recording,
                 confirmation=confirmation,)
@@ -360,7 +360,7 @@ def save_session_meta(
     """
     _logger.debug(
         "Saving meta for session %s.", session.name)
-    filename = f"{session.name}{'.Session'}{SatkitSuffix.META}"
+    filename = f"{session.name}{'.Session'}{patkitSuffix.META}"
     filepath = session.paths.root/filename
 
     if filepath.exists():
@@ -397,8 +397,8 @@ def save_recording_session(
     """
     _logger.debug(
         "Saving recording session %s.", session.name)
-    if session.satkit_path is None:
-        session.satkit_path = session.recorded_path
+    if session.patkit_path is None:
+        session.patkit_path = session.recorded_path
     recording_meta_files, confirmation = save_recordings(
         recordings=session.recordings, confirmation=None)
     statistics_saves, confirmation = save_statistics(

@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 # citations.bib in BibTeX format.
 #
 """
-This is the main GUI class for SATKIT.
+This is the main GUI class for patkit.
 """
 
 import csv
@@ -858,7 +858,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
 
     def open(self):
         """
-        Open either SATKIT saved data or import new data.
+        Open either patkit saved data or import new data.
         """
         directory = QFileDialog.getExistingDirectory(
             self, caption="Open directory", directory='.')
@@ -873,11 +873,11 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
 
     def open_file(self):
         """
-        Open either SATKIT saved data or import new data.
+        Open either patkit saved data or import new data.
         """
         filename = QFileDialog.getOpenFileName(
             self, caption="Open file", directory='.',
-            filter="SATKIT files (*.satkit_meta)")
+            filter="patkit files (*.patkit_meta)")
         _logger.warning(
             "Don't yet know how to open a file "
             "even though I know the name is %s.", filename)
@@ -901,7 +901,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
             _logger.info(
                 "Pickling is currently disabled. Did NOT write file %s.",
                 self.pickle_filename)
-            # satkit_io.save2pickle(
+            # patkit_io.save2pickle(
             #     self.recordings,
             #     self.pickle_filename)
             # _qt_annotator_logger.info(
@@ -933,7 +933,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
             if not recording.textgrid_path:
                 # TODO: This will be SUPER ANNOYING when there are a lot of
                 # recordings. Instead, ask for the directory to save in. In any
-                # case needs to be reworked when SATKIT files no longer live
+                # case needs to be reworked when patkit files no longer live
                 # with the recorded data.
                 (recording.textgrid_path, _) = QFileDialog.getSaveFileName(
                     self, 'Save TextGrid', directory='.',
@@ -953,7 +953,7 @@ class PdQtAnnotator(QMainWindow, Ui_MainWindow):
         Opens a filedialog to ask for the filename. Save format is determined
         by file extension.
         """
-        suggested_path = Path.cwd() / "Satkit_figure.png"
+        suggested_path = Path.cwd() / "patkit_figure.png"
         filename, _ = ImageSaveDialog.get_selection(
             name="Export the main figure",
             save_path=suggested_path,

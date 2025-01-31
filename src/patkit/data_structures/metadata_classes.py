@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ from patkit.configuration import (
     ExclusionList, PointAnnotationParams, SplineConfig
 )
 from patkit.constants import AnnotationType, Datasource
-from patkit.external_class_extensions import SatkitBaseModel
+from patkit.external_class_extensions import patkitBaseModel
 from patkit.utility_functions.types import is_sequence_form
 
 _datastructures_logger = logging.getLogger('patkit.data_structures')
@@ -52,7 +52,7 @@ _datastructures_logger = logging.getLogger('patkit.data_structures')
 @dataclass
 class FileInformation:
     """
-    File and Path information for SATKIT DataObjects. 
+    File and Path information for patkit DataObjects. 
 
     recorded_data_file: str | None = None
         Name of the file containing the raw recorded data.
@@ -61,22 +61,22 @@ class FileInformation:
     recorded_path : Path | None = None
         Path to the recorded data of this DataObject - if there is original
         recorded data associated with this instance/type, defaults to None
-    satkit_data_file : str | None
-        Name of the SATKIT data file, if it exists, defaults to None.
-    satkit_meta_file : str | None
-        Name of the SATKIT meta file, if it exists, defaults to None.
-    satkit_path : Path | None
-        Path to the saved SATKIT data, if it exists, defaults to None.
+    patkit_data_file : str | None
+        Name of the patkit data file, if it exists, defaults to None.
+    patkit_meta_file : str | None
+        Name of the patkit meta file, if it exists, defaults to None.
+    patkit_path : Path | None
+        Path to the saved patkit data, if it exists, defaults to None.
         Generally this will mostly be equivalent to the recorded_path, except
         for the root level DataAggregator which contains the paths to the
-        SATKIT and recorded data root directories.
+        patkit and recorded data root directories.
     """
     recorded_data_file: str | None = None
     recorded_meta_file: str | None = None
     recorded_path: Path | None = None
-    satkit_data_file: str | None = None
-    satkit_meta_file: str | None = None
-    satkit_path: Path | None = None
+    patkit_data_file: str | None = None
+    patkit_meta_file: str | None = None
+    patkit_path: Path | None = None
 
 
 @dataclass
@@ -97,7 +97,7 @@ class ModalityData:
     timevector: np.ndarray
 
 
-class ModalityMetaData(SatkitBaseModel):
+class ModalityMetaData(patkitBaseModel):
     """
     Baseclass of Modalities' metadata classes.
     """
@@ -207,7 +207,7 @@ class PointAnnotations:
                 self.properties[key] = self.properties[key][selected]
 
 
-class RecordingMetaData(SatkitBaseModel):
+class RecordingMetaData(patkitBaseModel):
     """Basic metadata that any Recording should reasonably have."""
     prompt: str
     time_of_recording: datetime
@@ -217,16 +217,16 @@ class RecordingMetaData(SatkitBaseModel):
     path: Path
 
 
-class SessionConfig(SatkitBaseModel):
+class SessionConfig(patkitBaseModel):
     """
-    Description of a Session for import into SATKIT.
+    Description of a Session for import into patkit.
     """
     data_source: Datasource
     exclusion_list: ExclusionList | None = None
     spline_config: SplineConfig | None = None
 
 
-class StatisticMetaData(SatkitBaseModel):
+class StatisticMetaData(patkitBaseModel):
     """
     Baseclass of Statistics' metadata classes.
     """

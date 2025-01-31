@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,10 +43,10 @@ import dateutil.parser
 import numpy as np
 
 from patkit.constants import (
-    CoordinateSystems, SatkitConfigFile,
+    CoordinateSystems, patkitConfigFile,
     SplineDataColumn, SplineMetaColumn)
 from patkit.data_structures import ModalityData, Recording
-from patkit.errors import SatkitError
+from patkit.errors import patkitError
 from patkit.modalities.splines import Splines, SplineMetadata
 
 from .spline_import_config import (
@@ -256,7 +256,7 @@ def add_splines_from_individual_files(
         spline_dict = retrieve_splines(spline_file, spline_config)
         keys = list(spline_dict.keys())
         if len(keys) > 1:
-            raise SatkitError(
+            raise patkitError(
                 f"Spline file {spline_file} was supposed to "
                 f"contain splines of a single recording, "
                 f"but multiple found: {keys}.")
@@ -282,8 +282,8 @@ def add_splines(
     """
     Load and add Splines to the Recordings if available.
 
-    Note that a SatkitConfigFile.CSV_SPLINE_IMPORT file needs to be present in
-    the directory. Otherwise nothing gets loaded because SATKIT doesn't know
+    Note that a patkitConfigFile.CSV_SPLINE_IMPORT file needs to be present in
+    the directory. Otherwise nothing gets loaded because patkit doesn't know
     how to handle arbitrary spline files.
 
     Parameters
@@ -294,7 +294,7 @@ def add_splines(
         Path to the directory where the splines (and most likely other
         Recording files) are.
     """
-    spline_config_path = directory/SatkitConfigFile.SPLINE
+    spline_config_path = directory/patkitConfigFile.SPLINE
     if spline_config_path.is_file():
         spline_config = load_spline_config(spline_config_path)
         if spline_config.import_config.single_spline_file:

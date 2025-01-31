@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,10 +30,10 @@
 # citations.bib in BibTeX format.
 #
 """
-SATKIT's core datastructures.
+patkit's core datastructures.
 
 This module contains some abstract classes that are used as base classes for
-SATKIT's datastructures and are not meant to be directly inherited from.
+patkit's datastructures and are not meant to be directly inherited from.
 """
 
 from .base_classes import Statistic

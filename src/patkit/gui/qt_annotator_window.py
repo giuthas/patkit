@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -156,7 +156,7 @@ class QtAnnotatorWindow(QMainWindow, Ui_MainWindow):
         """
         Private helper function for generating the title.
         """
-        text = 'SATKIT Annotator'
+        text = 'patkit Annotator'
         text += ', prompt: ' + self.current.meta['prompt']
         text += ', recording: ' + str(self.index+1) + '/' + str(self.max_index)
         return text

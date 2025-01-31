@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -270,7 +270,7 @@ def spline_shape_metric(
 
 def run_analysis():
     """This is only a place holder function showing how each metric is supposed
-    to be run until things are more like SATKIT in general.
+    to be run until things are more like patkit in general.
     """
     # TODO: move this function and the associated data to tests and ask Kate if
     # it's ok to use her data.

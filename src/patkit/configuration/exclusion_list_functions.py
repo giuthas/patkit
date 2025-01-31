@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ from strictyaml import (Map, Optional, Seq, Str,
                         YAMLError, load)
 
 from .configuration_models import ExclusionList
-from patkit.constants import SatkitSuffix, SourceSuffix
+from patkit.constants import patkitSuffix, SourceSuffix
 from patkit.data_structures import Recording, Session
 
 _logger = logging.getLogger('patkit.configuration')
@@ -165,7 +165,7 @@ def load_exclusion_list(filepath: Path | str) -> ExclusionList:
     if isinstance(filepath, str):
         filepath = Path(filepath)
 
-    if filepath.suffix == SatkitSuffix.CONFIG:
+    if filepath.suffix == patkitSuffix.CONFIG:
         return _read_exclusion_list_from_yaml(filepath)
 
     if filepath.suffix == SourceSuffix.CSV:

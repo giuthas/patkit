@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ from pathlib import Path
 import numpy as np
 
 from patkit.errors import OverwriteError
-from patkit.external_class_extensions import SatkitBaseModel
+from patkit.external_class_extensions import patkitBaseModel
 
 from .metadata_classes import FileInformation, StatisticMetaData
 
@@ -49,7 +49,7 @@ _datastructures_logger = logging.getLogger('patkit.data_structures')
 
 class DataObject(abc.ABC):
     """
-    Abstract base class for SATKIT data objects.
+    Abstract base class for patkit data objects.
 
     Almost no class should directly inherit from this class. Exceptions are
     DataAggregator and DataContainer. The latter is the abstract baseclass for
@@ -59,7 +59,7 @@ class DataObject(abc.ABC):
     """
 
     def __init__(self,
-                 metadata: SatkitBaseModel,
+                 metadata: patkitBaseModel,
                  owner: DataAggregator | None = None,
                  file_info: FileInformation | None = None,
                  ) -> None:
@@ -130,7 +130,7 @@ class DataObject(abc.ABC):
         return self._file_info
 
     @property
-    def metadata(self) -> SatkitBaseModel:
+    def metadata(self) -> patkitBaseModel:
         """
         Metadata of this DataObject.
 
@@ -140,7 +140,7 @@ class DataObject(abc.ABC):
 
         Returns
         -------
-        SatkitBaseModel
+        patkitBaseModel
             The meta data as a Pydantic model.
         """
         return self._metadata
@@ -236,9 +236,9 @@ class DataObject(abc.ABC):
         return self._file_info.recorded_path
 
     @property
-    def satkit_data_path(self) -> Path | None:
+    def patkit_data_path(self) -> Path | None:
         """
-        Path to the SATKIT (derived) data file of this DataObject.
+        Path to the patkit (derived) data file of this DataObject.
 
         This file will exist only for saved derived data.
 
@@ -249,21 +249,21 @@ class DataObject(abc.ABC):
         Path
             The path or None if no path was set.
         """
-        if not self._file_info.satkit_data_file:
+        if not self._file_info.patkit_data_file:
             return None
-        return self.satkit_path / self._file_info.satkit_data_file
+        return self.patkit_path / self._file_info.patkit_data_file
 
-    @satkit_data_path.setter
-    def satkit_data_path(self, satkit_data_file: Path | None) -> None:
-        if satkit_data_file is None:
-            self._file_info.satkit_data_file = None
+    @patkit_data_path.setter
+    def patkit_data_path(self, patkit_data_file: Path | None) -> None:
+        if patkit_data_file is None:
+            self._file_info.patkit_data_file = None
         else:
-            self._file_info.satkit_data_file = satkit_data_file.name
+            self._file_info.patkit_data_file = patkit_data_file.name
 
     @property
-    def satkit_data_name(self) -> str | None:
+    def patkit_data_name(self) -> str | None:
         """
-        Name the SATKIT data file of this DataObject.
+        Name the patkit data file of this DataObject.
 
         May be overwritten.
 
@@ -272,16 +272,16 @@ class DataObject(abc.ABC):
         str
             The name or None if no name was set.
         """
-        return self._file_info.satkit_data_file
+        return self._file_info.patkit_data_file
 
-    @satkit_data_name.setter
-    def satkit_data_name(self, satkit_data_file: str | None) -> None:
-        self._file_info.satkit_data_file = satkit_data_file
+    @patkit_data_name.setter
+    def patkit_data_name(self, patkit_data_file: str | None) -> None:
+        self._file_info.patkit_data_file = patkit_data_file
 
     @property
-    def satkit_meta_path(self) -> Path | None:
+    def patkit_meta_path(self) -> Path | None:
         """
-        Path to the SATKIT meta data file of this DataObject.
+        Path to the patkit meta data file of this DataObject.
 
         After saving this file will exist even for recorded data.
 
@@ -292,21 +292,21 @@ class DataObject(abc.ABC):
         Path
             The path or None if no path was set.
         """
-        if not self._file_info.satkit_meta_file:
+        if not self._file_info.patkit_meta_file:
             return None
-        return self.satkit_path / self._file_info.satkit_meta_file
+        return self.patkit_path / self._file_info.patkit_meta_file
 
-    @satkit_meta_path.setter
-    def satkit_meta_path(self, satkit_meta_file: Path | None) -> None:
-        if satkit_meta_file is None:
-            self._file_info.satkit_meta_file = None
+    @patkit_meta_path.setter
+    def patkit_meta_path(self, patkit_meta_file: Path | None) -> None:
+        if patkit_meta_file is None:
+            self._file_info.patkit_meta_file = None
         else:
-            self._file_info.satkit_meta_file = satkit_meta_file.name
+            self._file_info.patkit_meta_file = patkit_meta_file.name
 
     @property
-    def satkit_meta_name(self) -> str | None:
+    def patkit_meta_name(self) -> str | None:
         """
-        Name the SATKIT meta data file of this DataObject.
+        Name the patkit meta data file of this DataObject.
 
         May be overwritten.
 
@@ -315,16 +315,16 @@ class DataObject(abc.ABC):
         str
             The name or None if no name was set.
         """
-        return self._file_info.satkit_meta_file
+        return self._file_info.patkit_meta_file
 
-    @satkit_meta_name.setter
-    def satkit_meta_name(self, satkit_meta_file: str | None) -> None:
-        self._file_info.satkit_meta_file = satkit_meta_file
+    @patkit_meta_name.setter
+    def patkit_meta_name(self, patkit_meta_file: str | None) -> None:
+        self._file_info.patkit_meta_file = patkit_meta_file
 
     @property
-    def satkit_path(self) -> Path | None:
+    def patkit_path(self) -> Path | None:
         """
-        Path to the SATKIT files of this DataObject.
+        Path to the patkit files of this DataObject.
 
         May be overwritten.
 
@@ -333,18 +333,18 @@ class DataObject(abc.ABC):
         Path
             The path or None if no path was set.
         """
-        if not self._file_info.satkit_path:
+        if not self._file_info.patkit_path:
             return None
         if self.owner:
-            return self.owner.satkit_path / self._file_info.satkit_path
-        return self._file_info.satkit_path
+            return self.owner.patkit_path / self._file_info.patkit_path
+        return self._file_info.patkit_path
 
-    @satkit_path.setter
-    def satkit_path(self, satkit_path: str | Path | None) -> None:
-        if satkit_path is None or isinstance(satkit_path, Path):
-            self._file_info.satkit_path = satkit_path
+    @patkit_path.setter
+    def patkit_path(self, patkit_path: str | Path | None) -> None:
+        if patkit_path is None or isinstance(patkit_path, Path):
+            self._file_info.patkit_path = patkit_path
         else:
-            self._file_info.satkit_path = Path(satkit_path)
+            self._file_info.patkit_path = Path(patkit_path)
 
     @property
     def is_fully_initialised(self) -> bool:
@@ -392,7 +392,7 @@ class DataAggregator(DataObject):
 
     def __init__(self,
                  name: str,
-                 metadata: SatkitBaseModel,
+                 metadata: patkitBaseModel,
                  owner: DataObject | None = None,
                  file_info: FileInformation | None = None,
                  statistics: dict[str, 'Statistic'] | None = None
@@ -465,11 +465,11 @@ class DataContainer(DataObject):
     """
     @classmethod
     @abc.abstractmethod
-    def generate_name(cls, params: SatkitBaseModel) -> str:
+    def generate_name(cls, params: patkitBaseModel) -> str:
         """Abstract version of generating a RecordingMetric name."""
 
     def __init__(self,
-                 metadata: SatkitBaseModel,
+                 metadata: patkitBaseModel,
                  owner: DataObject | None = None,
                  file_info: FileInformation | None = None,
                  ) -> None:
@@ -535,7 +535,7 @@ class Statistic(DataContainer):
 
     def __init__(
             self,
-            metadata: SatkitBaseModel,
+            metadata: patkitBaseModel,
             owner: DataAggregator | None = None,
             file_info: FileInformation | None = None,
             parsed_data: np.ndarray | None = None,
@@ -545,14 +545,14 @@ class Statistic(DataContainer):
 
         Parameters
         ----------
-        metadata : SatkitBaseModel
+        metadata : patkitBaseModel
             Parameters used in calculating this Statistic.
         owner : DataAggregator
             The owner of this Statistic. Usually this will be the object whose
             contents this Statistic was calculated on. By default, None, to
             facilitate mass generation and setting the owner after wards.
         file_info : FileInformation
-            The SATKIT load path and names for this Statistic. Recorded path and
+            The patkit load path and names for this Statistic. Recorded path and
             names should usually be empty. Defaults to None, when the Statistic
             hasn't been saved yet.
         parsed_data : Optional[np.ndarray], optional

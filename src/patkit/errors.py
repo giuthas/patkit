@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,15 +30,15 @@
 # citations.bib in BibTeX format.
 #
 """
-Error classes for SATKIT.
+Error classes for patkit.
 """
 
 
-class SatkitError(Exception):
-    """Base class of SATKIT Errors."""
+class patkitError(Exception):
+    """Base class of patkit Errors."""
 
 
-class MissingDataError(SatkitError):
+class MissingDataError(patkitError):
     """
     Data requested from Modality but is unavailable.
 
@@ -48,21 +48,21 @@ class MissingDataError(SatkitError):
     """
 
 
-class OverwriteError(SatkitError):
+class OverwriteError(patkitError):
     """
     Modality or Statistic already exists in container.
     """
 
 
-class DimensionMismatchError(SatkitError):
+class DimensionMismatchError(patkitError):
     """
     Trying to replace the data or timevector in a Modality with non-matching dtype, size, or shape.
     """
 
 
-class UnrecognisedNormError(SatkitError):
+class UnrecognisedNormError(patkitError):
     """Did not have an implementation for requested norm."""
 
 
-class UltrasoundInterpolationError(SatkitError):
+class UltrasoundInterpolationError(patkitError):
     """Interpolated ultrasound image could not be produced."""

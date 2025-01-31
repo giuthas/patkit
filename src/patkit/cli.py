@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 # citations.bib in BibTeX format.
 #
 """
-SATKIT Commandline main command.
+patkit Commandline main command.
 """
 
 import click
@@ -49,14 +49,14 @@ def run_cli(
         verbosity: int
 ) -> None:
     """
-    SATKIT - Speech Analysis ToolKIT
+    patkit - Speech Analysis ToolKIT
 
-    Satkit collects tools for phonetic analysis of speech data. It includes
+    patkit collects tools for phonetic analysis of speech data. It includes
     tools for analysing audio and articulatory data, a commandline interface, an
     annotator GUI, and a Python programming API. See documentation for more
     details.
 
-    By default, Satkit will open the given path in the annotator GUI.
+    By default, patkit will open the given path in the annotator GUI.
     """
 
 

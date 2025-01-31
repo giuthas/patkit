@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ def generate_aaa_recording_list(
     The processed files are recording meta: .txt, ultrasound meta: US.txt or
     .param, ultrasound: .ult, and audio waveform: .wav.
 
-    If there is a `satkit_spline_import_config.yaml` present Splines modalities
+    If there is a `patkit_spline_import_config.yaml` present Splines modalities
     will be added to the Recordings, but any missing ones (or even all missing)
     are considered non-fatal.
 

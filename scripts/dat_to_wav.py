@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,13 +30,13 @@
 # citations.bib in BibTeX format.
 #
 
-from satkit.import_formats.rasl_dat_to_wav import dat_to_wav
+from patkit.import_formats.rasl_dat_to_wav import dat_to_wav
 from pathlib import Path
 import time
 import sys
 
 # setting path
-sys.path.append('../satkit')
+sys.path.append('../patkit')
 
 
 def main(args):

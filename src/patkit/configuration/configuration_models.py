@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ These are the code friendly wrappers for the configuration structures.
 comment-retaining dictionary-like structures. Here those structures get parsed
 into pydantic models that know what their fields actually are.
 
-This two level structure is maintained so that in some version after SATKIT 1.0
+This two level structure is maintained so that in some version after patkit 1.0
 we can implement configuration round tripping with preserved comments.
 """
 
@@ -125,7 +125,7 @@ class PathStructure(UpdatableBaseModel):
 
 class MainConfig(UpdatableBaseModel):
     """
-    Main configuration data of SATKIT.
+    Main configuration data of patkit.
     """
     epsilon: float
     mains_frequency: float

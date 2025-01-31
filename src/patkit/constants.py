@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 # citations.bib in BibTeX format.
 #
 """
-This module contains all sorts of constants used by SATKIT.
+This module contains all sorts of constants used by patkit.
 
 Enums are used for constants that need to be instantiated from other variables.
 They maybe used as fields in other objects. Using an Enum limits the possible
@@ -75,7 +75,7 @@ class CoordinateSystems(Enum):
 
 class Datasource(Enum):
     """
-    Data sources SATKIT can handle.
+    Data sources patkit can handle.
 
     Used in saving and loading to identify the data source in config, as well
     as in meta and skip the step of trying to figure the data source out from
@@ -90,7 +90,7 @@ class GuiColorScheme(Enum):
     """
     GUI styles.
 
-    FOLLOW_SYSTEM means SATKIT will
+    FOLLOW_SYSTEM means patkit will
     """
     DARK = "dark"
     FOLLOW_SYSTEM = "follow_system"
@@ -128,7 +128,7 @@ class IntervalCategory(Enum):
 
 
 @dataclass(frozen=True)
-class SatkitConfigFile:
+class patkitConfigFile:
     """
     Human written yaml files to control importing data.
     """
@@ -137,12 +137,12 @@ class SatkitConfigFile:
 
 
 @dataclass(frozen=True)
-class SatkitSuffix:
+class patkitSuffix:
     """
-    Suffixes for files saved by SATKIT.
+    Suffixes for files saved by patkit.
 
     These exist as a convenient way of not needing to risk typos. To see the
-    whole layered scheme SATKIT uses see the 'Saving and Loading Data' section
+    whole layered scheme patkit uses see the 'Saving and Loading Data' section
     in the documentation.
     """
     CONFIG = ".yaml"
@@ -152,7 +152,7 @@ class SatkitSuffix:
 
 class SavedObjectTypes(Enum):
     """
-    Represent type of a saved patkit object in .satkit_meta.
+    Represent type of a saved patkit object in .patkit_meta.
     """
     # TODO 1.0: Check if this is actually in use.
     SESSION = "Session"
@@ -163,10 +163,10 @@ class SavedObjectTypes(Enum):
 @dataclass(frozen=True)
 class SourceSuffix:
     """
-    Suffixes for files imported by SATKIT.
+    Suffixes for files imported by patkit.
 
     These exist as a convenient way of not needing to risk typos and for
-    recognising what SATKIT is being asked to import.
+    recognising what patkit is being asked to import.
 
     Note that AAA_ULTRA_META_OLD is not a proper suffix and won't be recognised
     by pathlib and Path as such. Instead, do this
@@ -184,14 +184,14 @@ class SourceSuffix:
     CSV = ".csv"
 
 
-# def satkit_suffix(
-#         satkit_type: Union[Recording, Session, Modality]) -> str:
+# def patkit_suffix(
+#         patkit_type: Union[Recording, Session, Modality]) -> str:
 #     """
-#     Generate a suffix for the save file of a SATKIT data structure.
+#     Generate a suffix for the save file of a patkit data structure.
 
 #     Parameters
 #     ----------
-#     satkit_type : Union[Recording, Session, Modality]
+#     patkit_type : Union[Recording, Session, Modality]
 #         The datastructures type.
 
 #     Returns
@@ -203,12 +203,12 @@ class SourceSuffix:
 #     # suffixes.
 #     # Another is to let all the classes take care of it themselves and make it
 #     # into a Protocol (Python version of an interface).
-#     suffix = SatkitSuffix.META
-#     if satkit_type == Recording:
+#     suffix = patkitSuffix.META
+#     if patkit_type == Recording:
 #         suffix = '.Recording' + suffix
-#     elif satkit_type == Session:
+#     elif patkit_type == Session:
 #         suffix = '.Session' + suffix
-#     elif satkit_type == Modality:
+#     elif patkit_type == Modality:
 #         suffix = ''
 #     return suffix
 

@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -232,7 +232,7 @@ def recording_timeseries_figure(
     """
     Create a figure from the recording and write it out to the pdf.
 
-    Settings will have been read from satkit_publish_parameters.yaml in the
+    Settings will have been read from patkit_publish_parameters.yaml in the
     configuration folder unless another setting file has been specified either
     on the commandline or in configuration/configuration.yaml.
 
@@ -344,7 +344,7 @@ def publish_session_pdf(
     """
     Draw all Recordings in the Session into a pdf file.
 
-    The filename is read from configuration (likely satkit_publish_config.yaml
+    The filename is read from configuration (likely patkit_publish_config.yaml
     or similar specified in the main config file.)
 
     Excluded Recordings are skipped.

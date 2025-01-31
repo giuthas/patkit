@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ import numpy as np
 import nestedtext
 
 from patkit.configuration import PathStructure
-from patkit.constants import SatkitConfigFile, SatkitSuffix
+from patkit.constants import patkitConfigFile, patkitSuffix
 from patkit.data_import import (
     modality_adders, add_splines, load_session_config
 )
@@ -69,9 +69,9 @@ def _load_data_container_data_and_meta(
     Only a helper function, not for general use.
     """
     file_info = FileInformation(
-        satkit_path=Path(""),
-        satkit_data_file=data_container_schema.data_name,
-        satkit_meta_file=data_container_schema.meta_name,
+        patkit_path=Path(""),
+        patkit_data_file=data_container_schema.data_name,
+        patkit_meta_file=data_container_schema.meta_name,
     )
     meta_path = path / data_container_schema.meta_name
     data_path = path / data_container_schema.data_name
@@ -215,9 +215,9 @@ def load_recording(filepath: Path) -> Recording:
     ------
     NotImplementedError
         If there is no previously saved metadata for the recording. This maybe
-        handled by a future version of SATKIT, if it should prove necessary.
+        handled by a future version of patkit, if it should prove necessary.
     """
-    # decide which loader we will be using based on either filepath.satkit_meta
+    # decide which loader we will be using based on either filepath.patkit_meta
     # or config[''] in that order and document this behaviour. this way if the
     # data has previously been loaded patkit can decide itself what to do with
     # it and there is an easy place where to add processing
@@ -225,7 +225,7 @@ def load_recording(filepath: Path) -> Recording:
     # based on what is present as the final fall back or as the option tried if
     # no meta and config has the wrong guess.
 
-    meta_path = filepath.with_suffix(SatkitSuffix.META)
+    meta_path = filepath.with_suffix(patkitSuffix.META)
     if meta_path.is_file():
         # this is a list of Modalities, each with a data path and meta path
         meta = read_recording_meta(filepath)
@@ -237,8 +237,8 @@ def load_recording(filepath: Path) -> Recording:
     # TODO: new directory structure
     file_info = FileInformation(
         recorded_path=Path(""),
-        satkit_path=Path(""),
-        satkit_meta_file=meta_path.name)
+        patkit_path=Path(""),
+        patkit_meta_file=meta_path.name)
     recording = Recording(meta.parameters, file_info=file_info)
 
     for modality in meta.modalities:
@@ -281,7 +281,7 @@ def load_recordings(
     """
     if not recording_metafiles:
         recording_metafiles = directory.glob(
-            "*.Recording" + str(SatkitSuffix.META))
+            "*.Recording" + str(patkitSuffix.META))
 
     recordings = [load_recording(directory / name)
                   for name in recording_metafiles]
@@ -314,9 +314,9 @@ def load_recording_session(
         directory = Path(directory)
 
     if not session_config_path:
-        session_config_path = directory / SatkitConfigFile.SESSION
+        session_config_path = directory / patkitConfigFile.SESSION
 
-    filename = f"{directory.parts[-1]}{'.Session'}{SatkitSuffix.META}"
+    filename = f"{directory.parts[-1]}{'.Session'}{patkitSuffix.META}"
     filepath = directory / filename
 
     raw_input = nestedtext.load(filepath)
@@ -334,8 +334,8 @@ def load_recording_session(
     # TODO: don't really know if the current FileInformation handles the
     # duality of config from user and saved meta too well.
     file_info = FileInformation(
-        satkit_meta_file=filename,
-        satkit_path=directory,
+        patkit_meta_file=filename,
+        patkit_path=directory,
         recorded_path=directory,
         recorded_meta_file=session_config_path.name)
     session = Session(

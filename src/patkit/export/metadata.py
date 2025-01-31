@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ def _export_header(
 ) -> None:
     file.write(
         f"Metadata for {object_name} exported by "
-        f"SATKIT {PATKIT_VERSION} to\n")
+        f"patkit {PATKIT_VERSION} to\n")
     file.write(f"\t{filename}.\n\n")
     if file_info is not None:
         file.write(f"{file_info}\n\n")

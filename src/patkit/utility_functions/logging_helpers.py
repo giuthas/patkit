@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ last_log_time = time.time()
 # passed arguments instead. Otherwise, there will be trouble with circular
 # imports as this module will get imported before logging is actually properly
 # setup.
-# _satkit_logger = logging.getLogger('patkit')
+# _patkit_logger = logging.getLogger('patkit')
 
 
 def set_logging_level(verbosity: int | None) -> logging.Logger:

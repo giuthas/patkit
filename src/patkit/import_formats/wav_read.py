@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ from pathlib import Path
 import numpy as np
 import scipy.io.wavfile as sio_wavfile
 
-import patkit.audio_processing as satkit_audio
+import patkit.audio_processing as patkit_audio
 from patkit.data_structures import ModalityData
 
 
@@ -95,11 +95,11 @@ def read_wav_and_detect_beep(
 
     # use a high-pass filter for removing the mains frequency (and anything
     # below it) from the recorded sound.
-    go_signal, has_speech = satkit_audio.detect_beep_and_speech(
+    go_signal, has_speech = patkit_audio.detect_beep_and_speech(
         wav_frames,
         wav_fs,
-        satkit_audio.MainsFilter.mains_filter['b'],
-        satkit_audio.MainsFilter.mains_filter['a'],
+        patkit_audio.MainsFilter.mains_filter['b'],
+        patkit_audio.MainsFilter.mains_filter['a'],
         path
     )
 

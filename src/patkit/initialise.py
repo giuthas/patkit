@@ -4,7 +4,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ def initialise_patkit(
         logging_level: int | None = None,
 ) -> tuple[Configuration, Logger, Session]:
     """
-    Initialise the basic structures for running SATKIT.
+    Initialise the basic structures for running patkit.
 
     This sets up the argument parser, reads the basic configuration, sets up the
     logger, and loads the recorded and saved data into a Session. To initialise

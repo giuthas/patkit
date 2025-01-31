@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -237,7 +237,7 @@ class SatInterval(SatAnnotation):
     def is_at_time(self, time: float, epsilon) -> bool:
         """
         Intervals are considered equivalent if the difference between their
-        `begin` values is < epsilon. Epsilon is a constant defined in SATKIT's
+        `begin` values is < epsilon. Epsilon is a constant defined in patkit's
         configuration.
         """
         return abs(self.begin - time) < epsilon
@@ -251,7 +251,7 @@ class SatInterval(SatAnnotation):
         Check if the given time is between the previous and next boundary.
 
         Usual caveats about float testing don't apply, because each boundary is
-        padded with SATKIT epsilon. Tests used do not include equality with
+        padded with patkit epsilon. Tests used do not include equality with
         either bounding boundary, and that may or may not be trusted to be the
         actual case depending on how small the epsilon is.
 
@@ -334,7 +334,7 @@ class SatTier(list):
 
         Returns None, if there is no boundary at time. 
 
-        'Being at time' is defined as being within SATKIT epsilon of the given
+        'Being at time' is defined as being within patkit epsilon of the given
         timestamp.
         """
         for interval in self:

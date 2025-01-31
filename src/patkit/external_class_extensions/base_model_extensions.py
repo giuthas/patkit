@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ _logger = logging.getLogger('patkit.base_model_extensions')
 # UpdatableBaseModel.
 
 
-class SatkitBaseModel(BaseModel):
+class patkitBaseModel(BaseModel):
     """
     A BaseModel which accepts empty strings for any field as None.
 
@@ -76,7 +76,7 @@ class SatkitBaseModel(BaseModel):
         return input_string
 
 
-class UpdatableBaseModel(SatkitBaseModel):
+class UpdatableBaseModel(patkitBaseModel):
     """
     A BaseModel which can be updated with new data.
 

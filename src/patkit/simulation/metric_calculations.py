@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -195,7 +195,7 @@ def calculate_perturbed_metric_series(
     metric : MetricFunction
         The metric function. Should accept a 2D np.ndarray as its argument and
         return an `np.ndarray`. This can be generated with `functools.partial`
-        from standard SATKIT metrics.
+        from standard patkit metrics.
     contour_to_perturb : np.ndarray
         The contour the perturbations will be applied to.
     reference_contour : Optional[np.ndarray], optional

@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ from pathlib import Path
 from patkit.audio_processing import MainsFilter
 from patkit.configuration import Configuration, PathStructure
 from patkit.constants import (
-    Datasource, SourceSuffix, SatkitSuffix, SatkitConfigFile)
+    Datasource, SourceSuffix, patkitSuffix, patkitConfigFile)
 from patkit.data_import import (
     generate_aaa_recording_list, load_session_config)
 from patkit.data_structures import (
@@ -60,9 +60,9 @@ def load_data(path: Path, configuration: Configuration) -> Session:
     Parameters
     ----------
     path : Path
-        Directory or SATKIT metafile to read the Session from.
+        Directory or patkit metafile to read the Session from.
     configuration : Configuration
-        Satkit configuration.
+        patkit configuration.
     Returns
     -------
     Session
@@ -85,7 +85,7 @@ def load_data(path: Path, configuration: Configuration) -> Session:
             recorded_data_path=path,
             detect_beep=configuration.data_run_config.flags.detect_beep
         )
-    elif path.suffix == '.satkit_meta':
+    elif path.suffix == '.patkit_meta':
         session = load_recording_session(path)
     else:
         logger.error(
@@ -114,9 +114,9 @@ def read_recording_session_from_dir(
     """
     containing_dir = recorded_data_path.parts[-1]
 
-    session_config_path = recorded_data_path / SatkitConfigFile.SESSION
+    session_config_path = recorded_data_path / patkitConfigFile.SESSION
     session_meta_path = recorded_data_path / (containing_dir + '.Session' +
-                                              SatkitSuffix.META)
+                                              patkitSuffix.META)
     if session_meta_path.is_file():
         return load_recording_session(recorded_data_path, session_config_path)
 

@@ -3,7 +3,7 @@
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
 # This file is part of Speech Articulation ToolKIT
-# (see https://github.com/giuthas/satkit/).
+# (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 # citations.bib in BibTeX format.
 #
 """
-SATKIT interactive interpreter.
+patkit interactive interpreter.
 """
 import atexit
 import code
@@ -45,7 +45,7 @@ from patkit.data_structures import Session
 
 def run_interpreter(session: Session, configuration: Configuration):
     """
-    Run the SATKIT interactive interpreter on the command line.
+    Run the patkit interactive interpreter on the command line.
 
     Parameters
     ----------
@@ -73,6 +73,6 @@ def run_interpreter(session: Session, configuration: Configuration):
     atexit.register(readline.write_history_file, python_history_file)
 
     code.InteractiveConsole(variables).interact(
-        banner="SATKIT Interactive Console",
-        exitmsg="Exiting SATKIT Interactive Console",
+        banner="patkit Interactive Console",
+        exitmsg="Exiting patkit Interactive Console",
     )
