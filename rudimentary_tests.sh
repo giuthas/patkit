@@ -3,7 +3,7 @@
 ## Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 ##
 ## This file is part of Speech Articulation ToolKIT
-## (see https://github.com/giuthas/satkit/).
+## (see https://github.com/giuthas/patkit/).
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -30,21 +30,22 @@
 ## citations.bib in BibTeX format.
 ##
 
-# Return instructions for how to run SATKIT
-./satkit.py
+# Return instructions for how to run PATKIT
+patkit
+patkit --help
 
 # Run with the default configuration and show 10 recordings in the
 # GUI. 
 #   - Just files, nothing fancy.
-./satkit.py recorded_data/tongue_data_1_1/
+patkit recorded_data/tongue_data_1_1/
 # The same but in interactive interpreter mode
-./satkit_interactive.py recorded_data/tongue_data_1_1/
+./patkit_interactive.py recorded_data/tongue_data_1_1/
 
 #   - Missing files
-./satkit.py recorded_data/tongue_data_1_2/
+patkit recorded_data/tongue_data_1_2/
 
 #   - Missing files, exclusion list in .csv format
-./satkit.py recorded_data/tongue_data_1_2/ -e recorded_data/tongue_data_1_2/exclusion_list.csv
+patkit recorded_data/tongue_data_1_2/ -e recorded_data/tongue_data_1_2/exclusion_list.csv
 
 #   - Missing files, exclusion list in .yaml format
-./satkit.py recorded_data/tongue_data_1_2/ -e recorded_data/tongue_data_1_2/exclusion_list.yaml
+patkit recorded_data/tongue_data_1_2/ -e recorded_data/tongue_data_1_2/exclusion_list.yaml

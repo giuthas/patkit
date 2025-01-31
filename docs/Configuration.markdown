@@ -7,8 +7,8 @@ TODO 0.15: See that the below description actually corresponds to reality.
 There are some configuration files that appear under both global and local
 below. Local overrides global in all cases. These could also be called user
 specific (global) and data specific (local) configuration. The global options
-are set by files in the user's `~/.satkit` (on Linux/macOS) or
-`%userprofile%\.satkit` (on Windows) folder. The local options live with the
+are set by files in the user's `~/.patkit` (on Linux/macOS) or
+`%userprofile%\.patkit` (on Windows) folder. The local options live with the
 data as is explained below in [Local Configuration](#local-configuration).
 
 There are examples of configuration files in the GitHub repository in the
@@ -17,11 +17,11 @@ There are examples of configuration files in the GitHub repository in the
 ## Command history
 
 By default, the command history of the interactive commandline is stored with
-the global (user specific) configuration in the `.satkit` folder inside the
+the global (user specific) configuration in the `.patkit` folder inside the
 `history` file. It is plain text and of the same format as the `.python_history`
 file. In fact, with a bit of tweaking a user could use `.python_history` instead
-because the SATKIT interactive interpreter is actually just a Python interpreter
-with SATKIT data preloaded. However, this is only recommended if you know what
+because the PATKIT interactive interpreter is actually just a Python interpreter
+with PATKIT data preloaded. However, this is only recommended if you know what
 you are doing.
 
 ## Global configuration

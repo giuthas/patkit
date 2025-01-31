@@ -1,4 +1,4 @@
-# SATKIT development guide
+# PATKIT development guide
 
 ## Code conventions
 
@@ -35,10 +35,10 @@ the following additions:
 In Python a module is -- [roughly
 speaking](https://docs.python.org/3/reference/import.html#packages) -- any .py
 file and a regular package is a directory that contains a `__init__.py` file
-and possibly some other `.py` files. In SATKIT `__init__.py` files are used for
+and possibly some other `.py` files. In PATKIT `__init__.py` files are used for
 two purposes: Defining the public API of the module and running any
 initialization that is needed. For an example have a look at
-`satkit/__init__.py`.
+`patkit/__init__.py`.
 
 We'll try to do imports mainly as absolute imports with the exception that
 `__init__.py` files will import modules from the local directory with `from
@@ -52,15 +52,15 @@ understanding that releases before 1.0 (i.e. current releases at time of
 writing) have not been tested in any way.
 
 For the versions available, see the [tags on this
-repository](https://github.com/giuthas/satkit/tags).
+repository](https://github.com/giuthas/patkit/tags).
 
-## SATKIT's branches
+## PATKIT's branches
 
-SATKIT uses gitflow as the branching convention (until we have a reason for
+PATKIT uses gitflow as the branching convention (until we have a reason for
 doing something else). This means we have the following kinds of branches:
 
 - `main` is the release branch. Any update here after 1.0 will get its own
-  version number and be considered a new version of SATKIT. See
+  version number and be considered a new version of PATKIT. See
   [Versioning](#versioning) above.
 - `devel` is the main development branch. New features are added by branching
   from devel, working on the feature branch, and merging back to devel before
@@ -80,7 +80,7 @@ doing something else). This means we have the following kinds of branches:
 
 ### Making a release
 
-A release of SATKIT is created as follows:
+A release of PATKIT is created as follows:
 
 1. If planning a major or minor release (first or second version number
    increments), check that all features in the current roadmap are either
@@ -113,14 +113,14 @@ A release of SATKIT is created as follows:
 5. Merge `main` to the release branch (not the other way around).
 6. Check that installation works:
    - This used to mean checking that conda environments are up-to-date. 
-     - It is especially possible that satkit-stable is neither up to date with
-       satkit-devel, nor tested.
-     - While we are in the time before 1.0, satkit-stable most likely does not
+     - It is especially possible that patkit-stable is neither up to date with
+       patkit-devel, nor tested.
+     - While we are in the time before 1.0, patkit-stable most likely does not
        work. 
    - This will soon mean checking that running with uv works and what ever
      can be done to check that installing with uv works.
 7. Run tests.
-   - These don't exist yet at the time of SATKIT 0.10.0 except as
+   - These don't exist yet at the time of PATKIT 0.10.0 except as
      'rudimentary_tests.sh'.
 8. Fix any bugs that occur, run tests to see that they pass, update the docs.
    - Check if [Changelog](Changelog.markdown) needs any final updates.

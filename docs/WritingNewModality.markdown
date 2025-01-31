@@ -26,11 +26,11 @@ So depending on the case, to create a new Modality we may need to implement at l
 
 ## What the New Modality Class should do?
 
-Have a look in `satkit/modalities/modalities.py`. The classes deal with which functions to use for reading their data from files and what to do with possible metadata that needs to be stored. On top of that some of them have special case accessors like the `interpolated_image` and `interpolated_frames` in `RawUltrasound`. Other than that Modalities don't really do anything.
+Have a look in `patkit/modalities/modalities.py`. The classes deal with which functions to use for reading their data from files and what to do with possible metadata that needs to be stored. On top of that some of them have special case accessors like the `interpolated_image` and `interpolated_frames` in `RawUltrasound`. Other than that Modalities don't really do anything.
 
 ## Creating a Modality Instance
 
-Assuming that the new Modality is a data Modality and not a derived one, it is going to need a read function that goes into `satkit/formats`. The reason these aren't tied to the import functions in `satkit/data_import` is that the same file format -- especially `wav` -- may get used by many datasources.
+Assuming that the new Modality is a data Modality and not a derived one, it is going to need a read function that goes into `patkit/formats`. The reason these aren't tied to the import functions in `patkit/data_import` is that the same file format -- especially `wav` -- may get used by many datasources.
 
 If a datasource already exists for the new Modality then there should already be an import function like `generate_aaa_recording`, but if not then that needs to be written to deal with reading Recording specific metadata and creating the Recording to contain the Modalities.
 

@@ -82,7 +82,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   DataAggregator. Recording will be split to Source and Trial, and DataSet added
   as a class that contains Sessions.
 - There maybe references to the old name (SATKIT) in documentation and source
-  code. These will be updated as they are found.
+  code. These will be updated as they are found. Please let us know if you spot
+  one.
 
 ### Bugs
 
@@ -120,8 +121,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Experimental interactive workflow. 
   - Supported by interface and data initialisation being collected into some
     simple-to-use functions.
-  - Also supported by temporary script file `satkit_interactive.py`.
-    - Runs like `satkit.py` but instead of starting the GUI annotator, starts an 
+  - Also supported by temporary script file `patkit_interactive.py`.
+    - Runs like `patkit.py` but instead of starting the GUI annotator, starts an 
       interactive Python session.
 - Exporting data from Modalities into DataFrames for external analysis.
 
@@ -131,7 +132,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - Includes an option of exporting with label info from TextGrids.
   - Experimentally enabled export of several derived modalities into the same csv
     file.
-- A script to run SATKIT as an interactive interpreter. 
+- A script to run PATKIT as an interactive interpreter. 
   - The same commands can obviously be copy-pasted into an interpreter to get some
     data loaded and processable in interactive mode.
 - Some helpful progress indicators to show how the data loading is going.
@@ -140,8 +141,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## Changed
 
-- A lot of functionality that lived in `satkit.py` is now in regular satkit
-  library functions and in the new `satkit/satkit.py` module.
+- A lot of functionality that lived in `patkit.py` is now in regular patkit
+  library functions and in the new `patkit/patkit.py` module.
 - Undefined fields are no longer allowed in config files.
 
 ### Removed
@@ -155,8 +156,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Bugs
 
 - Same as previous versions.
-- Command history does not yet work when running SATKIT as an interactive
-  interpreter with `satkit_interactive.py`.
+- Command history does not yet work when running PATKIT as an interactive
+  interpreter with `patkit_interactive.py`.
 - Undefined fields in config files should have a clearer error message. And so
   should errors in config files in general.
 
@@ -218,9 +219,9 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Deprecated
 
-- satkit.py will eventually be removed when running SATKIT will be moved to
-  access points. This means SATKIT -- when correctly installed -- will run with
-  from the command line with: `satkit [command] [arguments]`.
+- patkit.py will eventually be removed when running PATKIT will be moved to
+  access points. This means PATKIT -- when correctly installed -- will run with
+  from the command line with: `patkit [command] [arguments]`.
 
 ### Fixed
 
@@ -228,7 +229,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   `%Y-%m-%d %I:%M:%S %p`.
 - Parsing yaml exclusion lists should now work also when some of the headings
   are empty.
-- Added the seaborn package to conda environment satkit-devel to make it work
+- Added the seaborn package to conda environment patkit-devel to make it work
   properly.
 
 ### Known issues

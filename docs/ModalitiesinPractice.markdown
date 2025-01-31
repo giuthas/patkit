@@ -1,6 +1,6 @@
 # Modalities in Practice
 
-The diagram below shows an example of regular Modalities and a derived Modality in practice. The example is directly based on classes that will be instantieted when ultrasound data from AAA is loaded into SATKIT and PixelDifference is run on the data.
+The diagram below shows an example of regular Modalities and a derived Modality in practice. The example is directly based on classes that will be instantiated when ultrasound data from AAA is loaded into PATKIT and PixelDifference is run on the data.
 
 ```mermaid
 classDiagram
@@ -36,4 +36,4 @@ classDiagram
 
 ## Notes on specific Modalities
 
-- [Splines in SATKIT](Splines.markdown)
+- [Splines in PATKIT](Splines.markdown)

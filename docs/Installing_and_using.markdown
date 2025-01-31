@@ -36,7 +36,7 @@ This works independent of patkit being released on
 - Fork patkit on [github](https://github.com/giuthas/patkit) if you like, or
   just clone it directly with `git clone https://github.com/giuthas/patkit` or
   download [the latest
-  sources](https://github.com/giuthas/satkit/releases/latest).
+  sources](https://github.com/giuthas/patkit/releases/latest).
 - In the root directory of the repository on your machine run `uv build` and `uv
   tool install patkit`.
 - Patkit now runs from the commandline with `patkit`. Try `patkit --help` for

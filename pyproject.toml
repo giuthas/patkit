@@ -48,17 +48,14 @@ dependencies = [
 
 
 [project.urls]
-bug_tracker = "https://github.com/giuthas/satkit/issues"
-changelog = "https://github.com/giuthas/satkit/blob/main/docs/Release_notes.markdown"
-documentation = "https://giuthas.github.io/satkit/"
-homepage = "github.com/giuthas/satkit"
+bug_tracker = "https://github.com/giuthas/patkit/issues"
+changelog = "https://github.com/giuthas/patkit/blob/main/docs/Release_notes.markdown"
+documentation = "https://giuthas.github.io/patkit/"
+homepage = "github.com/giuthas/patkit"
 repository = "github.com"
 
 [project.scripts]
 patkit = "patkit:run_cli"
-
-#[project.gui-scripts]
-#satkit-gui = "satkit:main_gui"
 
 [build-system]
 requires = ["hatchling"]
