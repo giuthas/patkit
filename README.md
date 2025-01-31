@@ -1,11 +1,15 @@
 # PATKIT - Phonetic Analysis ToolKIT 
 
-![PATKIT GUI](docs/SATKIT_UI.png)
+![PATKIT GUI](docs/PATKIT_UI.png)
 
-Tools for processing speech data. While currently these tools mainly work on
-tongue and larynx ultrasound as well as audio, in the future, the toolkit will
-include facilities for processing other kinds of articulatory data. The first
-two tools to be implemented are Optical Flow and Pixel Difference.
+PATKIT provides tools for phonetic analysis of speech data. It includes a GUI
+for manual assessment/analysis/annotation (see picture above), command line
+tools for batch processing, and an API for programming your own tools.
+
+While currently PATKIT's tools mainly work on tongue and larynx ultrasound as
+well as audio, in the future, the toolkit will include facilities for processing
+other kinds of articulatory data. The first two tools to be implemented are
+Optical Flow and Pixel Difference.
 
 Optical Flow tracks local changes in ultrasound frames and estimates
 the flow field based on these.
@@ -15,124 +19,41 @@ uninterpolated data and produce measures of change over the course of a
 recording. How they work is explained in Chapter 3 of Pertti Palo's [PhD
 thesis](https://eresearch.qmu.ac.uk/handle/20.500.12289/10163).
 
-## Major update -- version 1.0 -- coming up
+## Getting PATKIT
 
-There will be incremental 0.x releases until the codebase reaches milestones for
-version 1.0 (See [Changelog](docs/Changelog.markdown)). While this notice is here in
-the main branch, that update is not yet complete. In the meanwhile, if you wish
-to try PATKIT or contribute to the code or as an alpha/beta tester, please
-contact Pertti for instructions.
+[Detailed instructions](docs/Installing_and_using.markdown).
 
-2024-11-11: As the timeline has drawn out quite a bit from the originally
-intended, time for a timeline update. Original plan for 1.0 was 2020 (yes 2020),
-and later 2021 and 2023. Good ideas piled and work for various conferences also
-piled, and it soon made no sense to not do a proper overhaul of the plan.
-Current plan does not have a specific time for when 1.0 should be released, but
-it does have a limited (if a bit lengthy) feature set. These will be rolled out
-in about 10-15 minor releases (versions 0.11-0.21/0.26), which will be followed
-by 1.0-alpha, 1.0-beta, 1.0-release-candidate, and 1.0.
+### Quick start guide: 
 
-## Current version
+Check that [PyPi](https://pypi.org/search/?q=patkit) finds patkit and if it
+does:
+- Install [uv](https://docs.astral.sh/uv/#getting-started).
+- On the commandline run `uv tool install patkit`.
+- Run `patkit --help` for instructions.
+- If you want to run the example data, get the `recorded_data` folder from
+  [github](https://github.com/giuthas/patkit).
+  - Run `patkit recorded_data/minimal` in the folder where you downloaded the data
+    and experiment from there.
 
-See [Changelog](docs/Changelog.markdown), for what's new in the current version.
+## Current version and development plans
 
-## Getting Started
+See [Changelog](docs/Changelog.markdown), for what's new in the current version
+and what's coming up.
 
-NOTE: 
-- With version 1.0 getting closer a lot of the instructions below are
-  outdated. More up-to-date information can be found in the
-  [Documentation](https://giuthas.github.io/satkit/)
 
-Download the repository to either a subdirectory of the project you
-want to use the tools on or a suitable place that you then add to your
-`$PYTHONPATH`.
+## What's included
 
-### Requisites
-
-A computer with a relatively new operating system which has a fairly regular
-file system. While pads and phones and watches are computers, PATKIT sadly does
-not run on them. ChromeOS may work, but it is a borderline case. A Linux, a Mac,
-or a Windows machine should be fine as long as it is capable of running the
-latest Python. If issues crop up, get in touch, and we'll see what can be done. 
-
-Currently, PATKIT is tested to work on
-- PopOS 24.04, which means any recent Ubuntu-like system should be fine.
-
-You only need to care about the dependencies if you do not use uv for
-installing. In that case see the `pyproject.toml` file for a full list or the
-`uv.lock` for an even fuller list. If you do decide to use some other system for
-installation, please get in touch -- we'd love to have the recipe in case others
-need/want it.
-
-### Installing for regular use
-
-TODO 0.14: Update this
-
-An installation through pypi is in the works. Do get in touch if you would like
-to *test* it. Do also get in touch if you would like to *build* it.
-
-A downloadable executable will hopefully also become reality. Do get in touch if
-you would like to *develop* it.
-
-### Installing for development
-
-TODO 0.14: Write new instructions.
-
-#### Using PATKIT as a library in program development
-
-If you are not going to work on PATKIT itself, you should setup the stable
-environment. To install the required packages and create the environment, run:
-`mamba env create -f satkit_stable_conda_env.yaml`
-
-Activate the environment with `conda activate satkit-stable` and the basics are
-set up. If you want to have an editable install (changing code in the repo
-changes behaviour of the installed SATKIT immediately) run finally `pip install
--e .` or `python3 -m pip install --editable .` if you prefer being explicit.
-
-#### Working on PATKIT
-
-If you plan on working on SATKIT, run the commands
-`mamba env create -f satkit_devel_conda_env.yaml` and
-`conda activate satkit-devel` instead of the ones above.
-
-### What's included
-
-TODO 0.14: delete manifest and give a quick description here.
-
-See
-[MANIFEST.markdown](https://github.com/giuthas/satkit/blob/master/MANIFEST.markdown)
-for a description of the contents.
-
-### Running the examples
-
-TODO 0.14: update this
-
-There are three small datasets included in the distribution. You can
-run tests on them with the test script `pd_test.py`. Currently the
-following work and produce a new spaghetti_plot.pdf and a transcript
-in `[method_name].log`.
-
-``` shell
-python satkit.py tongue_data_1_1
-```
-
-The first example directory contains recordings with all files present
-while the second is intentionally missing some files. The latter case
-should therefore produce warnings in the resulting log. Running
-without the exclusion list specified should produce a plot with a
-couple more curves in it.
-
-The routines to deal with a directory structure like that of `test2`
-are yet to be implemented.
-
-## Running the tests
-
-Proper testing is yet to be implemented.
+TODO 0.15: give a quick description of included data and goodies here.
+TODO 1.0: Move the data elsewhere to be optionally loaded.
 
 ## Contributing
 
-Please, read the docs and get in touch with [Pertti](https://taurlin.org), if
-you would like to contribute to the project.
+Please get in touch with [Pertti](https://taurlin.org), if you would like to
+contribute to the project. All help is welcome regardless of your skill level.
+You can contribute by trying to use it according to instructions and reporting
+back when they lead you astray, proofreading docs, commenting code, testing
+PATKIT on a new platform, writing new functionality, writing tests for the code,
+roasting the code, doing UI design, contributing use cases...
 
 ## Versioning
 
