@@ -1,14 +1,15 @@
 
-# SATKIT Documentation
+# PATKIT Documentation
 
-Until the 1.0 release none of the documentation is necessarily final nor
+Until the 1.0 release none of the documentation is final nor necessarily
 correct.
 
-## Setup
+## Installation and use
 
-- Setting SATKIT up for analysis is currently covered by setting up for
+- New [instructions](Installing_and_using.markdown).
+- Setting PATKIT up for analysis is currently covered by setting up for
   development:
-- [Set SATKIT up for development](SetupForDevelopment.markdown)
+- [Set PATKIT up for development](SetupForDevelopment.markdown)
 
 ## GUI User guide
 
@@ -17,33 +18,33 @@ correct.
 ## Commandline User guide
 
 [To be written] but already available in a rudimentary form by running
-`python satkit.py --help`
+`patkit --help`
 
-## SATKIT Runtime data structures
+## PATKIT Runtime data structures
 
-SATKIT's class structure aims for efficiency without sacrificing clarity.
+PATKIT's class structure aims for efficiency without sacrificing clarity.
 Clarity of code brings easy maintainability and that is more important in the
 long run than gains in execution speed.
 
-- Introduction to SATKIT Data Structures
+- Introduction to PATKIT Data Structures
   - [Core Data Structures](CoreDataStructures.markdown)
   - [Modalities for Recorded Data](ModalitiesforRecordedData.markdown)
   - [Modalities for Derived Data](ModalitiesforDerivedData.markdown)
   - [Modalities in Practice](ModalitiesinPractice.markdown) including notes on
     specific Modalities
-    - [Splines in SATKIT](Splines.markdown)
+    - [Splines in PATKIT](Splines.markdown)
   - [Database Classes](DatabaseClasses.markdown)
-- Extending SATKIT
-  - Before starting, please read Coding conventions in [SATKIT development
+- Extending PATKIT
+  - Before starting, please read Coding conventions in [PATKIT development
     guide](Development_guide).
   - Implementing a New Datasource
   - [Writing a New Modality](WritingNewModality.markdown)
 
-## SATKIT API
+## PATKIT API
 
 [API Documentation](api/index.html)
 
-## SATKIT Files
+## PATKIT Files
 
 - Data files
   - [Guidelines for Data Directory Structure](DirectoryStructure.markdown)

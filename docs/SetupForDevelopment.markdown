@@ -1,5 +1,14 @@
 # Setting PATKIT up for Development
 
+# NOTE: 
+
+As of PATKIT 0.14, these instructions are incorrect and only here in case
+someone wants to install PATKIT using mamba/conda etc. If you are that someone
+and would like to contribute, please fork PATKIT, update these instructions, and
+send us a pull request.
+
+## On with the instructions
+
 The most important steps for getting PATKIT installed in development mode are:
 
 - [Setting PATKIT up for Development](#setting-patkit-up-for-development)
