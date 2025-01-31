@@ -64,3 +64,5 @@ def run_cli(
 run_cli.add_command(cli_commands.open_in_annotator)
 # noinspection PyTypeChecker
 run_cli.add_command(cli_commands.interact)
+# noinspection PyTypeChecker
+run_cli.add_command(cli_commands.simulate)

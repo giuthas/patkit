@@ -37,9 +37,11 @@ from pathlib import Path
 
 import click
 
-from patkit.initialise import initialise_satkit
+from patkit.initialise import initialise_logger_and_config, initialise_patkit
 from patkit.qt_annotator import run_annotator
 from patkit.interpreter import run_interpreter
+from patkit.simulation import run_simulations
+from patkit.simulation.simulate import setup_simulation
 
 
 @click.command(name="open")
@@ -59,11 +61,8 @@ def open_in_annotator(path: Path, config_file: Path | None):
     PATH to the data - maybe be a file or a directory.
     CONFIG_FILE configuration .yaml file.
     """
-    # TODO 0.14: remove the dependency on argparse
-
-    configuration, logger, session = initialise_satkit(
+    configuration, logger, session = initialise_patkit(
         path=path, config_file=config_file)
-
     run_annotator(session, configuration)
 
 
@@ -84,10 +83,9 @@ def interact(path: Path, config_file: Path | None):
     PATH to the data - maybe be a file or a directory.
     CONFIG_FILE configuration .yaml file.
     """
-    configuration, logger, session = initialise_satkit(
+    configuration, logger, session = initialise_patkit(
         path=path, config_file=config_file
     )
-
     run_interpreter(session=session, configuration=configuration)
 
 
@@ -115,9 +113,32 @@ def publish(path: Path, config_file: Path | None, output_dir: Path | None):
 
     NOT IMPLEMENTED YET.
     """
-    configuration, logger, session = initialise_satkit(
+    configuration, logger, session = initialise_patkit(
         path=path, config_file=config_file
     )
 
+
+@click.command()
+@click.argument(
+    "directory",
+    type=click.Path(dir_okay=True, file_okay=False), )
+@click.argument(
+    "config_file",
+    type=click.Path(exists=True, dir_okay=False, file_okay=True),
+    required=False,
+)
+def simulate(path: Path, config_file: Path | None):
+    """
+    Run a simulation experiment.
+
+    \b
+    DIRECTORY to save results in. Will be created if it does not exist.
+    CONFIG_FILE configuration .yaml file specifying the simulation to run.
+    """
+    config, exclusion_file, logger = initialise_logger_and_config(
+        config_file=config_file,
+    )
+    comparisons, contours, sound_pairs = setup_simulation(config)
+    run_simulations(config, comparisons, contours, sound_pairs)
 
 
