@@ -33,7 +33,7 @@
 """
 Simulate data and run metrics on it with plotting.
 
-Original version for Ultrafest 2024.
+Original version was published for Ultrafest 2024.
 """
 
 from functools import partial
@@ -64,13 +64,14 @@ from .rays_on_contours import (
 )
 from .perturbation_series_plots import mci_perturbation_series_plot
 
+
 def run_simulations(
     comparisons, contours, perturbations, save_path, sound_pairs
 ) -> None:
     """
     Main to create plots for the Ultrafest 2024 paper.
     """
-    # TODO 0.14: SIMULATION RUN
+    # TODO 0.14: these should run based on config
     annd_baselines, annd_results = simulate_dyadic_metrics(
         comparisons, contours, perturbations)
     mci_baselines, mci_results = simulate_single_contour_metrics(
