@@ -1,5 +1,5 @@
 # Generate docs with pdoc ...
-uv run scripts/generate_docs.py
+uv run devel/generate_docs.py
 
 # and some diagrams to be linked as well.
 # Needs Graphviz to work properly
