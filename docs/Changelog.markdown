@@ -27,9 +27,71 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Added
 
-- SATKIT will soon be available on pypi, probably under the long name:
-  speech_analysis_toolkit.
-- See [Roadmap](Roadmap.markdown) for an overview of what to expect in 1.0.
+- PATKIT will soon be available on pypi under the name patkit.
+- 0.15 is planned to be a re-implementation of the simulation code that was
+  originally released for Ultrafest 2024.
+- 0.16 is planned to be a general configuration update moving from central to
+  local (stored with data) configuration.
+- 0.17 is planned to be a data structure update giving support for multiple data
+  sources per trial.
+- 0.18 is planned to update the GUI with full TextGrid editing.
+- 0.19 is planned to be a release of automated segmentation exercises.
+- After 0.19 there are planned updates to CLI, GUI, ultrasound frame
+  interpolation, processing speed by implementing multiprocessing, new algorithms
+  (optic flow, LPC for tongues, kymography, ...), new data sources, code
+  testing, documentation and finally a 1.0 release.
+
+## [0.14.0]
+
+### Highlights
+
+- New name! This program and library are now called PATKIT for Phonetic Analysis
+  ToolKIT.
+- PyPi package will be available very shortly after release of 0.14.
+- There's a new and shiny command line interface. With the new installation
+  procedure, PATKIT can be run as any regular command line tool.
+- There's a new installation procedure with uv. Fast, neat, gives us the
+  previous easily.
+
+### Added
+
+- Dark/Light mode support. See bugs below, though.
+
+### Changed and Refactored
+
+- Moved the project directory to src layout. Updated pyproject.toml to reflect
+  this. 
+- Moved to installation with uv and updated pyproject.toml to work with
+  this too. 
+- Command line is now implemented with `click` rather than `argparse`.
+  Neater look, easier maintenance and with the new installation also working
+  command line tool with subcommands.
+- PATKIT now uses PyQt6 instead of 5 for the GUI.
+
+### Docs
+
+- Docs are now again correctly generated.
+- Some preliminary docs on configuration. Expect these to update in the next
+  two-three releases.
+
+### Deprecated
+
+- One of the next updates - probably 0.16 - will move from centralised
+  single config system to per-dataset config system.
+- Another soon to happen change is the expansion of the classes derived from 
+  DataAggregator. Recording will be split to Source and Trial, and DataSet added
+  as a class that contains Sessions.
+- There maybe references to the old name (SATKIT) in documentation and source
+  code. These will be updated as they are found. Please let us know if you spot
+  one.
+
+### Bugs
+
+- Switching the operating system between dark/light mode while the annotator is
+  running may or may not update the plots, and may even break them. However,
+  restarting the annotator will update the plots.
+- Implementing the subcommand `patkit simulate` is still underway. Expected to
+  be available in 0.15.
 
 ## [0.13.0] 2025-01-07
 
@@ -59,8 +121,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Experimental interactive workflow. 
   - Supported by interface and data initialisation being collected into some
     simple-to-use functions.
-  - Also supported by temporary script file `satkit_interactive.py`.
-    - Runs like `satkit.py` but instead of starting the GUI annotator, starts an 
+  - Also supported by temporary script file `patkit_interactive.py`.
+    - Runs like `patkit.py` but instead of starting the GUI annotator, starts an 
       interactive Python session.
 - Exporting data from Modalities into DataFrames for external analysis.
 
@@ -70,7 +132,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - Includes an option of exporting with label info from TextGrids.
   - Experimentally enabled export of several derived modalities into the same csv
     file.
-- A script to run SATKIT as an interactive interpreter. 
+- A script to run PATKIT as an interactive interpreter. 
   - The same commands can obviously be copy-pasted into an interpreter to get some
     data loaded and processable in interactive mode.
 - Some helpful progress indicators to show how the data loading is going.
@@ -79,8 +141,9 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## Changed
 
-- A lot of functionality that lived in `satkit.py` is now in regular satkit
-  library functions and in the new `satkit/satkit.py` module.
+- A lot of functionality that lived in `patkit.py` is now in regular patkit
+  library functions and in the new `patkit/patkit.py` module.
+- Undefined fields are no longer allowed in config files.
 
 ### Removed
 
@@ -93,8 +156,10 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Bugs
 
 - Same as previous versions.
-- Command history does not yet work when running SATKIT as an interactive
-  interpreter with `satkit_interactive.py`.
+- Command history does not yet work when running PATKIT as an interactive
+  interpreter with `patkit_interactive.py`.
+- Undefined fields in config files should have a clearer error message. And so
+  should errors in config files in general.
 
 
 ## [0.11.0] 2024-11-20
@@ -154,9 +219,9 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Deprecated
 
-- satkit.py will eventually be removed when running SATKIT will be moved to
-  access points. This means SATKIT -- when correctly installed -- will run with
-  from the command line with: `satkit [command] [arguments]`.
+- patkit.py will eventually be removed when running PATKIT will be moved to
+  access points. This means PATKIT -- when correctly installed -- will run with
+  from the command line with: `patkit [command] [arguments]`.
 
 ### Fixed
 
@@ -164,7 +229,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   `%Y-%m-%d %I:%M:%S %p`.
 - Parsing yaml exclusion lists should now work also when some of the headings
   are empty.
-- Added the seaborn package to conda environment satkit-devel to make it work
+- Added the seaborn package to conda environment patkit-devel to make it work
   properly.
 
 ### Known issues

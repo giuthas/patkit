@@ -1,13 +1,22 @@
-# Setting SATKIT up for Development
+# Setting PATKIT up for Development
 
-The most important steps for getting SATKIT installed in development mode are:
+# NOTE: 
 
-- [Setting SATKIT up for Development](#setting-satkit-up-for-development)
+As of PATKIT 0.14, these instructions are incorrect and only here in case
+someone wants to install PATKIT using mamba/conda etc. If you are that someone
+and would like to contribute, please fork PATKIT, update these instructions, and
+send us a pull request.
+
+## On with the instructions
+
+The most important steps for getting PATKIT installed in development mode are:
+
+- [Setting PATKIT up for Development](#setting-patkit-up-for-development)
   - [Preliminaries](#preliminaries)
   - [Fork and clone the repository](#fork-and-clone-the-repository)
-  - [Clone directly from the SATKIT main](#clone-directly-from-the-satkit-main)
+  - [Clone directly from the PATKIT main](#clone-directly-from-the-patkit-main)
   - [Create the conda environments](#create-the-conda-environments)
-  - [Install SATKIT in development mode](#install-satkit-in-development-mode)
+  - [Install PATKIT in development mode](#install-patkit-in-development-mode)
   - [Other topics](#other-topics)
     - [Rebuild and activate a conda environment after updating the environment](#rebuild-and-activate-a-conda-environment-after-updating-the-environment)
 
@@ -16,7 +25,7 @@ The most important steps for getting SATKIT installed in development mode are:
 Install the following:
 
 - [Mamba](https://mamba.readthedocs.io/en/latest/installation.html)
-  - Mamba is used for building the conda environments that SATKIT runs in.
+  - Mamba is used for building the conda environments that PATKIT runs in.
   - If you already have Conda installed, you will still need Mamba, since Conda
     has been shown to not be able to deal with the rather complex dependencies,
     and in any case Mamba is much faster.
@@ -44,7 +53,7 @@ account](https://github.com/join).
 ## Fork and clone the repository
 
 First, fork the repository from
-[https://github.com/giuthas/satkit](https://github.com/giuthas/satkit).
+[https://github.com/giuthas/patkit](https://github.com/giuthas/patkit).
 
 Second, clone the repository to your local system.
 
@@ -52,50 +61,50 @@ Third, if not automatically done, setup the original repository as your
 upstream repo:
 
 ```bash
-git remote add upstream https://github.com/giuthas/satkit
+git remote add upstream https://github.com/giuthas/patkit
 git fetch upstream
 git merge upstream/main main
 ```
 
 Here's what this does in practice:
 
-![forking SATKIT](forking_satkit.drawio.png)
+![forking PATKIT](forking_patkit.drawio.png)
 
-## Clone directly from the SATKIT main
+## Clone directly from the PATKIT main
 
 In a directory that you would like the clone to live in, run the following
-command optionally giving a name for the directory SATKIT will be cloned to.
+command optionally giving a name for the directory PATKIT will be cloned to.
 
 ```bash
-git clone https://github.com/giuthas/satkit [optional directory]
+git clone https://github.com/giuthas/patkit [optional directory]
 ```
 
 ## Create the conda environments
 
-Once you have a copy of SATKIT's source code, run these commands on the command
+Once you have a copy of PATKIT's source code, run these commands on the command
 line:
 
 ```bash
-cd [satkit root]
-mamba env create -f satkit_stable_conda_env.yaml
-mamba env create -f satkit_devel_conda_env.yaml
+cd [patkit root]
+mamba env create -f patkit_stable_conda_env.yaml
+mamba env create -f patkit_devel_conda_env.yaml
 ```
 
 And to actually use the latter:
 
 ```bash
-conda activate satkit-devel
+conda activate patkit-devel
 ```
 
-## Install SATKIT in development mode
+## Install PATKIT in development mode
 
 This should work in [the usual
 way](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#working-in-development-mode)
 for Python packages by just running `pip install -e .` in the root directory of
-SATKIT -- NOT the `satkit` directory inside the package, but the root directory
+PATKIT -- NOT the `patkit` directory inside the package, but the root directory
 of the repository.
 
-This will enable use of SATKIT as a library as if it were a regularly installed
+This will enable use of PATKIT as a library as if it were a regularly installed
 Python package, while waht actually gets used is the live code base in the
 local repository. **This needs to be done separately for each Python
 conda/virtual environment in use.**
@@ -113,11 +122,11 @@ commands on the command line:
 
 ```bash
 conda activate base
-conda env remove -n satkit-devel
-mamba env create -f satkit_devel_conda_env.yaml
-conda activate satkit-devel
+conda env remove -n patkit-devel
+mamba env create -f patkit_devel_conda_env.yaml
+conda activate patkit-devel
 ```
 
-Substitute `satkit-stable` for `satkit-devel` and
-`satkit_stable_conda_env.yaml` for `satkit_devel_conda_env.yaml` to update the
+Substitute `patkit-stable` for `patkit-devel` and
+`patkit_stable_conda_env.yaml` for `patkit_devel_conda_env.yaml` to update the
 stable environment.

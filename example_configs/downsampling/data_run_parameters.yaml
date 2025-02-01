@@ -1,0 +1,69 @@
+
+# Please note that empty file or directory fields are interpreted as not
+# available and represented by None. If you want to specify current working
+# directory, use '.'
+
+flags:
+  detect_beep: True # Should onset beep detection be run?
+  test: False # Run on only the first 10 recordings.
+
+# This is where PATKIT will save results of data processing. Please note that
+# once exclusion list or similar things can be edited in PATKIT, they will by
+# default be saved at their original locations.
+output_directory:
+
+aggregate_image_arguments:
+  metrics:
+    - 'mean'
+  run_on_interpolated_data: False
+  preload: True
+  release_data_memory: True
+
+pd_arguments:
+  norms:
+    - 'l1'
+    - 'l2'
+  timesteps:
+    - 1
+    - 2
+#    - 3
+#    - 4
+  mask_images: False
+  pd_on_interpolated_data: False
+  release_data_memory: True
+  preload: True
+
+downsample:
+  modality_pattern:
+    pattern: "l[0-9]"
+    is_regexp: True
+  # if this is True, then only modalities with matching timesteps will be downsampled
+  match_timestep: True
+  downsampling_ratios:
+    - 2
+#    - 3
+#    - 4
+
+#spline_metric_arguments:
+#  'metrics':
+#    - 'annd'
+#    - 'mpbpd'
+#    - 'modified_curvature'
+#    - 'fourier'
+#  'timesteps':
+#    - 3
+#  'release_data_memory': False
+#  'preload': True
+
+#distance_matrix_arguments:
+#  exclusion_list: "alignment/data/patkit_exclusion_list.yaml"
+#  metrics:
+#    - 'mean_squared_error'
+#  preload: True
+#  release_data_memory: False
+##  slice_max_step: 6
+#  slice_step_to: 6
+#  sort: True
+#  sort_criteria:
+#    - 'i'
+#    - 'o'

@@ -1,7 +1,7 @@
 # Splines
 
-While SATKIT does not generate splines it can handle them as a Modality. Since
-the formats in which splines are saved vary quite a bit, SATKIT needs a helping
+While PATKIT does not generate splines it can handle them as a Modality. Since
+the formats in which splines are saved vary quite a bit, PATKIT needs a helping
 hand in understanding how to read the files. This happens in the form of a YAML
 (Yet Another Markup Language) file, such as those in the included spline sample
 directories.
@@ -9,12 +9,12 @@ directories.
 ## Assumptions made about the spline files
 
 Currently the spline files are assumed to consist of possibly a header line
-(which will be ignored by SATKIT), and lines that contain first some metadata
+(which will be ignored by PATKIT), and lines that contain first some metadata
 for each spline and then the coordinates of the splines points in either
 Cartesian or polar coordinates. All values are assumed to be delimited by
 tabulators ('\t') unless specified otherwise in the YAML file.
 
-A future version of SATKIT maybe able to read `.spl` files exported by AAA.
+A future version of PATKIT maybe able to read `.spl` files exported by AAA.
 
 ## Import configuration files
 

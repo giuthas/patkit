@@ -1,0 +1,42 @@
+
+# Please note that empty file or directory fields are interpreted as not
+# available and represented by None. If you want to specify current working
+# directory, use '.'
+
+# This is where PATKIT will save results of data processing. 
+output_directory: "ultrafest2024/"
+logging_notice_base: "Ultrafest 2024 simulation: "
+
+sounds: 
+  - 'æ'
+  - 'i'
+    
+perturbations: 
+  - -2 
+  - -1 
+  - -.5 
+  - .5 
+  - 1 
+  - 2
+
+spline_nnd_params:
+  metric: "annd"
+  timestep: 1
+  sound_pair_params:
+    sounds:
+      - 'æ'
+      - 'i'
+    perturbed:
+      - 'second'
+      - 'first'
+    combinations: full_cartesian # only_cross, only_self
+
+spline_shape_params:
+  metric: 'mci'
+
+plotting_params:
+  sound_pair_params:
+    sounds:
+      - 'æ'
+      - 'i'
+    combinations: full_cartesian # only_cross, only_self

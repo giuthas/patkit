@@ -1,0 +1,18 @@
+
+# Please note that empty file or directory fields are interpreted as not
+# available and represented by None. If you want to specify current working
+# directory, use '.'
+
+# What precision is treated as equal when comparing annotation boundaries.
+epsilon: 0.00001
+
+# Used in filtering sound signals before beep detection.
+mains_frequency: 50
+
+# No data run parameters here, only simulation.
+simulation_parameter_file: configuration/simulation_parameters.yaml
+
+# GUI setup parameters
+gui_parameter_file: configuration/gui_parameters.yaml
+
+publish_parameter_file: configuration/publish_parameters.yaml

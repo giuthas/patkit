@@ -1,0 +1,77 @@
+##
+## Copyright (c) 2019-2025
+## Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
+##
+## This file is part of Speech Articulation ToolKIT
+## (see https://github.com/giuthas/patkit/).
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program. If not, see <http://www.gnu.org/licenses/>.
+##
+## The example data packaged with this program is licensed under the
+## Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+## International (CC BY-NC-SA 4.0) License. You should have received a
+## copy of the Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+## International (CC BY-NC-SA 4.0) License along with the data. If not,
+## see <https://creativecommons.org/licenses/by-nc-sa/4.0/> for details.
+##
+## When using the toolkit for scientific publications, please cite the
+## articles listed in README.markdown. They can also be found in
+## citations.bib in BibTeX format.
+##
+
+# Please note that empty file or directory fields are
+# interpreted as not available and represented by None. If you want to specify
+# current working directory, use '.'
+
+flags:
+  detect_beep: True # Should onset beep detection be run?
+  test: False # Run on only the first 10 recordings.
+
+# This is where PATKIT will save results of data processing. Please note that
+# once exclusion list or similar things can be edited in PATKIT, they will by
+# default be saved at their original locations.
+output_directory:
+
+pd_arguments: 
+  'norms':
+    - 'l0'
+    - 'l0.5'
+    - 'l1'
+    - 'l2'
+    - 'l5'
+    - 'l_inf'
+  'timesteps': 
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+  mask_images: False
+  pd_on_interpolated_data: False
+  release_data_memory: True
+  preload: True
+  
+downsample:
+  modality_pattern: 
+    pattern: PD
+  match_timestep: True
+  downsampling_ratios:
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7

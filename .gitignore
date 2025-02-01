@@ -2,7 +2,7 @@ venv/
 .idea/
 
 #
-# Satkit generated files
+# Patkit generated files
 #
 *.meta
 *.npz
@@ -67,4 +67,4 @@ figures/
 
 # Distribution and build files
 dist/
-satkit/satkit.egg-info/
+*.egg-info

@@ -1,7 +1,6 @@
 # Generate docs with pdoc ...
-# TODO 0.14: see about removing the * from below
-pdoc -d numpy -o docs/api satkit/*
+uv run devel/generate_docs.py
 
 # and some diagrams to be linked as well.
 # Needs Graphviz to work properly
-pyreverse -o png -p satkit -d docs/api satkit
+uvx --from pylint pyreverse -o png -p patkit -d docs/api src/patkit
