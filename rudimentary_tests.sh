@@ -34,13 +34,13 @@
 patkit
 patkit --help
 
-# Run with the default configuration and show 10 recordings in the
-# GUI. 
-#   - Just files, nothing fancy.
-patkit recorded_data/tongue_data_1_1/
+# Run with the default configuration and show 3 recordings in the GUI.
+patkit recorded_data/minimal/
+patkit open recorded_data/minimal/
 # The same but in interactive interpreter mode
-./patkit_interactive.py recorded_data/tongue_data_1_1/
+patkit interact recorded_data/minimal/
 
+# A bit more extensive with 10 files
 #   - Missing files
 patkit recorded_data/tongue_data_1_2/
 
