@@ -116,14 +116,7 @@ In the main repository (done by Pertti or other maintainers):
    - You can save a bit of work by keeping this branch only local unless the 
      release does not get done in one working session. 
 3. Merge `main` to the release branch (not the other way around).
-4. Check that installation works:
-   - This used to mean checking that conda environments are up-to-date. 
-     - It is especially possible that patkit-stable is neither up to date with
-       patkit-devel, nor tested.
-     - While we are in the time before 1.0, patkit-stable most likely does not
-       work. 
-   - This will soon mean checking that running with uv works and what ever
-     can be done to check that installing with uv works.
+4. Check that installation works: `uv tool install .`
 5. Run tests.
    - These don't exist yet at the time of PATKIT 0.10.0 except as
      'rudimentary_tests.sh'.
