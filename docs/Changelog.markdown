@@ -92,6 +92,13 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   restarting the annotator will update the plots.
 - Implementing the subcommand `patkit simulate` is still underway. Expected to
   be available in 0.15.
+- Errors like these can show up at startup, but can be safely ignored:
+```shell
+/home/jpalo/.local/share/uv/tools/patkit/lib/python3.13/site-packages/patkit/annotations/peaks.py:293: SyntaxWarning: invalid escape sequence '\i'
+  categories = ["l$\infty$" if metric ==
+/home/jpalo/.local/share/uv/tools/patkit/lib/python3.13/site-packages/patkit/plot_and_publish/publish.py:188: SyntaxWarning: invalid escape sequence '\i'
+  plot_categories = ["l$\infty$" if metric ==
+```
 
 ## [0.13.0] 2025-01-07
 
