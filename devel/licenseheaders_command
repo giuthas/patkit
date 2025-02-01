@@ -1,1 +1,0 @@
-uv run python -m licenseheaders -t devel/gpl-v3_and_CC-BY-NC-SA.tmpl -y 2019-2025 -o "Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito" -n "Phonetic Analysis ToolKIT" -u https://github.com/giuthas/patkit/  --exclude docs/* .pixi/* .idea/* .vscode/* .VSCodeCounter/* *.html *.md *.markdown *.js *.yaml -v -v -v
