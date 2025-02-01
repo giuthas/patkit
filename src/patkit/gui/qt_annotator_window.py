@@ -46,7 +46,7 @@ from PyQt6.uic import loadUiType
 from patkit.plot_and_publish import plot_timeseries, plot_wav
 
 # Load the GUI layout generated with QtDesigner.
-Ui_MainWindow, QMainWindow = loadUiType('patkit/gui/qt_annotator.ui')
+Ui_MainWindow, QMainWindow = loadUiType('src/patkit/gui/qt_annotator.ui')
 
 _qt_annotator_logger = logging.getLogger('patkit.qt_annotator')
 
