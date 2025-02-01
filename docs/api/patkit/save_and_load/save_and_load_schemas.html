@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 14.4.0"/>
-    <title>satkit.save_and_load.save_and_load_schemas API documentation</title>
+    <meta name="generator" content="pdoc 15.0.1"/>
+    <title>patkit.save_and_load.save_and_load_schemas API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
     <style>/*! syntax-highlighting.css */pre{line-height:125%;}span.linenos{color:inherit; background-color:transparent; padding-left:5px; padding-right:20px;}.pdoc-code .hll{background-color:#ffffcc}.pdoc-code{background:#f8f8f8;}.pdoc-code .c{color:#3D7B7B; font-style:italic}.pdoc-code .err{border:1px solid #FF0000}.pdoc-code .k{color:#008000; font-weight:bold}.pdoc-code .o{color:#666666}.pdoc-code .ch{color:#3D7B7B; font-style:italic}.pdoc-code .cm{color:#3D7B7B; font-style:italic}.pdoc-code .cp{color:#9C6500}.pdoc-code .cpf{color:#3D7B7B; font-style:italic}.pdoc-code .c1{color:#3D7B7B; font-style:italic}.pdoc-code .cs{color:#3D7B7B; font-style:italic}.pdoc-code .gd{color:#A00000}.pdoc-code .ge{font-style:italic}.pdoc-code .gr{color:#E40000}.pdoc-code .gh{color:#000080; font-weight:bold}.pdoc-code .gi{color:#008400}.pdoc-code .go{color:#717171}.pdoc-code .gp{color:#000080; font-weight:bold}.pdoc-code .gs{font-weight:bold}.pdoc-code .gu{color:#800080; font-weight:bold}.pdoc-code .gt{color:#0044DD}.pdoc-code .kc{color:#008000; font-weight:bold}.pdoc-code .kd{color:#008000; font-weight:bold}.pdoc-code .kn{color:#008000; font-weight:bold}.pdoc-code .kp{color:#008000}.pdoc-code .kr{color:#008000; font-weight:bold}.pdoc-code .kt{color:#B00040}.pdoc-code .m{color:#666666}.pdoc-code .s{color:#BA2121}.pdoc-code .na{color:#687822}.pdoc-code .nb{color:#008000}.pdoc-code .nc{color:#0000FF; font-weight:bold}.pdoc-code .no{color:#880000}.pdoc-code .nd{color:#AA22FF}.pdoc-code .ni{color:#717171; font-weight:bold}.pdoc-code .ne{color:#CB3F38; font-weight:bold}.pdoc-code .nf{color:#0000FF}.pdoc-code .nl{color:#767600}.pdoc-code .nn{color:#0000FF; font-weight:bold}.pdoc-code .nt{color:#008000; font-weight:bold}.pdoc-code .nv{color:#19177C}.pdoc-code .ow{color:#AA22FF; font-weight:bold}.pdoc-code .w{color:#bbbbbb}.pdoc-code .mb{color:#666666}.pdoc-code .mf{color:#666666}.pdoc-code .mh{color:#666666}.pdoc-code .mi{color:#666666}.pdoc-code .mo{color:#666666}.pdoc-code .sa{color:#BA2121}.pdoc-code .sb{color:#BA2121}.pdoc-code .sc{color:#BA2121}.pdoc-code .dl{color:#BA2121}.pdoc-code .sd{color:#BA2121; font-style:italic}.pdoc-code .s2{color:#BA2121}.pdoc-code .se{color:#AA5D1F; font-weight:bold}.pdoc-code .sh{color:#BA2121}.pdoc-code .si{color:#A45A77; font-weight:bold}.pdoc-code .sx{color:#008000}.pdoc-code .sr{color:#A45A77}.pdoc-code .s1{color:#BA2121}.pdoc-code .ss{color:#19177C}.pdoc-code .bp{color:#008000}.pdoc-code .fm{color:#0000FF}.pdoc-code .vc{color:#19177C}.pdoc-code .vg{color:#19177C}.pdoc-code .vi{color:#19177C}.pdoc-code .vm{color:#19177C}.pdoc-code .il{color:#666666}</style>
     <style>/*! theme.css */:root{--pdoc-background:#fff;}.pdoc{--text:#212529;--muted:#6c757d;--link:#3660a5;--link-hover:#1659c5;--code:#f8f8f8;--active:#fff598;--accent:#eee;--accent2:#c1c1c1;--nav-hover:rgba(255, 255, 255, 0.5);--name:#0066BB;--def:#008800;--annotation:#007020;}</style>
     <style>/*! layout.css */html, body{width:100%;height:100%;}html, main{scroll-behavior:smooth;}body{background-color:var(--pdoc-background);}@media (max-width:769px){#navtoggle{cursor:pointer;position:absolute;width:50px;height:40px;top:1rem;right:1rem;border-color:var(--text);color:var(--text);display:flex;opacity:0.8;z-index:999;}#navtoggle:hover{opacity:1;}#togglestate + div{display:none;}#togglestate:checked + div{display:inherit;}main, header{padding:2rem 3vw;}header + main{margin-top:-3rem;}.git-button{display:none !important;}nav input[type="search"]{max-width:77%;}nav input[type="search"]:first-child{margin-top:-6px;}nav input[type="search"]:valid ~ *{display:none !important;}}@media (min-width:770px){:root{--sidebar-width:clamp(12.5rem, 28vw, 22rem);}nav{position:fixed;overflow:auto;height:100vh;width:var(--sidebar-width);}main, header{padding:3rem 2rem 3rem calc(var(--sidebar-width) + 3rem);width:calc(54rem + var(--sidebar-width));max-width:100%;}header + main{margin-top:-4rem;}#navtoggle{display:none;}}#togglestate{position:absolute;height:0;opacity:0;}nav.pdoc{--pad:clamp(0.5rem, 2vw, 1.75rem);--indent:1.5rem;background-color:var(--accent);border-right:1px solid var(--accent2);box-shadow:0 0 20px rgba(50, 50, 50, .2) inset;padding:0 0 0 var(--pad);overflow-wrap:anywhere;scrollbar-width:thin; scrollbar-color:var(--accent2) transparent; z-index:1}nav.pdoc::-webkit-scrollbar{width:.4rem; }nav.pdoc::-webkit-scrollbar-thumb{background-color:var(--accent2); }nav.pdoc > div{padding:var(--pad) 0;}nav.pdoc .module-list-button{display:inline-flex;align-items:center;color:var(--text);border-color:var(--muted);margin-bottom:1rem;}nav.pdoc .module-list-button:hover{border-color:var(--text);}nav.pdoc input[type=search]{display:block;outline-offset:0;width:calc(100% - var(--pad));}nav.pdoc .logo{max-width:calc(100% - var(--pad));max-height:35vh;display:block;margin:0 auto 1rem;transform:translate(calc(-.5 * var(--pad)), 0);}nav.pdoc ul{list-style:none;padding-left:0;}nav.pdoc > div > ul{margin-left:calc(0px - var(--pad));}nav.pdoc li a{padding:.2rem 0 .2rem calc(var(--pad) + var(--indent));}nav.pdoc > div > ul > li > a{padding-left:var(--pad);}nav.pdoc li{transition:all 100ms;}nav.pdoc li:hover{background-color:var(--nav-hover);}nav.pdoc a, nav.pdoc a:hover{color:var(--text);}nav.pdoc a{display:block;}nav.pdoc > h2:first-of-type{margin-top:1.5rem;}nav.pdoc .class:before{content:"class ";color:var(--muted);}nav.pdoc .function:after{content:"()";color:var(--muted);}nav.pdoc footer:before{content:"";display:block;width:calc(100% - var(--pad));border-top:solid var(--accent2) 1px;margin-top:1.5rem;padding-top:.5rem;}nav.pdoc footer{font-size:small;}</style>
-    <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{cursor:pointer;display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .pdoc-alert{padding:1rem 1rem 1rem calc(1.5rem + 24px);border:1px solid transparent;border-radius:.25rem;background-repeat:no-repeat;background-position:1rem center;margin-bottom:1rem;}.pdoc .pdoc-alert > *:last-child{margin-bottom:0;}.pdoc .pdoc-alert-note {color:#084298;background-color:#cfe2ff;border-color:#b6d4fe;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23084298%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2016A8%208%200%201%200%208%200a8%208%200%200%200%200%2016zm.93-9.412-1%204.705c-.07.34.029.533.304.533.194%200%20.487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703%200-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381%202.29-.287zM8%205.5a1%201%200%201%201%200-2%201%201%200%200%201%200%202z%22/%3E%3C/svg%3E");}.pdoc .pdoc-alert-warning{color:#664d03;background-color:#fff3cd;border-color:#ffecb5;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23664d03%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8.982%201.566a1.13%201.13%200%200%200-1.96%200L.165%2013.233c-.457.778.091%201.767.98%201.767h13.713c.889%200%201.438-.99.98-1.767L8.982%201.566zM8%205c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%205.995A.905.905%200%200%201%208%205zm.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2z%22/%3E%3C/svg%3E");}.pdoc .pdoc-alert-danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5.52.359A.5.5%200%200%201%206%200h4a.5.5%200%200%201%20.474.658L8.694%206H12.5a.5.5%200%200%201%20.395.807l-7%209a.5.5%200%200%201-.873-.454L6.823%209.5H3.5a.5.5%200%200%201-.48-.641l2.5-8.5z%22/%3E%3C/svg%3E");}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc > section:not(.module-info) h1{font-size:1.5rem;font-weight:500;}.pdoc > section:not(.module-info) h2{font-size:1.4rem;font-weight:500;}.pdoc > section:not(.module-info) h3{font-size:1.3rem;font-weight:500;}.pdoc > section:not(.module-info) h4{font-size:1.2rem;}.pdoc > section:not(.module-info) h5{font-size:1.1rem;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--accent);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc > section:not(.module-info){margin-bottom:1.5rem;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.view-source-toggle-state,.view-source-toggle-state ~ .pdoc-code{display:none;}.view-source-toggle-state:checked ~ .pdoc-code{display:block;}.view-source-button{display:inline-block;float:right;font-size:.75rem;line-height:1.5rem;color:var(--muted);padding:0 .4rem 0 1.3rem;cursor:pointer;text-indent:-2px;}.view-source-button > span{visibility:hidden;}.module-info .view-source-button{float:none;display:flex;justify-content:flex-end;margin:-1.2rem .4rem -.2rem 0;}.view-source-button::before{position:absolute;content:"View Source";display:list-item;list-style-type:disclosure-closed;}.view-source-toggle-state:checked ~ .attr .view-source-button::before,.view-source-toggle-state:checked ~ .view-source-button::before{list-style-type:disclosure-open;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc section:not(.module-info) .docstring{margin-left:clamp(0rem, 5vw - 2rem, 1rem);}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target,.pdoc .pdoc-code > pre > span:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc .pdoc-code > pre > span:target{display:block;}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc *{scroll-margin:2rem;}.pdoc .pdoc-code .linenos{user-select:none;}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc section, .pdoc .classattr{position:relative;}.pdoc .headerlink{--width:clamp(1rem, 3vw, 2rem);position:absolute;top:0;left:calc(0rem - var(--width));transition:all 100ms ease-in-out;opacity:0;}.pdoc .headerlink::before{content:"#";display:block;text-align:center;width:var(--width);height:2.3rem;line-height:2.3rem;font-size:1.5rem;}.pdoc .attr:hover ~ .headerlink,.pdoc *:target > .headerlink,.pdoc .headerlink:hover{opacity:1;}.pdoc .attr{display:block;margin:.5rem 0 .5rem;padding:.4rem .4rem .4rem 1rem;background-color:var(--accent);overflow-x:auto;}.pdoc .classattr{margin-left:2rem;}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{background-color:transparent;}.pdoc .param, .pdoc .return-annotation{white-space:pre;}.pdoc .signature.multiline .param{display:block;}.pdoc .signature.condensed .param{display:inline-block;}.pdoc .annotation{color:var(--annotation);}.pdoc .view-value-toggle-state,.pdoc .view-value-toggle-state ~ .default_value{display:none;}.pdoc .view-value-toggle-state:checked ~ .default_value{display:inherit;}.pdoc .view-value-button{font-size:.5rem;vertical-align:middle;border-style:dashed;margin-top:-0.1rem;}.pdoc .view-value-button:hover{background:white;}.pdoc .view-value-button::before{content:"show";text-align:center;width:2.2em;display:inline-block;}.pdoc .view-value-toggle-state:checked ~ .view-value-button::before{content:"hide";}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:35px;vertical-align:middle;width:70px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
+    <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{cursor:pointer;display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .alert{padding:1rem 1rem 1rem calc(1.5rem + 24px);border:1px solid transparent;border-radius:.25rem;background-repeat:no-repeat;background-position:.75rem center;margin-bottom:1rem;}.pdoc .alert > em{display:none;}.pdoc .alert > *:last-child{margin-bottom:0;}.pdoc .alert.note {color:#084298;background-color:#cfe2ff;border-color:#b6d4fe;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23084298%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2016A8%208%200%201%200%208%200a8%208%200%200%200%200%2016zm.93-9.412-1%204.705c-.07.34.029.533.304.533.194%200%20.487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703%200-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381%202.29-.287zM8%205.5a1%201%200%201%201%200-2%201%201%200%200%201%200%202z%22/%3E%3C/svg%3E");}.pdoc .alert.warning{color:#664d03;background-color:#fff3cd;border-color:#ffecb5;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23664d03%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8.982%201.566a1.13%201.13%200%200%200-1.96%200L.165%2013.233c-.457.778.091%201.767.98%201.767h13.713c.889%200%201.438-.99.98-1.767L8.982%201.566zM8%205c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%205.995A.905.905%200%200%201%208%205zm.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2z%22/%3E%3C/svg%3E");}.pdoc .alert.danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5.52.359A.5.5%200%200%201%206%200h4a.5.5%200%200%201%20.474.658L8.694%206H12.5a.5.5%200%200%201%20.395.807l-7%209a.5.5%200%200%201-.873-.454L6.823%209.5H3.5a.5.5%200%200%201-.48-.641l2.5-8.5z%22/%3E%3C/svg%3E");}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc > section:not(.module-info) h1{font-size:1.5rem;font-weight:500;}.pdoc > section:not(.module-info) h2{font-size:1.4rem;font-weight:500;}.pdoc > section:not(.module-info) h3{font-size:1.3rem;font-weight:500;}.pdoc > section:not(.module-info) h4{font-size:1.2rem;}.pdoc > section:not(.module-info) h5{font-size:1.1rem;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--accent);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc > section:not(.module-info){margin-bottom:1.5rem;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.view-source-toggle-state,.view-source-toggle-state ~ .pdoc-code{display:none;}.view-source-toggle-state:checked ~ .pdoc-code{display:block;}.view-source-button{display:inline-block;float:right;font-size:.75rem;line-height:1.5rem;color:var(--muted);padding:0 .4rem 0 1.3rem;cursor:pointer;text-indent:-2px;}.view-source-button > span{visibility:hidden;}.module-info .view-source-button{float:none;display:flex;justify-content:flex-end;margin:-1.2rem .4rem -.2rem 0;}.view-source-button::before{position:absolute;content:"View Source";display:list-item;list-style-type:disclosure-closed;}.view-source-toggle-state:checked ~ .attr .view-source-button::before,.view-source-toggle-state:checked ~ .view-source-button::before{list-style-type:disclosure-open;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc section:not(.module-info) .docstring{margin-left:clamp(0rem, 5vw - 2rem, 1rem);}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target,.pdoc .pdoc-code > pre > span:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc .pdoc-code > pre > span:target{display:block;}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc *{scroll-margin:2rem;}.pdoc .pdoc-code .linenos{user-select:none;}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc section, .pdoc .classattr{position:relative;}.pdoc .headerlink{--width:clamp(1rem, 3vw, 2rem);position:absolute;top:0;left:calc(0rem - var(--width));transition:all 100ms ease-in-out;opacity:0;}.pdoc .headerlink::before{content:"#";display:block;text-align:center;width:var(--width);height:2.3rem;line-height:2.3rem;font-size:1.5rem;}.pdoc .attr:hover ~ .headerlink,.pdoc *:target > .headerlink,.pdoc .headerlink:hover{opacity:1;}.pdoc .attr{display:block;margin:.5rem 0 .5rem;padding:.4rem .4rem .4rem 1rem;background-color:var(--accent);overflow-x:auto;}.pdoc .classattr{margin-left:2rem;}.pdoc .decorator-deprecated{color:#842029;}.pdoc .decorator-deprecated ~ span{filter:grayscale(1) opacity(0.8);}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{background-color:transparent;}.pdoc .param, .pdoc .return-annotation{white-space:pre;}.pdoc .signature.multiline .param{display:block;}.pdoc .signature.condensed .param{display:inline-block;}.pdoc .annotation{color:var(--annotation);}.pdoc .view-value-toggle-state,.pdoc .view-value-toggle-state ~ .default_value{display:none;}.pdoc .view-value-toggle-state:checked ~ .default_value{display:inherit;}.pdoc .view-value-button{font-size:.5rem;vertical-align:middle;border-style:dashed;margin-top:-0.1rem;}.pdoc .view-value-button:hover{background:white;}.pdoc .view-value-button::before{content:"show";text-align:center;width:2.2em;display:inline-block;}.pdoc .view-value-toggle-state:checked ~ .view-value-button::before{content:"hide";}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:35px;vertical-align:middle;width:70px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
     <style>/*! custom.css */</style></head>
 <body>
     <nav class="pdoc">
@@ -20,7 +20,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
   <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-</svg>                &nbsp;satkit.save_and_load</a>
+</svg>                &nbsp;patkit.save_and_load</a>
 
 
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
@@ -51,12 +51,6 @@
                         <li>
                                 <a class="variable" href="#StatisticLoadSchema.model_config">model_config</a>
                         </li>
-                        <li>
-                                <a class="variable" href="#StatisticLoadSchema.model_fields">model_fields</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#StatisticLoadSchema.model_computed_fields">model_computed_fields</a>
-                        </li>
                 </ul>
 
             </li>
@@ -78,12 +72,6 @@
                         <li>
                                 <a class="variable" href="#DataContainerLoadSchema.model_config">model_config</a>
                         </li>
-                        <li>
-                                <a class="variable" href="#DataContainerLoadSchema.model_fields">model_fields</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#DataContainerLoadSchema.model_computed_fields">model_computed_fields</a>
-                        </li>
                 </ul>
 
             </li>
@@ -98,12 +86,6 @@
                         </li>
                         <li>
                                 <a class="variable" href="#DataContainerListingLoadSchema.model_config">model_config</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#DataContainerListingLoadSchema.model_fields">model_fields</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#DataContainerListingLoadSchema.model_computed_fields">model_computed_fields</a>
                         </li>
                 </ul>
 
@@ -132,12 +114,6 @@
                         <li>
                                 <a class="variable" href="#RecordingLoadSchema.model_config">model_config</a>
                         </li>
-                        <li>
-                                <a class="variable" href="#RecordingLoadSchema.model_fields">model_fields</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#RecordingLoadSchema.model_computed_fields">model_computed_fields</a>
-                        </li>
                 </ul>
 
             </li>
@@ -152,12 +128,6 @@
                         </li>
                         <li>
                                 <a class="variable" href="#SessionParameterLoadSchema.model_config">model_config</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SessionParameterLoadSchema.model_fields">model_fields</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SessionParameterLoadSchema.model_computed_fields">model_computed_fields</a>
                         </li>
                 </ul>
 
@@ -183,12 +153,6 @@
                         <li>
                                 <a class="variable" href="#SessionLoadSchema.model_config">model_config</a>
                         </li>
-                        <li>
-                                <a class="variable" href="#SessionLoadSchema.model_fields">model_fields</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SessionLoadSchema.model_computed_fields">model_computed_fields</a>
-                        </li>
                 </ul>
 
             </li>
@@ -206,7 +170,7 @@
     <main class="pdoc">
             <section class="module-info">
                     <h1 class="modulename">
-<a href="./../../satkit.html">satkit</a><wbr>.<a href="./../save_and_load.html">save_and_load</a><wbr>.save_and_load_schemas    </h1>
+<a href="./../../patkit.html">patkit</a><wbr>.<a href="./../save_and_load.html">save_and_load</a><wbr>.save_and_load_schemas    </h1>
 
                         <div class="docstring"><p>Pydantic models and converters for saving and loading.</p>
 </div>
@@ -220,7 +184,7 @@
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="c1"># Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="c1">#</span>
 </span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="c1"># This file is part of Speech Articulation ToolKIT</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="c1"># (see https://github.com/giuthas/satkit/).</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="c1"># (see https://github.com/giuthas/patkit/).</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="c1">#</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -250,95 +214,94 @@
 </span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a><span class="sd">Pydantic models and converters for saving and loading.</span>
 </span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>
-</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span><span class="p">,</span> <span class="n">PosixPath</span><span class="p">,</span> <span class="n">WindowsPath</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span><span class="p">,</span> <span class="n">PosixPath</span><span class="p">,</span> <span class="n">WindowsPath</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">DirectoryPath</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">DirectoryPath</span>
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="kn">from</span> <span class="nn">satkit.constants</span> <span class="kn">import</span> <span class="n">Datasource</span><span class="p">,</span> <span class="n">SavedObjectTypes</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span> <span class="nn">satkit.data_structures</span> <span class="kn">import</span> <span class="n">RecordingMetaData</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="kn">from</span> <span class="nn">satkit.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">SplineDiffsEnum</span><span class="p">,</span> <span class="n">SplineNNDsEnum</span><span class="p">,</span> <span class="n">SplineShapesEnum</span><span class="p">)</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">Datasource</span><span class="p">,</span> <span class="n">SavedObjectTypes</span><span class="p">,</span> <span class="n">SplineDiffsEnum</span><span class="p">,</span> \
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>    <span class="n">SplineNNDsEnum</span><span class="p">,</span> <span class="n">SplineShapesEnum</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.data_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordingMetaData</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="n">nested_text_converters</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>    <span class="n">datetime</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>    <span class="n">PosixPath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="n">WindowsPath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>    <span class="n">Path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>    <span class="n">SplineDiffsEnum</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>    <span class="n">SplineNNDsEnum</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>    <span class="n">SplineShapesEnum</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="p">}</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="n">nested_text_converters</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>    <span class="n">datetime</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>    <span class="n">PosixPath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>    <span class="n">WindowsPath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="n">Path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>    <span class="n">SplineDiffsEnum</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>    <span class="n">SplineNNDsEnum</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>    <span class="n">SplineShapesEnum</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="p">}</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>
 </span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="k">class</span> <span class="nc">StatisticLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="sd">    Loading schema for a saved Statistic.</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="sd">    Statistic is defined in the data_structures module.</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StatisticLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="sd">    Loading schema for a saved Statistic.</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">    Statistic is defined in the data_structures module.</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>
 </span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="k">class</span> <span class="nc">DataContainerLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="sd">    Loading schema for a saved Modality.</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="sd">    Modality is defined in the data_structures module.</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DataContainerLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="sd">    Loading schema for a saved Modality.</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="sd">    Modality is defined in the data_structures module.</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>
 </span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="k">class</span> <span class="nc">DataContainerListingLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">    Loading schema for the DataContainer listings in a saved Recording.</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="n">data_name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>    <span class="n">meta_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DataContainerListingLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="sd">    Loading schema for the DataContainer listings in a saved Recording.</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="n">data_name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="n">meta_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>
 </span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="k">class</span> <span class="nc">RecordingLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="sd">    Loading schema for a saved Recording.</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">    Recording is defined in the data_structures module.</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="n">SavedObjectTypes</span> <span class="o">=</span> <span class="n">SavedObjectTypes</span><span class="o">.</span><span class="n">RECORDING</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">RecordingMetaData</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="n">modalities</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataContainerListingLoadSchema</span><span class="p">]</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>    <span class="n">statistics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataContainerListingLoadSchema</span><span class="p">]</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RecordingLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="sd">    Loading schema for a saved Recording.</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="sd">    Recording is defined in the data_structures module.</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="n">SavedObjectTypes</span> <span class="o">=</span> <span class="n">SavedObjectTypes</span><span class="o">.</span><span class="n">RECORDING</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">RecordingMetaData</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>    <span class="n">modalities</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataContainerListingLoadSchema</span><span class="p">]</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="n">statistics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataContainerListingLoadSchema</span><span class="p">]</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>
 </span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="k">class</span> <span class="nc">SessionParameterLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a><span class="sd">    Loading schema for a saved Session.</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="sd">    Session is defined in the data_structures module.</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="n">path</span><span class="p">:</span> <span class="n">DirectoryPath</span>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>    <span class="n">datasource</span><span class="p">:</span> <span class="n">Datasource</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SessionParameterLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="sd">    Loading schema for a saved Session.</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="sd">    Session is defined in the data_structures module.</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="n">path</span><span class="p">:</span> <span class="n">DirectoryPath</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="n">datasource</span><span class="p">:</span> <span class="n">Datasource</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>
 </span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="k">class</span> <span class="nc">SessionLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">    Loading schema for a saved Session.</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">    Session is defined in the data_structures module.</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="n">SavedObjectTypes</span> <span class="o">=</span> <span class="n">SavedObjectTypes</span><span class="o">.</span><span class="n">SESSION</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">SessionParameterLoadSchema</span>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>    <span class="n">recordings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SessionLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">    Loading schema for a saved Session.</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">    Session is defined in the data_structures module.</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="n">SavedObjectTypes</span> <span class="o">=</span> <span class="n">SavedObjectTypes</span><span class="o">.</span><span class="n">SESSION</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">SessionParameterLoadSchema</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>    <span class="n">recordings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -347,7 +310,7 @@
                     <div class="attr variable">
             <span class="name">nested_text_converters</span>        =
 <input id="nested_text_converters-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="nested_text_converters-view-value"></label><span class="default_value">{&lt;class &#39;datetime.datetime&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;class &#39;pathlib.PosixPath&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;class &#39;pathlib.WindowsPath&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;class &#39;pathlib.Path&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;enum &#39;SplineDiffsEnum&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;enum &#39;SplineNNDsEnum&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;enum &#39;SplineShapesEnum&#39;&gt;: &lt;class &#39;str&#39;&gt;}</span>
+            <label class="view-value-button pdoc-button" for="nested_text_converters-view-value"></label><span class="default_value">{&lt;class &#39;datetime.datetime&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;class &#39;pathlib._local.PosixPath&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;class &#39;pathlib._local.WindowsPath&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;class &#39;pathlib._local.Path&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;enum &#39;SplineDiffsEnum&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;enum &#39;SplineNNDsEnum&#39;&gt;: &lt;class &#39;str&#39;&gt;, &lt;enum &#39;SplineShapesEnum&#39;&gt;: &lt;class &#39;str&#39;&gt;}</span>
 
         
     </div>
@@ -367,16 +330,16 @@
 
     </div>
     <a class="headerlink" href="#StatisticLoadSchema"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="StatisticLoadSchema-59"><a href="#StatisticLoadSchema-59"><span class="linenos">59</span></a><span class="k">class</span> <span class="nc">StatisticLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="StatisticLoadSchema-60"><a href="#StatisticLoadSchema-60"><span class="linenos">60</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="StatisticLoadSchema-61"><a href="#StatisticLoadSchema-61"><span class="linenos">61</span></a><span class="sd">    Loading schema for a saved Statistic.</span>
-</span><span id="StatisticLoadSchema-62"><a href="#StatisticLoadSchema-62"><span class="linenos">62</span></a>
-</span><span id="StatisticLoadSchema-63"><a href="#StatisticLoadSchema-63"><span class="linenos">63</span></a><span class="sd">    Statistic is defined in the data_structures module.</span>
-</span><span id="StatisticLoadSchema-64"><a href="#StatisticLoadSchema-64"><span class="linenos">64</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="StatisticLoadSchema-65"><a href="#StatisticLoadSchema-65"><span class="linenos">65</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="StatisticLoadSchema-66"><a href="#StatisticLoadSchema-66"><span class="linenos">66</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="StatisticLoadSchema-67"><a href="#StatisticLoadSchema-67"><span class="linenos">67</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="StatisticLoadSchema-68"><a href="#StatisticLoadSchema-68"><span class="linenos">68</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="StatisticLoadSchema-58"><a href="#StatisticLoadSchema-58"><span class="linenos">58</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StatisticLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="StatisticLoadSchema-59"><a href="#StatisticLoadSchema-59"><span class="linenos">59</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="StatisticLoadSchema-60"><a href="#StatisticLoadSchema-60"><span class="linenos">60</span></a><span class="sd">    Loading schema for a saved Statistic.</span>
+</span><span id="StatisticLoadSchema-61"><a href="#StatisticLoadSchema-61"><span class="linenos">61</span></a>
+</span><span id="StatisticLoadSchema-62"><a href="#StatisticLoadSchema-62"><span class="linenos">62</span></a><span class="sd">    Statistic is defined in the data_structures module.</span>
+</span><span id="StatisticLoadSchema-63"><a href="#StatisticLoadSchema-63"><span class="linenos">63</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="StatisticLoadSchema-64"><a href="#StatisticLoadSchema-64"><span class="linenos">64</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="StatisticLoadSchema-65"><a href="#StatisticLoadSchema-65"><span class="linenos">65</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="StatisticLoadSchema-66"><a href="#StatisticLoadSchema-66"><span class="linenos">66</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="StatisticLoadSchema-67"><a href="#StatisticLoadSchema-67"><span class="linenos">67</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
 </span></pre></div>
 
 
@@ -432,74 +395,17 @@
                             </div>
                             <div id="StatisticLoadSchema.model_config" class="classattr">
                                 <div class="attr variable">
-            <span class="name">model_config</span>        =
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
 <span class="default_value">{}</span>
 
         
     </div>
     <a class="headerlink" href="#StatisticLoadSchema.model_config"></a>
     
-    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
 
-                            </div>
-                            <div id="StatisticLoadSchema.model_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_fields</span>        =
-<input id="StatisticLoadSchema.model_fields-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="StatisticLoadSchema.model_fields-view-value"></label><span class="default_value">{&#39;object_type&#39;: FieldInfo(annotation=str, required=True), &#39;name&#39;: FieldInfo(annotation=str, required=True), &#39;format_version&#39;: FieldInfo(annotation=str, required=True), &#39;parameters&#39;: FieldInfo(annotation=dict, required=True)}</span>
 
-        
-    </div>
-    <a class="headerlink" href="#StatisticLoadSchema.model_fields"></a>
-    
-    
-
-                            </div>
-                            <div id="StatisticLoadSchema.model_computed_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_computed_fields</span>        =
-<span class="default_value">{}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#StatisticLoadSchema.model_computed_fields"></a>
-    
-    
-
-                            </div>
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>pydantic.main.BaseModel</dt>
-                                <dd id="StatisticLoadSchema.__init__" class="function">BaseModel</dd>
-                <dd id="StatisticLoadSchema.model_extra" class="variable">model_extra</dd>
-                <dd id="StatisticLoadSchema.model_fields_set" class="variable">model_fields_set</dd>
-                <dd id="StatisticLoadSchema.model_construct" class="function">model_construct</dd>
-                <dd id="StatisticLoadSchema.model_copy" class="function">model_copy</dd>
-                <dd id="StatisticLoadSchema.model_dump" class="function">model_dump</dd>
-                <dd id="StatisticLoadSchema.model_dump_json" class="function">model_dump_json</dd>
-                <dd id="StatisticLoadSchema.model_json_schema" class="function">model_json_schema</dd>
-                <dd id="StatisticLoadSchema.model_parametrized_name" class="function">model_parametrized_name</dd>
-                <dd id="StatisticLoadSchema.model_post_init" class="function">model_post_init</dd>
-                <dd id="StatisticLoadSchema.model_rebuild" class="function">model_rebuild</dd>
-                <dd id="StatisticLoadSchema.model_validate" class="function">model_validate</dd>
-                <dd id="StatisticLoadSchema.model_validate_json" class="function">model_validate_json</dd>
-                <dd id="StatisticLoadSchema.model_validate_strings" class="function">model_validate_strings</dd>
-                <dd id="StatisticLoadSchema.dict" class="function">dict</dd>
-                <dd id="StatisticLoadSchema.json" class="function">json</dd>
-                <dd id="StatisticLoadSchema.parse_obj" class="function">parse_obj</dd>
-                <dd id="StatisticLoadSchema.parse_raw" class="function">parse_raw</dd>
-                <dd id="StatisticLoadSchema.parse_file" class="function">parse_file</dd>
-                <dd id="StatisticLoadSchema.from_orm" class="function">from_orm</dd>
-                <dd id="StatisticLoadSchema.construct" class="function">construct</dd>
-                <dd id="StatisticLoadSchema.copy" class="function">copy</dd>
-                <dd id="StatisticLoadSchema.schema" class="function">schema</dd>
-                <dd id="StatisticLoadSchema.schema_json" class="function">schema_json</dd>
-                <dd id="StatisticLoadSchema.validate" class="function">validate</dd>
-                <dd id="StatisticLoadSchema.update_forward_refs" class="function">update_forward_refs</dd>
-
-            </div>
-                                </dl>
                             </div>
                 </section>
                 <section id="DataContainerLoadSchema">
@@ -513,16 +419,16 @@
 
     </div>
     <a class="headerlink" href="#DataContainerLoadSchema"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DataContainerLoadSchema-71"><a href="#DataContainerLoadSchema-71"><span class="linenos">71</span></a><span class="k">class</span> <span class="nc">DataContainerLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="DataContainerLoadSchema-72"><a href="#DataContainerLoadSchema-72"><span class="linenos">72</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="DataContainerLoadSchema-73"><a href="#DataContainerLoadSchema-73"><span class="linenos">73</span></a><span class="sd">    Loading schema for a saved Modality.</span>
-</span><span id="DataContainerLoadSchema-74"><a href="#DataContainerLoadSchema-74"><span class="linenos">74</span></a>
-</span><span id="DataContainerLoadSchema-75"><a href="#DataContainerLoadSchema-75"><span class="linenos">75</span></a><span class="sd">    Modality is defined in the data_structures module.</span>
-</span><span id="DataContainerLoadSchema-76"><a href="#DataContainerLoadSchema-76"><span class="linenos">76</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="DataContainerLoadSchema-77"><a href="#DataContainerLoadSchema-77"><span class="linenos">77</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="DataContainerLoadSchema-78"><a href="#DataContainerLoadSchema-78"><span class="linenos">78</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="DataContainerLoadSchema-79"><a href="#DataContainerLoadSchema-79"><span class="linenos">79</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="DataContainerLoadSchema-80"><a href="#DataContainerLoadSchema-80"><span class="linenos">80</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataContainerLoadSchema-70"><a href="#DataContainerLoadSchema-70"><span class="linenos">70</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DataContainerLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="DataContainerLoadSchema-71"><a href="#DataContainerLoadSchema-71"><span class="linenos">71</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="DataContainerLoadSchema-72"><a href="#DataContainerLoadSchema-72"><span class="linenos">72</span></a><span class="sd">    Loading schema for a saved Modality.</span>
+</span><span id="DataContainerLoadSchema-73"><a href="#DataContainerLoadSchema-73"><span class="linenos">73</span></a>
+</span><span id="DataContainerLoadSchema-74"><a href="#DataContainerLoadSchema-74"><span class="linenos">74</span></a><span class="sd">    Modality is defined in the data_structures module.</span>
+</span><span id="DataContainerLoadSchema-75"><a href="#DataContainerLoadSchema-75"><span class="linenos">75</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="DataContainerLoadSchema-76"><a href="#DataContainerLoadSchema-76"><span class="linenos">76</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="DataContainerLoadSchema-77"><a href="#DataContainerLoadSchema-77"><span class="linenos">77</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="DataContainerLoadSchema-78"><a href="#DataContainerLoadSchema-78"><span class="linenos">78</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="DataContainerLoadSchema-79"><a href="#DataContainerLoadSchema-79"><span class="linenos">79</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
 </span></pre></div>
 
 
@@ -578,74 +484,17 @@
                             </div>
                             <div id="DataContainerLoadSchema.model_config" class="classattr">
                                 <div class="attr variable">
-            <span class="name">model_config</span>        =
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
 <span class="default_value">{}</span>
 
         
     </div>
     <a class="headerlink" href="#DataContainerLoadSchema.model_config"></a>
     
-    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
 
-                            </div>
-                            <div id="DataContainerLoadSchema.model_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_fields</span>        =
-<input id="DataContainerLoadSchema.model_fields-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="DataContainerLoadSchema.model_fields-view-value"></label><span class="default_value">{&#39;object_type&#39;: FieldInfo(annotation=str, required=True), &#39;name&#39;: FieldInfo(annotation=str, required=True), &#39;format_version&#39;: FieldInfo(annotation=str, required=True), &#39;parameters&#39;: FieldInfo(annotation=dict, required=True)}</span>
 
-        
-    </div>
-    <a class="headerlink" href="#DataContainerLoadSchema.model_fields"></a>
-    
-    
-
-                            </div>
-                            <div id="DataContainerLoadSchema.model_computed_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_computed_fields</span>        =
-<span class="default_value">{}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#DataContainerLoadSchema.model_computed_fields"></a>
-    
-    
-
-                            </div>
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>pydantic.main.BaseModel</dt>
-                                <dd id="DataContainerLoadSchema.__init__" class="function">BaseModel</dd>
-                <dd id="DataContainerLoadSchema.model_extra" class="variable">model_extra</dd>
-                <dd id="DataContainerLoadSchema.model_fields_set" class="variable">model_fields_set</dd>
-                <dd id="DataContainerLoadSchema.model_construct" class="function">model_construct</dd>
-                <dd id="DataContainerLoadSchema.model_copy" class="function">model_copy</dd>
-                <dd id="DataContainerLoadSchema.model_dump" class="function">model_dump</dd>
-                <dd id="DataContainerLoadSchema.model_dump_json" class="function">model_dump_json</dd>
-                <dd id="DataContainerLoadSchema.model_json_schema" class="function">model_json_schema</dd>
-                <dd id="DataContainerLoadSchema.model_parametrized_name" class="function">model_parametrized_name</dd>
-                <dd id="DataContainerLoadSchema.model_post_init" class="function">model_post_init</dd>
-                <dd id="DataContainerLoadSchema.model_rebuild" class="function">model_rebuild</dd>
-                <dd id="DataContainerLoadSchema.model_validate" class="function">model_validate</dd>
-                <dd id="DataContainerLoadSchema.model_validate_json" class="function">model_validate_json</dd>
-                <dd id="DataContainerLoadSchema.model_validate_strings" class="function">model_validate_strings</dd>
-                <dd id="DataContainerLoadSchema.dict" class="function">dict</dd>
-                <dd id="DataContainerLoadSchema.json" class="function">json</dd>
-                <dd id="DataContainerLoadSchema.parse_obj" class="function">parse_obj</dd>
-                <dd id="DataContainerLoadSchema.parse_raw" class="function">parse_raw</dd>
-                <dd id="DataContainerLoadSchema.parse_file" class="function">parse_file</dd>
-                <dd id="DataContainerLoadSchema.from_orm" class="function">from_orm</dd>
-                <dd id="DataContainerLoadSchema.construct" class="function">construct</dd>
-                <dd id="DataContainerLoadSchema.copy" class="function">copy</dd>
-                <dd id="DataContainerLoadSchema.schema" class="function">schema</dd>
-                <dd id="DataContainerLoadSchema.schema_json" class="function">schema_json</dd>
-                <dd id="DataContainerLoadSchema.validate" class="function">validate</dd>
-                <dd id="DataContainerLoadSchema.update_forward_refs" class="function">update_forward_refs</dd>
-
-            </div>
-                                </dl>
                             </div>
                 </section>
                 <section id="DataContainerListingLoadSchema">
@@ -659,12 +508,12 @@
 
     </div>
     <a class="headerlink" href="#DataContainerListingLoadSchema"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DataContainerListingLoadSchema-83"><a href="#DataContainerListingLoadSchema-83"><span class="linenos">83</span></a><span class="k">class</span> <span class="nc">DataContainerListingLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="DataContainerListingLoadSchema-84"><a href="#DataContainerListingLoadSchema-84"><span class="linenos">84</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="DataContainerListingLoadSchema-85"><a href="#DataContainerListingLoadSchema-85"><span class="linenos">85</span></a><span class="sd">    Loading schema for the DataContainer listings in a saved Recording.</span>
-</span><span id="DataContainerListingLoadSchema-86"><a href="#DataContainerListingLoadSchema-86"><span class="linenos">86</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="DataContainerListingLoadSchema-87"><a href="#DataContainerListingLoadSchema-87"><span class="linenos">87</span></a>    <span class="n">data_name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="DataContainerListingLoadSchema-88"><a href="#DataContainerListingLoadSchema-88"><span class="linenos">88</span></a>    <span class="n">meta_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DataContainerListingLoadSchema-82"><a href="#DataContainerListingLoadSchema-82"><span class="linenos">82</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DataContainerListingLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="DataContainerListingLoadSchema-83"><a href="#DataContainerListingLoadSchema-83"><span class="linenos">83</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="DataContainerListingLoadSchema-84"><a href="#DataContainerListingLoadSchema-84"><span class="linenos">84</span></a><span class="sd">    Loading schema for the DataContainer listings in a saved Recording.</span>
+</span><span id="DataContainerListingLoadSchema-85"><a href="#DataContainerListingLoadSchema-85"><span class="linenos">85</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="DataContainerListingLoadSchema-86"><a href="#DataContainerListingLoadSchema-86"><span class="linenos">86</span></a>    <span class="n">data_name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="DataContainerListingLoadSchema-87"><a href="#DataContainerListingLoadSchema-87"><span class="linenos">87</span></a>    <span class="n">meta_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -696,74 +545,17 @@
                             </div>
                             <div id="DataContainerListingLoadSchema.model_config" class="classattr">
                                 <div class="attr variable">
-            <span class="name">model_config</span>        =
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
 <span class="default_value">{}</span>
 
         
     </div>
     <a class="headerlink" href="#DataContainerListingLoadSchema.model_config"></a>
     
-    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
 
-                            </div>
-                            <div id="DataContainerListingLoadSchema.model_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_fields</span>        =
-<input id="DataContainerListingLoadSchema.model_fields-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="DataContainerListingLoadSchema.model_fields-view-value"></label><span class="default_value">{&#39;data_name&#39;: FieldInfo(annotation=str, required=True), &#39;meta_name&#39;: FieldInfo(annotation=Union[str, NoneType], required=True)}</span>
 
-        
-    </div>
-    <a class="headerlink" href="#DataContainerListingLoadSchema.model_fields"></a>
-    
-    
-
-                            </div>
-                            <div id="DataContainerListingLoadSchema.model_computed_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_computed_fields</span>        =
-<span class="default_value">{}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#DataContainerListingLoadSchema.model_computed_fields"></a>
-    
-    
-
-                            </div>
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>pydantic.main.BaseModel</dt>
-                                <dd id="DataContainerListingLoadSchema.__init__" class="function">BaseModel</dd>
-                <dd id="DataContainerListingLoadSchema.model_extra" class="variable">model_extra</dd>
-                <dd id="DataContainerListingLoadSchema.model_fields_set" class="variable">model_fields_set</dd>
-                <dd id="DataContainerListingLoadSchema.model_construct" class="function">model_construct</dd>
-                <dd id="DataContainerListingLoadSchema.model_copy" class="function">model_copy</dd>
-                <dd id="DataContainerListingLoadSchema.model_dump" class="function">model_dump</dd>
-                <dd id="DataContainerListingLoadSchema.model_dump_json" class="function">model_dump_json</dd>
-                <dd id="DataContainerListingLoadSchema.model_json_schema" class="function">model_json_schema</dd>
-                <dd id="DataContainerListingLoadSchema.model_parametrized_name" class="function">model_parametrized_name</dd>
-                <dd id="DataContainerListingLoadSchema.model_post_init" class="function">model_post_init</dd>
-                <dd id="DataContainerListingLoadSchema.model_rebuild" class="function">model_rebuild</dd>
-                <dd id="DataContainerListingLoadSchema.model_validate" class="function">model_validate</dd>
-                <dd id="DataContainerListingLoadSchema.model_validate_json" class="function">model_validate_json</dd>
-                <dd id="DataContainerListingLoadSchema.model_validate_strings" class="function">model_validate_strings</dd>
-                <dd id="DataContainerListingLoadSchema.dict" class="function">dict</dd>
-                <dd id="DataContainerListingLoadSchema.json" class="function">json</dd>
-                <dd id="DataContainerListingLoadSchema.parse_obj" class="function">parse_obj</dd>
-                <dd id="DataContainerListingLoadSchema.parse_raw" class="function">parse_raw</dd>
-                <dd id="DataContainerListingLoadSchema.parse_file" class="function">parse_file</dd>
-                <dd id="DataContainerListingLoadSchema.from_orm" class="function">from_orm</dd>
-                <dd id="DataContainerListingLoadSchema.construct" class="function">construct</dd>
-                <dd id="DataContainerListingLoadSchema.copy" class="function">copy</dd>
-                <dd id="DataContainerListingLoadSchema.schema" class="function">schema</dd>
-                <dd id="DataContainerListingLoadSchema.schema_json" class="function">schema_json</dd>
-                <dd id="DataContainerListingLoadSchema.validate" class="function">validate</dd>
-                <dd id="DataContainerListingLoadSchema.update_forward_refs" class="function">update_forward_refs</dd>
-
-            </div>
-                                </dl>
                             </div>
                 </section>
                 <section id="RecordingLoadSchema">
@@ -777,18 +569,18 @@
 
     </div>
     <a class="headerlink" href="#RecordingLoadSchema"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RecordingLoadSchema-91"><a href="#RecordingLoadSchema-91"><span class="linenos"> 91</span></a><span class="k">class</span> <span class="nc">RecordingLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="RecordingLoadSchema-92"><a href="#RecordingLoadSchema-92"><span class="linenos"> 92</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="RecordingLoadSchema-93"><a href="#RecordingLoadSchema-93"><span class="linenos"> 93</span></a><span class="sd">    Loading schema for a saved Recording.</span>
-</span><span id="RecordingLoadSchema-94"><a href="#RecordingLoadSchema-94"><span class="linenos"> 94</span></a>
-</span><span id="RecordingLoadSchema-95"><a href="#RecordingLoadSchema-95"><span class="linenos"> 95</span></a><span class="sd">    Recording is defined in the data_structures module.</span>
-</span><span id="RecordingLoadSchema-96"><a href="#RecordingLoadSchema-96"><span class="linenos"> 96</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="RecordingLoadSchema-97"><a href="#RecordingLoadSchema-97"><span class="linenos"> 97</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="n">SavedObjectTypes</span> <span class="o">=</span> <span class="n">SavedObjectTypes</span><span class="o">.</span><span class="n">RECORDING</span>
-</span><span id="RecordingLoadSchema-98"><a href="#RecordingLoadSchema-98"><span class="linenos"> 98</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="RecordingLoadSchema-99"><a href="#RecordingLoadSchema-99"><span class="linenos"> 99</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="RecordingLoadSchema-100"><a href="#RecordingLoadSchema-100"><span class="linenos">100</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">RecordingMetaData</span>
-</span><span id="RecordingLoadSchema-101"><a href="#RecordingLoadSchema-101"><span class="linenos">101</span></a>    <span class="n">modalities</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataContainerListingLoadSchema</span><span class="p">]</span>
-</span><span id="RecordingLoadSchema-102"><a href="#RecordingLoadSchema-102"><span class="linenos">102</span></a>    <span class="n">statistics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataContainerListingLoadSchema</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RecordingLoadSchema-90"><a href="#RecordingLoadSchema-90"><span class="linenos"> 90</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RecordingLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="RecordingLoadSchema-91"><a href="#RecordingLoadSchema-91"><span class="linenos"> 91</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="RecordingLoadSchema-92"><a href="#RecordingLoadSchema-92"><span class="linenos"> 92</span></a><span class="sd">    Loading schema for a saved Recording.</span>
+</span><span id="RecordingLoadSchema-93"><a href="#RecordingLoadSchema-93"><span class="linenos"> 93</span></a>
+</span><span id="RecordingLoadSchema-94"><a href="#RecordingLoadSchema-94"><span class="linenos"> 94</span></a><span class="sd">    Recording is defined in the data_structures module.</span>
+</span><span id="RecordingLoadSchema-95"><a href="#RecordingLoadSchema-95"><span class="linenos"> 95</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="RecordingLoadSchema-96"><a href="#RecordingLoadSchema-96"><span class="linenos"> 96</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="n">SavedObjectTypes</span> <span class="o">=</span> <span class="n">SavedObjectTypes</span><span class="o">.</span><span class="n">RECORDING</span>
+</span><span id="RecordingLoadSchema-97"><a href="#RecordingLoadSchema-97"><span class="linenos"> 97</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="RecordingLoadSchema-98"><a href="#RecordingLoadSchema-98"><span class="linenos"> 98</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="RecordingLoadSchema-99"><a href="#RecordingLoadSchema-99"><span class="linenos"> 99</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">RecordingMetaData</span>
+</span><span id="RecordingLoadSchema-100"><a href="#RecordingLoadSchema-100"><span class="linenos">100</span></a>    <span class="n">modalities</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataContainerListingLoadSchema</span><span class="p">]</span>
+</span><span id="RecordingLoadSchema-101"><a href="#RecordingLoadSchema-101"><span class="linenos">101</span></a>    <span class="n">statistics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DataContainerListingLoadSchema</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -800,7 +592,7 @@
 
                             <div id="RecordingLoadSchema.object_type" class="classattr">
                                 <div class="attr variable">
-            <span class="name">object_type</span><span class="annotation">: <a href="../constants.html#SavedObjectTypes">satkit.constants.SavedObjectTypes</a></span>
+            <span class="name">object_type</span><span class="annotation">: <a href="../constants.html#SavedObjectTypes">patkit.constants.SavedObjectTypes</a></span>
 
         
     </div>
@@ -833,7 +625,7 @@
                             </div>
                             <div id="RecordingLoadSchema.parameters" class="classattr">
                                 <div class="attr variable">
-            <span class="name">parameters</span><span class="annotation">: <a href="../data_structures/metadata_classes.html#RecordingMetaData">satkit.data_structures.metadata_classes.RecordingMetaData</a></span>
+            <span class="name">parameters</span><span class="annotation">: <a href="../data_structures/metadata_classes.html#RecordingMetaData">patkit.data_structures.metadata_classes.RecordingMetaData</a></span>
 
         
     </div>
@@ -866,74 +658,17 @@
                             </div>
                             <div id="RecordingLoadSchema.model_config" class="classattr">
                                 <div class="attr variable">
-            <span class="name">model_config</span>        =
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
 <span class="default_value">{}</span>
 
         
     </div>
     <a class="headerlink" href="#RecordingLoadSchema.model_config"></a>
     
-    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
 
-                            </div>
-                            <div id="RecordingLoadSchema.model_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_fields</span>        =
-<input id="RecordingLoadSchema.model_fields-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="RecordingLoadSchema.model_fields-view-value"></label><span class="default_value">{&#39;object_type&#39;: FieldInfo(annotation=SavedObjectTypes, required=False, default=&lt;SavedObjectTypes.RECORDING: &#39;Recording&#39;&gt;), &#39;name&#39;: FieldInfo(annotation=str, required=True), &#39;format_version&#39;: FieldInfo(annotation=str, required=True), &#39;parameters&#39;: FieldInfo(annotation=RecordingMetaData, required=True), &#39;modalities&#39;: FieldInfo(annotation=dict[str, DataContainerListingLoadSchema], required=True), &#39;statistics&#39;: FieldInfo(annotation=dict[str, DataContainerListingLoadSchema], required=True)}</span>
 
-        
-    </div>
-    <a class="headerlink" href="#RecordingLoadSchema.model_fields"></a>
-    
-    
-
-                            </div>
-                            <div id="RecordingLoadSchema.model_computed_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_computed_fields</span>        =
-<span class="default_value">{}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#RecordingLoadSchema.model_computed_fields"></a>
-    
-    
-
-                            </div>
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>pydantic.main.BaseModel</dt>
-                                <dd id="RecordingLoadSchema.__init__" class="function">BaseModel</dd>
-                <dd id="RecordingLoadSchema.model_extra" class="variable">model_extra</dd>
-                <dd id="RecordingLoadSchema.model_fields_set" class="variable">model_fields_set</dd>
-                <dd id="RecordingLoadSchema.model_construct" class="function">model_construct</dd>
-                <dd id="RecordingLoadSchema.model_copy" class="function">model_copy</dd>
-                <dd id="RecordingLoadSchema.model_dump" class="function">model_dump</dd>
-                <dd id="RecordingLoadSchema.model_dump_json" class="function">model_dump_json</dd>
-                <dd id="RecordingLoadSchema.model_json_schema" class="function">model_json_schema</dd>
-                <dd id="RecordingLoadSchema.model_parametrized_name" class="function">model_parametrized_name</dd>
-                <dd id="RecordingLoadSchema.model_post_init" class="function">model_post_init</dd>
-                <dd id="RecordingLoadSchema.model_rebuild" class="function">model_rebuild</dd>
-                <dd id="RecordingLoadSchema.model_validate" class="function">model_validate</dd>
-                <dd id="RecordingLoadSchema.model_validate_json" class="function">model_validate_json</dd>
-                <dd id="RecordingLoadSchema.model_validate_strings" class="function">model_validate_strings</dd>
-                <dd id="RecordingLoadSchema.dict" class="function">dict</dd>
-                <dd id="RecordingLoadSchema.json" class="function">json</dd>
-                <dd id="RecordingLoadSchema.parse_obj" class="function">parse_obj</dd>
-                <dd id="RecordingLoadSchema.parse_raw" class="function">parse_raw</dd>
-                <dd id="RecordingLoadSchema.parse_file" class="function">parse_file</dd>
-                <dd id="RecordingLoadSchema.from_orm" class="function">from_orm</dd>
-                <dd id="RecordingLoadSchema.construct" class="function">construct</dd>
-                <dd id="RecordingLoadSchema.copy" class="function">copy</dd>
-                <dd id="RecordingLoadSchema.schema" class="function">schema</dd>
-                <dd id="RecordingLoadSchema.schema_json" class="function">schema_json</dd>
-                <dd id="RecordingLoadSchema.validate" class="function">validate</dd>
-                <dd id="RecordingLoadSchema.update_forward_refs" class="function">update_forward_refs</dd>
-
-            </div>
-                                </dl>
                             </div>
                 </section>
                 <section id="SessionParameterLoadSchema">
@@ -947,14 +682,14 @@
 
     </div>
     <a class="headerlink" href="#SessionParameterLoadSchema"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SessionParameterLoadSchema-105"><a href="#SessionParameterLoadSchema-105"><span class="linenos">105</span></a><span class="k">class</span> <span class="nc">SessionParameterLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="SessionParameterLoadSchema-106"><a href="#SessionParameterLoadSchema-106"><span class="linenos">106</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SessionParameterLoadSchema-107"><a href="#SessionParameterLoadSchema-107"><span class="linenos">107</span></a><span class="sd">    Loading schema for a saved Session.</span>
-</span><span id="SessionParameterLoadSchema-108"><a href="#SessionParameterLoadSchema-108"><span class="linenos">108</span></a>
-</span><span id="SessionParameterLoadSchema-109"><a href="#SessionParameterLoadSchema-109"><span class="linenos">109</span></a><span class="sd">    Session is defined in the data_structures module.</span>
-</span><span id="SessionParameterLoadSchema-110"><a href="#SessionParameterLoadSchema-110"><span class="linenos">110</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="SessionParameterLoadSchema-111"><a href="#SessionParameterLoadSchema-111"><span class="linenos">111</span></a>    <span class="n">path</span><span class="p">:</span> <span class="n">DirectoryPath</span>
-</span><span id="SessionParameterLoadSchema-112"><a href="#SessionParameterLoadSchema-112"><span class="linenos">112</span></a>    <span class="n">datasource</span><span class="p">:</span> <span class="n">Datasource</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SessionParameterLoadSchema-104"><a href="#SessionParameterLoadSchema-104"><span class="linenos">104</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SessionParameterLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="SessionParameterLoadSchema-105"><a href="#SessionParameterLoadSchema-105"><span class="linenos">105</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SessionParameterLoadSchema-106"><a href="#SessionParameterLoadSchema-106"><span class="linenos">106</span></a><span class="sd">    Loading schema for a saved Session.</span>
+</span><span id="SessionParameterLoadSchema-107"><a href="#SessionParameterLoadSchema-107"><span class="linenos">107</span></a>
+</span><span id="SessionParameterLoadSchema-108"><a href="#SessionParameterLoadSchema-108"><span class="linenos">108</span></a><span class="sd">    Session is defined in the data_structures module.</span>
+</span><span id="SessionParameterLoadSchema-109"><a href="#SessionParameterLoadSchema-109"><span class="linenos">109</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="SessionParameterLoadSchema-110"><a href="#SessionParameterLoadSchema-110"><span class="linenos">110</span></a>    <span class="n">path</span><span class="p">:</span> <span class="n">DirectoryPath</span>
+</span><span id="SessionParameterLoadSchema-111"><a href="#SessionParameterLoadSchema-111"><span class="linenos">111</span></a>    <span class="n">datasource</span><span class="p">:</span> <span class="n">Datasource</span>
 </span></pre></div>
 
 
@@ -966,7 +701,7 @@
 
                             <div id="SessionParameterLoadSchema.path" class="classattr">
                                 <div class="attr variable">
-            <span class="name">path</span><span class="annotation">: typing.Annotated[pathlib.Path, PathType(path_type=&#39;dir&#39;)]</span>
+            <span class="name">path</span><span class="annotation">: Annotated[pathlib._local.Path, PathType(path_type=&#39;dir&#39;)]</span>
 
         
     </div>
@@ -977,7 +712,7 @@
                             </div>
                             <div id="SessionParameterLoadSchema.datasource" class="classattr">
                                 <div class="attr variable">
-            <span class="name">datasource</span><span class="annotation">: <a href="../constants.html#Datasource">satkit.constants.Datasource</a></span>
+            <span class="name">datasource</span><span class="annotation">: <a href="../constants.html#Datasource">patkit.constants.Datasource</a></span>
 
         
     </div>
@@ -988,74 +723,17 @@
                             </div>
                             <div id="SessionParameterLoadSchema.model_config" class="classattr">
                                 <div class="attr variable">
-            <span class="name">model_config</span>        =
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
 <span class="default_value">{}</span>
 
         
     </div>
     <a class="headerlink" href="#SessionParameterLoadSchema.model_config"></a>
     
-    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
 
-                            </div>
-                            <div id="SessionParameterLoadSchema.model_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_fields</span>        =
-<input id="SessionParameterLoadSchema.model_fields-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="SessionParameterLoadSchema.model_fields-view-value"></label><span class="default_value">{&#39;path&#39;: FieldInfo(annotation=Path, required=True, metadata=[PathType(path_type=&#39;dir&#39;)]), &#39;datasource&#39;: FieldInfo(annotation=Datasource, required=True)}</span>
 
-        
-    </div>
-    <a class="headerlink" href="#SessionParameterLoadSchema.model_fields"></a>
-    
-    
-
-                            </div>
-                            <div id="SessionParameterLoadSchema.model_computed_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_computed_fields</span>        =
-<span class="default_value">{}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SessionParameterLoadSchema.model_computed_fields"></a>
-    
-    
-
-                            </div>
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>pydantic.main.BaseModel</dt>
-                                <dd id="SessionParameterLoadSchema.__init__" class="function">BaseModel</dd>
-                <dd id="SessionParameterLoadSchema.model_extra" class="variable">model_extra</dd>
-                <dd id="SessionParameterLoadSchema.model_fields_set" class="variable">model_fields_set</dd>
-                <dd id="SessionParameterLoadSchema.model_construct" class="function">model_construct</dd>
-                <dd id="SessionParameterLoadSchema.model_copy" class="function">model_copy</dd>
-                <dd id="SessionParameterLoadSchema.model_dump" class="function">model_dump</dd>
-                <dd id="SessionParameterLoadSchema.model_dump_json" class="function">model_dump_json</dd>
-                <dd id="SessionParameterLoadSchema.model_json_schema" class="function">model_json_schema</dd>
-                <dd id="SessionParameterLoadSchema.model_parametrized_name" class="function">model_parametrized_name</dd>
-                <dd id="SessionParameterLoadSchema.model_post_init" class="function">model_post_init</dd>
-                <dd id="SessionParameterLoadSchema.model_rebuild" class="function">model_rebuild</dd>
-                <dd id="SessionParameterLoadSchema.model_validate" class="function">model_validate</dd>
-                <dd id="SessionParameterLoadSchema.model_validate_json" class="function">model_validate_json</dd>
-                <dd id="SessionParameterLoadSchema.model_validate_strings" class="function">model_validate_strings</dd>
-                <dd id="SessionParameterLoadSchema.dict" class="function">dict</dd>
-                <dd id="SessionParameterLoadSchema.json" class="function">json</dd>
-                <dd id="SessionParameterLoadSchema.parse_obj" class="function">parse_obj</dd>
-                <dd id="SessionParameterLoadSchema.parse_raw" class="function">parse_raw</dd>
-                <dd id="SessionParameterLoadSchema.parse_file" class="function">parse_file</dd>
-                <dd id="SessionParameterLoadSchema.from_orm" class="function">from_orm</dd>
-                <dd id="SessionParameterLoadSchema.construct" class="function">construct</dd>
-                <dd id="SessionParameterLoadSchema.copy" class="function">copy</dd>
-                <dd id="SessionParameterLoadSchema.schema" class="function">schema</dd>
-                <dd id="SessionParameterLoadSchema.schema_json" class="function">schema_json</dd>
-                <dd id="SessionParameterLoadSchema.validate" class="function">validate</dd>
-                <dd id="SessionParameterLoadSchema.update_forward_refs" class="function">update_forward_refs</dd>
-
-            </div>
-                                </dl>
                             </div>
                 </section>
                 <section id="SessionLoadSchema">
@@ -1069,17 +747,17 @@
 
     </div>
     <a class="headerlink" href="#SessionLoadSchema"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SessionLoadSchema-115"><a href="#SessionLoadSchema-115"><span class="linenos">115</span></a><span class="k">class</span> <span class="nc">SessionLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="SessionLoadSchema-116"><a href="#SessionLoadSchema-116"><span class="linenos">116</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SessionLoadSchema-117"><a href="#SessionLoadSchema-117"><span class="linenos">117</span></a><span class="sd">    Loading schema for a saved Session.</span>
-</span><span id="SessionLoadSchema-118"><a href="#SessionLoadSchema-118"><span class="linenos">118</span></a>
-</span><span id="SessionLoadSchema-119"><a href="#SessionLoadSchema-119"><span class="linenos">119</span></a><span class="sd">    Session is defined in the data_structures module.</span>
-</span><span id="SessionLoadSchema-120"><a href="#SessionLoadSchema-120"><span class="linenos">120</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="SessionLoadSchema-121"><a href="#SessionLoadSchema-121"><span class="linenos">121</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="n">SavedObjectTypes</span> <span class="o">=</span> <span class="n">SavedObjectTypes</span><span class="o">.</span><span class="n">SESSION</span>
-</span><span id="SessionLoadSchema-122"><a href="#SessionLoadSchema-122"><span class="linenos">122</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="SessionLoadSchema-123"><a href="#SessionLoadSchema-123"><span class="linenos">123</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="SessionLoadSchema-124"><a href="#SessionLoadSchema-124"><span class="linenos">124</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">SessionParameterLoadSchema</span>
-</span><span id="SessionLoadSchema-125"><a href="#SessionLoadSchema-125"><span class="linenos">125</span></a>    <span class="n">recordings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SessionLoadSchema-114"><a href="#SessionLoadSchema-114"><span class="linenos">114</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SessionLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="SessionLoadSchema-115"><a href="#SessionLoadSchema-115"><span class="linenos">115</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SessionLoadSchema-116"><a href="#SessionLoadSchema-116"><span class="linenos">116</span></a><span class="sd">    Loading schema for a saved Session.</span>
+</span><span id="SessionLoadSchema-117"><a href="#SessionLoadSchema-117"><span class="linenos">117</span></a>
+</span><span id="SessionLoadSchema-118"><a href="#SessionLoadSchema-118"><span class="linenos">118</span></a><span class="sd">    Session is defined in the data_structures module.</span>
+</span><span id="SessionLoadSchema-119"><a href="#SessionLoadSchema-119"><span class="linenos">119</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="SessionLoadSchema-120"><a href="#SessionLoadSchema-120"><span class="linenos">120</span></a>    <span class="n">object_type</span><span class="p">:</span> <span class="n">SavedObjectTypes</span> <span class="o">=</span> <span class="n">SavedObjectTypes</span><span class="o">.</span><span class="n">SESSION</span>
+</span><span id="SessionLoadSchema-121"><a href="#SessionLoadSchema-121"><span class="linenos">121</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SessionLoadSchema-122"><a href="#SessionLoadSchema-122"><span class="linenos">122</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SessionLoadSchema-123"><a href="#SessionLoadSchema-123"><span class="linenos">123</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">SessionParameterLoadSchema</span>
+</span><span id="SessionLoadSchema-124"><a href="#SessionLoadSchema-124"><span class="linenos">124</span></a>    <span class="n">recordings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -1091,7 +769,7 @@
 
                             <div id="SessionLoadSchema.object_type" class="classattr">
                                 <div class="attr variable">
-            <span class="name">object_type</span><span class="annotation">: <a href="../constants.html#SavedObjectTypes">satkit.constants.SavedObjectTypes</a></span>
+            <span class="name">object_type</span><span class="annotation">: <a href="../constants.html#SavedObjectTypes">patkit.constants.SavedObjectTypes</a></span>
 
         
     </div>
@@ -1146,74 +824,17 @@
                             </div>
                             <div id="SessionLoadSchema.model_config" class="classattr">
                                 <div class="attr variable">
-            <span class="name">model_config</span>        =
+            <span class="name">model_config</span><span class="annotation">: ClassVar[pydantic.config.ConfigDict]</span>        =
 <span class="default_value">{}</span>
 
         
     </div>
     <a class="headerlink" href="#SessionLoadSchema.model_config"></a>
     
-    
+            <div class="docstring"><p>Configuration for the model, should be a dictionary conforming to [<code>ConfigDict</code>][pydantic.config.ConfigDict].</p>
+</div>
 
-                            </div>
-                            <div id="SessionLoadSchema.model_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_fields</span>        =
-<input id="SessionLoadSchema.model_fields-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="SessionLoadSchema.model_fields-view-value"></label><span class="default_value">{&#39;object_type&#39;: FieldInfo(annotation=SavedObjectTypes, required=False, default=&lt;SavedObjectTypes.SESSION: &#39;Session&#39;&gt;), &#39;name&#39;: FieldInfo(annotation=str, required=True), &#39;format_version&#39;: FieldInfo(annotation=str, required=True), &#39;parameters&#39;: FieldInfo(annotation=SessionParameterLoadSchema, required=True), &#39;recordings&#39;: FieldInfo(annotation=list[str], required=True)}</span>
 
-        
-    </div>
-    <a class="headerlink" href="#SessionLoadSchema.model_fields"></a>
-    
-    
-
-                            </div>
-                            <div id="SessionLoadSchema.model_computed_fields" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_computed_fields</span>        =
-<span class="default_value">{}</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SessionLoadSchema.model_computed_fields"></a>
-    
-    
-
-                            </div>
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>pydantic.main.BaseModel</dt>
-                                <dd id="SessionLoadSchema.__init__" class="function">BaseModel</dd>
-                <dd id="SessionLoadSchema.model_extra" class="variable">model_extra</dd>
-                <dd id="SessionLoadSchema.model_fields_set" class="variable">model_fields_set</dd>
-                <dd id="SessionLoadSchema.model_construct" class="function">model_construct</dd>
-                <dd id="SessionLoadSchema.model_copy" class="function">model_copy</dd>
-                <dd id="SessionLoadSchema.model_dump" class="function">model_dump</dd>
-                <dd id="SessionLoadSchema.model_dump_json" class="function">model_dump_json</dd>
-                <dd id="SessionLoadSchema.model_json_schema" class="function">model_json_schema</dd>
-                <dd id="SessionLoadSchema.model_parametrized_name" class="function">model_parametrized_name</dd>
-                <dd id="SessionLoadSchema.model_post_init" class="function">model_post_init</dd>
-                <dd id="SessionLoadSchema.model_rebuild" class="function">model_rebuild</dd>
-                <dd id="SessionLoadSchema.model_validate" class="function">model_validate</dd>
-                <dd id="SessionLoadSchema.model_validate_json" class="function">model_validate_json</dd>
-                <dd id="SessionLoadSchema.model_validate_strings" class="function">model_validate_strings</dd>
-                <dd id="SessionLoadSchema.dict" class="function">dict</dd>
-                <dd id="SessionLoadSchema.json" class="function">json</dd>
-                <dd id="SessionLoadSchema.parse_obj" class="function">parse_obj</dd>
-                <dd id="SessionLoadSchema.parse_raw" class="function">parse_raw</dd>
-                <dd id="SessionLoadSchema.parse_file" class="function">parse_file</dd>
-                <dd id="SessionLoadSchema.from_orm" class="function">from_orm</dd>
-                <dd id="SessionLoadSchema.construct" class="function">construct</dd>
-                <dd id="SessionLoadSchema.copy" class="function">copy</dd>
-                <dd id="SessionLoadSchema.schema" class="function">schema</dd>
-                <dd id="SessionLoadSchema.schema_json" class="function">schema_json</dd>
-                <dd id="SessionLoadSchema.validate" class="function">validate</dd>
-                <dd id="SessionLoadSchema.update_forward_refs" class="function">update_forward_refs</dd>
-
-            </div>
-                                </dl>
                             </div>
                 </section>
     </main>

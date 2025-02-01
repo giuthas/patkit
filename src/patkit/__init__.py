@@ -54,7 +54,7 @@ from .cli import run_cli
 from .initialise import add_derived_data, initialise_patkit
 from .qt_annotator import run_annotator
 
-__all__ = ['add_derived_data', 'initialise_patkit']
+# __all__ = ['add_derived_data', 'initialise_patkit']
 
 # Load logging config from json file.
 LOG_CONFIG = "configuration/patkit_logging_configuration.json"

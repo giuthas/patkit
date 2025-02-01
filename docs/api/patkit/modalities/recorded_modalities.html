@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 14.4.0"/>
-    <title>satkit.modalities.recorded_modalities API documentation</title>
+    <meta name="generator" content="pdoc 15.0.1"/>
+    <title>patkit.modalities.recorded_modalities API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
     <style>/*! syntax-highlighting.css */pre{line-height:125%;}span.linenos{color:inherit; background-color:transparent; padding-left:5px; padding-right:20px;}.pdoc-code .hll{background-color:#ffffcc}.pdoc-code{background:#f8f8f8;}.pdoc-code .c{color:#3D7B7B; font-style:italic}.pdoc-code .err{border:1px solid #FF0000}.pdoc-code .k{color:#008000; font-weight:bold}.pdoc-code .o{color:#666666}.pdoc-code .ch{color:#3D7B7B; font-style:italic}.pdoc-code .cm{color:#3D7B7B; font-style:italic}.pdoc-code .cp{color:#9C6500}.pdoc-code .cpf{color:#3D7B7B; font-style:italic}.pdoc-code .c1{color:#3D7B7B; font-style:italic}.pdoc-code .cs{color:#3D7B7B; font-style:italic}.pdoc-code .gd{color:#A00000}.pdoc-code .ge{font-style:italic}.pdoc-code .gr{color:#E40000}.pdoc-code .gh{color:#000080; font-weight:bold}.pdoc-code .gi{color:#008400}.pdoc-code .go{color:#717171}.pdoc-code .gp{color:#000080; font-weight:bold}.pdoc-code .gs{font-weight:bold}.pdoc-code .gu{color:#800080; font-weight:bold}.pdoc-code .gt{color:#0044DD}.pdoc-code .kc{color:#008000; font-weight:bold}.pdoc-code .kd{color:#008000; font-weight:bold}.pdoc-code .kn{color:#008000; font-weight:bold}.pdoc-code .kp{color:#008000}.pdoc-code .kr{color:#008000; font-weight:bold}.pdoc-code .kt{color:#B00040}.pdoc-code .m{color:#666666}.pdoc-code .s{color:#BA2121}.pdoc-code .na{color:#687822}.pdoc-code .nb{color:#008000}.pdoc-code .nc{color:#0000FF; font-weight:bold}.pdoc-code .no{color:#880000}.pdoc-code .nd{color:#AA22FF}.pdoc-code .ni{color:#717171; font-weight:bold}.pdoc-code .ne{color:#CB3F38; font-weight:bold}.pdoc-code .nf{color:#0000FF}.pdoc-code .nl{color:#767600}.pdoc-code .nn{color:#0000FF; font-weight:bold}.pdoc-code .nt{color:#008000; font-weight:bold}.pdoc-code .nv{color:#19177C}.pdoc-code .ow{color:#AA22FF; font-weight:bold}.pdoc-code .w{color:#bbbbbb}.pdoc-code .mb{color:#666666}.pdoc-code .mf{color:#666666}.pdoc-code .mh{color:#666666}.pdoc-code .mi{color:#666666}.pdoc-code .mo{color:#666666}.pdoc-code .sa{color:#BA2121}.pdoc-code .sb{color:#BA2121}.pdoc-code .sc{color:#BA2121}.pdoc-code .dl{color:#BA2121}.pdoc-code .sd{color:#BA2121; font-style:italic}.pdoc-code .s2{color:#BA2121}.pdoc-code .se{color:#AA5D1F; font-weight:bold}.pdoc-code .sh{color:#BA2121}.pdoc-code .si{color:#A45A77; font-weight:bold}.pdoc-code .sx{color:#008000}.pdoc-code .sr{color:#A45A77}.pdoc-code .s1{color:#BA2121}.pdoc-code .ss{color:#19177C}.pdoc-code .bp{color:#008000}.pdoc-code .fm{color:#0000FF}.pdoc-code .vc{color:#19177C}.pdoc-code .vg{color:#19177C}.pdoc-code .vi{color:#19177C}.pdoc-code .vm{color:#19177C}.pdoc-code .il{color:#666666}</style>
     <style>/*! theme.css */:root{--pdoc-background:#fff;}.pdoc{--text:#212529;--muted:#6c757d;--link:#3660a5;--link-hover:#1659c5;--code:#f8f8f8;--active:#fff598;--accent:#eee;--accent2:#c1c1c1;--nav-hover:rgba(255, 255, 255, 0.5);--name:#0066BB;--def:#008800;--annotation:#007020;}</style>
     <style>/*! layout.css */html, body{width:100%;height:100%;}html, main{scroll-behavior:smooth;}body{background-color:var(--pdoc-background);}@media (max-width:769px){#navtoggle{cursor:pointer;position:absolute;width:50px;height:40px;top:1rem;right:1rem;border-color:var(--text);color:var(--text);display:flex;opacity:0.8;z-index:999;}#navtoggle:hover{opacity:1;}#togglestate + div{display:none;}#togglestate:checked + div{display:inherit;}main, header{padding:2rem 3vw;}header + main{margin-top:-3rem;}.git-button{display:none !important;}nav input[type="search"]{max-width:77%;}nav input[type="search"]:first-child{margin-top:-6px;}nav input[type="search"]:valid ~ *{display:none !important;}}@media (min-width:770px){:root{--sidebar-width:clamp(12.5rem, 28vw, 22rem);}nav{position:fixed;overflow:auto;height:100vh;width:var(--sidebar-width);}main, header{padding:3rem 2rem 3rem calc(var(--sidebar-width) + 3rem);width:calc(54rem + var(--sidebar-width));max-width:100%;}header + main{margin-top:-4rem;}#navtoggle{display:none;}}#togglestate{position:absolute;height:0;opacity:0;}nav.pdoc{--pad:clamp(0.5rem, 2vw, 1.75rem);--indent:1.5rem;background-color:var(--accent);border-right:1px solid var(--accent2);box-shadow:0 0 20px rgba(50, 50, 50, .2) inset;padding:0 0 0 var(--pad);overflow-wrap:anywhere;scrollbar-width:thin; scrollbar-color:var(--accent2) transparent; z-index:1}nav.pdoc::-webkit-scrollbar{width:.4rem; }nav.pdoc::-webkit-scrollbar-thumb{background-color:var(--accent2); }nav.pdoc > div{padding:var(--pad) 0;}nav.pdoc .module-list-button{display:inline-flex;align-items:center;color:var(--text);border-color:var(--muted);margin-bottom:1rem;}nav.pdoc .module-list-button:hover{border-color:var(--text);}nav.pdoc input[type=search]{display:block;outline-offset:0;width:calc(100% - var(--pad));}nav.pdoc .logo{max-width:calc(100% - var(--pad));max-height:35vh;display:block;margin:0 auto 1rem;transform:translate(calc(-.5 * var(--pad)), 0);}nav.pdoc ul{list-style:none;padding-left:0;}nav.pdoc > div > ul{margin-left:calc(0px - var(--pad));}nav.pdoc li a{padding:.2rem 0 .2rem calc(var(--pad) + var(--indent));}nav.pdoc > div > ul > li > a{padding-left:var(--pad);}nav.pdoc li{transition:all 100ms;}nav.pdoc li:hover{background-color:var(--nav-hover);}nav.pdoc a, nav.pdoc a:hover{color:var(--text);}nav.pdoc a{display:block;}nav.pdoc > h2:first-of-type{margin-top:1.5rem;}nav.pdoc .class:before{content:"class ";color:var(--muted);}nav.pdoc .function:after{content:"()";color:var(--muted);}nav.pdoc footer:before{content:"";display:block;width:calc(100% - var(--pad));border-top:solid var(--accent2) 1px;margin-top:1.5rem;padding-top:.5rem;}nav.pdoc footer{font-size:small;}</style>
-    <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{cursor:pointer;display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .pdoc-alert{padding:1rem 1rem 1rem calc(1.5rem + 24px);border:1px solid transparent;border-radius:.25rem;background-repeat:no-repeat;background-position:1rem center;margin-bottom:1rem;}.pdoc .pdoc-alert > *:last-child{margin-bottom:0;}.pdoc .pdoc-alert-note {color:#084298;background-color:#cfe2ff;border-color:#b6d4fe;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23084298%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2016A8%208%200%201%200%208%200a8%208%200%200%200%200%2016zm.93-9.412-1%204.705c-.07.34.029.533.304.533.194%200%20.487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703%200-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381%202.29-.287zM8%205.5a1%201%200%201%201%200-2%201%201%200%200%201%200%202z%22/%3E%3C/svg%3E");}.pdoc .pdoc-alert-warning{color:#664d03;background-color:#fff3cd;border-color:#ffecb5;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23664d03%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8.982%201.566a1.13%201.13%200%200%200-1.96%200L.165%2013.233c-.457.778.091%201.767.98%201.767h13.713c.889%200%201.438-.99.98-1.767L8.982%201.566zM8%205c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%205.995A.905.905%200%200%201%208%205zm.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2z%22/%3E%3C/svg%3E");}.pdoc .pdoc-alert-danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5.52.359A.5.5%200%200%201%206%200h4a.5.5%200%200%201%20.474.658L8.694%206H12.5a.5.5%200%200%201%20.395.807l-7%209a.5.5%200%200%201-.873-.454L6.823%209.5H3.5a.5.5%200%200%201-.48-.641l2.5-8.5z%22/%3E%3C/svg%3E");}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc > section:not(.module-info) h1{font-size:1.5rem;font-weight:500;}.pdoc > section:not(.module-info) h2{font-size:1.4rem;font-weight:500;}.pdoc > section:not(.module-info) h3{font-size:1.3rem;font-weight:500;}.pdoc > section:not(.module-info) h4{font-size:1.2rem;}.pdoc > section:not(.module-info) h5{font-size:1.1rem;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--accent);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc > section:not(.module-info){margin-bottom:1.5rem;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.view-source-toggle-state,.view-source-toggle-state ~ .pdoc-code{display:none;}.view-source-toggle-state:checked ~ .pdoc-code{display:block;}.view-source-button{display:inline-block;float:right;font-size:.75rem;line-height:1.5rem;color:var(--muted);padding:0 .4rem 0 1.3rem;cursor:pointer;text-indent:-2px;}.view-source-button > span{visibility:hidden;}.module-info .view-source-button{float:none;display:flex;justify-content:flex-end;margin:-1.2rem .4rem -.2rem 0;}.view-source-button::before{position:absolute;content:"View Source";display:list-item;list-style-type:disclosure-closed;}.view-source-toggle-state:checked ~ .attr .view-source-button::before,.view-source-toggle-state:checked ~ .view-source-button::before{list-style-type:disclosure-open;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc section:not(.module-info) .docstring{margin-left:clamp(0rem, 5vw - 2rem, 1rem);}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target,.pdoc .pdoc-code > pre > span:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc .pdoc-code > pre > span:target{display:block;}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc *{scroll-margin:2rem;}.pdoc .pdoc-code .linenos{user-select:none;}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc section, .pdoc .classattr{position:relative;}.pdoc .headerlink{--width:clamp(1rem, 3vw, 2rem);position:absolute;top:0;left:calc(0rem - var(--width));transition:all 100ms ease-in-out;opacity:0;}.pdoc .headerlink::before{content:"#";display:block;text-align:center;width:var(--width);height:2.3rem;line-height:2.3rem;font-size:1.5rem;}.pdoc .attr:hover ~ .headerlink,.pdoc *:target > .headerlink,.pdoc .headerlink:hover{opacity:1;}.pdoc .attr{display:block;margin:.5rem 0 .5rem;padding:.4rem .4rem .4rem 1rem;background-color:var(--accent);overflow-x:auto;}.pdoc .classattr{margin-left:2rem;}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{background-color:transparent;}.pdoc .param, .pdoc .return-annotation{white-space:pre;}.pdoc .signature.multiline .param{display:block;}.pdoc .signature.condensed .param{display:inline-block;}.pdoc .annotation{color:var(--annotation);}.pdoc .view-value-toggle-state,.pdoc .view-value-toggle-state ~ .default_value{display:none;}.pdoc .view-value-toggle-state:checked ~ .default_value{display:inherit;}.pdoc .view-value-button{font-size:.5rem;vertical-align:middle;border-style:dashed;margin-top:-0.1rem;}.pdoc .view-value-button:hover{background:white;}.pdoc .view-value-button::before{content:"show";text-align:center;width:2.2em;display:inline-block;}.pdoc .view-value-toggle-state:checked ~ .view-value-button::before{content:"hide";}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:35px;vertical-align:middle;width:70px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
+    <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{cursor:pointer;display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .alert{padding:1rem 1rem 1rem calc(1.5rem + 24px);border:1px solid transparent;border-radius:.25rem;background-repeat:no-repeat;background-position:.75rem center;margin-bottom:1rem;}.pdoc .alert > em{display:none;}.pdoc .alert > *:last-child{margin-bottom:0;}.pdoc .alert.note {color:#084298;background-color:#cfe2ff;border-color:#b6d4fe;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23084298%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2016A8%208%200%201%200%208%200a8%208%200%200%200%200%2016zm.93-9.412-1%204.705c-.07.34.029.533.304.533.194%200%20.487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703%200-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381%202.29-.287zM8%205.5a1%201%200%201%201%200-2%201%201%200%200%201%200%202z%22/%3E%3C/svg%3E");}.pdoc .alert.warning{color:#664d03;background-color:#fff3cd;border-color:#ffecb5;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23664d03%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8.982%201.566a1.13%201.13%200%200%200-1.96%200L.165%2013.233c-.457.778.091%201.767.98%201.767h13.713c.889%200%201.438-.99.98-1.767L8.982%201.566zM8%205c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%205.995A.905.905%200%200%201%208%205zm.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2z%22/%3E%3C/svg%3E");}.pdoc .alert.danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5.52.359A.5.5%200%200%201%206%200h4a.5.5%200%200%201%20.474.658L8.694%206H12.5a.5.5%200%200%201%20.395.807l-7%209a.5.5%200%200%201-.873-.454L6.823%209.5H3.5a.5.5%200%200%201-.48-.641l2.5-8.5z%22/%3E%3C/svg%3E");}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc > section:not(.module-info) h1{font-size:1.5rem;font-weight:500;}.pdoc > section:not(.module-info) h2{font-size:1.4rem;font-weight:500;}.pdoc > section:not(.module-info) h3{font-size:1.3rem;font-weight:500;}.pdoc > section:not(.module-info) h4{font-size:1.2rem;}.pdoc > section:not(.module-info) h5{font-size:1.1rem;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--accent);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc > section:not(.module-info){margin-bottom:1.5rem;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.view-source-toggle-state,.view-source-toggle-state ~ .pdoc-code{display:none;}.view-source-toggle-state:checked ~ .pdoc-code{display:block;}.view-source-button{display:inline-block;float:right;font-size:.75rem;line-height:1.5rem;color:var(--muted);padding:0 .4rem 0 1.3rem;cursor:pointer;text-indent:-2px;}.view-source-button > span{visibility:hidden;}.module-info .view-source-button{float:none;display:flex;justify-content:flex-end;margin:-1.2rem .4rem -.2rem 0;}.view-source-button::before{position:absolute;content:"View Source";display:list-item;list-style-type:disclosure-closed;}.view-source-toggle-state:checked ~ .attr .view-source-button::before,.view-source-toggle-state:checked ~ .view-source-button::before{list-style-type:disclosure-open;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc section:not(.module-info) .docstring{margin-left:clamp(0rem, 5vw - 2rem, 1rem);}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target,.pdoc .pdoc-code > pre > span:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc .pdoc-code > pre > span:target{display:block;}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc *{scroll-margin:2rem;}.pdoc .pdoc-code .linenos{user-select:none;}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc section, .pdoc .classattr{position:relative;}.pdoc .headerlink{--width:clamp(1rem, 3vw, 2rem);position:absolute;top:0;left:calc(0rem - var(--width));transition:all 100ms ease-in-out;opacity:0;}.pdoc .headerlink::before{content:"#";display:block;text-align:center;width:var(--width);height:2.3rem;line-height:2.3rem;font-size:1.5rem;}.pdoc .attr:hover ~ .headerlink,.pdoc *:target > .headerlink,.pdoc .headerlink:hover{opacity:1;}.pdoc .attr{display:block;margin:.5rem 0 .5rem;padding:.4rem .4rem .4rem 1rem;background-color:var(--accent);overflow-x:auto;}.pdoc .classattr{margin-left:2rem;}.pdoc .decorator-deprecated{color:#842029;}.pdoc .decorator-deprecated ~ span{filter:grayscale(1) opacity(0.8);}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{background-color:transparent;}.pdoc .param, .pdoc .return-annotation{white-space:pre;}.pdoc .signature.multiline .param{display:block;}.pdoc .signature.condensed .param{display:inline-block;}.pdoc .annotation{color:var(--annotation);}.pdoc .view-value-toggle-state,.pdoc .view-value-toggle-state ~ .default_value{display:none;}.pdoc .view-value-toggle-state:checked ~ .default_value{display:inherit;}.pdoc .view-value-button{font-size:.5rem;vertical-align:middle;border-style:dashed;margin-top:-0.1rem;}.pdoc .view-value-button:hover{background:white;}.pdoc .view-value-button::before{content:"show";text-align:center;width:2.2em;display:inline-block;}.pdoc .view-value-toggle-state:checked ~ .view-value-button::before{content:"hide";}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:35px;vertical-align:middle;width:70px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
     <style>/*! custom.css */</style></head>
 <body>
     <nav class="pdoc">
@@ -20,7 +20,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
   <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-</svg>                &nbsp;satkit.modalities</a>
+</svg>                &nbsp;patkit.modalities</a>
 
 
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
@@ -143,7 +143,7 @@
     <main class="pdoc">
             <section class="module-info">
                     <h1 class="modulename">
-<a href="./../../satkit.html">satkit</a><wbr>.<a href="./../modalities.html">modalities</a><wbr>.recorded_modalities    </h1>
+<a href="./../../patkit.html">patkit</a><wbr>.<a href="./../modalities.html">modalities</a><wbr>.recorded_modalities    </h1>
 
                         <div class="docstring"><p>Recorded data modalities</p>
 </div>
@@ -157,7 +157,7 @@
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="c1"># Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="c1">#</span>
 </span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="c1"># This file is part of Speech Articulation ToolKIT</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="c1"># (see https://github.com/giuthas/satkit/).</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="c1"># (see https://github.com/giuthas/patkit/).</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="c1">#</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -187,27 +187,27 @@
 </span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a><span class="sd">Recorded data modalities</span>
 </span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>
-</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="kn">import</span> <span class="nn">logging</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="kn">import</span> <span class="nn">sys</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="c1"># local modules</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span> <span class="nn">satkit.data_structures</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.data_structures</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>    <span class="n">FileInformation</span><span class="p">,</span> <span class="n">Modality</span><span class="p">,</span> <span class="n">ModalityData</span><span class="p">,</span> <span class="n">ModalityMetaData</span><span class="p">,</span> <span class="n">Recording</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="p">)</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="kn">from</span> <span class="nn">satkit.import_formats</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.import_formats</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>    <span class="n">read_3d_ultrasound_dicom</span><span class="p">,</span> <span class="n">read_avi</span><span class="p">,</span> <span class="n">read_ult</span><span class="p">,</span> <span class="n">read_wav</span><span class="p">,</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>    <span class="n">read_wav_and_detect_beep</span>
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="p">)</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="kn">from</span> <span class="nn">satkit.interpolate_raw_uti</span> <span class="kn">import</span> <span class="n">to_fan</span><span class="p">,</span> <span class="n">to_fan_2d</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="kn">from</span> <span class="nn">.recorded_metadata_classes</span> <span class="kn">import</span> <span class="n">RawUltrasoundMeta</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.interpolate_raw_uti</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_fan</span><span class="p">,</span> <span class="n">to_fan_2d</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.recorded_metadata_classes</span><span class="w"> </span><span class="kn">import</span> <span class="n">RawUltrasoundMeta</span>
 </span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;satkit.modalities&#39;</span><span class="p">)</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;patkit.modalities&#39;</span><span class="p">)</span>
 </span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>
 </span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="k">class</span> <span class="nc">MonoAudio</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="k">class</span><span class="w"> </span><span class="nc">MonoAudio</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
 </span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="sd">    A mono audio track.</span>
 </span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>
@@ -222,10 +222,10 @@
 </span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="c1"># filter = {}</span>
 </span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
 </span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>    <span class="nd">@classmethod</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>            <span class="bp">self</span><span class="p">,</span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>            <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>            <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
@@ -265,7 +265,7 @@
 </span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">go_signal</span> <span class="o">=</span> <span class="n">go_signal</span>
 </span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">has_speech</span> <span class="o">=</span> <span class="n">has_speech</span>
 </span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>    <span class="k">def</span> <span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
 </span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">        Read wav data, and possibly detect go-signal &amp; speech.</span>
 </span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -287,20 +287,20 @@
 </span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>    <span class="c1"># metadata save file will be read as well to recover any go-signal or</span>
 </span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>    <span class="c1"># speech detection results. &quot;&quot;&quot;</span>
 </span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_rate</span><span class="p">}</span>
 </span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>
 </span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>
-</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a><span class="k">class</span> <span class="nc">RawUltrasound</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RawUltrasound</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
 </span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a><span class="sd">    Ultrasound Recording with raw (probe return) data.</span>
 </span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>
 </span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>    <span class="nd">@classmethod</span>
-</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a>
-</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -341,22 +341,22 @@
 </span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">video_has_been_stored</span> <span class="o">=</span> <span class="kc">False</span>
 </span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">stored_video</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>
-</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>    <span class="k">def</span> <span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
 </span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>        <span class="k">return</span> <span class="n">read_ult</span><span class="p">(</span>
 </span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">recorded_data_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_offset</span><span class="p">)</span>
 </span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>
-</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>
 </span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>    <span class="nd">@property</span>
-</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
 </span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>
 </span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>    <span class="nd">@data</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_data_setter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a>
-</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>    <span class="k">def</span> <span class="nf">raw_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">raw_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a><span class="sd">        Return the raw ultrasound frame at index.</span>
 </span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a>
@@ -372,7 +372,7 @@
 </span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>
-</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>    <span class="k">def</span> <span class="nf">interpolated_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolated_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 </span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a><span class="sd">        Return an interpolated version of the ultrasound frame at index.</span>
 </span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a>
@@ -407,7 +407,7 @@
 </span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>            <span class="p">)</span>
 </span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stored_image</span>
 </span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>
-</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>    <span class="k">def</span> <span class="nf">interpolated_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolated_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a><span class="sd">        Return an interpolated version of the ultrasound frame at index.</span>
 </span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a>
@@ -431,7 +431,7 @@
 </span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a>        <span class="k">return</span> <span class="n">video</span>
 </span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a>
 </span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a>    <span class="nd">@property</span>
-</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a>    <span class="k">def</span> <span class="nf">interpolation_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolation_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a>        <span class="k">return</span> <span class="p">{</span>
 </span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a>            <span class="s1">&#39;angle&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span>
 </span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>            <span class="s1">&#39;zero_offset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">zero_offset</span><span class="p">,</span>
@@ -440,7 +440,7 @@
 </span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a>        <span class="p">}</span>
 </span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a>
 </span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a>
-</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a><span class="k">class</span> <span class="nc">Video</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
+</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Video</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
 </span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a><span class="sd">    Video recording.</span>
 </span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -450,10 +450,10 @@
 </span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a>    <span class="p">]</span>
 </span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a>
 </span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a>    <span class="nd">@classmethod</span>
-</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a>
-</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -506,15 +506,15 @@
 </span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>            <span class="n">parsed_data</span><span class="o">=</span><span class="n">parsed_data</span><span class="p">,</span>
 </span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>            <span class="n">time_offset</span><span class="o">=</span><span class="n">time_offset</span><span class="p">)</span>
 </span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>
-</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>    <span class="k">def</span> <span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
+</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
 </span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>        <span class="k">return</span> <span class="n">read_avi</span><span class="p">(</span>
 </span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">recorded_data_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_offset</span><span class="p">)</span>
 </span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>
-</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_rate</span><span class="p">}</span>
 </span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a>
 </span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>
-</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a><span class="k">class</span> <span class="nc">ThreeD_Ultrasound</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
+</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ThreeD_Ultrasound</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
 </span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a><span class="sd">    Ultrasound Recording with interpolated 3D/4D data.</span>
 </span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -531,10 +531,10 @@
 </span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>    <span class="p">]</span>
 </span><span id="L-378"><a href="#L-378"><span class="linenos">378</span></a>
 </span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a>    <span class="nd">@classmethod</span>
-</span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="L-381"><a href="#L-381"><span class="linenos">381</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="L-382"><a href="#L-382"><span class="linenos">382</span></a>
-</span><span id="L-383"><a href="#L-383"><span class="linenos">383</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="L-383"><a href="#L-383"><span class="linenos">383</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="L-384"><a href="#L-384"><span class="linenos">384</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="L-385"><a href="#L-385"><span class="linenos">385</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="L-386"><a href="#L-386"><span class="linenos">386</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -593,21 +593,21 @@
 </span><span id="L-439"><a href="#L-439"><span class="linenos">439</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_stored_index</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-440"><a href="#L-440"><span class="linenos">440</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_stored_image</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-441"><a href="#L-441"><span class="linenos">441</span></a>
-</span><span id="L-442"><a href="#L-442"><span class="linenos">442</span></a>    <span class="k">def</span> <span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
+</span><span id="L-442"><a href="#L-442"><span class="linenos">442</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
 </span><span id="L-443"><a href="#L-443"><span class="linenos">443</span></a>        <span class="k">return</span> <span class="n">read_3d_ultrasound_dicom</span><span class="p">(</span>
 </span><span id="L-444"><a href="#L-444"><span class="linenos">444</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">recorded_data_path</span><span class="p">,</span>
 </span><span id="L-445"><a href="#L-445"><span class="linenos">445</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span>
 </span><span id="L-446"><a href="#L-446"><span class="linenos">446</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_time_offset</span><span class="p">)</span>
 </span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a>
 </span><span id="L-448"><a href="#L-448"><span class="linenos">448</span></a>    <span class="nd">@property</span>
-</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
 </span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a>
 </span><span id="L-452"><a href="#L-452"><span class="linenos">452</span></a>    <span class="nd">@data</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="L-453"><a href="#L-453"><span class="linenos">453</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-453"><a href="#L-453"><span class="linenos">453</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-454"><a href="#L-454"><span class="linenos">454</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_data_setter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </span><span id="L-455"><a href="#L-455"><span class="linenos">455</span></a>
-</span><span id="L-456"><a href="#L-456"><span class="linenos">456</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="L-456"><a href="#L-456"><span class="linenos">456</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="L-457"><a href="#L-457"><span class="linenos">457</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </span></pre></div>
 
@@ -618,13 +618,13 @@
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">MonoAudio</span><wbr>(<span class="base"><a href="../data_structures/data_structures.html#Modality">satkit.data_structures.data_structures.Modality</a></span>):
+    <span class="name">MonoAudio</span><wbr>(<span class="base"><a href="../data_structures/data_structures.html#Modality">patkit.data_structures.data_structures.Modality</a></span>):
 
                 <label class="view-source-button" for="MonoAudio-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#MonoAudio"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="MonoAudio-57"><a href="#MonoAudio-57"><span class="linenos"> 57</span></a><span class="k">class</span> <span class="nc">MonoAudio</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="MonoAudio-57"><a href="#MonoAudio-57"><span class="linenos"> 57</span></a><span class="k">class</span><span class="w"> </span><span class="nc">MonoAudio</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
 </span><span id="MonoAudio-58"><a href="#MonoAudio-58"><span class="linenos"> 58</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="MonoAudio-59"><a href="#MonoAudio-59"><span class="linenos"> 59</span></a><span class="sd">    A mono audio track.</span>
 </span><span id="MonoAudio-60"><a href="#MonoAudio-60"><span class="linenos"> 60</span></a>
@@ -639,10 +639,10 @@
 </span><span id="MonoAudio-69"><a href="#MonoAudio-69"><span class="linenos"> 69</span></a>    <span class="c1"># filter = {}</span>
 </span><span id="MonoAudio-70"><a href="#MonoAudio-70"><span class="linenos"> 70</span></a>
 </span><span id="MonoAudio-71"><a href="#MonoAudio-71"><span class="linenos"> 71</span></a>    <span class="nd">@classmethod</span>
-</span><span id="MonoAudio-72"><a href="#MonoAudio-72"><span class="linenos"> 72</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="MonoAudio-72"><a href="#MonoAudio-72"><span class="linenos"> 72</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="MonoAudio-73"><a href="#MonoAudio-73"><span class="linenos"> 73</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="MonoAudio-74"><a href="#MonoAudio-74"><span class="linenos"> 74</span></a>
-</span><span id="MonoAudio-75"><a href="#MonoAudio-75"><span class="linenos"> 75</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span><span id="MonoAudio-75"><a href="#MonoAudio-75"><span class="linenos"> 75</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="MonoAudio-76"><a href="#MonoAudio-76"><span class="linenos"> 76</span></a>            <span class="bp">self</span><span class="p">,</span>
 </span><span id="MonoAudio-77"><a href="#MonoAudio-77"><span class="linenos"> 77</span></a>            <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="MonoAudio-78"><a href="#MonoAudio-78"><span class="linenos"> 78</span></a>            <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
@@ -682,7 +682,7 @@
 </span><span id="MonoAudio-112"><a href="#MonoAudio-112"><span class="linenos">112</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">go_signal</span> <span class="o">=</span> <span class="n">go_signal</span>
 </span><span id="MonoAudio-113"><a href="#MonoAudio-113"><span class="linenos">113</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">has_speech</span> <span class="o">=</span> <span class="n">has_speech</span>
 </span><span id="MonoAudio-114"><a href="#MonoAudio-114"><span class="linenos">114</span></a>
-</span><span id="MonoAudio-115"><a href="#MonoAudio-115"><span class="linenos">115</span></a>    <span class="k">def</span> <span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
+</span><span id="MonoAudio-115"><a href="#MonoAudio-115"><span class="linenos">115</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
 </span><span id="MonoAudio-116"><a href="#MonoAudio-116"><span class="linenos">116</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="MonoAudio-117"><a href="#MonoAudio-117"><span class="linenos">117</span></a><span class="sd">        Read wav data, and possibly detect go-signal &amp; speech.</span>
 </span><span id="MonoAudio-118"><a href="#MonoAudio-118"><span class="linenos">118</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -704,7 +704,7 @@
 </span><span id="MonoAudio-134"><a href="#MonoAudio-134"><span class="linenos">134</span></a>    <span class="c1"># metadata save file will be read as well to recover any go-signal or</span>
 </span><span id="MonoAudio-135"><a href="#MonoAudio-135"><span class="linenos">135</span></a>    <span class="c1"># speech detection results. &quot;&quot;&quot;</span>
 </span><span id="MonoAudio-136"><a href="#MonoAudio-136"><span class="linenos">136</span></a>
-</span><span id="MonoAudio-137"><a href="#MonoAudio-137"><span class="linenos">137</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="MonoAudio-137"><a href="#MonoAudio-137"><span class="linenos">137</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="MonoAudio-138"><a href="#MonoAudio-138"><span class="linenos">138</span></a>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_rate</span><span class="p">}</span>
 </span></pre></div>
 
@@ -721,13 +721,13 @@ this Modality preloads data at construction time.</p>
                                         <input id="MonoAudio.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">MonoAudio</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">owner</span><span class="p">:</span> <span class="n"><a href="../data_structures/data_structures.html#Recording">satkit.data_structures.data_structures.Recording</a></span>,</span><span class="param">	<span class="n">file_info</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#FileInformation">satkit.data_structures.metadata_classes.FileInformation</a></span>,</span><span class="param">	<span class="n">parsed_data</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityData">satkit.data_structures.metadata_classes.ModalityData</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">time_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">detect_beep</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>,</span><span class="param">	<span class="n">go_signal</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">has_speech</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+        <span class="name">MonoAudio</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">owner</span><span class="p">:</span> <span class="n"><a href="../data_structures/data_structures.html#Recording">patkit.data_structures.data_structures.Recording</a></span>,</span><span class="param">	<span class="n">file_info</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#FileInformation">patkit.data_structures.metadata_classes.FileInformation</a></span>,</span><span class="param">	<span class="n">parsed_data</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityData">patkit.data_structures.metadata_classes.ModalityData</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">time_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">detect_beep</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>,</span><span class="param">	<span class="n">go_signal</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">has_speech</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
 
                 <label class="view-source-button" for="MonoAudio.__init__-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#MonoAudio.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="MonoAudio.__init__-75"><a href="#MonoAudio.__init__-75"><span class="linenos"> 75</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="MonoAudio.__init__-75"><a href="#MonoAudio.__init__-75"><span class="linenos"> 75</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="MonoAudio.__init__-76"><a href="#MonoAudio.__init__-76"><span class="linenos"> 76</span></a>            <span class="bp">self</span><span class="p">,</span>
 </span><span id="MonoAudio.__init__-77"><a href="#MonoAudio.__init__-77"><span class="linenos"> 77</span></a>            <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="MonoAudio.__init__-78"><a href="#MonoAudio.__init__-78"><span class="linenos"> 78</span></a>            <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
@@ -794,17 +794,17 @@ has_speech -- True if the heuristic algorithm thinks there is speech
                             <div id="MonoAudio.generate_name" class="classattr">
                                         <input id="MonoAudio.generate_name-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
-                    <div class="decorator">@classmethod</div>
+                    <div class="decorator decorator-classmethod">@classmethod</div>
 
         <span class="def">def</span>
-        <span class="name">generate_name</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">cls</span>,</span><span class="param">	<span class="n">params</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityMetaData">satkit.data_structures.metadata_classes.ModalityMetaData</a></span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
+        <span class="name">generate_name</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">cls</span>,</span><span class="param">	<span class="n">params</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityMetaData">patkit.data_structures.metadata_classes.ModalityMetaData</a></span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
 
                 <label class="view-source-button" for="MonoAudio.generate_name-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#MonoAudio.generate_name"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="MonoAudio.generate_name-71"><a href="#MonoAudio.generate_name-71"><span class="linenos">71</span></a>    <span class="nd">@classmethod</span>
-</span><span id="MonoAudio.generate_name-72"><a href="#MonoAudio.generate_name-72"><span class="linenos">72</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="MonoAudio.generate_name-72"><a href="#MonoAudio.generate_name-72"><span class="linenos">72</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="MonoAudio.generate_name-73"><a href="#MonoAudio.generate_name-73"><span class="linenos">73</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span></pre></div>
 
@@ -858,7 +858,7 @@ has_speech -- True if the heuristic algorithm thinks there is speech
 
     </div>
     <a class="headerlink" href="#MonoAudio.get_meta"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="MonoAudio.get_meta-137"><a href="#MonoAudio.get_meta-137"><span class="linenos">137</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="MonoAudio.get_meta-137"><a href="#MonoAudio.get_meta-137"><span class="linenos">137</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="MonoAudio.get_meta-138"><a href="#MonoAudio.get_meta-138"><span class="linenos">138</span></a>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_rate</span><span class="p">}</span>
 </span></pre></div>
 
@@ -884,7 +884,7 @@ text etc. </p>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt><a href="../data_structures/data_structures.html#Modality">satkit.data_structures.data_structures.Modality</a></dt>
+                                    <div><dt><a href="../data_structures/data_structures.html#Modality">patkit.data_structures.data_structures.Modality</a></dt>
                                 <dd id="MonoAudio.owner" class="variable"><a href="../data_structures/data_structures.html#Modality.owner">owner</a></dd>
                 <dd id="MonoAudio.excluded" class="variable"><a href="../data_structures/data_structures.html#Modality.excluded">excluded</a></dd>
                 <dd id="MonoAudio.annotations" class="variable"><a href="../data_structures/data_structures.html#Modality.annotations">annotations</a></dd>
@@ -900,16 +900,14 @@ text etc. </p>
                 <dd id="MonoAudio.min_time" class="variable"><a href="../data_structures/data_structures.html#Modality.min_time">min_time</a></dd>
                 <dd id="MonoAudio.max_time" class="variable"><a href="../data_structures/data_structures.html#Modality.max_time">max_time</a></dd>
                 <dd id="MonoAudio.is_derived" class="variable"><a href="../data_structures/data_structures.html#Modality.is_derived">is_derived</a></dd>
-                <dd id="MonoAudio.process_format_directive" class="function"><a href="../data_structures/data_structures.html#Modality.process_format_directive">process_format_directive</a></dd>
-                <dd id="MonoAudio.format_legend" class="function"><a href="../data_structures/data_structures.html#Modality.format_legend">format_legend</a></dd>
 
             </div>
-            <div><dt><a href="../data_structures/base_classes.html#DataContainer">satkit.data_structures.base_classes.DataContainer</a></dt>
+            <div><dt><a href="../data_structures/base_classes.html#DataContainer">patkit.data_structures.base_classes.DataContainer</a></dt>
                                 <dd id="MonoAudio.name" class="variable"><a href="../data_structures/base_classes.html#DataContainer.name">name</a></dd>
                 <dd id="MonoAudio.name_underscored" class="variable"><a href="../data_structures/base_classes.html#DataContainer.name_underscored">name_underscored</a></dd>
 
             </div>
-            <div><dt><a href="../data_structures/base_classes.html#DataObject">satkit.data_structures.base_classes.DataObject</a></dt>
+            <div><dt><a href="../data_structures/base_classes.html#DataObject">patkit.data_structures.base_classes.DataObject</a></dt>
                                 <dd id="MonoAudio.file_info" class="variable"><a href="../data_structures/base_classes.html#DataObject.file_info">file_info</a></dd>
                 <dd id="MonoAudio.metadata" class="variable"><a href="../data_structures/base_classes.html#DataObject.metadata">metadata</a></dd>
                 <dd id="MonoAudio.recorded_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_data_path">recorded_data_path</a></dd>
@@ -917,30 +915,12 @@ text etc. </p>
                 <dd id="MonoAudio.recorded_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_meta_path">recorded_meta_path</a></dd>
                 <dd id="MonoAudio.recorded_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_meta_name">recorded_meta_name</a></dd>
                 <dd id="MonoAudio.recorded_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_path">recorded_path</a></dd>
-                <dd id="MonoAudio.satkit_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_data_path">satkit_data_path</a></dd>
-                <dd id="MonoAudio.satkit_data_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_data_name">satkit_data_name</a></dd>
-                <dd id="MonoAudio.satkit_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_meta_path">satkit_meta_path</a></dd>
-                <dd id="MonoAudio.satkit_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_meta_name">satkit_meta_name</a></dd>
-                <dd id="MonoAudio.satkit_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_path">satkit_path</a></dd>
+                <dd id="MonoAudio.patkit_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_data_path">patkit_data_path</a></dd>
+                <dd id="MonoAudio.patkit_data_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_data_name">patkit_data_name</a></dd>
+                <dd id="MonoAudio.patkit_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_meta_path">patkit_meta_path</a></dd>
+                <dd id="MonoAudio.patkit_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_meta_name">patkit_meta_name</a></dd>
+                <dd id="MonoAudio.patkit_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_path">patkit_path</a></dd>
                 <dd id="MonoAudio.is_fully_initialised" class="variable"><a href="../data_structures/base_classes.html#DataObject.is_fully_initialised">is_fully_initialised</a></dd>
-
-            </div>
-            <div><dt>collections.OrderedDict</dt>
-                                <dd id="MonoAudio.clear" class="function">clear</dd>
-                <dd id="MonoAudio.popitem" class="function">popitem</dd>
-                <dd id="MonoAudio.move_to_end" class="function">move_to_end</dd>
-                <dd id="MonoAudio.keys" class="function">keys</dd>
-                <dd id="MonoAudio.items" class="function">items</dd>
-                <dd id="MonoAudio.values" class="function">values</dd>
-                <dd id="MonoAudio.pop" class="function">pop</dd>
-                <dd id="MonoAudio.setdefault" class="function">setdefault</dd>
-                <dd id="MonoAudio.copy" class="function">copy</dd>
-                <dd id="MonoAudio.fromkeys" class="function">fromkeys</dd>
-                <dd id="MonoAudio.update" class="function">update</dd>
-
-            </div>
-            <div><dt>builtins.dict</dt>
-                                <dd id="MonoAudio.get" class="function">get</dd>
 
             </div>
                                 </dl>
@@ -951,22 +931,22 @@ text etc. </p>
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">RawUltrasound</span><wbr>(<span class="base"><a href="../data_structures/data_structures.html#Modality">satkit.data_structures.data_structures.Modality</a></span>):
+    <span class="name">RawUltrasound</span><wbr>(<span class="base"><a href="../data_structures/data_structures.html#Modality">patkit.data_structures.data_structures.Modality</a></span>):
 
                 <label class="view-source-button" for="RawUltrasound-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#RawUltrasound"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound-141"><a href="#RawUltrasound-141"><span class="linenos">141</span></a><span class="k">class</span> <span class="nc">RawUltrasound</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound-141"><a href="#RawUltrasound-141"><span class="linenos">141</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RawUltrasound</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
 </span><span id="RawUltrasound-142"><a href="#RawUltrasound-142"><span class="linenos">142</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="RawUltrasound-143"><a href="#RawUltrasound-143"><span class="linenos">143</span></a><span class="sd">    Ultrasound Recording with raw (probe return) data.</span>
 </span><span id="RawUltrasound-144"><a href="#RawUltrasound-144"><span class="linenos">144</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="RawUltrasound-145"><a href="#RawUltrasound-145"><span class="linenos">145</span></a>
 </span><span id="RawUltrasound-146"><a href="#RawUltrasound-146"><span class="linenos">146</span></a>    <span class="nd">@classmethod</span>
-</span><span id="RawUltrasound-147"><a href="#RawUltrasound-147"><span class="linenos">147</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="RawUltrasound-147"><a href="#RawUltrasound-147"><span class="linenos">147</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="RawUltrasound-148"><a href="#RawUltrasound-148"><span class="linenos">148</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="RawUltrasound-149"><a href="#RawUltrasound-149"><span class="linenos">149</span></a>
-</span><span id="RawUltrasound-150"><a href="#RawUltrasound-150"><span class="linenos">150</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="RawUltrasound-150"><a href="#RawUltrasound-150"><span class="linenos">150</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="RawUltrasound-151"><a href="#RawUltrasound-151"><span class="linenos">151</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="RawUltrasound-152"><a href="#RawUltrasound-152"><span class="linenos">152</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="RawUltrasound-153"><a href="#RawUltrasound-153"><span class="linenos">153</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1007,22 +987,22 @@ text etc. </p>
 </span><span id="RawUltrasound-188"><a href="#RawUltrasound-188"><span class="linenos">188</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">video_has_been_stored</span> <span class="o">=</span> <span class="kc">False</span>
 </span><span id="RawUltrasound-189"><a href="#RawUltrasound-189"><span class="linenos">189</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">stored_video</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="RawUltrasound-190"><a href="#RawUltrasound-190"><span class="linenos">190</span></a>
-</span><span id="RawUltrasound-191"><a href="#RawUltrasound-191"><span class="linenos">191</span></a>    <span class="k">def</span> <span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
+</span><span id="RawUltrasound-191"><a href="#RawUltrasound-191"><span class="linenos">191</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
 </span><span id="RawUltrasound-192"><a href="#RawUltrasound-192"><span class="linenos">192</span></a>        <span class="k">return</span> <span class="n">read_ult</span><span class="p">(</span>
 </span><span id="RawUltrasound-193"><a href="#RawUltrasound-193"><span class="linenos">193</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">recorded_data_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_offset</span><span class="p">)</span>
 </span><span id="RawUltrasound-194"><a href="#RawUltrasound-194"><span class="linenos">194</span></a>
-</span><span id="RawUltrasound-195"><a href="#RawUltrasound-195"><span class="linenos">195</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="RawUltrasound-195"><a href="#RawUltrasound-195"><span class="linenos">195</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="RawUltrasound-196"><a href="#RawUltrasound-196"><span class="linenos">196</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </span><span id="RawUltrasound-197"><a href="#RawUltrasound-197"><span class="linenos">197</span></a>
 </span><span id="RawUltrasound-198"><a href="#RawUltrasound-198"><span class="linenos">198</span></a>    <span class="nd">@property</span>
-</span><span id="RawUltrasound-199"><a href="#RawUltrasound-199"><span class="linenos">199</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="RawUltrasound-199"><a href="#RawUltrasound-199"><span class="linenos">199</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="RawUltrasound-200"><a href="#RawUltrasound-200"><span class="linenos">200</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
 </span><span id="RawUltrasound-201"><a href="#RawUltrasound-201"><span class="linenos">201</span></a>
 </span><span id="RawUltrasound-202"><a href="#RawUltrasound-202"><span class="linenos">202</span></a>    <span class="nd">@data</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="RawUltrasound-203"><a href="#RawUltrasound-203"><span class="linenos">203</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="RawUltrasound-203"><a href="#RawUltrasound-203"><span class="linenos">203</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="RawUltrasound-204"><a href="#RawUltrasound-204"><span class="linenos">204</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_data_setter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </span><span id="RawUltrasound-205"><a href="#RawUltrasound-205"><span class="linenos">205</span></a>
-</span><span id="RawUltrasound-206"><a href="#RawUltrasound-206"><span class="linenos">206</span></a>    <span class="k">def</span> <span class="nf">raw_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="RawUltrasound-206"><a href="#RawUltrasound-206"><span class="linenos">206</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">raw_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="RawUltrasound-207"><a href="#RawUltrasound-207"><span class="linenos">207</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="RawUltrasound-208"><a href="#RawUltrasound-208"><span class="linenos">208</span></a><span class="sd">        Return the raw ultrasound frame at index.</span>
 </span><span id="RawUltrasound-209"><a href="#RawUltrasound-209"><span class="linenos">209</span></a>
@@ -1038,7 +1018,7 @@ text etc. </p>
 </span><span id="RawUltrasound-219"><a href="#RawUltrasound-219"><span class="linenos">219</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="RawUltrasound-220"><a href="#RawUltrasound-220"><span class="linenos">220</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </span><span id="RawUltrasound-221"><a href="#RawUltrasound-221"><span class="linenos">221</span></a>
-</span><span id="RawUltrasound-222"><a href="#RawUltrasound-222"><span class="linenos">222</span></a>    <span class="k">def</span> <span class="nf">interpolated_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+</span><span id="RawUltrasound-222"><a href="#RawUltrasound-222"><span class="linenos">222</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolated_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 </span><span id="RawUltrasound-223"><a href="#RawUltrasound-223"><span class="linenos">223</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="RawUltrasound-224"><a href="#RawUltrasound-224"><span class="linenos">224</span></a><span class="sd">        Return an interpolated version of the ultrasound frame at index.</span>
 </span><span id="RawUltrasound-225"><a href="#RawUltrasound-225"><span class="linenos">225</span></a>
@@ -1073,7 +1053,7 @@ text etc. </p>
 </span><span id="RawUltrasound-254"><a href="#RawUltrasound-254"><span class="linenos">254</span></a>            <span class="p">)</span>
 </span><span id="RawUltrasound-255"><a href="#RawUltrasound-255"><span class="linenos">255</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stored_image</span>
 </span><span id="RawUltrasound-256"><a href="#RawUltrasound-256"><span class="linenos">256</span></a>
-</span><span id="RawUltrasound-257"><a href="#RawUltrasound-257"><span class="linenos">257</span></a>    <span class="k">def</span> <span class="nf">interpolated_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="RawUltrasound-257"><a href="#RawUltrasound-257"><span class="linenos">257</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolated_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="RawUltrasound-258"><a href="#RawUltrasound-258"><span class="linenos">258</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="RawUltrasound-259"><a href="#RawUltrasound-259"><span class="linenos">259</span></a><span class="sd">        Return an interpolated version of the ultrasound frame at index.</span>
 </span><span id="RawUltrasound-260"><a href="#RawUltrasound-260"><span class="linenos">260</span></a>
@@ -1097,7 +1077,7 @@ text etc. </p>
 </span><span id="RawUltrasound-278"><a href="#RawUltrasound-278"><span class="linenos">278</span></a>        <span class="k">return</span> <span class="n">video</span>
 </span><span id="RawUltrasound-279"><a href="#RawUltrasound-279"><span class="linenos">279</span></a>
 </span><span id="RawUltrasound-280"><a href="#RawUltrasound-280"><span class="linenos">280</span></a>    <span class="nd">@property</span>
-</span><span id="RawUltrasound-281"><a href="#RawUltrasound-281"><span class="linenos">281</span></a>    <span class="k">def</span> <span class="nf">interpolation_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="RawUltrasound-281"><a href="#RawUltrasound-281"><span class="linenos">281</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolation_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="RawUltrasound-282"><a href="#RawUltrasound-282"><span class="linenos">282</span></a>        <span class="k">return</span> <span class="p">{</span>
 </span><span id="RawUltrasound-283"><a href="#RawUltrasound-283"><span class="linenos">283</span></a>            <span class="s1">&#39;angle&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span>
 </span><span id="RawUltrasound-284"><a href="#RawUltrasound-284"><span class="linenos">284</span></a>            <span class="s1">&#39;zero_offset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">zero_offset</span><span class="p">,</span>
@@ -1115,13 +1095,13 @@ text etc. </p>
                                         <input id="RawUltrasound.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">RawUltrasound</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">owner</span><span class="p">:</span> <span class="n"><a href="../data_structures/data_structures.html#Recording">satkit.data_structures.data_structures.Recording</a></span>,</span><span class="param">	<span class="n">file_info</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#FileInformation">satkit.data_structures.metadata_classes.FileInformation</a></span>,</span><span class="param">	<span class="n">parsed_data</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityData">satkit.data_structures.metadata_classes.ModalityData</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">time_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">metadata</span><span class="p">:</span> <span class="n"><a href="recorded_metadata_classes.html#RawUltrasoundMeta">satkit.modalities.recorded_metadata_classes.RawUltrasoundMeta</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+        <span class="name">RawUltrasound</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">owner</span><span class="p">:</span> <span class="n"><a href="../data_structures/data_structures.html#Recording">patkit.data_structures.data_structures.Recording</a></span>,</span><span class="param">	<span class="n">file_info</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#FileInformation">patkit.data_structures.metadata_classes.FileInformation</a></span>,</span><span class="param">	<span class="n">parsed_data</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityData">patkit.data_structures.metadata_classes.ModalityData</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">time_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">metadata</span><span class="p">:</span> <span class="n"><a href="recorded_metadata_classes.html#RawUltrasoundMeta">patkit.modalities.recorded_metadata_classes.RawUltrasoundMeta</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
 
                 <label class="view-source-button" for="RawUltrasound.__init__-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#RawUltrasound.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.__init__-150"><a href="#RawUltrasound.__init__-150"><span class="linenos">150</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.__init__-150"><a href="#RawUltrasound.__init__-150"><span class="linenos">150</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="RawUltrasound.__init__-151"><a href="#RawUltrasound.__init__-151"><span class="linenos">151</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="RawUltrasound.__init__-152"><a href="#RawUltrasound.__init__-152"><span class="linenos">152</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="RawUltrasound.__init__-153"><a href="#RawUltrasound.__init__-153"><span class="linenos">153</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1187,17 +1167,17 @@ meta -- a dict with (at least) the keys listed in
                             <div id="RawUltrasound.generate_name" class="classattr">
                                         <input id="RawUltrasound.generate_name-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
-                    <div class="decorator">@classmethod</div>
+                    <div class="decorator decorator-classmethod">@classmethod</div>
 
         <span class="def">def</span>
-        <span class="name">generate_name</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">cls</span>,</span><span class="param">	<span class="n">params</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityMetaData">satkit.data_structures.metadata_classes.ModalityMetaData</a></span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
+        <span class="name">generate_name</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">cls</span>,</span><span class="param">	<span class="n">params</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityMetaData">patkit.data_structures.metadata_classes.ModalityMetaData</a></span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
 
                 <label class="view-source-button" for="RawUltrasound.generate_name-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#RawUltrasound.generate_name"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.generate_name-146"><a href="#RawUltrasound.generate_name-146"><span class="linenos">146</span></a>    <span class="nd">@classmethod</span>
-</span><span id="RawUltrasound.generate_name-147"><a href="#RawUltrasound.generate_name-147"><span class="linenos">147</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="RawUltrasound.generate_name-147"><a href="#RawUltrasound.generate_name-147"><span class="linenos">147</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="RawUltrasound.generate_name-148"><a href="#RawUltrasound.generate_name-148"><span class="linenos">148</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span></pre></div>
 
@@ -1240,7 +1220,7 @@ meta -- a dict with (at least) the keys listed in
 
     </div>
     <a class="headerlink" href="#RawUltrasound.get_meta"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.get_meta-195"><a href="#RawUltrasound.get_meta-195"><span class="linenos">195</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.get_meta-195"><a href="#RawUltrasound.get_meta-195"><span class="linenos">195</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="RawUltrasound.get_meta-196"><a href="#RawUltrasound.get_meta-196"><span class="linenos">196</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </span></pre></div>
 
@@ -1273,7 +1253,7 @@ text etc. </p>
     </div>
     <a class="headerlink" href="#RawUltrasound.data"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.data-198"><a href="#RawUltrasound.data-198"><span class="linenos">198</span></a>    <span class="nd">@property</span>
-</span><span id="RawUltrasound.data-199"><a href="#RawUltrasound.data-199"><span class="linenos">199</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="RawUltrasound.data-199"><a href="#RawUltrasound.data-199"><span class="linenos">199</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="RawUltrasound.data-200"><a href="#RawUltrasound.data-200"><span class="linenos">200</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
 </span></pre></div>
 
@@ -1305,7 +1285,7 @@ release the memory, assign None to this Modality's data.</p>
 
     </div>
     <a class="headerlink" href="#RawUltrasound.raw_image"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.raw_image-206"><a href="#RawUltrasound.raw_image-206"><span class="linenos">206</span></a>    <span class="k">def</span> <span class="nf">raw_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.raw_image-206"><a href="#RawUltrasound.raw_image-206"><span class="linenos">206</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">raw_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="RawUltrasound.raw_image-207"><a href="#RawUltrasound.raw_image-207"><span class="linenos">207</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="RawUltrasound.raw_image-208"><a href="#RawUltrasound.raw_image-208"><span class="linenos">208</span></a><span class="sd">        Return the raw ultrasound frame at index.</span>
 </span><span id="RawUltrasound.raw_image-209"><a href="#RawUltrasound.raw_image-209"><span class="linenos">209</span></a>
@@ -1352,7 +1332,7 @@ Index to look up.</li>
 
     </div>
     <a class="headerlink" href="#RawUltrasound.interpolated_image"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.interpolated_image-222"><a href="#RawUltrasound.interpolated_image-222"><span class="linenos">222</span></a>    <span class="k">def</span> <span class="nf">interpolated_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.interpolated_image-222"><a href="#RawUltrasound.interpolated_image-222"><span class="linenos">222</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolated_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 </span><span id="RawUltrasound.interpolated_image-223"><a href="#RawUltrasound.interpolated_image-223"><span class="linenos">223</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="RawUltrasound.interpolated_image-224"><a href="#RawUltrasound.interpolated_image-224"><span class="linenos">224</span></a><span class="sd">        Return an interpolated version of the ultrasound frame at index.</span>
 </span><span id="RawUltrasound.interpolated_image-225"><a href="#RawUltrasound.interpolated_image-225"><span class="linenos">225</span></a>
@@ -1411,7 +1391,7 @@ stored in memory.</p>
 
     </div>
     <a class="headerlink" href="#RawUltrasound.interpolated_frames"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.interpolated_frames-257"><a href="#RawUltrasound.interpolated_frames-257"><span class="linenos">257</span></a>    <span class="k">def</span> <span class="nf">interpolated_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.interpolated_frames-257"><a href="#RawUltrasound.interpolated_frames-257"><span class="linenos">257</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolated_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="RawUltrasound.interpolated_frames-258"><a href="#RawUltrasound.interpolated_frames-258"><span class="linenos">258</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="RawUltrasound.interpolated_frames-259"><a href="#RawUltrasound.interpolated_frames-259"><span class="linenos">259</span></a><span class="sd">        Return an interpolated version of the ultrasound frame at index.</span>
 </span><span id="RawUltrasound.interpolated_frames-260"><a href="#RawUltrasound.interpolated_frames-260"><span class="linenos">260</span></a>
@@ -1457,7 +1437,7 @@ stored in memory.</p>
     </div>
     <a class="headerlink" href="#RawUltrasound.interpolation_params"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="RawUltrasound.interpolation_params-280"><a href="#RawUltrasound.interpolation_params-280"><span class="linenos">280</span></a>    <span class="nd">@property</span>
-</span><span id="RawUltrasound.interpolation_params-281"><a href="#RawUltrasound.interpolation_params-281"><span class="linenos">281</span></a>    <span class="k">def</span> <span class="nf">interpolation_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="RawUltrasound.interpolation_params-281"><a href="#RawUltrasound.interpolation_params-281"><span class="linenos">281</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">interpolation_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="RawUltrasound.interpolation_params-282"><a href="#RawUltrasound.interpolation_params-282"><span class="linenos">282</span></a>        <span class="k">return</span> <span class="p">{</span>
 </span><span id="RawUltrasound.interpolation_params-283"><a href="#RawUltrasound.interpolation_params-283"><span class="linenos">283</span></a>            <span class="s1">&#39;angle&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span>
 </span><span id="RawUltrasound.interpolation_params-284"><a href="#RawUltrasound.interpolation_params-284"><span class="linenos">284</span></a>            <span class="s1">&#39;zero_offset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">zero_offset</span><span class="p">,</span>
@@ -1473,7 +1453,7 @@ stored in memory.</p>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt><a href="../data_structures/data_structures.html#Modality">satkit.data_structures.data_structures.Modality</a></dt>
+                                    <div><dt><a href="../data_structures/data_structures.html#Modality">patkit.data_structures.data_structures.Modality</a></dt>
                                 <dd id="RawUltrasound.owner" class="variable"><a href="../data_structures/data_structures.html#Modality.owner">owner</a></dd>
                 <dd id="RawUltrasound.excluded" class="variable"><a href="../data_structures/data_structures.html#Modality.excluded">excluded</a></dd>
                 <dd id="RawUltrasound.annotations" class="variable"><a href="../data_structures/data_structures.html#Modality.annotations">annotations</a></dd>
@@ -1488,16 +1468,14 @@ stored in memory.</p>
                 <dd id="RawUltrasound.min_time" class="variable"><a href="../data_structures/data_structures.html#Modality.min_time">min_time</a></dd>
                 <dd id="RawUltrasound.max_time" class="variable"><a href="../data_structures/data_structures.html#Modality.max_time">max_time</a></dd>
                 <dd id="RawUltrasound.is_derived" class="variable"><a href="../data_structures/data_structures.html#Modality.is_derived">is_derived</a></dd>
-                <dd id="RawUltrasound.process_format_directive" class="function"><a href="../data_structures/data_structures.html#Modality.process_format_directive">process_format_directive</a></dd>
-                <dd id="RawUltrasound.format_legend" class="function"><a href="../data_structures/data_structures.html#Modality.format_legend">format_legend</a></dd>
 
             </div>
-            <div><dt><a href="../data_structures/base_classes.html#DataContainer">satkit.data_structures.base_classes.DataContainer</a></dt>
+            <div><dt><a href="../data_structures/base_classes.html#DataContainer">patkit.data_structures.base_classes.DataContainer</a></dt>
                                 <dd id="RawUltrasound.name" class="variable"><a href="../data_structures/base_classes.html#DataContainer.name">name</a></dd>
                 <dd id="RawUltrasound.name_underscored" class="variable"><a href="../data_structures/base_classes.html#DataContainer.name_underscored">name_underscored</a></dd>
 
             </div>
-            <div><dt><a href="../data_structures/base_classes.html#DataObject">satkit.data_structures.base_classes.DataObject</a></dt>
+            <div><dt><a href="../data_structures/base_classes.html#DataObject">patkit.data_structures.base_classes.DataObject</a></dt>
                                 <dd id="RawUltrasound.file_info" class="variable"><a href="../data_structures/base_classes.html#DataObject.file_info">file_info</a></dd>
                 <dd id="RawUltrasound.metadata" class="variable"><a href="../data_structures/base_classes.html#DataObject.metadata">metadata</a></dd>
                 <dd id="RawUltrasound.recorded_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_data_path">recorded_data_path</a></dd>
@@ -1505,30 +1483,12 @@ stored in memory.</p>
                 <dd id="RawUltrasound.recorded_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_meta_path">recorded_meta_path</a></dd>
                 <dd id="RawUltrasound.recorded_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_meta_name">recorded_meta_name</a></dd>
                 <dd id="RawUltrasound.recorded_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_path">recorded_path</a></dd>
-                <dd id="RawUltrasound.satkit_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_data_path">satkit_data_path</a></dd>
-                <dd id="RawUltrasound.satkit_data_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_data_name">satkit_data_name</a></dd>
-                <dd id="RawUltrasound.satkit_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_meta_path">satkit_meta_path</a></dd>
-                <dd id="RawUltrasound.satkit_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_meta_name">satkit_meta_name</a></dd>
-                <dd id="RawUltrasound.satkit_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_path">satkit_path</a></dd>
+                <dd id="RawUltrasound.patkit_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_data_path">patkit_data_path</a></dd>
+                <dd id="RawUltrasound.patkit_data_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_data_name">patkit_data_name</a></dd>
+                <dd id="RawUltrasound.patkit_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_meta_path">patkit_meta_path</a></dd>
+                <dd id="RawUltrasound.patkit_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_meta_name">patkit_meta_name</a></dd>
+                <dd id="RawUltrasound.patkit_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_path">patkit_path</a></dd>
                 <dd id="RawUltrasound.is_fully_initialised" class="variable"><a href="../data_structures/base_classes.html#DataObject.is_fully_initialised">is_fully_initialised</a></dd>
-
-            </div>
-            <div><dt>collections.OrderedDict</dt>
-                                <dd id="RawUltrasound.clear" class="function">clear</dd>
-                <dd id="RawUltrasound.popitem" class="function">popitem</dd>
-                <dd id="RawUltrasound.move_to_end" class="function">move_to_end</dd>
-                <dd id="RawUltrasound.keys" class="function">keys</dd>
-                <dd id="RawUltrasound.items" class="function">items</dd>
-                <dd id="RawUltrasound.values" class="function">values</dd>
-                <dd id="RawUltrasound.pop" class="function">pop</dd>
-                <dd id="RawUltrasound.setdefault" class="function">setdefault</dd>
-                <dd id="RawUltrasound.copy" class="function">copy</dd>
-                <dd id="RawUltrasound.fromkeys" class="function">fromkeys</dd>
-                <dd id="RawUltrasound.update" class="function">update</dd>
-
-            </div>
-            <div><dt>builtins.dict</dt>
-                                <dd id="RawUltrasound.get" class="function">get</dd>
 
             </div>
                                 </dl>
@@ -1539,13 +1499,13 @@ stored in memory.</p>
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">Video</span><wbr>(<span class="base"><a href="../data_structures/data_structures.html#Modality">satkit.data_structures.data_structures.Modality</a></span>):
+    <span class="name">Video</span><wbr>(<span class="base"><a href="../data_structures/data_structures.html#Modality">patkit.data_structures.data_structures.Modality</a></span>):
 
                 <label class="view-source-button" for="Video-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#Video"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Video-290"><a href="#Video-290"><span class="linenos">290</span></a><span class="k">class</span> <span class="nc">Video</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Video-290"><a href="#Video-290"><span class="linenos">290</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Video</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
 </span><span id="Video-291"><a href="#Video-291"><span class="linenos">291</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Video-292"><a href="#Video-292"><span class="linenos">292</span></a><span class="sd">    Video recording.</span>
 </span><span id="Video-293"><a href="#Video-293"><span class="linenos">293</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1555,10 +1515,10 @@ stored in memory.</p>
 </span><span id="Video-297"><a href="#Video-297"><span class="linenos">297</span></a>    <span class="p">]</span>
 </span><span id="Video-298"><a href="#Video-298"><span class="linenos">298</span></a>
 </span><span id="Video-299"><a href="#Video-299"><span class="linenos">299</span></a>    <span class="nd">@classmethod</span>
-</span><span id="Video-300"><a href="#Video-300"><span class="linenos">300</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="Video-300"><a href="#Video-300"><span class="linenos">300</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="Video-301"><a href="#Video-301"><span class="linenos">301</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="Video-302"><a href="#Video-302"><span class="linenos">302</span></a>
-</span><span id="Video-303"><a href="#Video-303"><span class="linenos">303</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="Video-303"><a href="#Video-303"><span class="linenos">303</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="Video-304"><a href="#Video-304"><span class="linenos">304</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="Video-305"><a href="#Video-305"><span class="linenos">305</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="Video-306"><a href="#Video-306"><span class="linenos">306</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1611,11 +1571,11 @@ stored in memory.</p>
 </span><span id="Video-353"><a href="#Video-353"><span class="linenos">353</span></a>            <span class="n">parsed_data</span><span class="o">=</span><span class="n">parsed_data</span><span class="p">,</span>
 </span><span id="Video-354"><a href="#Video-354"><span class="linenos">354</span></a>            <span class="n">time_offset</span><span class="o">=</span><span class="n">time_offset</span><span class="p">)</span>
 </span><span id="Video-355"><a href="#Video-355"><span class="linenos">355</span></a>
-</span><span id="Video-356"><a href="#Video-356"><span class="linenos">356</span></a>    <span class="k">def</span> <span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
+</span><span id="Video-356"><a href="#Video-356"><span class="linenos">356</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
 </span><span id="Video-357"><a href="#Video-357"><span class="linenos">357</span></a>        <span class="k">return</span> <span class="n">read_avi</span><span class="p">(</span>
 </span><span id="Video-358"><a href="#Video-358"><span class="linenos">358</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">recorded_data_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_offset</span><span class="p">)</span>
 </span><span id="Video-359"><a href="#Video-359"><span class="linenos">359</span></a>
-</span><span id="Video-360"><a href="#Video-360"><span class="linenos">360</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="Video-360"><a href="#Video-360"><span class="linenos">360</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="Video-361"><a href="#Video-361"><span class="linenos">361</span></a>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_rate</span><span class="p">}</span>
 </span></pre></div>
 
@@ -1628,13 +1588,13 @@ stored in memory.</p>
                                         <input id="Video.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">Video</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">owner</span><span class="p">:</span> <span class="n"><a href="../data_structures/data_structures.html#Recording">satkit.data_structures.data_structures.Recording</a></span>,</span><span class="param">	<span class="n">file_info</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#FileInformation">satkit.data_structures.metadata_classes.FileInformation</a></span>,</span><span class="param">	<span class="n">parsed_data</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityData">satkit.data_structures.metadata_classes.ModalityData</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">time_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+        <span class="name">Video</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">owner</span><span class="p">:</span> <span class="n"><a href="../data_structures/data_structures.html#Recording">patkit.data_structures.data_structures.Recording</a></span>,</span><span class="param">	<span class="n">file_info</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#FileInformation">patkit.data_structures.metadata_classes.FileInformation</a></span>,</span><span class="param">	<span class="n">parsed_data</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityData">patkit.data_structures.metadata_classes.ModalityData</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">time_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
 
                 <label class="view-source-button" for="Video.__init__-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#Video.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Video.__init__-303"><a href="#Video.__init__-303"><span class="linenos">303</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Video.__init__-303"><a href="#Video.__init__-303"><span class="linenos">303</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="Video.__init__-304"><a href="#Video.__init__-304"><span class="linenos">304</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="Video.__init__-305"><a href="#Video.__init__-305"><span class="linenos">305</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="Video.__init__-306"><a href="#Video.__init__-306"><span class="linenos">306</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1726,17 +1686,17 @@ meta -- a dict with (at least) the keys listed in
                             <div id="Video.generate_name" class="classattr">
                                         <input id="Video.generate_name-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
-                    <div class="decorator">@classmethod</div>
+                    <div class="decorator decorator-classmethod">@classmethod</div>
 
         <span class="def">def</span>
-        <span class="name">generate_name</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">cls</span>,</span><span class="param">	<span class="n">params</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityMetaData">satkit.data_structures.metadata_classes.ModalityMetaData</a></span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
+        <span class="name">generate_name</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">cls</span>,</span><span class="param">	<span class="n">params</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityMetaData">patkit.data_structures.metadata_classes.ModalityMetaData</a></span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
 
                 <label class="view-source-button" for="Video.generate_name-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#Video.generate_name"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Video.generate_name-299"><a href="#Video.generate_name-299"><span class="linenos">299</span></a>    <span class="nd">@classmethod</span>
-</span><span id="Video.generate_name-300"><a href="#Video.generate_name-300"><span class="linenos">300</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="Video.generate_name-300"><a href="#Video.generate_name-300"><span class="linenos">300</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="Video.generate_name-301"><a href="#Video.generate_name-301"><span class="linenos">301</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span></pre></div>
 
@@ -1757,7 +1717,7 @@ meta -- a dict with (at least) the keys listed in
 
     </div>
     <a class="headerlink" href="#Video.get_meta"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Video.get_meta-360"><a href="#Video.get_meta-360"><span class="linenos">360</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Video.get_meta-360"><a href="#Video.get_meta-360"><span class="linenos">360</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="Video.get_meta-361"><a href="#Video.get_meta-361"><span class="linenos">361</span></a>        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_rate</span><span class="p">}</span>
 </span></pre></div>
 
@@ -1783,7 +1743,7 @@ text etc. </p>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt><a href="../data_structures/data_structures.html#Modality">satkit.data_structures.data_structures.Modality</a></dt>
+                                    <div><dt><a href="../data_structures/data_structures.html#Modality">patkit.data_structures.data_structures.Modality</a></dt>
                                 <dd id="Video.owner" class="variable"><a href="../data_structures/data_structures.html#Modality.owner">owner</a></dd>
                 <dd id="Video.excluded" class="variable"><a href="../data_structures/data_structures.html#Modality.excluded">excluded</a></dd>
                 <dd id="Video.annotations" class="variable"><a href="../data_structures/data_structures.html#Modality.annotations">annotations</a></dd>
@@ -1799,16 +1759,14 @@ text etc. </p>
                 <dd id="Video.min_time" class="variable"><a href="../data_structures/data_structures.html#Modality.min_time">min_time</a></dd>
                 <dd id="Video.max_time" class="variable"><a href="../data_structures/data_structures.html#Modality.max_time">max_time</a></dd>
                 <dd id="Video.is_derived" class="variable"><a href="../data_structures/data_structures.html#Modality.is_derived">is_derived</a></dd>
-                <dd id="Video.process_format_directive" class="function"><a href="../data_structures/data_structures.html#Modality.process_format_directive">process_format_directive</a></dd>
-                <dd id="Video.format_legend" class="function"><a href="../data_structures/data_structures.html#Modality.format_legend">format_legend</a></dd>
 
             </div>
-            <div><dt><a href="../data_structures/base_classes.html#DataContainer">satkit.data_structures.base_classes.DataContainer</a></dt>
+            <div><dt><a href="../data_structures/base_classes.html#DataContainer">patkit.data_structures.base_classes.DataContainer</a></dt>
                                 <dd id="Video.name" class="variable"><a href="../data_structures/base_classes.html#DataContainer.name">name</a></dd>
                 <dd id="Video.name_underscored" class="variable"><a href="../data_structures/base_classes.html#DataContainer.name_underscored">name_underscored</a></dd>
 
             </div>
-            <div><dt><a href="../data_structures/base_classes.html#DataObject">satkit.data_structures.base_classes.DataObject</a></dt>
+            <div><dt><a href="../data_structures/base_classes.html#DataObject">patkit.data_structures.base_classes.DataObject</a></dt>
                                 <dd id="Video.file_info" class="variable"><a href="../data_structures/base_classes.html#DataObject.file_info">file_info</a></dd>
                 <dd id="Video.metadata" class="variable"><a href="../data_structures/base_classes.html#DataObject.metadata">metadata</a></dd>
                 <dd id="Video.recorded_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_data_path">recorded_data_path</a></dd>
@@ -1816,30 +1774,12 @@ text etc. </p>
                 <dd id="Video.recorded_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_meta_path">recorded_meta_path</a></dd>
                 <dd id="Video.recorded_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_meta_name">recorded_meta_name</a></dd>
                 <dd id="Video.recorded_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_path">recorded_path</a></dd>
-                <dd id="Video.satkit_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_data_path">satkit_data_path</a></dd>
-                <dd id="Video.satkit_data_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_data_name">satkit_data_name</a></dd>
-                <dd id="Video.satkit_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_meta_path">satkit_meta_path</a></dd>
-                <dd id="Video.satkit_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_meta_name">satkit_meta_name</a></dd>
-                <dd id="Video.satkit_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_path">satkit_path</a></dd>
+                <dd id="Video.patkit_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_data_path">patkit_data_path</a></dd>
+                <dd id="Video.patkit_data_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_data_name">patkit_data_name</a></dd>
+                <dd id="Video.patkit_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_meta_path">patkit_meta_path</a></dd>
+                <dd id="Video.patkit_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_meta_name">patkit_meta_name</a></dd>
+                <dd id="Video.patkit_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_path">patkit_path</a></dd>
                 <dd id="Video.is_fully_initialised" class="variable"><a href="../data_structures/base_classes.html#DataObject.is_fully_initialised">is_fully_initialised</a></dd>
-
-            </div>
-            <div><dt>collections.OrderedDict</dt>
-                                <dd id="Video.clear" class="function">clear</dd>
-                <dd id="Video.popitem" class="function">popitem</dd>
-                <dd id="Video.move_to_end" class="function">move_to_end</dd>
-                <dd id="Video.keys" class="function">keys</dd>
-                <dd id="Video.items" class="function">items</dd>
-                <dd id="Video.values" class="function">values</dd>
-                <dd id="Video.pop" class="function">pop</dd>
-                <dd id="Video.setdefault" class="function">setdefault</dd>
-                <dd id="Video.copy" class="function">copy</dd>
-                <dd id="Video.fromkeys" class="function">fromkeys</dd>
-                <dd id="Video.update" class="function">update</dd>
-
-            </div>
-            <div><dt>builtins.dict</dt>
-                                <dd id="Video.get" class="function">get</dd>
 
             </div>
                                 </dl>
@@ -1850,13 +1790,13 @@ text etc. </p>
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">ThreeD_Ultrasound</span><wbr>(<span class="base"><a href="../data_structures/data_structures.html#Modality">satkit.data_structures.data_structures.Modality</a></span>):
+    <span class="name">ThreeD_Ultrasound</span><wbr>(<span class="base"><a href="../data_structures/data_structures.html#Modality">patkit.data_structures.data_structures.Modality</a></span>):
 
                 <label class="view-source-button" for="ThreeD_Ultrasound-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#ThreeD_Ultrasound"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ThreeD_Ultrasound-364"><a href="#ThreeD_Ultrasound-364"><span class="linenos">364</span></a><span class="k">class</span> <span class="nc">ThreeD_Ultrasound</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ThreeD_Ultrasound-364"><a href="#ThreeD_Ultrasound-364"><span class="linenos">364</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ThreeD_Ultrasound</span><span class="p">(</span><span class="n">Modality</span><span class="p">):</span>
 </span><span id="ThreeD_Ultrasound-365"><a href="#ThreeD_Ultrasound-365"><span class="linenos">365</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="ThreeD_Ultrasound-366"><a href="#ThreeD_Ultrasound-366"><span class="linenos">366</span></a><span class="sd">    Ultrasound Recording with interpolated 3D/4D data.</span>
 </span><span id="ThreeD_Ultrasound-367"><a href="#ThreeD_Ultrasound-367"><span class="linenos">367</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1873,10 +1813,10 @@ text etc. </p>
 </span><span id="ThreeD_Ultrasound-378"><a href="#ThreeD_Ultrasound-378"><span class="linenos">378</span></a>    <span class="p">]</span>
 </span><span id="ThreeD_Ultrasound-379"><a href="#ThreeD_Ultrasound-379"><span class="linenos">379</span></a>
 </span><span id="ThreeD_Ultrasound-380"><a href="#ThreeD_Ultrasound-380"><span class="linenos">380</span></a>    <span class="nd">@classmethod</span>
-</span><span id="ThreeD_Ultrasound-381"><a href="#ThreeD_Ultrasound-381"><span class="linenos">381</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="ThreeD_Ultrasound-381"><a href="#ThreeD_Ultrasound-381"><span class="linenos">381</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="ThreeD_Ultrasound-382"><a href="#ThreeD_Ultrasound-382"><span class="linenos">382</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span><span id="ThreeD_Ultrasound-383"><a href="#ThreeD_Ultrasound-383"><span class="linenos">383</span></a>
-</span><span id="ThreeD_Ultrasound-384"><a href="#ThreeD_Ultrasound-384"><span class="linenos">384</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="ThreeD_Ultrasound-384"><a href="#ThreeD_Ultrasound-384"><span class="linenos">384</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="ThreeD_Ultrasound-385"><a href="#ThreeD_Ultrasound-385"><span class="linenos">385</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="ThreeD_Ultrasound-386"><a href="#ThreeD_Ultrasound-386"><span class="linenos">386</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="ThreeD_Ultrasound-387"><a href="#ThreeD_Ultrasound-387"><span class="linenos">387</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1935,21 +1875,21 @@ text etc. </p>
 </span><span id="ThreeD_Ultrasound-440"><a href="#ThreeD_Ultrasound-440"><span class="linenos">440</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_stored_index</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="ThreeD_Ultrasound-441"><a href="#ThreeD_Ultrasound-441"><span class="linenos">441</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_stored_image</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="ThreeD_Ultrasound-442"><a href="#ThreeD_Ultrasound-442"><span class="linenos">442</span></a>
-</span><span id="ThreeD_Ultrasound-443"><a href="#ThreeD_Ultrasound-443"><span class="linenos">443</span></a>    <span class="k">def</span> <span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
+</span><span id="ThreeD_Ultrasound-443"><a href="#ThreeD_Ultrasound-443"><span class="linenos">443</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModalityData</span><span class="p">:</span>
 </span><span id="ThreeD_Ultrasound-444"><a href="#ThreeD_Ultrasound-444"><span class="linenos">444</span></a>        <span class="k">return</span> <span class="n">read_3d_ultrasound_dicom</span><span class="p">(</span>
 </span><span id="ThreeD_Ultrasound-445"><a href="#ThreeD_Ultrasound-445"><span class="linenos">445</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">recorded_data_path</span><span class="p">,</span>
 </span><span id="ThreeD_Ultrasound-446"><a href="#ThreeD_Ultrasound-446"><span class="linenos">446</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span>
 </span><span id="ThreeD_Ultrasound-447"><a href="#ThreeD_Ultrasound-447"><span class="linenos">447</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_time_offset</span><span class="p">)</span>
 </span><span id="ThreeD_Ultrasound-448"><a href="#ThreeD_Ultrasound-448"><span class="linenos">448</span></a>
 </span><span id="ThreeD_Ultrasound-449"><a href="#ThreeD_Ultrasound-449"><span class="linenos">449</span></a>    <span class="nd">@property</span>
-</span><span id="ThreeD_Ultrasound-450"><a href="#ThreeD_Ultrasound-450"><span class="linenos">450</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="ThreeD_Ultrasound-450"><a href="#ThreeD_Ultrasound-450"><span class="linenos">450</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="ThreeD_Ultrasound-451"><a href="#ThreeD_Ultrasound-451"><span class="linenos">451</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
 </span><span id="ThreeD_Ultrasound-452"><a href="#ThreeD_Ultrasound-452"><span class="linenos">452</span></a>
 </span><span id="ThreeD_Ultrasound-453"><a href="#ThreeD_Ultrasound-453"><span class="linenos">453</span></a>    <span class="nd">@data</span><span class="o">.</span><span class="n">setter</span>
-</span><span id="ThreeD_Ultrasound-454"><a href="#ThreeD_Ultrasound-454"><span class="linenos">454</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="ThreeD_Ultrasound-454"><a href="#ThreeD_Ultrasound-454"><span class="linenos">454</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="ThreeD_Ultrasound-455"><a href="#ThreeD_Ultrasound-455"><span class="linenos">455</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_data_setter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </span><span id="ThreeD_Ultrasound-456"><a href="#ThreeD_Ultrasound-456"><span class="linenos">456</span></a>
-</span><span id="ThreeD_Ultrasound-457"><a href="#ThreeD_Ultrasound-457"><span class="linenos">457</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span id="ThreeD_Ultrasound-457"><a href="#ThreeD_Ultrasound-457"><span class="linenos">457</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="ThreeD_Ultrasound-458"><a href="#ThreeD_Ultrasound-458"><span class="linenos">458</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </span></pre></div>
 
@@ -1962,13 +1902,13 @@ text etc. </p>
                                         <input id="ThreeD_Ultrasound.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">ThreeD_Ultrasound</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">owner</span><span class="p">:</span> <span class="n"><a href="../data_structures/data_structures.html#Recording">satkit.data_structures.data_structures.Recording</a></span>,</span><span class="param">	<span class="n">file_info</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#FileInformation">satkit.data_structures.metadata_classes.FileInformation</a></span>,</span><span class="param">	<span class="n">parsed_data</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityData">satkit.data_structures.metadata_classes.ModalityData</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">time_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+        <span class="name">ThreeD_Ultrasound</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">owner</span><span class="p">:</span> <span class="n"><a href="../data_structures/data_structures.html#Recording">patkit.data_structures.data_structures.Recording</a></span>,</span><span class="param">	<span class="n">file_info</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#FileInformation">patkit.data_structures.metadata_classes.FileInformation</a></span>,</span><span class="param">	<span class="n">parsed_data</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityData">patkit.data_structures.metadata_classes.ModalityData</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">time_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
 
                 <label class="view-source-button" for="ThreeD_Ultrasound.__init__-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#ThreeD_Ultrasound.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ThreeD_Ultrasound.__init__-384"><a href="#ThreeD_Ultrasound.__init__-384"><span class="linenos">384</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ThreeD_Ultrasound.__init__-384"><a href="#ThreeD_Ultrasound.__init__-384"><span class="linenos">384</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="ThreeD_Ultrasound.__init__-385"><a href="#ThreeD_Ultrasound.__init__-385"><span class="linenos">385</span></a>                 <span class="n">owner</span><span class="p">:</span> <span class="n">Recording</span><span class="p">,</span>
 </span><span id="ThreeD_Ultrasound.__init__-386"><a href="#ThreeD_Ultrasound.__init__-386"><span class="linenos">386</span></a>                 <span class="n">file_info</span><span class="p">:</span> <span class="n">FileInformation</span><span class="p">,</span>
 </span><span id="ThreeD_Ultrasound.__init__-387"><a href="#ThreeD_Ultrasound.__init__-387"><span class="linenos">387</span></a>                 <span class="n">parsed_data</span><span class="p">:</span> <span class="n">ModalityData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2064,17 +2004,17 @@ meta -- a dict with (at least) the keys listed in
                             <div id="ThreeD_Ultrasound.generate_name" class="classattr">
                                         <input id="ThreeD_Ultrasound.generate_name-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
-                    <div class="decorator">@classmethod</div>
+                    <div class="decorator decorator-classmethod">@classmethod</div>
 
         <span class="def">def</span>
-        <span class="name">generate_name</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">cls</span>,</span><span class="param">	<span class="n">params</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityMetaData">satkit.data_structures.metadata_classes.ModalityMetaData</a></span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
+        <span class="name">generate_name</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">cls</span>,</span><span class="param">	<span class="n">params</span><span class="p">:</span> <span class="n"><a href="../data_structures/metadata_classes.html#ModalityMetaData">patkit.data_structures.metadata_classes.ModalityMetaData</a></span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
 
                 <label class="view-source-button" for="ThreeD_Ultrasound.generate_name-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#ThreeD_Ultrasound.generate_name"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="ThreeD_Ultrasound.generate_name-380"><a href="#ThreeD_Ultrasound.generate_name-380"><span class="linenos">380</span></a>    <span class="nd">@classmethod</span>
-</span><span id="ThreeD_Ultrasound.generate_name-381"><a href="#ThreeD_Ultrasound.generate_name-381"><span class="linenos">381</span></a>    <span class="k">def</span> <span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="ThreeD_Ultrasound.generate_name-381"><a href="#ThreeD_Ultrasound.generate_name-381"><span class="linenos">381</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ModalityMetaData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="ThreeD_Ultrasound.generate_name-382"><a href="#ThreeD_Ultrasound.generate_name-382"><span class="linenos">382</span></a>        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 </span></pre></div>
 
@@ -2094,7 +2034,7 @@ meta -- a dict with (at least) the keys listed in
     </div>
     <a class="headerlink" href="#ThreeD_Ultrasound.data"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="ThreeD_Ultrasound.data-449"><a href="#ThreeD_Ultrasound.data-449"><span class="linenos">449</span></a>    <span class="nd">@property</span>
-</span><span id="ThreeD_Ultrasound.data-450"><a href="#ThreeD_Ultrasound.data-450"><span class="linenos">450</span></a>    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span id="ThreeD_Ultrasound.data-450"><a href="#ThreeD_Ultrasound.data-450"><span class="linenos">450</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span id="ThreeD_Ultrasound.data-451"><a href="#ThreeD_Ultrasound.data-451"><span class="linenos">451</span></a>        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
 </span></pre></div>
 
@@ -2126,7 +2066,7 @@ release the memory, assign None to this Modality's data.</p>
 
     </div>
     <a class="headerlink" href="#ThreeD_Ultrasound.get_meta"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ThreeD_Ultrasound.get_meta-457"><a href="#ThreeD_Ultrasound.get_meta-457"><span class="linenos">457</span></a>    <span class="k">def</span> <span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ThreeD_Ultrasound.get_meta-457"><a href="#ThreeD_Ultrasound.get_meta-457"><span class="linenos">457</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 </span><span id="ThreeD_Ultrasound.get_meta-458"><a href="#ThreeD_Ultrasound.get_meta-458"><span class="linenos">458</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>
 </span></pre></div>
 
@@ -2152,7 +2092,7 @@ text etc. </p>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt><a href="../data_structures/data_structures.html#Modality">satkit.data_structures.data_structures.Modality</a></dt>
+                                    <div><dt><a href="../data_structures/data_structures.html#Modality">patkit.data_structures.data_structures.Modality</a></dt>
                                 <dd id="ThreeD_Ultrasound.owner" class="variable"><a href="../data_structures/data_structures.html#Modality.owner">owner</a></dd>
                 <dd id="ThreeD_Ultrasound.excluded" class="variable"><a href="../data_structures/data_structures.html#Modality.excluded">excluded</a></dd>
                 <dd id="ThreeD_Ultrasound.annotations" class="variable"><a href="../data_structures/data_structures.html#Modality.annotations">annotations</a></dd>
@@ -2167,16 +2107,14 @@ text etc. </p>
                 <dd id="ThreeD_Ultrasound.min_time" class="variable"><a href="../data_structures/data_structures.html#Modality.min_time">min_time</a></dd>
                 <dd id="ThreeD_Ultrasound.max_time" class="variable"><a href="../data_structures/data_structures.html#Modality.max_time">max_time</a></dd>
                 <dd id="ThreeD_Ultrasound.is_derived" class="variable"><a href="../data_structures/data_structures.html#Modality.is_derived">is_derived</a></dd>
-                <dd id="ThreeD_Ultrasound.process_format_directive" class="function"><a href="../data_structures/data_structures.html#Modality.process_format_directive">process_format_directive</a></dd>
-                <dd id="ThreeD_Ultrasound.format_legend" class="function"><a href="../data_structures/data_structures.html#Modality.format_legend">format_legend</a></dd>
 
             </div>
-            <div><dt><a href="../data_structures/base_classes.html#DataContainer">satkit.data_structures.base_classes.DataContainer</a></dt>
+            <div><dt><a href="../data_structures/base_classes.html#DataContainer">patkit.data_structures.base_classes.DataContainer</a></dt>
                                 <dd id="ThreeD_Ultrasound.name" class="variable"><a href="../data_structures/base_classes.html#DataContainer.name">name</a></dd>
                 <dd id="ThreeD_Ultrasound.name_underscored" class="variable"><a href="../data_structures/base_classes.html#DataContainer.name_underscored">name_underscored</a></dd>
 
             </div>
-            <div><dt><a href="../data_structures/base_classes.html#DataObject">satkit.data_structures.base_classes.DataObject</a></dt>
+            <div><dt><a href="../data_structures/base_classes.html#DataObject">patkit.data_structures.base_classes.DataObject</a></dt>
                                 <dd id="ThreeD_Ultrasound.file_info" class="variable"><a href="../data_structures/base_classes.html#DataObject.file_info">file_info</a></dd>
                 <dd id="ThreeD_Ultrasound.metadata" class="variable"><a href="../data_structures/base_classes.html#DataObject.metadata">metadata</a></dd>
                 <dd id="ThreeD_Ultrasound.recorded_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_data_path">recorded_data_path</a></dd>
@@ -2184,30 +2122,12 @@ text etc. </p>
                 <dd id="ThreeD_Ultrasound.recorded_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_meta_path">recorded_meta_path</a></dd>
                 <dd id="ThreeD_Ultrasound.recorded_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_meta_name">recorded_meta_name</a></dd>
                 <dd id="ThreeD_Ultrasound.recorded_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.recorded_path">recorded_path</a></dd>
-                <dd id="ThreeD_Ultrasound.satkit_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_data_path">satkit_data_path</a></dd>
-                <dd id="ThreeD_Ultrasound.satkit_data_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_data_name">satkit_data_name</a></dd>
-                <dd id="ThreeD_Ultrasound.satkit_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_meta_path">satkit_meta_path</a></dd>
-                <dd id="ThreeD_Ultrasound.satkit_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_meta_name">satkit_meta_name</a></dd>
-                <dd id="ThreeD_Ultrasound.satkit_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.satkit_path">satkit_path</a></dd>
+                <dd id="ThreeD_Ultrasound.patkit_data_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_data_path">patkit_data_path</a></dd>
+                <dd id="ThreeD_Ultrasound.patkit_data_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_data_name">patkit_data_name</a></dd>
+                <dd id="ThreeD_Ultrasound.patkit_meta_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_meta_path">patkit_meta_path</a></dd>
+                <dd id="ThreeD_Ultrasound.patkit_meta_name" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_meta_name">patkit_meta_name</a></dd>
+                <dd id="ThreeD_Ultrasound.patkit_path" class="variable"><a href="../data_structures/base_classes.html#DataObject.patkit_path">patkit_path</a></dd>
                 <dd id="ThreeD_Ultrasound.is_fully_initialised" class="variable"><a href="../data_structures/base_classes.html#DataObject.is_fully_initialised">is_fully_initialised</a></dd>
-
-            </div>
-            <div><dt>collections.OrderedDict</dt>
-                                <dd id="ThreeD_Ultrasound.clear" class="function">clear</dd>
-                <dd id="ThreeD_Ultrasound.popitem" class="function">popitem</dd>
-                <dd id="ThreeD_Ultrasound.move_to_end" class="function">move_to_end</dd>
-                <dd id="ThreeD_Ultrasound.keys" class="function">keys</dd>
-                <dd id="ThreeD_Ultrasound.items" class="function">items</dd>
-                <dd id="ThreeD_Ultrasound.values" class="function">values</dd>
-                <dd id="ThreeD_Ultrasound.pop" class="function">pop</dd>
-                <dd id="ThreeD_Ultrasound.setdefault" class="function">setdefault</dd>
-                <dd id="ThreeD_Ultrasound.copy" class="function">copy</dd>
-                <dd id="ThreeD_Ultrasound.fromkeys" class="function">fromkeys</dd>
-                <dd id="ThreeD_Ultrasound.update" class="function">update</dd>
-
-            </div>
-            <div><dt>builtins.dict</dt>
-                                <dd id="ThreeD_Ultrasound.get" class="function">get</dd>
 
             </div>
                                 </dl>
