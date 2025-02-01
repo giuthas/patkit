@@ -102,8 +102,8 @@ In the fork repository:
      - File version number will be different from program version number after
        1.0 and this is set in constants.py.
    - [Changelog](Changelog.markdown)
-   - [Generated documentation](../devel/doc_generation_commands)
    - [License headers](../devel/licenseheaders_command)
+   - [Generated documentation](../devel/doc_generation_commands)
 3. Send a pull request to the main repo.
 4. After the new version has been released there are some housekeeping steps to
    perform in the fork repository. They are listed at the end of these instructions
