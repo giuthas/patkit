@@ -36,6 +36,7 @@ from pathlib import Path
 
 import pdoc
 
+
 def main():
     """
     Generate the docs for PATKIT.
