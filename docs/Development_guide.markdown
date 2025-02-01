@@ -80,8 +80,9 @@ doing something else). This means we have the following kinds of branches:
 
 ### Making a release
 
-A release of PATKIT is created as follows:
+A release of PATKIT is created as following these steps.
 
+In the fork repository:
 1. If planning a major or minor release (first or second version number
    increments), check that all features in the current roadmap are either
    done (implemented and merged to local `devel`, after which you should 
@@ -96,22 +97,26 @@ A release of PATKIT is created as follows:
      them to a later version. Mostly these should be just documentation, but one 
      never knows.
    - This is done in the `devel` branch.
-2. Send a pull request to the main repo either before or after the next stage.
-   After the pull request has been processed rest of the release tasks are done
-   in the main repo.
-3. Update documentation and bump version number.
+2. Update documentation and bump version number.
    - Version number lives in [pyproject.toml](../pyproject.toml).
      - File version number will be different from program version number after
        1.0 and this is set in constants.py.
    - [Changelog](Changelog.markdown)
    - [Generated documentation](../devel/doc_generation_commands)
    - [License headers](../devel/licenseheaders_command)
-4. Create a new release candidate branch named 'vX.Y.Z' e.g. 'v0.7.0' from the
+3. Send a pull request to the main repo.
+4. After the new version has been released there are some housekeeping steps to
+   perform in the fork repository. They are listed at the end of these instructions
+   below.
+
+In the main repository (done by Pertti or other maintainers):
+1. Process the pull request.
+2. Create a new release candidate branch named 'vX.Y.Z' e.g. 'v0.7.0' from the
    `devel` branch.
    - You can save a bit of work by keeping this branch only local unless the 
      release does not get done in one working session. 
-5. Merge `main` to the release branch (not the other way around).
-6. Check that installation works:
+3. Merge `main` to the release branch (not the other way around).
+4. Check that installation works:
    - This used to mean checking that conda environments are up-to-date. 
      - It is especially possible that patkit-stable is neither up to date with
        patkit-devel, nor tested.
@@ -119,20 +124,26 @@ A release of PATKIT is created as follows:
        work. 
    - This will soon mean checking that running with uv works and what ever
      can be done to check that installing with uv works.
-7. Run tests.
+5. Run tests.
    - These don't exist yet at the time of PATKIT 0.10.0 except as
      'rudimentary_tests.sh'.
-8. Fix any bugs that occur, run tests to see that they pass, update the docs.
+6. Fix any bugs that occur, run tests to see that they pass, update the docs.
    - Check if [Changelog](Changelog.markdown) needs any final updates.
      - Check also if any of the old 'known issues' or 'bugs' got fixed.
    - Rerun doc generation if there were any changes.
-9. Merge release branch to `main`.
-10. Release housekeeping:
-    - Delete the now defunct release branch (`git push -d <remote_name>
+7. Merge release branch to `main`.
+8. Release housekeeping:
+   - Delete the now defunct release branch (`git push -d <remote_name>
    <branchname>` and `git branch -d <branchname`)
-    - Tag the commit in main with the release title ('vX.Y.Z') and push it to
-      remote with `git push origin vX.Y.Z`
-    - If any commits were made to the release branch, merge `main` into `devel`.
-11. Make the tagged version a release on GitHub to show it correctly as
-    'latest' in the sidebar. 
-12. Announce the release.
+   - Tag the commit in main with the release title ('vX.Y.Z') and push it to
+     remote with `git push origin vX.Y.Z`
+   - If any commits were made to the release branch, merge `main` into `devel`.
+9. Make the tagged version a release on GitHub to show it correctly as
+   'latest' in the sidebar.
+10. Release the new version on PyPi.
+11. Announce the release.
+
+In the fork repository:
+1. Synch both `main` and `devel` with the main repository.
+2. Pull from `main` and `devel` to your local machine.
+3. If you have `patkit` installed as a tool, update it.
