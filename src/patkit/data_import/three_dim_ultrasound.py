@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2025
 # Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
 #
-# This file is part of Speech Articulation ToolKIT
+# This file is part of the Phonetic Analysis ToolKIT
 # (see https://github.com/giuthas/patkit/).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 # see <https://creativecommons.org/licenses/by-nc-sa/4.0/> for details.
 #
 # When using the toolkit for scientific publications, please cite the
-# articles listed in README.markdown. They can also be found in
+# articles listed in README.md. They can also be found in
 # citations.bib in BibTeX format.
 #
 
