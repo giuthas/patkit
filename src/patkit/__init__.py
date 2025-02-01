@@ -30,10 +30,9 @@
 # citations.bib in BibTeX format.
 #
 
+# TODO 1.0 Add an example of running PATKIT from the interactive command line.
 """
 PATKIT -- The Phonetic Analysis ToolKIT
-
-# TODO 1.0 Add an example of running PATKIT from the interactive command line.
 
 PATKIT consists of several interdependent modules.
 
