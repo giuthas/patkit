@@ -33,7 +33,7 @@ data_axes:
     ylim:
       - 100
       - 2000
-  PD normalised:
+  "Normalised\nPD":
     modalities:
       - PD l1 on RawUltrasound
       - PD l2 on RawUltrasound
