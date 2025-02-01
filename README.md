@@ -1,6 +1,6 @@
 # PATKIT - Phonetic Analysis ToolKIT 
 
-![PATKIT GUI](docs/PATKIT_UI.png)
+![PATKIT GUI](PATKIT_UI.png)
 
 PATKIT provides tools for phonetic analysis of speech data. It includes a GUI
 for manual assessment/analysis/annotation (see picture above), command line
