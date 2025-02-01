@@ -30,7 +30,7 @@
 # citations.bib in BibTeX format.
 #
 """
-patkit Commandline main command.
+PATKIT Commandline main command.
 """
 
 import click
