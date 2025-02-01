@@ -34,16 +34,17 @@
 """
 PATKIT -- The Phonetic Analysis ToolKIT
 
-PATKIT consists of several interdependent modules.
+This is the API reference for PATKIT, if you are looking for the general
+documentation, it can be found [here](../index.md).
 
-![PATKIT Module hierarchy](packages_patkit.png "PATKIT Module hierarchy")
+[PATKIT Module hierarchy](packages_patkit.png "PATKIT Module hierarchy")
 
 PATKIT's data structures are built around two class hierarchies:
 The Recording and the Modality. Similarly, the commandline interface -- and
 the batch processing of data -- is handled by classes that extend CLI and 
 graphical annotation tools derive from Annotator.
 
-![PATKIT Class hierarchies](classes_patkit.png "PATKIT Class hierarchies")
+[PATKIT Class hierarchies](classes_patkit.png "PATKIT Class hierarchies")
 """
 
 import json
