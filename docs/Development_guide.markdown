@@ -128,11 +128,11 @@ In the main repository (done by Pertti or other maintainers):
    - Delete the now defunct release branch (`git push -d <remote_name>
    <branchname>` and `git branch -d <branchname`)
    - Tag the commit in main with the release title ('vX.Y.Z') and push it to
-     remote with `git push origin vX.Y.Z`
+     remote with `git push --atomic origin main vX.Y.Z`
    - If any commits were made to the release branch, merge `main` into `devel`.
-9. Make the tagged version a release on GitHub to show it correctly as
-   'latest' in the sidebar.
-10. Release the new version on PyPi.
+9. Check that the new version shows correctly on GitHub as 'latest' in the
+   sidebar.
+10. Check that the new version is on PyPi.
 11. Announce the release.
 
 In the fork repository:
