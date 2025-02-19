@@ -96,7 +96,7 @@ jobs:
     needs: [setup_and_build, details]
     runs-on: ubuntu-latest
     environment:
-      name: release
+      name: pypi
     permissions:
       id-token: write
     steps:
