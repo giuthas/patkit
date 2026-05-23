@@ -85,7 +85,7 @@ class ConfigPaths:
 
 class Configuration:
     """
-    Main configuration class of patkit.    
+    Main configuration class of patkit.
     """
 
     # TODO: implement save functionality.
@@ -95,7 +95,7 @@ class Configuration:
             configuration_paths: ConfigPaths
     ) -> None:
         """
-        Init the main configuration object. 
+        Init the main configuration object.
 
         Run only once. Updates should be done with methods of the class.
 
@@ -113,7 +113,8 @@ class Configuration:
             self._data_yaml = load_data_params(
                 self._config_paths.data_config)
             self._data_config = DataConfig(**self._data_yaml.data)
-            recorded = self._config_paths.path/self._data_config.recorded_data_path
+            recorded = \
+                self._config_paths.path/self._data_config.recorded_data_path
             self._data_config.recorded_data_path = recorded.resolve()
         else:
             self._data_config = None

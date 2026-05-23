@@ -1,3 +1,4 @@
+[![test](https://github.com/giuthas/patkit/actions/workflows/test.yaml/badge.svg)](https://github.com/giuthas/patkit/actions/workflows/test.yaml)
 # PATKIT - Phonetic Analysis ToolKIT 
 
 ![PATKIT GUI](https://giuthas.github.io/patkit/PATKIT_UI_0.22.0.png)
