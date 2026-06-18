@@ -314,6 +314,31 @@ class UiMainWindow(object):
         self.menu_export.addAction(self.action_export_main_figure)
         self.menu_export.addAction(self.action_export_ultrasound_frame)
 
+        # Image actions
+        self.menu_select_image = self.menu_image.addMenu("Select image")
+
+        self.action_mean_image = QtGui.QAction(
+            text="Mean image", parent=self.menu_select_image)
+        self.action_frame = QtGui.QAction(
+            text="Frame at cursor", parent=self.menu_select_image)
+        self.action_raw_frame = QtGui.QAction(
+            text="Raw frame at cursor", parent=self.menu_select_image)
+
+        self.action_mean_image.setCheckable(True)
+        self.action_frame.setCheckable(True)
+        self.action_raw_frame.setCheckable(True)
+        self.action_frame.setChecked(True)
+
+        self.menu_select_image.addAction(self.action_mean_image)
+        self.menu_select_image.addAction(self.action_frame)
+        self.menu_select_image.addAction(self.action_raw_frame)
+
+        self.menu_select_small_action_group = QtGui.QActionGroup(
+            self.menu_select_image)
+        self.menu_select_small_action_group.addAction(self.action_mean_image)
+        self.menu_select_small_action_group.addAction(self.action_frame)
+        self.menu_select_small_action_group.addAction(self.action_raw_frame)
+
         # Mode menu actions
         # self.mode_group = QtGui.QActionGroup(main_window)
         # self.action_annotator_mode = QtGui.QAction(main_window)
@@ -455,6 +480,15 @@ class UiMainWindow(object):
         self.action_save_current_textgrid.setText(
             _translate("MainWindow", "Save current TextGrid")
         )
+
+        self.menu_select_image.setTitle(
+            _translate("MainWindow", "Select image"))
+        self.action_mean_image.setText(
+            _translate("MainWindow", "Mean image"))
+        self.action_frame.setText(
+            _translate("MainWindow", "Frame at cursor"))
+        self.action_raw_frame.setText(
+            _translate("MainWindow", "Raw frame at cursor"))
 
         self.action_quit.setText(_translate("MainWindow", "Quit"))
         self.action_quit.setShortcut(_translate("MainWindow", "Ctrl+Q"))

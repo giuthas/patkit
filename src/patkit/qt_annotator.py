@@ -54,8 +54,6 @@ from PyQt6.QtCore import (
     QCoreApplication, QItemSelectionModel, QModelIndex, Qt
 )
 from PyQt6.QtGui import (
-    QAction,
-    QActionGroup,
     QGuiApplication,
     QIntValidator,
     QKeySequence,
@@ -183,29 +181,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             QKeySequence(self.tr("Ctrl+W", "File|Quit")), self)
         self.close_window_shortcut.activated.connect(self.quit)
 
-        # TODO 1.0: move the following block to annotator_window.py
-        self.menu_select_image = self.menu_image.addMenu(
-            "Select image")
-        self.action_mean_image = QAction(
-            text="Mean image", parent=self.menu_select_image)
-        self.action_frame = QAction(
-            text="Frame at cursor", parent=self.menu_select_image)
-        self.action_raw_frame = QAction(
-            text="Raw frame at cursor", parent=self.menu_select_image)
-        self.action_mean_image.setCheckable(True)
-        self.action_frame.setCheckable(True)
-        self.action_raw_frame.setCheckable(True)
-        self.action_frame.setChecked(True)
-
-        self.menu_select_image.addAction(self.action_mean_image)
-        self.menu_select_image.addAction(self.action_frame)
-        self.menu_select_image.addAction(self.action_raw_frame)
-
-        self.menu_select_small_action_group = QActionGroup(
-            self.menu_select_image)
-        self.menu_select_small_action_group.addAction(self.action_mean_image)
-        self.menu_select_small_action_group.addAction(self.action_frame)
-        self.menu_select_small_action_group.addAction(self.action_raw_frame)
+        # Image selection logic hookups
         self.menu_select_small_action_group.triggered.connect(
             self.image_updater)
         self.image_type = GuiImageType.MEAN_IMAGE
