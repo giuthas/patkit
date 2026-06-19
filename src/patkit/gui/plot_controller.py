@@ -377,7 +377,7 @@ class PlotController(QtWidgets.QWidget):
                 for boundaries, interval in zip(
                         boundaries_by_boundary, tier_in_limits, strict=True):
                     animator = BoundaryAnimator(
-                        main_window=self,
+                        main_window=self.parent(),
                         boundaries=boundaries,
                         segment=interval,
                         epsilon=self.data_config.epsilon,

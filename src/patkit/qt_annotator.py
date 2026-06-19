@@ -237,13 +237,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         #     self.positionRB_3.text(): self.positionRB_3
         # }
 
-        # Audio playback setup
-        self.audio_player = AudioPlayer(self)
-        self.play_controls.play.connect(self.audio_player.play)
-        self.play_controls.pause.connect(self.audio_player.pause)
-        self.play_controls.stop.connect(self.audio_player.stop)
-        self.play_controls.rewind.connect(self.rewind)
-
         self.shift_is_held = False
         self.ctrl_is_held = False
         self.alt_is_held = False
@@ -261,6 +254,16 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         # Add the canvases to their respective Qt Layouts
         self.mplWindowVerticalLayout.addWidget(self.plot_controller.canvas)
         self.verticalLayout_6.addWidget(self.plot_controller.ultra_canvas)
+
+        self.plot_controller.canvas.mpl_connect(
+            'button_press_event', self.onpick)
+
+        # Audio playback setup
+        self.audio_player = AudioPlayer(self)
+        self.play_controls.play.connect(self.audio_player.play)
+        self.play_controls.pause.connect(self.audio_player.pause)
+        self.play_controls.stop.connect(self.audio_player.stop)
+        self.play_controls.rewind.connect(self.rewind)
 
         # Connect tracking events
         self.audio_player.position_changed.connect(
@@ -388,11 +391,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.current.annotations['selected_time'] = current_position
         self.update()
 
-    def clear_axes(self):
-        """Clear data axes of this annotator."""
-        for axes in self.data_axes:
-            axes.cla()
-
     def update(self) -> None:
         """Updates the graphs but not the buttons."""
         if (
@@ -448,8 +446,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Updates title and graphs to show this Recording is excluded.
         """
-        self.data_axes[0].set_title(
-            self._get_title() + "\nNOTE: This recording has been excluded.")
+        # TODO 0.23: do this correctly
+        pass
 
     def next(self):
         """
@@ -1148,7 +1146,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             return
 
         subplot = 0
-        for i, axes in enumerate(self.data_axes):
+        for i, axes in enumerate(self.plot_controller.data_axes):
             if axes == event.inaxes:
                 subplot = i + 1
                 break
