@@ -740,6 +740,10 @@ class PlotController(QtWidgets.QWidget):
 
     def update_multicursor(self) -> None:
         """Recreate the MultiCursor and tracking cursors after drawing."""
+        if self.multicursor is not None:
+            self.multicursor.disconnect()
+            self.multicursor = None
+
         self.multicursor = MultiCursor(
             self.canvas,
             axes=self.data_axes + self.tier_axes,
