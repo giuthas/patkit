@@ -1,0 +1,679 @@
+"""Matplotlib canvas and axes management for the GUI."""
+
+import logging
+
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from matplotlib.lines import Line2D
+from matplotlib.widgets import MultiCursor
+import numpy as np
+from PyQt6 import QtWidgets
+
+from patkit.data_structures import Recording
+from patkit.configuration import GuiConfig
+from patkit.constants import AnnotatorMode, ExerciseMode, GuiImageType
+from patkit.plot_and_publish import (
+    format_legend,
+    get_colors_in_sequence,
+    mark_peaks,
+    plot_patgrid_tier,
+    plot_spectrogram,
+    plot_spectrogram2,
+    plot_spline,
+    plot_timeseries,
+    plot_wav,
+)
+
+from .boundary_animation import BoundaryAnimator
+
+_logger = logging.getLogger(__name__)
+
+
+class PlotController(QtWidgets.QWidget):
+    """
+    Manages the Matplotlib figure, canvas, and tracking cursors.
+
+    Encapsulates the Matplotlib setup required for rendering and provides
+    utility methods for updating playback cursors across all axes. Handles both
+    the main data/tier canvas and the secondary ultrasound canvas.
+
+    Parameters
+    ----------
+    parent : QtWidgets.QWidget | None
+        The parent Qt widget.
+    """
+
+    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
+        super().__init__(parent)
+
+        # 1. Main Canvas Setup
+        self.figure = Figure(layout="tight")
+        self.canvas = FigureCanvas(self.figure)
+
+        # 2. Ultrasound Canvas Setup
+        self.ultra_fig = Figure()
+        self.ultra_canvas = FigureCanvas(self.ultra_fig)
+        self.ultra_axes = self.ultra_fig.add_axes((0, 0, 1, 1))
+
+        self.data_axes: list = []
+        self.tier_axes: list = []
+        self.cursor_lines: list[Line2D] = []
+        self.multicursor: MultiCursor | None = None
+
+        self.main_grid_spec = None
+        self.tier_grid_spec = None
+        self.data_grid_spec = None
+
+    def setup_axes(self, gui_config) -> None:
+        """
+        Clear the figure and set up the required subplots.
+
+        Parameters
+        ----------
+        gui_config : Configuration
+            The GUI configuration containing axes layout requirements.
+        """
+        self.figure.clear()
+        self.data_axes = []
+        self.tier_axes = []
+
+        height_ratios = [gui_config.data_and_tier_height_ratios.data_axes,
+                         gui_config.data_and_tier_height_ratios.tier_axes]
+        self.main_grid_spec = self.figure.add_gridspec(
+            nrows=2,
+            ncols=1,
+            hspace=0,
+            wspace=0,
+            height_ratios=height_ratios,
+        )
+
+        number_of_data_axes = gui_config.number_of_data_axes
+        self.data_grid_spec = self.main_grid_spec[0].subgridspec(
+            number_of_data_axes, 1, hspace=0, wspace=0)
+
+        data_axes_params = None
+        if gui_config.general_axes_params:
+            if gui_config.general_axes_params is not None:
+                data_axes_params = gui_config.general_axes_params
+
+        for i, axes_name in enumerate(gui_config.data_axes):
+            sharex = False
+            if gui_config.data_axes[axes_name].sharex:
+                sharex = gui_config.data_axes[axes_name].sharex
+            elif (data_axes_params is not None and
+                  data_axes_params.sharex is not None):
+                sharex = data_axes_params.sharex
+
+            if i != 0 and sharex:
+                ax = self.figure.add_subplot(
+                    self.data_grid_spec[i],
+                    sharex=self.data_axes[0])
+            else:
+                ax = self.figure.add_subplot(
+                    self.data_grid_spec[i])
+            self.data_axes.append(ax)
+
+        self.canvas.draw_idle()
+
+    def clear_data_axes(self) -> None:
+        """Clear all data axes."""
+        for axes in self.data_axes:
+            axes.cla()
+
+    def draw_plots(
+        self,
+        recording: Recording,
+        patgrid: list,
+        gui_config: GuiConfig,
+        xlim: tuple[float, float],
+        mode: AnnotatorMode,
+        exercise_mode: ExerciseMode
+    ) -> None:
+        """
+        Dynamically calculate grid specs and draw the data and tiers.
+
+        Parameters
+        ----------
+        current_recording : Recording
+            The active audio recording/session data.
+        patgrid : list
+            The TextGrid or associated annotation grid tiers.
+        gui_config : GuiConfig
+            The layout and axis preferences.
+        xlim : tuple[float, float]
+            The current viewing boundaries for the x-axis.
+        mode : AnnotatorMode
+            The current operating mode of the annotator.
+        exercise_mode : ExerciseMode
+            The current exercise state if in exercise mode.
+        """
+        if recording.excluded:
+            self.display_exclusion()
+
+        if 'MonoAudio' in recording.modalities:
+            self.data_axes[0].set_title(self._get_long_title())
+        else:
+            self.data_axes[0].set_title(
+                self._get_long_title() + "\nNOTE: Audio missing.")
+            return
+
+        for axes in self.tier_axes:
+            axes.remove()
+        self.tier_axes = []
+        # if current_recording.patgrid:
+        if patgrid:
+            nro_tiers = len(patgrid)
+            self.tier_grid_spec = self.main_grid_spec[1].subgridspec(
+                nro_tiers, 1, hspace=0, wspace=0)
+            for axes_counter, tier in enumerate(patgrid):
+                axes = self.figure.add_subplot(
+                    self.tier_grid_spec[axes_counter],
+                    sharex=self.data_axes[0])
+                axes.set_yticks([])
+                self.tier_axes.append(axes)
+
+        for axes in self.data_axes:
+            axes.xaxis.set_tick_params(bottom=False, labelbottom=False)
+        self.data_axes[0].xaxis.set_tick_params(top=True, labeltop=True)
+
+        for axes in self.tier_axes[:-1]:
+            axes.xaxis.set_tick_params(bottom=False, labelbottom=False)
+
+        if 'MonoAudio' not in recording.modalities:
+            return
+
+        audio = recording.modalities['MonoAudio']
+        if audio.go_signal is None:
+            stimulus_onset = 0
+        else:
+            stimulus_onset = audio.go_signal
+
+        wav = audio.data
+        wav_time = audio.timevector - stimulus_onset
+
+        if gui_config.xlim is not None:
+            xlim = gui_config.xlim
+        elif gui_config.auto_xlim:
+            x_minimums = []
+            x_maximums = []
+            modalities_to_check = gui_config.plotted_modality_names()
+            modalities_to_check.add("MonoAudio")
+            for name in modalities_to_check:
+                if name in recording:
+                    x_minimums.append(
+                        recording[name].timevector[0] - stimulus_onset
+                    )
+                    x_maximums.append(
+                        recording[name].timevector[-1] - stimulus_onset
+                    )
+            xlim = (np.min(x_minimums)-.05, np.max(x_maximums)+.05)
+
+        axes_counter = 0
+        for axes_name in gui_config.data_axes:
+            self.data_axes[axes_counter].grid(False)
+            match axes_name:
+                case "spectrogram":
+                    if gui_config.data_axes[axes_name].ylim is not None:
+                        ylim = gui_config.data_axes[axes_name].ylim
+                    else:
+                        ylim = (0, 10500)
+                    plot_spectrogram(self.data_axes[axes_counter],
+                                     waveform=wav,
+                                     ylim=ylim,
+                                     sampling_frequency=audio.sampling_rate,
+                                     extent_on_x=(wav_time[0], wav_time[-1]))
+                case "spectrogram2":
+                    if gui_config.data_axes[axes_name].ylim is not None:
+                        ylim = gui_config.data_axes[axes_name].ylim
+                    else:
+                        ylim = (0, 10500)
+                    plot_spectrogram2(
+                        self.data_axes[axes_counter],
+                        waveform=wav,
+                        ylim=ylim,
+                        sampling_frequency=audio.sampling_rate,
+                        extent_on_x=(wav_time[0], wav_time[-1]),
+                        mode=gui_config.color_scheme
+                    )
+                case "wav":
+                    plot_wav(
+                        ax=self.data_axes[axes_counter],
+                        waveform=wav,
+                        wav_time=wav_time,
+                        xlim=xlim,
+                        mode=gui_config.color_scheme
+                    )
+                case _:
+                    if not recording.excluded:
+                        self.plot_modality_axes(
+                            axes_number=axes_counter,
+                            axes_name=axes_name,
+                            zero_offset=stimulus_onset,
+                            ylim=gui_config.data_axes[axes_name].ylim,
+                        )
+            axes_counter += 1
+
+        self.animators = []
+        iterator = zip(patgrid.items(),
+                       self.tier_axes, strict=True)
+        for (name, tier), axis in iterator:
+            axis.grid(False)
+            boundaries_by_axis = []
+
+            boundary_set, _ = plot_patgrid_tier(
+                axes=axis,
+                tier=tier,
+                time_offset=stimulus_onset,
+                text_y=.5,
+                xlim=xlim,
+            )
+            boundaries_by_axis.append(boundary_set)
+            axis.set_ylabel(
+                name, rotation=0, horizontalalignment="right",
+                verticalalignment="center")
+            axis.set_xlim(xlim)
+            if name in gui_config.pervasive_tiers:
+                for data_axis in self.data_axes:
+                    boundary_set = plot_patgrid_tier(
+                        axes=data_axis,
+                        tier=tier,
+                        time_offset=stimulus_onset,
+                        draw_text=False)[0]
+                    boundaries_by_axis.append(boundary_set)
+
+            # Change rows to be individual boundaries instead of axis. This
+            # makes it possible to create animators for each boundary as
+            # represented by multiple lines on different axes.
+            boundaries_by_boundary = list(map(list, zip(*boundaries_by_axis)))
+
+            tier_limits = [
+                xlim[0] + stimulus_onset, xlim[1] + stimulus_onset]
+            tier_in_limits = tier.intersects(xlim=tier_limits)
+            if (
+                mode is AnnotatorMode.ANALYSE or
+                exercise_mode is ExerciseMode.ANSWER
+            ):
+                for boundaries, interval in zip(
+                        boundaries_by_boundary, tier_in_limits, strict=True):
+                    animator = BoundaryAnimator(
+                        main_window=self,
+                        boundaries=boundaries,
+                        segment=interval,
+                        epsilon=self.data_config.epsilon,
+                        time_offset=stimulus_onset)
+                    animator.connect()
+                    self.animators.append(animator)
+        if self.tier_axes:
+            self.tier_axes[-1].set_xlabel("Time (s), go-signal at 0 s.")
+
+        if recording.annotations['selected_time'] > -1:
+            old_ticks = self.data_axes[0].get_xticks()
+            if len(old_ticks) > 2:
+                self.data_axes[0].set_xticks(
+                    [
+                        old_ticks[1],
+                        recording.annotations['selected_time'],
+                        old_ticks[-2],
+                    ]
+                )
+            else:
+                self.data_axes[0].set_xticks(
+                    [
+                        old_ticks[0],
+                        recording.annotations['selected_time'],
+                        old_ticks[-1],
+                    ]
+                )
+
+            xtick_labels = self.data_axes[0].get_xticklabels()
+            xtick_labels[1].set_color(color="deepskyblue")
+            xtick_labels = self.tier_axes[-1].get_xticklabels()
+            xtick_labels[1].set_color(color="deepskyblue")
+            for axes in self.data_axes:
+                # Save ylim to restore after annotation lines have been drawn.
+                # This is done because at least spectrogram tends to go weird
+                # otherwise.
+                current_ylim = axes.get_ylim()
+                axes.axvline(x=recording.annotations['selected_time'],
+                             linestyle=':', color="deepskyblue", lw=1)
+                lines = axes.get_lines()
+                colors = []
+                yticks = axes.get_yticks()
+                for line in lines:
+                    if len(line.get_xdata()) <= 2:
+                        continue
+                    index = np.argmin(np.abs(
+                        line.get_xdata() -
+                        recording.annotations['selected_time']
+                    ))
+                    y_value = line.get_ydata()[index]
+                    color = line.get_color()
+                    axes.axhline(y=y_value,
+                                 linestyle=':', color=color, lw=1)
+                    yticks = np.append(yticks, y_value)
+                    colors.append(color)
+                axes.set_yticks(yticks)
+
+                labels = axes.get_yticklabels()
+                ytick_lines = axes.yaxis.get_ticklines()
+                for i, color in enumerate(colors):
+                    ytick_lines[i*2+4].set_color(color)
+                    ytick_lines[i*2+5].set_color(color)
+                    labels[i+2].set_color(color)
+                axes.set_ylim(current_ylim)
+        else:
+            old_ticks = self.data_axes[0].get_xticks()
+            if len(old_ticks) > 2:
+                self.data_axes[0].set_xticks(
+                    [
+                        old_ticks[1],
+                        old_ticks[-2]
+                    ]
+                )
+
+        if recording.annotations['selected_frequency'] > -1:
+            for i, name in enumerate(gui_config.data_axes):
+                if "spectrogram" in name:
+                    axes = self.data_axes[i]
+                    yticks = axes.get_yticks()
+                    axes.set_yticks(np.append(
+                        yticks,
+                        recording.annotations['selected_frequency']
+                    ))
+                    axes.axhline(
+                        y=recording.annotations['selected_frequency'],
+                        linestyle=':', color="deepskyblue", lw=1
+                    )
+                    labels = axes.get_yticklabels()
+                    labels[2].set_color(color="deepskyblue")
+                    ytick_lines = axes.yaxis.get_ticklines()
+                    ytick_lines[4].set_color(color="deepskyblue")
+                    ytick_lines[5].set_color(color="deepskyblue")
+
+            for axes in self.tier_axes:
+                axes.axvline(x=recording.annotations['selected_time'],
+                             linestyle=':', color="deepskyblue", lw=1)
+
+        # Align the y-labels nicely across all subplots
+        self.figure.align_ylabels()
+
+    def plot_modality_axes(
+        self,
+        axes_number: int,
+        axes_name: str,
+        recording: Recording,
+        gui_config: GuiConfig,
+        xlim: tuple[float, float],
+        zero_offset: float = 0,
+        ylim: list[float, float] | None = None,
+    ) -> None:
+        """
+        Plot modalities on a data_axes.
+
+        Parameters
+        ----------
+        axes_number : int
+            Which axes, counting from top.
+        axes_name : str
+            What should the axes be called. This will be the y_label.
+        current_recording : Recording
+            The active recording object containing the modality data.
+        gui_config : GuiConfig
+            The active GUI configuration.
+        xlim : tuple[float, float]
+            The current viewing limits for the x-axis.
+        zero_offset : Optional[float], optional
+            Where do we set 0 in time in relation to the audio, by default 0
+        ylim : Optional[list[float, float]], optional
+            y limits, by default None
+        """
+        axes_params = self.gui_config.data_axes[axes_name]
+        data_axes_params = self.gui_config.general_axes_params.data_axes
+        plot_modality_names = axes_params.modalities
+
+        if ylim is None:
+            if data_axes_params is None and axes_params is None:
+                ylim = None  # (-0.075, 1.075)
+            elif data_axes_params.ylim is None and axes_params.ylim is None:
+                if (
+                    not data_axes_params.auto_ylim and
+                    not axes_params.auto_ylim
+                ):
+                    ylim = None  # (-0.075, 1.075)
+                else:
+                    ylim = None
+            elif axes_params.ylim is None:
+                ylim = data_axes_params.ylim
+            else:
+                ylim = axes_params.ylim
+
+        # TODO 0.23: this needs to work together with normalisation, maybe this
+        # should in fact live inside of plot_timeseries instead of here?
+        # This adjust y_limits in case the graphs are offset from each other.
+        y_offset = 0
+        if axes_params.y_offset is not None:
+            y_offset = axes_params.y_offset
+            ylim_adjustment = y_offset * len(plot_modality_names)
+            if y_offset > 0:
+                ylim = (ylim[0], ylim[1] + ylim_adjustment)
+            else:
+                ylim = (ylim[0] + ylim_adjustment, ylim[1])
+
+        if axes_params.colors_in_sequence:
+            colors = get_colors_in_sequence(len(plot_modality_names))
+        else:
+            colors = None
+        for i, name in enumerate(plot_modality_names):
+            modality = self.current.modalities[name]
+            plot_timeseries(
+                self.data_axes[axes_number],
+                modality.data,
+                modality.timevector - zero_offset,
+                self.xlim,
+                ylim=ylim,
+                color=colors[i],
+                linestyle=(0, (i + 1, i + 1)),
+                normalise=axes_params.normalisation,
+                y_offset=i * y_offset,
+                label=format_legend(
+                    modality=modality,
+                    index=i,
+                    format_strings=axes_params.modality_names
+                )
+            )
+            if axes_params.mark_peaks:
+                mark_peaks(self.data_axes[axes_number],
+                           modality,
+                           self.xlim,
+                           display_prominence_values=True,
+                           time_offset=zero_offset)
+            self.data_axes[axes_number].set_ylabel(axes_name)
+
+        if axes_params.legend:
+            self.data_axes[axes_number].legend(
+                loc='upper left',
+            )
+
+    def draw_ultra_frame(
+        self,
+        recording: Recording,
+        image_type: GuiImageType
+    ) -> None:
+        """
+        Draw the requested ultrasound frame into the secondary canvas.
+
+        Parameters
+        ----------
+        current_recording : Recording
+            The current recording containing the ultrasound data.
+        image_type : GuiImageType
+            The type of image (e.g. MEAN_IMAGE, RAW_FRAME) to display.
+        """
+        # Display mean image if asked or if there is no selection cursor.
+        if 'RawUltrasound' not in self.current.modalities:
+            return
+
+        if (
+            (
+                'frame_selection_index' not in self.current.annotations or
+                recording.annotations['frame_selection_index'] == -1
+            )
+            or image_type == GuiImageType.MEAN_IMAGE
+        ):
+            self.action_export_ultrasound_frame.setEnabled(False)
+            self.ultra_axes.clear()
+            image_name = 'AggregateImage mean on RawUltrasound'
+            if image_name in self.current.statistics:
+                stat = self.current.statistics[image_name]
+                image = stat.data
+                self.ultra_axes.imshow(
+                    image, interpolation='nearest', cmap='gray',
+                    extent=(-image.shape[1] / 2 - .5, image.shape[1] / 2 + .5,
+                            -.5, image.shape[0] + .5))
+        # Display either raw or interpolated ultrasound if asked
+        elif (
+            'frame_selection_index' in self.current.annotations and
+            self.current.annotations['frame_selection_index'] >= 0
+        ):
+            self.action_export_ultrasound_frame.setEnabled(True)
+            self.ultra_axes.clear()
+            index = self.current.annotations['frame_selection_index']
+
+            ultrasound = self.current.modalities['RawUltrasound']
+            if self.image_type == GuiImageType.FRAME:
+                image = ultrasound.interpolated_image(index)
+            elif self.image_type == GuiImageType.RAW_FRAME:
+                image = ultrasound.raw_image(index)
+
+            self.ultra_axes.imshow(
+                image, interpolation='nearest', cmap='gray',
+                extent=(-image.shape[1] / 2 - .5, image.shape[1] / 2 + .5,
+                        -.5, image.shape[0] + .5))
+
+            # TODO 0.24: implement these
+            if self.gui_config.display_image_info:
+                # image time, image index
+                pass
+            if self.gui_config.display_curve_values:
+                # curve values at intersections
+                pass
+
+            # if self.image_type == GuiImageType.FRAME:
+            #     self.kymography_clicker = clicker(
+            #         ax=self.ultra_axes,
+            #         classes=["event"],
+            #         markers=["x"],
+            #         linestyle="--")
+            #     self.kymography_clicker.on_point_added(self.point_added_cb)
+                # self.kymography_clicker.on_point_removed(
+                #     self.point_removed_cb
+                # )
+
+            if (self.image_type == GuiImageType.FRAME
+                    and 'Splines' in self.current.modalities):
+                splines = self.current.modalities['Splines']
+                index = self.current.annotations['frame_selection_index']
+                ultra = self.current.modalities['RawUltrasound']
+                timestamp = ultra.timevector[index]
+
+                spline_index = np.argmin(
+                    np.abs(splines.timevector - timestamp))
+
+                # TODO 1.0: move this to reading splines/end of loading and
+                # make the system warn the user when there is a creeping
+                # discrepancy. also make it an integration test where
+                # spline_test_token1 gets run and triggers this
+                # ic(splines.timevector)
+                # ic(ultra.timevector[:len(splines.timevector)])
+                # time_diff = splines.timevector - \
+                #     ultra.timevector[:len(splines.timevector)]
+                # ic(np.diff(time_diff, n=1))
+                # ic(np.max(np.abs(np.diff(time_diff, n=1))))
+
+                epsilon = max((self.data_config.epsilon,
+                               splines.time_precision))
+                min_difference = abs(
+                    splines.timevector[spline_index] - timestamp)
+                # maybe this instead when loading data
+                # str(number)[::-1].find('.') -> precision
+
+                # ic(epsilon, splines.timevector[spline_index] - timestamp)
+                # ic(splines.timevector[spline_index], timestamp)
+                if min_difference > epsilon:
+                    _logger.info("Splines out of synch in %s.",
+                                 self.current.basename)
+                    _logger.info("Minimal difference: %f, epsilon: %f",
+                                 min_difference, epsilon)
+
+                spline_config = self.session.metadata.spline_config
+                if spline_config.data_config:
+                    limits = spline_config.data_config.ignore_points
+                    plot_spline(self.ultra_axes,
+                                splines.cartesian_spline(spline_index),
+                                limits=limits)
+                else:
+                    plot_spline(self.ultra_axes,
+                                splines.cartesian_spline(spline_index))
+            else:
+                _logger.info("No splines")
+        self.ultra_canvas.draw_idle()
+
+    def draw_raw_ultra_frame(
+        self,
+        recording: Recording,
+        image_type: GuiImageType
+    ) -> None:
+        """
+        Display a raw ultrasound frame.
+        """
+        if recording.annotations['frame_selection_index'] > -1:
+            self.action_export_ultrasound_frame.setEnabled(True)
+            ind = recording.annotations['frame_selection_index']
+            array = recording.modalities['RawUltrasound'].data[ind, :, :]
+        else:
+            self.action_export_ultrasound_frame.setEnabled(False)
+            if recording.statistics['Aggregate mean on RawUltrasound']:
+                array = recording.modalities[
+                    'Aggregate mean on RawUltrasound'].data
+            else:
+                array = recording.modalities['RawUltrasound'].data[1, :, :]
+        array = np.transpose(array)
+        array = np.flip(array, 0).copy()
+        array = array.astype(np.int8)
+        self.ultra_axes.imshow(array, interpolation='nearest', cmap='gray')
+        self.ultra_canvas.draw_idle()
+
+    def update_multicursor(self) -> None:
+        """Recreate the MultiCursor and tracking cursors after drawing."""
+        self.multicursor = MultiCursor(
+            self.canvas,
+            axes=self.data_axes + self.tier_axes,
+            color='deepskyblue',
+            linestyle="--",
+            lw=1
+        )
+        self.cursor_lines = []
+        for ax in self.data_axes + self.tier_axes:
+            line = ax.axvline(x=0, color='red', linestyle='-', visible=False)
+            self.cursor_lines.append(line)
+
+    def update_playback_cursor(self, current_time: float) -> None:
+        """
+        Move the tracking cursor lines to the specified time.
+
+        Parameters
+        ----------
+        current_time : float
+            The current playback position in seconds.
+        """
+        for line in self.cursor_lines:
+            line.set_xdata([current_time, current_time])
+            line.set_visible(True)
+
+        self.canvas.draw_idle()
+
+    def hide_playback_cursor(self) -> None:
+        """Hide the tracking cursor lines on all axes."""
+        for line in self.cursor_lines:
+            line.set_visible(False)
+        self.canvas.draw_idle()

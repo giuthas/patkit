@@ -39,15 +39,11 @@ import sys
 from contextlib import closing
 from copy import deepcopy
 from pathlib import Path
-import time
 
 import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 import numpy as np
 
-from matplotlib.figure import Figure
-from matplotlib.widgets import MultiCursor
 
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import (
@@ -64,8 +60,6 @@ from PyQt6.QtWidgets import (
 )
 from qbstyles import mpl_style
 
-import sounddevice
-
 from patkit.configuration import Configuration
 from patkit.constants import (
     AnnotatorMode, ExerciseMode, GuiColorScheme, GuiImageType, OpenPathType
@@ -78,22 +72,13 @@ from patkit.export import (
     export_ultrasound_frame_and_meta,
 )
 from patkit.gui import (
-    BoundaryAnimator, ImageSaveDialog, ListSaveDialog,
-    ListSelectionDialog, ReplaceDialog, UiMainWindow,
+    AudioPlayer,
+    ImageSaveDialog, ListSaveDialog,
+    ListSelectionDialog, PlotController,
+    ReplaceDialog, UiMainWindow,
 )
 from patkit.initialise import initialise_config, initialise_patkit
 from patkit.path_resolution import get_manifest_scenarios, resolve_open_path
-from patkit.plot_and_publish import (
-    format_legend,
-    get_colors_in_sequence,
-    mark_peaks,
-    plot_patgrid_tier,
-    plot_spectrogram,
-    plot_spline,
-    plot_timeseries,
-    plot_wav,
-)
-from patkit.plot_and_publish.plot import plot_spectrogram2
 from patkit.save_and_load import (
     load_exercise, save_recording_session
 )
@@ -236,23 +221,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.next_button.clicked.connect(self.next)
         self.go_to_line_edit.returnPressed.connect(self.go_to_callback)
 
-        # Audio playback
-        # TODO 1.0 or later: these could be migrated to their own
-        # class along the lines of self.player.play etc. But that will need
-        # access to the cursor state and current sound etc.
-        self.current_audio_frame = 0
-        self.audio_start_time = None
-        self.current_audio_device = sounddevice.default.device
-        # TODO 0.23: use sounddevice.query_devices() to create a selection menu
-        # for audio output
-        self.play_controls.play.connect(self.play)
-        self.play_controls.pause.connect(self.pause)
-        self.play_controls.stop.connect(self.stop)
-        self.play_controls.rewind.connect(self.rewind)
-        self.play_controls.change_volume.connect(self.set_volume)
-        # play_controls.change_muting.connect(self.m_audioOutput.setMuted)
-        # play_controls.change_rate.connect(self.m_player.setPlaybackRate)
-
         # PD categories
         # TODO 1.0: these could be optional instead of the below ones
         # self.categoryRB_1.toggled.connect(self.pd_category_cb)
@@ -271,23 +239,20 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         #     self.positionRB_3.text(): self.positionRB_3
         # }
 
-        # plt.style.use('dark_background')
+        # Audio playback setup
+        self.audio_player = AudioPlayer(self)
+        self.play_controls.play.connect(self.audio_player.play)
+        self.play_controls.pause.connect(self.audio_player.pause)
+        self.play_controls.stop.connect(self.audio_player.stop)
+        self.play_controls.rewind.connect(self.rewind)
+
         plt.style.use('tableau-colorblind10')
-        self.figure = Figure(layout="tight")
-        self.canvas = FigureCanvas(self.figure)
-        self.mplWindowVerticalLayout.addWidget(self.canvas)
-        self.data_axes = []
-        self.tier_axes = []
         self.animators = []
 
         self.shift_is_held = False
         self.ctrl_is_held = False
         self.alt_is_held = False
         self.alt_gr_is_held = False
-        # self.cid_key_press = self.figure.canvas.mpl_connect(
-        #     'key_press_event', self.on_key_press)
-        # self.cid_key_release = self.figure.canvas.mpl_connect(
-        #     'key_release_event', self.on_key_release)
 
         matplotlib.rcParams.update(
             {'font.size': self.gui_config.default_font_size}
@@ -295,61 +260,28 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.xlim = xlim
 
-        height_ratios = [self.gui_config.data_and_tier_height_ratios.data_axes,
-                         self.gui_config.data_and_tier_height_ratios.tier_axes]
-        self.main_grid_spec = self.figure.add_gridspec(
-            nrows=2,
-            ncols=1,
-            hspace=0,
-            wspace=0,
-            height_ratios=height_ratios,
-        )
-        self.tier_grid_spec = None
+        # Plot controller setup
+        self.plot_controller = PlotController(self)
 
-        number_of_data_axes = self.gui_config.number_of_data_axes
-        self.data_grid_spec = self.main_grid_spec[0].subgridspec(
-            number_of_data_axes, 1, hspace=0, wspace=0)
+        # Add the canvases to their respective Qt Layouts
+        self.mplWindowVerticalLayout.addWidget(self.plot_controller.canvas)
+        self.verticalLayout_6.addWidget(self.plot_controller.ultra_canvas)
 
-        data_axes_params = None
-        if self.gui_config.general_axes_params:
-            general_axes_params = self.gui_config.general_axes_params
-            if general_axes_params is not None:
-                data_axes_params = general_axes_params
-
-        for i, axes_name in enumerate(self.gui_config.data_axes):
-            # There used to be a 'global' axes which has been moved to
-            # 'general_axes_params' this may still cause problems with old
-            # config files and should be fixed in them, not here.
-            sharex = False
-            if self.gui_config.data_axes[axes_name].sharex:
-                sharex = self.gui_config.data_axes[axes_name].sharex
-            elif (data_axes_params is not None and
-                  data_axes_params.sharex is not None):
-                sharex = data_axes_params.sharex
-
-            if i != 0 and sharex:
-                self.data_axes.append(
-                    self.figure.add_subplot(
-                        self.data_grid_spec[i],
-                        sharex=self.data_axes[0]))
-            else:
-                self.data_axes.append(
-                    self.figure.add_subplot(
-                        self.data_grid_spec[i]))
-
-        self.ultra_fig = Figure()
-        self.ultra_canvas = FigureCanvas(self.ultra_fig)
-        self.verticalLayout_6.addWidget(self.ultra_canvas)
-        self.ultra_axes = self.ultra_fig.add_axes((0, 0, 1, 1))
+        # Connect tracking events
+        self.audio_player.position_changed.connect(
+            self.plot_controller.update_playback_cursor)
+        self.audio_player.playback_stopped.connect(
+            self.plot_controller.hide_playback_cursor)
+        self.audio_player.playback_paused.connect(
+            self._sync_selected_time)
 
         if not self.current.excluded:
-            self.draw_plots()
+            self._set_audio_for_player()
+            self.update()  # Let the update method trigger the initial draw
         else:
             self.display_exclusion()
 
-        self.figure.align_ylabels()
-
-        self.multicursor = None
+        self.plot_controller.figure.align_ylabels()
 
         self.mode_selection_changed(self.mode.value)
         self.image_updater()
@@ -441,35 +373,63 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         if 'RawUltrasound' in self.current.modalities:
             self.current.modalities['RawUltrasound'].data = None
 
+    def _set_audio_for_player(self) -> None:
+        """Pass the current audio data to the audio player."""
+        if 'MonoAudio' in self.current.modalities:
+            mono_audio = self.current['MonoAudio'].modality_data
+            self.audio_player.set_audio(
+                audio_data=mono_audio.data,
+                sampling_rate=mono_audio.sampling_rate
+            )
+
+    def _sync_selected_time(self, current_position: float) -> None:
+        """
+        Sync the global annotation state with the audio player's position.
+
+        Parameters
+        ----------
+        current_position : float
+            The time in seconds where playback was paused.
+        """
+        self.current.annotations['selected_time'] = current_position
+        self.update()
+
     def clear_axes(self):
         """Clear data axes of this annotator."""
         for axes in self.data_axes:
             axes.cla()
 
-    def update(self):
-        """
-        Updates the graphs but not the buttons.
-        """
+    def update(self) -> None:
+        """Updates the graphs but not the buttons."""
         if (
-            self.mode is AnnotatorMode.EXERCISE
-            and self.exercise_mode is ExerciseMode.ANSWER
+            self.mode is AnnotatorMode.EXERCISE and
+            self.exercise_mode is ExerciseMode.ANSWER
         ):
             self.patgrid = self.exercise.current_answer[self.index]
         else:
             self.patgrid = self.current.patgrid
 
-        self.clear_axes()
-        self.draw_plots()
-        self.multicursor = MultiCursor(
-            self.canvas,
-            axes=self.data_axes + self.tier_axes,
-            color='deepskyblue', linestyle="--", lw=1)
-        # TODO 0.23: select the color based on dark/light mode.
-        self.figure.canvas.draw_idle()
+        self.plot_controller.clear_data_axes()
+
+        self.plot_controller.draw_plots(
+            current_recording=self.current,
+            patgrid=self.patgrid,
+            gui_config=self.gui_config,
+            xlim=self.xlim,
+            mode=self.mode,
+            exercise_mode=self.exercise_mode
+        )
+
+        self.plot_controller.update_multicursor()
+        self.plot_controller.canvas.draw_idle()
 
         if self.display_tongue:
             _logger.debug("Drawing ultra frame in update")
-            self.draw_ultra_frame()
+            self.plot_controller.draw_ultra_frame(
+                current_recording=self.current,
+                image_type=self.image_type
+            )
+            self.plot_controller.ultra_canvas.draw_idle()
 
     def update_ui(self):
         """
@@ -492,483 +452,12 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         # else:
         #     self.action_select_kymography_line.setEnabled(False)
 
-    def plot_modality_axes(
-        self,
-        axes_number: int,
-        axes_name: str,
-        zero_offset: float = 0,
-        ylim: list[float, float] | None = None,
-    ) -> None:
-        """
-        Plot modalities on a data_axes.
-
-        Parameters
-        ----------
-        axes_number : int
-            Which axes, counting from top.
-        axes_name : str
-            What should the axes be called. This will be the y_label.
-        zero_offset : Optional[float], optional
-            Where do we set 0 in time in relation to the audio, by default 0
-        ylim : Optional[list[float, float]], optional
-            y limits, by default None
-        """
-        axes_params = self.gui_config.data_axes[axes_name]
-        data_axes_params = self.gui_config.general_axes_params.data_axes
-        plot_modality_names = axes_params.modalities
-
-        if ylim is None:
-            if data_axes_params is None and axes_params is None:
-                ylim = None  # (-0.075, 1.075)
-            elif data_axes_params.ylim is None and axes_params.ylim is None:
-                if (
-                    not data_axes_params.auto_ylim and
-                    not axes_params.auto_ylim
-                ):
-                    ylim = None  # (-0.075, 1.075)
-                else:
-                    ylim = None
-            elif axes_params.ylim is None:
-                ylim = data_axes_params.ylim
-            else:
-                ylim = axes_params.ylim
-
-        # TODO 0.23: this needs to work together with normalisation, maybe this
-        # should in fact live inside of plot_timeseries instead of here?
-        # This adjust y_limits in case the graphs are offset from each other.
-        y_offset = 0
-        if axes_params.y_offset is not None:
-            y_offset = axes_params.y_offset
-            ylim_adjustment = y_offset * len(plot_modality_names)
-            if y_offset > 0:
-                ylim = (ylim[0], ylim[1] + ylim_adjustment)
-            else:
-                ylim = (ylim[0] + ylim_adjustment, ylim[1])
-
-        if axes_params.colors_in_sequence:
-            colors = get_colors_in_sequence(len(plot_modality_names))
-        else:
-            colors = None
-        for i, name in enumerate(plot_modality_names):
-            modality = self.current.modalities[name]
-            plot_timeseries(
-                self.data_axes[axes_number],
-                modality.data,
-                modality.timevector - zero_offset,
-                self.xlim,
-                ylim=ylim,
-                color=colors[i],
-                linestyle=(0, (i + 1, i + 1)),
-                normalise=axes_params.normalisation,
-                y_offset=i * y_offset,
-                label=format_legend(
-                    modality=modality,
-                    index=i,
-                    format_strings=axes_params.modality_names
-                )
-            )
-            if axes_params.mark_peaks:
-                mark_peaks(self.data_axes[axes_number],
-                           modality,
-                           self.xlim,
-                           display_prominence_values=True,
-                           time_offset=zero_offset)
-            self.data_axes[axes_number].set_ylabel(axes_name)
-
-        if axes_params.legend:
-            self.data_axes[axes_number].legend(
-                loc='upper left',
-            )
-
     def display_exclusion(self):
         """
         Updates title and graphs to show this Recording is excluded.
         """
         self.data_axes[0].set_title(
             self._get_title() + "\nNOTE: This recording has been excluded.")
-
-    def draw_plots(self):
-        """
-        Updates title and graphs. Called by self.update().
-        """
-        if self.current.excluded:
-            self.display_exclusion()
-
-        if 'MonoAudio' in self.current.modalities:
-            self.data_axes[0].set_title(self._get_long_title())
-        else:
-            self.data_axes[0].set_title(
-                self._get_long_title() + "\nNOTE: Audio missing.")
-            return
-
-        for axes in self.tier_axes:
-            axes.remove()
-        self.tier_axes = []
-        # if self.current.patgrid:
-        if self.patgrid:
-            nro_tiers = len(self.patgrid)
-            self.tier_grid_spec = self.main_grid_spec[1].subgridspec(
-                nro_tiers, 1, hspace=0, wspace=0)
-            for axes_counter, tier in enumerate(self.patgrid):
-                axes = self.figure.add_subplot(
-                    self.tier_grid_spec[axes_counter],
-                    sharex=self.data_axes[0])
-                axes.set_yticks([])
-                self.tier_axes.append(axes)
-
-        for axes in self.data_axes:
-            axes.xaxis.set_tick_params(bottom=False, labelbottom=False)
-        self.data_axes[0].xaxis.set_tick_params(top=True, labeltop=True)
-
-        for axes in self.tier_axes[:-1]:
-            axes.xaxis.set_tick_params(bottom=False, labelbottom=False)
-
-        if 'MonoAudio' not in self.current.modalities:
-            return
-
-        audio = self.current.modalities['MonoAudio']
-        if audio.go_signal is None:
-            stimulus_onset = 0
-        else:
-            stimulus_onset = audio.go_signal
-
-        wav = audio.data
-        wav_time = audio.timevector - stimulus_onset
-
-        if self.gui_config.xlim is not None:
-            self.xlim = self.gui_config.xlim
-        elif self.gui_config.auto_xlim:
-            x_minimums = []
-            x_maximums = []
-            modalities_to_check = self.gui_config.plotted_modality_names()
-            modalities_to_check.add("MonoAudio")
-            for name in modalities_to_check:
-                if name in self.current:
-                    x_minimums.append(
-                        self.current[name].timevector[0] - stimulus_onset)
-                    x_maximums.append(
-                        self.current[name].timevector[-1] - stimulus_onset)
-            self.xlim = (np.min(x_minimums)-.05, np.max(x_maximums)+.05)
-
-        axes_counter = 0
-        for axes_name in self.gui_config.data_axes:
-            self.data_axes[axes_counter].grid(False)
-            match axes_name:
-                case "spectrogram":
-                    if self.gui_config.data_axes[axes_name].ylim is not None:
-                        ylim = self.gui_config.data_axes[axes_name].ylim
-                    else:
-                        ylim = (0, 10500)
-                    plot_spectrogram(self.data_axes[axes_counter],
-                                     waveform=wav,
-                                     ylim=ylim,
-                                     sampling_frequency=audio.sampling_rate,
-                                     extent_on_x=(wav_time[0], wav_time[-1]))
-                case "spectrogram2":
-                    if self.gui_config.data_axes[axes_name].ylim is not None:
-                        ylim = self.gui_config.data_axes[axes_name].ylim
-                    else:
-                        ylim = (0, 10500)
-                    plot_spectrogram2(
-                        self.data_axes[axes_counter],
-                        waveform=wav,
-                        ylim=ylim,
-                        sampling_frequency=audio.sampling_rate,
-                        extent_on_x=(wav_time[0], wav_time[-1]),
-                        mode=self.gui_config.color_scheme
-                    )
-                case "wav":
-                    plot_wav(
-                        ax=self.data_axes[axes_counter],
-                        waveform=wav,
-                        wav_time=wav_time,
-                        xlim=self.xlim,
-                        mode=self.gui_config.color_scheme
-                    )
-                case _:
-                    if not self.current.excluded:
-                        self.plot_modality_axes(
-                            axes_number=axes_counter,
-                            axes_name=axes_name,
-                            zero_offset=stimulus_onset,
-                            ylim=self.gui_config.data_axes[axes_name].ylim,
-                        )
-            axes_counter += 1
-
-        self.animators = []
-        iterator = zip(self.patgrid.items(),
-                       self.tier_axes, strict=True)
-        for (name, tier), axis in iterator:
-            axis.grid(False)
-            boundaries_by_axis = []
-
-            boundary_set, _ = plot_patgrid_tier(
-                axes=axis,
-                tier=tier,
-                time_offset=stimulus_onset,
-                text_y=.5,
-                xlim=self.xlim,
-            )
-            boundaries_by_axis.append(boundary_set)
-            axis.set_ylabel(
-                name, rotation=0, horizontalalignment="right",
-                verticalalignment="center")
-            axis.set_xlim(self.xlim)
-            if name in self.gui_config.pervasive_tiers:
-                for data_axis in self.data_axes:
-                    boundary_set = plot_patgrid_tier(
-                        axes=data_axis,
-                        tier=tier,
-                        time_offset=stimulus_onset,
-                        draw_text=False)[0]
-                    boundaries_by_axis.append(boundary_set)
-
-            # Change rows to be individual boundaries instead of axis. This
-            # makes it possible to create animators for each boundary as
-            # represented by multiple lines on different axes.
-            boundaries_by_boundary = list(map(list, zip(*boundaries_by_axis)))
-
-            tier_limits = [
-                self.xlim[0] + stimulus_onset, self.xlim[1] + stimulus_onset]
-            tier_in_limits = tier.intersects(xlim=tier_limits)
-            if (
-                self.mode is AnnotatorMode.ANALYSE or
-                self.exercise_mode is ExerciseMode.ANSWER
-            ):
-                for boundaries, interval in zip(
-                        boundaries_by_boundary, tier_in_limits, strict=True):
-                    animator = BoundaryAnimator(
-                        main_window=self,
-                        boundaries=boundaries,
-                        segment=interval,
-                        epsilon=self.data_config.epsilon,
-                        time_offset=stimulus_onset)
-                    animator.connect()
-                    self.animators.append(animator)
-        if self.tier_axes:
-            self.tier_axes[-1].set_xlabel("Time (s), go-signal at 0 s.")
-
-        if self.current.annotations['selected_time'] > -1:
-            old_ticks = self.data_axes[0].get_xticks()
-            if len(old_ticks) > 2:
-                self.data_axes[0].set_xticks(
-                    [
-                        old_ticks[1],
-                        self.current.annotations['selected_time'],
-                        old_ticks[-2],
-                    ]
-                )
-            else:
-                self.data_axes[0].set_xticks(
-                    [
-                        old_ticks[0],
-                        self.current.annotations['selected_time'],
-                        old_ticks[-1],
-                    ]
-                )
-
-            xtick_labels = self.data_axes[0].get_xticklabels()
-            xtick_labels[1].set_color(color="deepskyblue")
-            xtick_labels = self.tier_axes[-1].get_xticklabels()
-            xtick_labels[1].set_color(color="deepskyblue")
-            for axes in self.data_axes:
-                # Save ylim to restore after annotation lines have been drawn.
-                # This is done because at least spectrogram tends to go weird
-                # otherwise.
-                current_ylim = axes.get_ylim()
-                axes.axvline(x=self.current.annotations['selected_time'],
-                             linestyle=':', color="deepskyblue", lw=1)
-                lines = axes.get_lines()
-                colors = []
-                yticks = axes.get_yticks()
-                for line in lines:
-                    if len(line.get_xdata()) <= 2:
-                        continue
-                    index = np.argmin(np.abs(
-                        line.get_xdata() -
-                        self.current.annotations['selected_time']
-                    ))
-                    y_value = line.get_ydata()[index]
-                    color = line.get_color()
-                    axes.axhline(y=y_value,
-                                 linestyle=':', color=color, lw=1)
-                    yticks = np.append(yticks, y_value)
-                    colors.append(color)
-                axes.set_yticks(yticks)
-
-                labels = axes.get_yticklabels()
-                ytick_lines = axes.yaxis.get_ticklines()
-                for i, color in enumerate(colors):
-                    ytick_lines[i*2+4].set_color(color)
-                    ytick_lines[i*2+5].set_color(color)
-                    labels[i+2].set_color(color)
-                axes.set_ylim(current_ylim)
-        else:
-            old_ticks = self.data_axes[0].get_xticks()
-            if len(old_ticks) > 2:
-                self.data_axes[0].set_xticks(
-                    [
-                        old_ticks[1],
-                        old_ticks[-2]
-                    ]
-                )
-
-        if self.current.annotations['selected_frequency'] > -1:
-            for i, name in enumerate(self.gui_config.data_axes):
-                if "spectrogram" in name:
-                    axes = self.data_axes[i]
-                    yticks = axes.get_yticks()
-                    axes.set_yticks(np.append(
-                        yticks,
-                        self.current.annotations['selected_frequency']
-                    ))
-                    axes.axhline(
-                        y=self.current.annotations['selected_frequency'],
-                        linestyle=':', color="deepskyblue", lw=1
-                    )
-                    labels = axes.get_yticklabels()
-                    labels[2].set_color(color="deepskyblue")
-                    ytick_lines = axes.yaxis.get_ticklines()
-                    ytick_lines[4].set_color(color="deepskyblue")
-                    ytick_lines[5].set_color(color="deepskyblue")
-
-            for axes in self.tier_axes:
-                axes.axvline(x=self.current.annotations['selected_time'],
-                             linestyle=':', color="deepskyblue", lw=1)
-
-    def draw_ultra_frame(self):
-        """
-        Display an already interpolated ultrasound frame.
-        """
-        # Display mean image if asked or if there is no selection cursor.
-        if 'RawUltrasound' not in self.current.modalities:
-            return
-
-        if (
-            (
-                'frame_selection_index' not in self.current.annotations or
-                self.current.annotations['frame_selection_index'] == -1
-            )
-            or self.image_type == GuiImageType.MEAN_IMAGE
-        ):
-            self.action_export_ultrasound_frame.setEnabled(False)
-            self.ultra_axes.clear()
-            image_name = 'AggregateImage mean on RawUltrasound'
-            if image_name in self.current.statistics:
-                stat = self.current.statistics[image_name]
-                image = stat.data
-                self.ultra_axes.imshow(
-                    image, interpolation='nearest', cmap='gray',
-                    extent=(-image.shape[1] / 2 - .5, image.shape[1] / 2 + .5,
-                            -.5, image.shape[0] + .5))
-        # Display either raw or interpolated ultrasound if asked
-        elif (
-            'frame_selection_index' in self.current.annotations and
-            self.current.annotations['frame_selection_index'] >= 0
-        ):
-            self.action_export_ultrasound_frame.setEnabled(True)
-            self.ultra_axes.clear()
-            index = self.current.annotations['frame_selection_index']
-
-            ultrasound = self.current.modalities['RawUltrasound']
-            if self.image_type == GuiImageType.FRAME:
-                image = ultrasound.interpolated_image(index)
-            elif self.image_type == GuiImageType.RAW_FRAME:
-                image = ultrasound.raw_image(index)
-
-            self.ultra_axes.imshow(
-                image, interpolation='nearest', cmap='gray',
-                extent=(-image.shape[1] / 2 - .5, image.shape[1] / 2 + .5,
-                        -.5, image.shape[0] + .5))
-
-            # TODO 0.24: implement these
-            if self.gui_config.display_image_info:
-                # image time, image index
-                pass
-            if self.gui_config.display_curve_values:
-                # curve values at intersections
-                pass
-
-            # if self.image_type == GuiImageType.FRAME:
-            #     self.kymography_clicker = clicker(
-            #         ax=self.ultra_axes,
-            #         classes=["event"],
-            #         markers=["x"],
-            #         linestyle="--")
-            #     self.kymography_clicker.on_point_added(self.point_added_cb)
-                # self.kymography_clicker.on_point_removed(
-                #     self.point_removed_cb
-                # )
-
-            if (self.image_type == GuiImageType.FRAME
-                    and 'Splines' in self.current.modalities):
-                splines = self.current.modalities['Splines']
-                index = self.current.annotations['frame_selection_index']
-                ultra = self.current.modalities['RawUltrasound']
-                timestamp = ultra.timevector[index]
-
-                spline_index = np.argmin(
-                    np.abs(splines.timevector - timestamp))
-
-                # TODO 1.0: move this to reading splines/end of loading and
-                # make the system warn the user when there is a creeping
-                # discrepancy. also make it an integration test where
-                # spline_test_token1 gets run and triggers this
-                # ic(splines.timevector)
-                # ic(ultra.timevector[:len(splines.timevector)])
-                # time_diff = splines.timevector - \
-                #     ultra.timevector[:len(splines.timevector)]
-                # ic(np.diff(time_diff, n=1))
-                # ic(np.max(np.abs(np.diff(time_diff, n=1))))
-
-                epsilon = max((self.data_config.epsilon,
-                               splines.time_precision))
-                min_difference = abs(
-                    splines.timevector[spline_index] - timestamp)
-                # maybe this instead when loading data
-                # str(number)[::-1].find('.') -> precision
-
-                # ic(epsilon, splines.timevector[spline_index] - timestamp)
-                # ic(splines.timevector[spline_index], timestamp)
-                if min_difference > epsilon:
-                    _logger.info("Splines out of synch in %s.",
-                                 self.current.basename)
-                    _logger.info("Minimal difference: %f, epsilon: %f",
-                                 min_difference, epsilon)
-
-                spline_config = self.session.metadata.spline_config
-                if spline_config.data_config:
-                    limits = spline_config.data_config.ignore_points
-                    plot_spline(self.ultra_axes,
-                                splines.cartesian_spline(spline_index),
-                                limits=limits)
-                else:
-                    plot_spline(self.ultra_axes,
-                                splines.cartesian_spline(spline_index))
-            else:
-                _logger.info("No splines")
-        self.ultra_canvas.draw_idle()
-
-    def draw_raw_ultra_frame(self):
-        """
-        Interpolate and display a raw ultrasound frame.
-        """
-        if self.current.annotations['frame_selection_index'] > -1:
-            self.action_export_ultrasound_frame.setEnabled(True)
-            ind = self.current.annotations['frame_selection_index']
-            array = self.current.modalities['RawUltrasound'].data[ind, :, :]
-        else:
-            self.action_export_ultrasound_frame.setEnabled(False)
-            if self.current.statistics['Aggregate mean on RawUltrasound']:
-                array = self.current.modalities[
-                    'Aggregate mean on RawUltrasound'].data
-            else:
-                array = self.current.modalities['RawUltrasound'].data[1, :, :]
-        array = np.transpose(array)
-        array = np.flip(array, 0).copy()
-        array = array.astype(np.int8)
-        self.ultra_axes.imshow(array, interpolation='nearest', cmap='gray')
-        self.ultra_canvas.draw_idle()
 
     def next(self):
         """
@@ -978,8 +467,45 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         if self.index < self.max_index - 1:
             self._release_modality_memory()
             self.index += 1
+            self._set_audio_for_player()
             self.update()
             self.update_ui()
+
+    def prev(self):
+        """
+        Callback function for the Previous button.
+        Decreases cursor index, updates the view.
+        """
+        if self.index > 0:
+            self._release_modality_memory()
+            self.index -= 1
+            self._set_audio_for_player()
+            self.update()
+            self.update_ui()
+
+    def go_to_recording(self, index: int):
+        """
+        Move to recording at index.
+
+        Parameters
+        ----------
+        index : int
+            Index of recording to move to.
+        """
+        self._release_modality_memory()
+        self.index = index
+        self._set_audio_for_player()
+        self.update()
+        self.update_ui()
+
+    def go_to_callback(self):
+        """
+        Go to a recording specified in the goLineEdit text input field.
+        """
+        index_to_jump_to = int(self.go_to_line_edit.text()) - 1
+
+        if 0 <= index_to_jump_to < len(self.session):
+            self.go_to_recording(index=index_to_jump_to)
 
     def _update_pd_onset(self):
         audio = self.current.modalities['MonoAudio']
@@ -1029,39 +555,15 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self.update()
             self.update_ui()
 
-    def prev(self):
+    def rewind(self) -> None:
         """
-        Callback function for the Previous button.
-        Decreases cursor index, updates the view.
+        Move the selection cursor to beginning of the recording.
         """
-        if self.index > 0:
-            self._release_modality_memory()
-            self.index -= 1
-            self.update()
-            self.update_ui()
-
-    def go_to_callback(self):
-        """
-        Go to a recording specified in the goLineEdit text input field.
-        """
-        index_to_jump_to = int(self.go_to_line_edit.text()) - 1
-
-        if 0 <= index_to_jump_to < len(self.session):
-            self.go_to_recording(index=index_to_jump_to)
-
-    def go_to_recording(self, index: int):
-        """
-        Move to recording at index.
-
-        Parameters
-        ----------
-        index : int
-            Index of recording to move to.
-        """
-        self._release_modality_memory()
-        self.index = index
+        self.audio_player.stop()
+        if self.current.annotations['selected_time'] > -1:
+            new_cursor = self.current['MonoAudio'].modality_data.timevector[0]
+            self.current.annotations['selected_time'] = new_cursor
         self.update()
-        self.update_ui()
 
     def image_updater(self) -> None:
         """
@@ -1083,6 +585,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Quit the app.
         """
+        self.audio_player.clear_audio()
         QCoreApplication.quit()
 
     def open(self):
@@ -1870,64 +1373,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self.alt_gr_is_held
         )
         return not modifiers_pressed
-
-    def play(self) -> None:
-        """
-        Play the audio of the current recording.
-
-        Playing starts from the current selection cursor if any.
-        """
-        if 'MonoAudio' not in self.current:
-            print('No audio to play.')
-            print(list(self.current.keys()))
-            return
-
-        if self.current.annotations['selected_time'] > -1:
-            timevector = self.current['MonoAudio'].modality_data.timevector
-            selected_time = self.current.annotations['selected_time']
-            start_index = np.argwhere(timevector > selected_time)[0][0]
-            data = self.current['MonoAudio'].modality_data.data[start_index:]
-        else:
-            data = self.current['MonoAudio'].modality_data.data
-
-        # data = self.current['MonoAudio'].modality_data.data
-        sounddevice.play(
-            data=data,
-            samplerate=self.current['MonoAudio'].modality_data.sampling_rate,
-            device=self.current_audio_device,
-        )
-        self.audio_start_time = time.time()
-
-    def pause(self) -> None:
-        """
-        Pause playing audio.
-
-        Moves the selection cursor to the time when the playing was paused.
-        """
-        sounddevice.stop()
-        paused_time = time.time()
-        played_time = paused_time-self.audio_start_time
-        self.current.annotations['selected_time'] = played_time
-        self.update()
-
-    def stop(self) -> None:
-        """
-        Stop playing audio.
-        """
-        sounddevice.stop()
-        self.audio_start_time = None
-
-    def rewind(self) -> None:
-        """
-        Move the selection cursor to beginning of the recording.
-        """
-        if self.current.annotations['selected_time'] > -1:
-            new_cursor = self.current['MonoAudio'].modality_data.timevector[0]
-            self.current.annotations['selected_time'] = new_cursor
-        self.update()
-
-    def set_volume(self) -> None:
-        pass
 
 
 def run_annotator(
