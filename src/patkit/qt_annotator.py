@@ -40,8 +40,6 @@ from contextlib import closing
 from copy import deepcopy
 from pathlib import Path
 
-import matplotlib
-import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -246,22 +244,19 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.play_controls.stop.connect(self.audio_player.stop)
         self.play_controls.rewind.connect(self.rewind)
 
-        plt.style.use('tableau-colorblind10')
-        self.animators = []
-
         self.shift_is_held = False
         self.ctrl_is_held = False
         self.alt_is_held = False
         self.alt_gr_is_held = False
 
-        matplotlib.rcParams.update(
-            {'font.size': self.gui_config.default_font_size}
-        )
-
         self.xlim = xlim
 
         # Plot controller setup
-        self.plot_controller = PlotController(self)
+        self.plot_controller = PlotController(
+            data_config=self.data_config,
+            gui_config=self.gui_config,
+            parent=self
+        )
 
         # Add the canvases to their respective Qt Layouts
         self.mplWindowVerticalLayout.addWidget(self.plot_controller.canvas)
@@ -286,7 +281,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.mode_selection_changed(self.mode.value)
         self.image_updater()
         self.showMaximized()
-        # self.show()
         self.ultra_canvas.draw_idle()
         self.update()
 
@@ -409,24 +403,22 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         else:
             self.patgrid = self.current.patgrid
 
-        self.plot_controller.clear_data_axes()
-
+        self.plot_controller.clear_axes()
         self.plot_controller.draw_plots(
-            current_recording=self.current,
+            recording=self.current,
             patgrid=self.patgrid,
-            gui_config=self.gui_config,
             xlim=self.xlim,
             mode=self.mode,
-            exercise_mode=self.exercise_mode
+            exercise_mode=self.exercise_mode,
+            title=self._get_long_title(),
         )
-
         self.plot_controller.update_multicursor()
         self.plot_controller.canvas.draw_idle()
 
         if self.display_tongue:
             _logger.debug("Drawing ultra frame in update")
             self.plot_controller.draw_ultra_frame(
-                current_recording=self.current,
+                recording=self.current,
                 image_type=self.image_type
             )
             self.plot_controller.ultra_canvas.draw_idle()
@@ -656,7 +648,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.gui_config = config.gui_config
         self.gui_mode = self.gui_config.color_scheme
         self._update_color_mode()
-        plt.style.use('tableau-colorblind10')
 
         # Reset Core State Variables
         self.recordings = self.session.recordings

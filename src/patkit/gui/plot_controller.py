@@ -2,6 +2,8 @@
 
 import logging
 
+import matplotlib
+import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
@@ -10,7 +12,7 @@ import numpy as np
 from PyQt6 import QtWidgets
 
 from patkit.data_structures import Recording
-from patkit.configuration import GuiConfig
+from patkit.configuration import DataConfig, GuiConfig
 from patkit.constants import AnnotatorMode, ExerciseMode, GuiImageType
 from patkit.plot_and_publish import (
     format_legend,
@@ -39,18 +41,27 @@ class PlotController(QtWidgets.QWidget):
 
     Parameters
     ----------
+    data_config : DataConfig
+        The data configuration.
+    gui_config : GuiConfig
+        The GUI configuration.
     parent : QtWidgets.QWidget | None
         The parent Qt widget.
     """
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
+    def __init__(
+        self,
+        data_config: DataConfig,
+        gui_config: GuiConfig,
+        parent: QtWidgets.QWidget | None = None
+    ) -> None:
         super().__init__(parent)
 
-        # 1. Main Canvas Setup
+        # Main Canvas Setup
         self.figure = Figure(layout="tight")
         self.canvas = FigureCanvas(self.figure)
 
-        # 2. Ultrasound Canvas Setup
+        # Ultrasound Canvas Setup
         self.ultra_fig = Figure()
         self.ultra_canvas = FigureCanvas(self.ultra_fig)
         self.ultra_axes = self.ultra_fig.add_axes((0, 0, 1, 1))
@@ -64,21 +75,37 @@ class PlotController(QtWidgets.QWidget):
         self.tier_grid_spec = None
         self.data_grid_spec = None
 
-    def setup_axes(self, gui_config) -> None:
+        self.data_config = data_config
+        self.gui_config = gui_config
+        self.set_style(self.gui_config)
+
+    def set_style(self, gui_config: GuiConfig) -> None:
         """
-        Clear the figure and set up the required subplots.
+        Set/reset gui configuration.
 
         Parameters
         ----------
-        gui_config : Configuration
-            The GUI configuration containing axes layout requirements.
+        gui_config : GuiConfig
+            The GUI configuration.
+        """
+        self.gui_config = gui_config
+        matplotlib.rcParams.update(
+            {'font.size': self.gui_config.default_font_size}
+        )
+        plt.style.use('tableau-colorblind10')
+
+    def setup_axes(self) -> None:
+        """
+        Clear the figure and set up the required subplots.
         """
         self.figure.clear()
         self.data_axes = []
         self.tier_axes = []
 
-        height_ratios = [gui_config.data_and_tier_height_ratios.data_axes,
-                         gui_config.data_and_tier_height_ratios.tier_axes]
+        height_ratios = [
+            self.gui_config.data_and_tier_height_ratios.data_axes,
+            self.gui_config.data_and_tier_height_ratios.tier_axes
+        ]
         self.main_grid_spec = self.figure.add_gridspec(
             nrows=2,
             ncols=1,
@@ -87,19 +114,19 @@ class PlotController(QtWidgets.QWidget):
             height_ratios=height_ratios,
         )
 
-        number_of_data_axes = gui_config.number_of_data_axes
+        number_of_data_axes = self.gui_config.number_of_data_axes
         self.data_grid_spec = self.main_grid_spec[0].subgridspec(
             number_of_data_axes, 1, hspace=0, wspace=0)
 
         data_axes_params = None
-        if gui_config.general_axes_params:
-            if gui_config.general_axes_params is not None:
-                data_axes_params = gui_config.general_axes_params
+        if self.gui_config.general_axes_params:
+            if self.gui_config.general_axes_params is not None:
+                data_axes_params = self.gui_config.general_axes_params
 
-        for i, axes_name in enumerate(gui_config.data_axes):
+        for i, axes_name in enumerate(self.gui_config.data_axes):
             sharex = False
-            if gui_config.data_axes[axes_name].sharex:
-                sharex = gui_config.data_axes[axes_name].sharex
+            if self.gui_config.data_axes[axes_name].sharex:
+                sharex = self.gui_config.data_axes[axes_name].sharex
             elif (data_axes_params is not None and
                   data_axes_params.sharex is not None):
                 sharex = data_axes_params.sharex
@@ -115,19 +142,19 @@ class PlotController(QtWidgets.QWidget):
 
         self.canvas.draw_idle()
 
-    def clear_data_axes(self) -> None:
+    def clear_axes(self) -> None:
         """Clear all data axes."""
-        for axes in self.data_axes:
+        for axes in self.data_axes + self.tier_axes:
             axes.cla()
 
     def draw_plots(
         self,
         recording: Recording,
         patgrid: list,
-        gui_config: GuiConfig,
         xlim: tuple[float, float],
         mode: AnnotatorMode,
-        exercise_mode: ExerciseMode
+        exercise_mode: ExerciseMode,
+        title: str,
     ) -> None:
         """
         Dynamically calculate grid specs and draw the data and tiers.
@@ -138,23 +165,30 @@ class PlotController(QtWidgets.QWidget):
             The active audio recording/session data.
         patgrid : list
             The TextGrid or associated annotation grid tiers.
-        gui_config : GuiConfig
-            The layout and axis preferences.
         xlim : tuple[float, float]
             The current viewing boundaries for the x-axis.
         mode : AnnotatorMode
             The current operating mode of the annotator.
         exercise_mode : ExerciseMode
             The current exercise state if in exercise mode.
+        title : str
+            The recording title.
         """
         if recording.excluded:
             self.display_exclusion()
 
+        if len(self.data_axes) == 0:
+            self.setup_axes()
+        else:
+            self.clear_axes()
+
+        print(self.data_axes)
+
         if 'MonoAudio' in recording.modalities:
-            self.data_axes[0].set_title(self._get_long_title())
+            self.data_axes[0].set_title(title)
         else:
             self.data_axes[0].set_title(
-                self._get_long_title() + "\nNOTE: Audio missing.")
+                title + "\nNOTE: Audio missing.")
             return
 
         for axes in self.tier_axes:
@@ -191,12 +225,12 @@ class PlotController(QtWidgets.QWidget):
         wav = audio.data
         wav_time = audio.timevector - stimulus_onset
 
-        if gui_config.xlim is not None:
-            xlim = gui_config.xlim
-        elif gui_config.auto_xlim:
+        if self.gui_config.xlim is not None:
+            xlim = self.gui_config.xlim
+        elif self.gui_config.auto_xlim:
             x_minimums = []
             x_maximums = []
-            modalities_to_check = gui_config.plotted_modality_names()
+            modalities_to_check = self.gui_config.plotted_modality_names()
             modalities_to_check.add("MonoAudio")
             for name in modalities_to_check:
                 if name in recording:
@@ -209,12 +243,12 @@ class PlotController(QtWidgets.QWidget):
             xlim = (np.min(x_minimums)-.05, np.max(x_maximums)+.05)
 
         axes_counter = 0
-        for axes_name in gui_config.data_axes:
+        for axes_name in self.gui_config.data_axes:
             self.data_axes[axes_counter].grid(False)
             match axes_name:
                 case "spectrogram":
-                    if gui_config.data_axes[axes_name].ylim is not None:
-                        ylim = gui_config.data_axes[axes_name].ylim
+                    if self.gui_config.data_axes[axes_name].ylim is not None:
+                        ylim = self.gui_config.data_axes[axes_name].ylim
                     else:
                         ylim = (0, 10500)
                     plot_spectrogram(self.data_axes[axes_counter],
@@ -223,8 +257,8 @@ class PlotController(QtWidgets.QWidget):
                                      sampling_frequency=audio.sampling_rate,
                                      extent_on_x=(wav_time[0], wav_time[-1]))
                 case "spectrogram2":
-                    if gui_config.data_axes[axes_name].ylim is not None:
-                        ylim = gui_config.data_axes[axes_name].ylim
+                    if self.gui_config.data_axes[axes_name].ylim is not None:
+                        ylim = self.gui_config.data_axes[axes_name].ylim
                     else:
                         ylim = (0, 10500)
                     plot_spectrogram2(
@@ -233,7 +267,7 @@ class PlotController(QtWidgets.QWidget):
                         ylim=ylim,
                         sampling_frequency=audio.sampling_rate,
                         extent_on_x=(wav_time[0], wav_time[-1]),
-                        mode=gui_config.color_scheme
+                        mode=self.gui_config.color_scheme
                     )
                 case "wav":
                     plot_wav(
@@ -241,15 +275,17 @@ class PlotController(QtWidgets.QWidget):
                         waveform=wav,
                         wav_time=wav_time,
                         xlim=xlim,
-                        mode=gui_config.color_scheme
+                        mode=self.gui_config.color_scheme
                     )
                 case _:
                     if not recording.excluded:
                         self.plot_modality_axes(
+                            recording=recording,
+                            xlim=xlim,
                             axes_number=axes_counter,
                             axes_name=axes_name,
                             zero_offset=stimulus_onset,
-                            ylim=gui_config.data_axes[axes_name].ylim,
+                            ylim=self.gui_config.data_axes[axes_name].ylim,
                         )
             axes_counter += 1
 
@@ -272,7 +308,7 @@ class PlotController(QtWidgets.QWidget):
                 name, rotation=0, horizontalalignment="right",
                 verticalalignment="center")
             axis.set_xlim(xlim)
-            if name in gui_config.pervasive_tiers:
+            if name in self.gui_config.pervasive_tiers:
                 for data_axis in self.data_axes:
                     boundary_set = plot_patgrid_tier(
                         axes=data_axis,
@@ -372,7 +408,7 @@ class PlotController(QtWidgets.QWidget):
                 )
 
         if recording.annotations['selected_frequency'] > -1:
-            for i, name in enumerate(gui_config.data_axes):
+            for i, name in enumerate(self.gui_config.data_axes):
                 if "spectrogram" in name:
                     axes = self.data_axes[i]
                     yticks = axes.get_yticks()
@@ -402,7 +438,6 @@ class PlotController(QtWidgets.QWidget):
         axes_number: int,
         axes_name: str,
         recording: Recording,
-        gui_config: GuiConfig,
         xlim: tuple[float, float],
         zero_offset: float = 0,
         ylim: list[float, float] | None = None,
@@ -418,8 +453,6 @@ class PlotController(QtWidgets.QWidget):
             What should the axes be called. This will be the y_label.
         current_recording : Recording
             The active recording object containing the modality data.
-        gui_config : GuiConfig
-            The active GUI configuration.
         xlim : tuple[float, float]
             The current viewing limits for the x-axis.
         zero_offset : Optional[float], optional
@@ -464,12 +497,12 @@ class PlotController(QtWidgets.QWidget):
         else:
             colors = None
         for i, name in enumerate(plot_modality_names):
-            modality = self.current.modalities[name]
+            modality = recording.modalities[name]
             plot_timeseries(
                 self.data_axes[axes_number],
                 modality.data,
                 modality.timevector - zero_offset,
-                self.xlim,
+                xlim=xlim,
                 ylim=ylim,
                 color=colors[i],
                 linestyle=(0, (i + 1, i + 1)),
@@ -510,12 +543,12 @@ class PlotController(QtWidgets.QWidget):
             The type of image (e.g. MEAN_IMAGE, RAW_FRAME) to display.
         """
         # Display mean image if asked or if there is no selection cursor.
-        if 'RawUltrasound' not in self.current.modalities:
+        if 'RawUltrasound' not in recording.modalities:
             return
 
         if (
             (
-                'frame_selection_index' not in self.current.annotations or
+                'frame_selection_index' not in recording.annotations or
                 recording.annotations['frame_selection_index'] == -1
             )
             or image_type == GuiImageType.MEAN_IMAGE
@@ -523,8 +556,8 @@ class PlotController(QtWidgets.QWidget):
             self.action_export_ultrasound_frame.setEnabled(False)
             self.ultra_axes.clear()
             image_name = 'AggregateImage mean on RawUltrasound'
-            if image_name in self.current.statistics:
-                stat = self.current.statistics[image_name]
+            if image_name in recording.statistics:
+                stat = recording.statistics[image_name]
                 image = stat.data
                 self.ultra_axes.imshow(
                     image, interpolation='nearest', cmap='gray',
@@ -532,17 +565,17 @@ class PlotController(QtWidgets.QWidget):
                             -.5, image.shape[0] + .5))
         # Display either raw or interpolated ultrasound if asked
         elif (
-            'frame_selection_index' in self.current.annotations and
-            self.current.annotations['frame_selection_index'] >= 0
+            'frame_selection_index' in recording.annotations and
+            recording.annotations['frame_selection_index'] >= 0
         ):
             self.action_export_ultrasound_frame.setEnabled(True)
             self.ultra_axes.clear()
-            index = self.current.annotations['frame_selection_index']
+            index = recording.annotations['frame_selection_index']
 
-            ultrasound = self.current.modalities['RawUltrasound']
-            if self.image_type == GuiImageType.FRAME:
+            ultrasound = recording.modalities['RawUltrasound']
+            if image_type == GuiImageType.FRAME:
                 image = ultrasound.interpolated_image(index)
-            elif self.image_type == GuiImageType.RAW_FRAME:
+            elif image_type == GuiImageType.RAW_FRAME:
                 image = ultrasound.raw_image(index)
 
             self.ultra_axes.imshow(
@@ -558,7 +591,7 @@ class PlotController(QtWidgets.QWidget):
                 # curve values at intersections
                 pass
 
-            # if self.image_type == GuiImageType.FRAME:
+            # if image_type == GuiImageType.FRAME:
             #     self.kymography_clicker = clicker(
             #         ax=self.ultra_axes,
             #         classes=["event"],
@@ -569,11 +602,11 @@ class PlotController(QtWidgets.QWidget):
                 #     self.point_removed_cb
                 # )
 
-            if (self.image_type == GuiImageType.FRAME
-                    and 'Splines' in self.current.modalities):
-                splines = self.current.modalities['Splines']
-                index = self.current.annotations['frame_selection_index']
-                ultra = self.current.modalities['RawUltrasound']
+            if (image_type == GuiImageType.FRAME
+                    and 'Splines' in recording.modalities):
+                splines = recording.modalities['Splines']
+                index = recording.annotations['frame_selection_index']
+                ultra = recording.modalities['RawUltrasound']
                 timestamp = ultra.timevector[index]
 
                 spline_index = np.argmin(
@@ -601,7 +634,7 @@ class PlotController(QtWidgets.QWidget):
                 # ic(splines.timevector[spline_index], timestamp)
                 if min_difference > epsilon:
                     _logger.info("Splines out of synch in %s.",
-                                 self.current.basename)
+                                 recording.basename)
                     _logger.info("Minimal difference: %f, epsilon: %f",
                                  min_difference, epsilon)
 
