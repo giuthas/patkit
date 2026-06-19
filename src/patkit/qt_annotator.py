@@ -281,7 +281,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.mode_selection_changed(self.mode.value)
         self.image_updater()
         self.showMaximized()
-        self.ultra_canvas.draw_idle()
+        self.plot_controller.ultra_canvas.draw_idle()
         self.update()
 
     def _update_color_mode(self) -> None:
@@ -403,7 +403,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         else:
             self.patgrid = self.current.patgrid
 
-        self.plot_controller.clear_axes()
         self.plot_controller.draw_plots(
             recording=self.current,
             patgrid=self.patgrid,
@@ -417,11 +416,12 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         if self.display_tongue:
             _logger.debug("Drawing ultra frame in update")
-            self.plot_controller.draw_ultra_frame(
+            has_ultra_data = self.plot_controller.draw_ultra_frame(
                 recording=self.current,
                 image_type=self.image_type
             )
             self.plot_controller.ultra_canvas.draw_idle()
+            self.action_export_ultrasound_frame.setEnabled(has_ultra_data)
 
     def update_ui(self):
         """
@@ -774,11 +774,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.exercise_drop_down.setEnabled(False)
         self.action_save_all_textgrids.setEnabled(True)
         self.action_save_current_textgrid.setEnabled(True)
-
-        if self.gui_mode is GuiColorScheme.DARK:
-            self.figure.patch.set_facecolor("black")
-        else:
-            self.figure.patch.set_facecolor("white")
+        self.plot_controller.to_annotator_mode(self.gui_mode)
 
         self.update()
         self.update_ui()
@@ -796,11 +792,29 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self.exercise.new_blank_answer(cursor=self.cursor)
         self.action_save_all_textgrids.setEnabled(False)
         self.action_save_current_textgrid.setEnabled(False)
+        self.plot_controller.to_exercise_mode(self.gui_mode)
 
-        if self.gui_mode is GuiColorScheme.DARK:
-            self.figure.patch.set_facecolor("#001202")
-        else:
-            self.figure.patch.set_facecolor("#e6ffe9")
+        self.update()
+        self.update_ui()
+
+    def to_example_mode(self) -> None:
+        """
+        Set the GUI to showing example answer mode.
+        """
+        if not self.action_show_example.isChecked():
+            self.action_show_example.setChecked(True)
+        self.plot_controller.to_example_mode(self.gui_mode)
+
+        self.update()
+        self.update_ui()
+
+    def to_answer_mode(self) -> None:
+        """
+        Set the GUI to answering exercise mode.
+        """
+        if self.action_show_example.isChecked():
+            self.action_show_example.setChecked(False)
+        self.plot_controller.to_answer_mode(self.gui_mode)
 
         self.update()
         self.update_ui()
@@ -827,36 +841,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
                 self.to_exercise_mode()
             case _:
                 raise ValueError(f"Unknown Annotator Mode requested: {mode}.")
-
-    def to_example_mode(self) -> None:
-        """
-        Set the GUI to showing example answer mode.
-        """
-        if not self.action_show_example.isChecked():
-            self.action_show_example.setChecked(True)
-
-        if self.gui_mode is GuiColorScheme.DARK:
-            self.figure.patch.set_facecolor("#001202")
-        else:
-            self.figure.patch.set_facecolor("#e7eaff")
-
-        self.update()
-        self.update_ui()
-
-    def to_answer_mode(self) -> None:
-        """
-        Set the GUI to answering exercise mode.
-        """
-        if self.action_show_example.isChecked():
-            self.action_show_example.setChecked(False)
-
-        if self.gui_mode is GuiColorScheme.DARK:
-            self.figure.patch.set_facecolor("#001202")
-        else:
-            self.figure.patch.set_facecolor("#e6ffe9")
-
-        self.update()
-        self.update_ui()
 
     def exercise_selection_changed(self, mode: str) -> None:
         """

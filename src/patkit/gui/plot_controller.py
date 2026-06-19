@@ -13,7 +13,9 @@ from PyQt6 import QtWidgets
 
 from patkit.data_structures import Recording
 from patkit.configuration import DataConfig, GuiConfig
-from patkit.constants import AnnotatorMode, ExerciseMode, GuiImageType
+from patkit.constants import (
+    AnnotatorMode, ExerciseMode, GuiColorScheme, GuiImageType
+)
 from patkit.plot_and_publish import (
     format_legend,
     get_colors_in_sequence,
@@ -93,6 +95,54 @@ class PlotController(QtWidgets.QWidget):
             {'font.size': self.gui_config.default_font_size}
         )
         plt.style.use('tableau-colorblind10')
+
+    def to_annotator_mode(
+        self,
+        gui_mode: GuiColorScheme = GuiColorScheme.LIGHT
+    ) -> None:
+        """
+        Set the GUI to regular annotator mode.
+        """
+        if gui_mode is GuiColorScheme.DARK:
+            self.figure.patch.set_facecolor("black")
+        else:
+            self.figure.patch.set_facecolor("white")
+
+    def to_exercise_mode(
+        self,
+        gui_mode: GuiColorScheme = GuiColorScheme.LIGHT
+    ) -> None:
+        """
+        Set the GUI to exercise mode.
+        """
+        if gui_mode is GuiColorScheme.DARK:
+            self.figure.patch.set_facecolor("#001202")
+        else:
+            self.figure.patch.set_facecolor("#e6ffe9")
+
+    def to_example_mode(
+        self,
+        gui_mode: GuiColorScheme = GuiColorScheme.LIGHT
+    ) -> None:
+        """
+        Set the GUI to showing example answer mode.
+        """
+        if gui_mode is GuiColorScheme.DARK:
+            self.figure.patch.set_facecolor("#001202")
+        else:
+            self.figure.patch.set_facecolor("#e7eaff")
+
+    def to_answer_mode(
+        self,
+        gui_mode: GuiColorScheme = GuiColorScheme.LIGHT
+    ) -> None:
+        """
+        Set the GUI to answering exercise mode.
+        """
+        if gui_mode is GuiColorScheme.DARK:
+            self.figure.patch.set_facecolor("#001202")
+        else:
+            self.figure.patch.set_facecolor("#e6ffe9")
 
     def setup_axes(self) -> None:
         """
@@ -177,12 +227,7 @@ class PlotController(QtWidgets.QWidget):
         if recording.excluded:
             self.display_exclusion()
 
-        if len(self.data_axes) == 0:
-            self.setup_axes()
-        else:
-            self.clear_axes()
-
-        print(self.data_axes)
+        self.setup_axes()
 
         if 'MonoAudio' in recording.modalities:
             self.data_axes[0].set_title(title)
@@ -531,20 +576,25 @@ class PlotController(QtWidgets.QWidget):
         self,
         recording: Recording,
         image_type: GuiImageType
-    ) -> None:
+    ) -> bool:
         """
         Draw the requested ultrasound frame into the secondary canvas.
 
         Parameters
         ----------
-        current_recording : Recording
+        recording : Recording
             The current recording containing the ultrasound data.
         image_type : GuiImageType
             The type of image (e.g. MEAN_IMAGE, RAW_FRAME) to display.
+
+        Returns
+        -------
+        bool
+            True if ultrasound data was found and drawn, False otherwise.
         """
         # Display mean image if asked or if there is no selection cursor.
         if 'RawUltrasound' not in recording.modalities:
-            return
+            return False
 
         if (
             (
@@ -553,7 +603,6 @@ class PlotController(QtWidgets.QWidget):
             )
             or image_type == GuiImageType.MEAN_IMAGE
         ):
-            self.action_export_ultrasound_frame.setEnabled(False)
             self.ultra_axes.clear()
             image_name = 'AggregateImage mean on RawUltrasound'
             if image_name in recording.statistics:
@@ -563,12 +612,12 @@ class PlotController(QtWidgets.QWidget):
                     image, interpolation='nearest', cmap='gray',
                     extent=(-image.shape[1] / 2 - .5, image.shape[1] / 2 + .5,
                             -.5, image.shape[0] + .5))
+            return False
         # Display either raw or interpolated ultrasound if asked
         elif (
             'frame_selection_index' in recording.annotations and
             recording.annotations['frame_selection_index'] >= 0
         ):
-            self.action_export_ultrasound_frame.setEnabled(True)
             self.ultra_axes.clear()
             index = recording.annotations['frame_selection_index']
 
@@ -650,14 +699,27 @@ class PlotController(QtWidgets.QWidget):
             else:
                 _logger.info("No splines")
         self.ultra_canvas.draw_idle()
+        return True
 
     def draw_raw_ultra_frame(
         self,
         recording: Recording,
         image_type: GuiImageType
-    ) -> None:
+    ) -> bool:
         """
         Display a raw ultrasound frame.
+
+        Parameters
+        ----------
+        recording : Recording
+            The current recording containing the ultrasound data.
+        image_type : GuiImageType
+            The type of image (e.g. MEAN_IMAGE, RAW_FRAME) to display.
+
+        Returns
+        -------
+        bool
+            True if ultrasound data was found and drawn, False otherwise.
         """
         if recording.annotations['frame_selection_index'] > -1:
             self.action_export_ultrasound_frame.setEnabled(True)
