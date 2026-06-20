@@ -284,7 +284,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.mode_selection_changed(self.mode.value)
         self.image_updater()
         self.showMaximized()
-        self.plot_controller.ultra_canvas.draw_idle()
         self.update()
 
     def _update_color_mode(self) -> None:
@@ -1190,7 +1189,22 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self.current.annotations['selection_index'],
             self.current.annotations['selected_time'])
 
-        self.update()
+        # Update the main canvas fast-path lines
+        self.plot_controller.update_selection_cursors(self.current)
+
+        # If the ultrasound panel is open, update the requested frame
+        if self.display_tongue:
+            if self.image_type == GuiImageType.RAW_FRAME:
+                has_ultra = self.plot_controller.draw_raw_ultra_frame(
+                    self.current, self.image_type
+                )
+            else:
+                has_ultra = self.plot_controller.draw_ultra_frame(
+                    self.current, self.image_type
+                )
+
+            # Since we bypassed self.update(), update the UI button locally
+            self.action_export_ultrasound_frame.setEnabled(has_ultra)
 
     def resize_event(self, event):
         """

@@ -70,8 +70,16 @@ class PlotController(QtWidgets.QWidget):
 
         self.data_axes: list = []
         self.tier_axes: list = []
-        self.cursor_lines: list[Line2D] = []
+
+        # Cursor Tracking
+        self.playback_cursor_lines: list[Line2D] = []
+        self.selection_artists: list = []
         self.multicursor: MultiCursor | None = None
+        self.playback_background = None
+
+        # Original axes state caching for fast updates
+        self.original_xticks = []
+        self.original_yticks = {}
 
         self.main_grid_spec = None
         self.tier_grid_spec = None
@@ -208,21 +216,6 @@ class PlotController(QtWidgets.QWidget):
     ) -> None:
         """
         Dynamically calculate grid specs and draw the data and tiers.
-
-        Parameters
-        ----------
-        current_recording : Recording
-            The active audio recording/session data.
-        patgrid : list
-            The TextGrid or associated annotation grid tiers.
-        xlim : tuple[float, float]
-            The current viewing boundaries for the x-axis.
-        mode : AnnotatorMode
-            The current operating mode of the annotator.
-        exercise_mode : ExerciseMode
-            The current exercise state if in exercise mode.
-        title : str
-            The recording title.
         """
         if recording.excluded:
             self.display_exclusion()
@@ -387,96 +380,158 @@ class PlotController(QtWidgets.QWidget):
         if self.tier_axes:
             self.tier_axes[-1].set_xlabel("Time (s), go-signal at 0 s.")
 
-        if recording.annotations['selected_time'] > -1:
-            old_ticks = self.data_axes[0].get_xticks()
+        # Save clean ticks to avoid infinite accumulation
+        # when adding selection ticks
+        self.original_xticks = self.data_axes[0].get_xticks()
+        self.original_yticks = {ax: ax.get_yticks() for ax in self.data_axes}
+
+        self.update_selection_cursors(recording)
+
+        self.playback_cursor_lines = []
+        for ax in self.data_axes + self.tier_axes:
+            line = ax.axvline(x=0, color='red', linestyle='-', visible=False)
+            self.playback_cursor_lines.append(line)
+
+        # Restore MultiCursor
+        self.update_multicursor()
+
+        # Align the y-labels nicely across all subplots
+        self.figure.align_ylabels()
+
+    def update_selection_cursors(self, recording: Recording) -> None:
+        """
+        Update the selection cursors across the subplots.
+
+        Fast path for rendering the selection cursors and tick
+        modifications without a full canvas wipe/rebuild.
+        """
+        # Clean up old drawn selection lines
+        for artist in getattr(self, 'selection_artists', []):
+            try:
+                artist.remove()
+            except Exception:
+                pass
+        self.selection_artists = []
+
+        # Reset ticks to their clean original states
+        if hasattr(self, 'original_xticks') and len(self.original_xticks) > 0:
+            self.data_axes[0].set_xticks(self.original_xticks)
+
+            # Remove deepskyblue from regular ticks
+            for label in self.data_axes[0].get_xticklabels():
+                label.set_color("black")
+            if self.tier_axes:
+                for label in self.tier_axes[-1].get_xticklabels():
+                    label.set_color("black")
+
+        if hasattr(self, 'original_yticks'):
+            for ax, yticks in self.original_yticks.items():
+                ax.set_yticks(yticks)
+
+        selected_time = recording.annotations['selected_time']
+        selected_freq = recording.annotations['selected_frequency']
+
+        # Apply the new selection
+        if selected_time > -1:
+            old_ticks = self.original_xticks
             if len(old_ticks) > 2:
                 self.data_axes[0].set_xticks(
-                    [
-                        old_ticks[1],
-                        recording.annotations['selected_time'],
-                        old_ticks[-2],
-                    ]
+                    [old_ticks[1], selected_time, old_ticks[-2]]
                 )
-            else:
+            elif len(old_ticks) > 0:
                 self.data_axes[0].set_xticks(
-                    [
-                        old_ticks[0],
-                        recording.annotations['selected_time'],
-                        old_ticks[-1],
-                    ]
+                    [old_ticks[0], selected_time, old_ticks[-1]]
                 )
 
             xtick_labels = self.data_axes[0].get_xticklabels()
-            xtick_labels[1].set_color(color="deepskyblue")
-            xtick_labels = self.tier_axes[-1].get_xticklabels()
-            xtick_labels[1].set_color(color="deepskyblue")
+            if len(xtick_labels) > 1:
+                xtick_labels[1].set_color(color="deepskyblue")
+
+            if self.tier_axes:
+                xtick_labels = self.tier_axes[-1].get_xticklabels()
+                if len(xtick_labels) > 1:
+                    xtick_labels[1].set_color(color="deepskyblue")
+
             for axes in self.data_axes:
-                # Save ylim to restore after annotation lines have been drawn.
-                # This is done because at least spectrogram tends to go weird
-                # otherwise.
                 current_ylim = axes.get_ylim()
-                axes.axvline(x=recording.annotations['selected_time'],
-                             linestyle=':', color="deepskyblue", lw=1)
+                vline = axes.axvline(
+                    x=selected_time, linestyle=':', color="deepskyblue", lw=1)
+                self.selection_artists.append(vline)
+
                 lines = axes.get_lines()
                 colors = []
                 yticks = axes.get_yticks()
                 for line in lines:
+                    if line in self.playback_cursor_lines:
+                        continue
+                    if line in self.selection_artists:
+                        continue
                     if len(line.get_xdata()) <= 2:
                         continue
-                    index = np.argmin(np.abs(
-                        line.get_xdata() -
-                        recording.annotations['selected_time']
-                    ))
+
+                    xdata = line.get_xdata()
+                    if len(xdata) == 0:
+                        continue
+
+                    index = np.argmin(np.abs(xdata - selected_time))
                     y_value = line.get_ydata()[index]
                     color = line.get_color()
-                    axes.axhline(y=y_value,
-                                 linestyle=':', color=color, lw=1)
+
+                    hline = axes.axhline(
+                        y=y_value, linestyle=':', color=color, lw=1)
+                    self.selection_artists.append(hline)
                     yticks = np.append(yticks, y_value)
                     colors.append(color)
+
                 axes.set_yticks(yticks)
 
                 labels = axes.get_yticklabels()
                 ytick_lines = axes.yaxis.get_ticklines()
                 for i, color in enumerate(colors):
-                    ytick_lines[i*2+4].set_color(color)
-                    ytick_lines[i*2+5].set_color(color)
-                    labels[i+2].set_color(color)
+                    if len(ytick_lines) > i*2+5:
+                        ytick_lines[i*2+4].set_color(color)
+                        ytick_lines[i*2+5].set_color(color)
+                    if len(labels) > i+2:
+                        labels[i+2].set_color(color)
                 axes.set_ylim(current_ylim)
         else:
-            old_ticks = self.data_axes[0].get_xticks()
+            old_ticks = self.original_xticks
             if len(old_ticks) > 2:
-                self.data_axes[0].set_xticks(
-                    [
-                        old_ticks[1],
-                        old_ticks[-2]
-                    ]
-                )
+                self.data_axes[0].set_xticks([old_ticks[1], old_ticks[-2]])
 
-        if recording.annotations['selected_frequency'] > -1:
+        if selected_freq > -1:
             for i, name in enumerate(self.gui_config.data_axes):
                 if "spectrogram" in name:
                     axes = self.data_axes[i]
                     yticks = axes.get_yticks()
-                    axes.set_yticks(np.append(
-                        yticks,
-                        recording.annotations['selected_frequency']
-                    ))
-                    axes.axhline(
-                        y=recording.annotations['selected_frequency'],
-                        linestyle=':', color="deepskyblue", lw=1
+                    axes.set_yticks(np.append(yticks, selected_freq))
+
+                    hline = axes.axhline(
+                        y=selected_freq,
+                        linestyle=':',
+                        color="deepskyblue",
+                        lw=1
                     )
+                    self.selection_artists.append(hline)
+
                     labels = axes.get_yticklabels()
-                    labels[2].set_color(color="deepskyblue")
+                    if len(labels) > 2:
+                        labels[2].set_color(color="deepskyblue")
                     ytick_lines = axes.yaxis.get_ticklines()
-                    ytick_lines[4].set_color(color="deepskyblue")
-                    ytick_lines[5].set_color(color="deepskyblue")
+                    if len(ytick_lines) > 5:
+                        ytick_lines[4].set_color(color="deepskyblue")
+                        ytick_lines[5].set_color(color="deepskyblue")
 
             for axes in self.tier_axes:
-                axes.axvline(x=recording.annotations['selected_time'],
-                             linestyle=':', color="deepskyblue", lw=1)
+                vline = axes.axvline(
+                    x=selected_time, linestyle=':', color="deepskyblue", lw=1)
+                self.selection_artists.append(vline)
 
-        # Align the y-labels nicely across all subplots
-        self.figure.align_ylabels()
+        # Force a synchronous draw to lock in the pixels immediately
+        # and clear the MultiCursor's background cache.
+        self.canvas.draw()
+        if self.multicursor is not None:
+            self.multicursor.background = None
 
     def plot_modality_axes(
         self,
@@ -489,21 +544,6 @@ class PlotController(QtWidgets.QWidget):
     ) -> None:
         """
         Plot modalities on a data_axes.
-
-        Parameters
-        ----------
-        axes_number : int
-            Which axes, counting from top.
-        axes_name : str
-            What should the axes be called. This will be the y_label.
-        current_recording : Recording
-            The active recording object containing the modality data.
-        xlim : tuple[float, float]
-            The current viewing limits for the x-axis.
-        zero_offset : Optional[float], optional
-            Where do we set 0 in time in relation to the audio, by default 0
-        ylim : Optional[list[float, float]], optional
-            y limits, by default None
         """
         axes_params = self.gui_config.data_axes[axes_name]
         data_axes_params = self.gui_config.general_axes_params.data_axes
@@ -579,20 +619,7 @@ class PlotController(QtWidgets.QWidget):
     ) -> bool:
         """
         Draw the requested ultrasound frame into the secondary canvas.
-
-        Parameters
-        ----------
-        recording : Recording
-            The current recording containing the ultrasound data.
-        image_type : GuiImageType
-            The type of image (e.g. MEAN_IMAGE, RAW_FRAME) to display.
-
-        Returns
-        -------
-        bool
-            True if ultrasound data was found and drawn, False otherwise.
         """
-        # Display mean image if asked or if there is no selection cursor.
         if 'RawUltrasound' not in recording.modalities:
             return False
 
@@ -613,7 +640,7 @@ class PlotController(QtWidgets.QWidget):
                     extent=(-image.shape[1] / 2 - .5, image.shape[1] / 2 + .5,
                             -.5, image.shape[0] + .5))
             return False
-        # Display either raw or interpolated ultrasound if asked
+
         elif (
             'frame_selection_index' in recording.annotations and
             recording.annotations['frame_selection_index'] >= 0
@@ -687,7 +714,7 @@ class PlotController(QtWidgets.QWidget):
                     _logger.info("Minimal difference: %f, epsilon: %f",
                                  min_difference, epsilon)
 
-                spline_config = self.session.metadata.spline_config
+                spline_config = self.parent().session.metadata.spline_config
                 if spline_config.data_config:
                     limits = spline_config.data_config.ignore_points
                     plot_spline(self.ultra_axes,
@@ -698,6 +725,7 @@ class PlotController(QtWidgets.QWidget):
                                 splines.cartesian_spline(spline_index))
             else:
                 _logger.info("No splines")
+
         self.ultra_canvas.draw_idle()
         return True
 
@@ -708,38 +736,30 @@ class PlotController(QtWidgets.QWidget):
     ) -> bool:
         """
         Display a raw ultrasound frame.
-
-        Parameters
-        ----------
-        recording : Recording
-            The current recording containing the ultrasound data.
-        image_type : GuiImageType
-            The type of image (e.g. MEAN_IMAGE, RAW_FRAME) to display.
-
-        Returns
-        -------
-        bool
-            True if ultrasound data was found and drawn, False otherwise.
         """
+        has_frame = False
         if recording.annotations['frame_selection_index'] > -1:
-            self.action_export_ultrasound_frame.setEnabled(True)
+            has_frame = True
             ind = recording.annotations['frame_selection_index']
             array = recording.modalities['RawUltrasound'].data[ind, :, :]
         else:
-            self.action_export_ultrasound_frame.setEnabled(False)
+            has_frame = False
             if recording.statistics['Aggregate mean on RawUltrasound']:
                 array = recording.modalities[
                     'Aggregate mean on RawUltrasound'].data
             else:
                 array = recording.modalities['RawUltrasound'].data[1, :, :]
+
         array = np.transpose(array)
         array = np.flip(array, 0).copy()
         array = array.astype(np.int8)
         self.ultra_axes.imshow(array, interpolation='nearest', cmap='gray')
         self.ultra_canvas.draw_idle()
 
+        return has_frame
+
     def update_multicursor(self) -> None:
-        """Recreate the MultiCursor and tracking cursors after drawing."""
+        """Update the MultiCursor after drawing."""
         if self.multicursor is not None:
             self.multicursor.disconnect()
             self.multicursor = None
@@ -751,28 +771,41 @@ class PlotController(QtWidgets.QWidget):
             linestyle="--",
             lw=1
         )
-        self.cursor_lines = []
-        for ax in self.data_axes + self.tier_axes:
-            line = ax.axvline(x=0, color='red', linestyle='-', visible=False)
-            self.cursor_lines.append(line)
 
     def update_playback_cursor(self, current_time: float) -> None:
         """
         Move the tracking cursor lines to the specified time.
-
-        Parameters
-        ----------
-        current_time : float
-            The current playback position in seconds.
         """
-        for line in self.cursor_lines:
+        if self.multicursor is not None:
+            self.multicursor.disconnect()
+            self.multicursor = None
+
+        if self.playback_background is None:
+            for line in self.playback_cursor_lines:
+                line.set_visible(False)
+                line.set_animated(True)
+
+            self.canvas.draw()
+            self.playback_background = self.canvas.copy_from_bbox(
+                self.figure.bbox)
+
+        self.canvas.restore_region(self.playback_background)
+
+        for line in self.playback_cursor_lines:
             line.set_xdata([current_time, current_time])
             line.set_visible(True)
+            line.axes.draw_artist(line)
 
-        self.canvas.draw_idle()
+        self.canvas.blit(self.figure.bbox)
+        self.canvas.flush_events()
 
     def hide_playback_cursor(self) -> None:
         """Hide the tracking cursor lines on all axes."""
-        for line in self.cursor_lines:
+        for line in self.playback_cursor_lines:
+            line.set_animated(False)
             line.set_visible(False)
-        self.canvas.draw_idle()
+        self.playback_background = None
+
+        self.canvas.draw()
+
+        self.update_multicursor()

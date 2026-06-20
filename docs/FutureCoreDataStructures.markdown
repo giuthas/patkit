@@ -1,4 +1,7 @@
-# Core Data Structures
+# Future Core Data Structures
+
+*This document describes a plan for the core data structures. It has not yet
+been implemented.*
 
 PATKIT has hierarchy of core data structures which take care of representing
 files that contain raw or processed data and directories which organise the
@@ -93,8 +96,3 @@ invariant derived data such as an average over a Trial.
 
 There are some abstract base classes which all of the core data structures
 inherit from. These are described in [Base classes](base_classes.markdown).
-
-## Future Data Structures
-
-A possible version of the core data structures is described in [Future Core
-Data Structures](FutureCoreDataStructures.markdown).
