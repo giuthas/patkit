@@ -58,7 +58,7 @@ represented by direct subclasses of Modality.
 
 RecordingMetaData contains information on what was recorded and when, but not
 redundant information such as what kind of data. In addition, each Recording has
-a TextGrid (or rather a SatGrid, see API docs), which is a dict of Tiers which
+a TextGrid (or rather a PatGrid, see API docs), which is a dict of Tiers which
 are lists of either Intervals or Points.
 
 Besides being a dictionary of Annotations, each Modality contains metadata --
