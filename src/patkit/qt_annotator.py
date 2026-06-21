@@ -70,15 +70,16 @@ from patkit.export import (
     export_ultrasound_frame_and_meta,
 )
 from patkit.gui import (
-    AudioPlayer,
-    ImageSaveDialog, ListSaveDialog,
+    AudioPlayer, ImageSaveDialog, ListSaveDialog,
+    NewAnswerDialog, NewExerciseDialog,
     ListSelectionDialog, PlotController,
     ReplaceDialog, UiMainWindow,
 )
 from patkit.initialise import initialise_config, initialise_patkit
 from patkit.path_resolution import get_manifest_scenarios, resolve_open_path
 from patkit.save_and_load import (
-    load_exercise, save_recording_session
+    load_answer, load_exercise, save_answer, save_exercise,
+    save_recording_session,
 )
 from patkit.ui_callbacks import UiCallbacks
 
@@ -184,11 +185,13 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.exercise_drop_down.currentTextChanged.connect(
             self.exercise_selection_changed)
 
-        self.action_create_exercise.triggered.connect(
-            self.create_exercise)
-        self.action_open_exercise.triggered.connect(self.open_exercise)
-        self.action_open_answer.triggered.connect(self.open_answer)
+        self.action_new_exercise.triggered.connect(
+            self.new_exercise)
+        self.action_save_exercise.triggered.connect(self.save_exercise)
+        self.action_load_exercise.triggered.connect(self.load_exercise)
+        self.action_new_answer.triggered.connect(self.new_answer)
         self.action_save_answer.triggered.connect(self.save_answer)
+        self.action_load_answer.triggered.connect(self.load_answer)
         self.action_compare_to_example.triggered.connect(
             self.compare_to_example)
         self.action_show_example.triggered.connect(self.show_example)
@@ -727,29 +730,78 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
                     "Wrote TextGrid to file %s.",
                     str(recording.textgrid_path))
 
-    def create_exercise(self):
-        """
-        Wrap a directory as an Exercise.
-        """
-        # TODO: AFTER 1.0
-        # ask for directory
-        # ask for patkit/exercise dir
-        # write patkit_v.yaml in exercise dir
-        # mess up the textgrids as equidistant
-        # show scrambled textgrid instead of original
+    def new_exercise(self):
+        """Create a new exercise based on the current Session."""
+        base_dir, scrambling_method = NewExerciseDialog.get_exercise_params(
+            self)
+        if base_dir is None:
+            return
 
-    def open_exercise(self):
-        # (exercise_config_path, _) = QFileDialog.getOpenFileName(
-        #     self, 'Open Exercise', directory='.',
-        #     filter="Exercise files (patkit_exercise.yaml)")
-        # self.exercise = load_exercise(exercise_config_path)
-        pass
+        self.exercise = Exercise(
+            scenario=self.session,
+            scrambling_method=scrambling_method
+        )
+        self.exercise_base_dir = base_dir
+        self.gui_mode = AnnotatorMode.EXERCISE
+        self.mode_selection()
 
-    def open_answer(self):
-        pass
+    def save_exercise(self) -> None:
+        """Save the active exercise to disk."""
+        save_exercise(
+            exercise=self.exercise,
+            base_dir=self.exercise_base_dir
+        )
 
-    def save_answer(self):
-        pass
+    def load_exercise(self) -> None:
+        """Load an existing exercise from disk."""
+        directory = QFileDialog.getExistingDirectory(
+            self, "Select Exercise Directory"
+        )
+        if directory is None:
+            return
+
+        self.exercise = load_exercise(directory)
+        self.exercise_base_dir = Path(directory)
+        self.session = self.exercise.scenario
+        self.gui_mode = AnnotatorMode.EXERCISE
+        self.mode_selection()
+
+    def new_answer(self) -> None:
+        """Create a new blank answer for the current exercise."""
+        author_name, answer_name = NewAnswerDialog.get_answer_params(self)
+        if author_name is None:
+            return
+
+        final_name = answer_name if answer_name else None
+        self.exercise.new_blank_answer(name=final_name, author=author_name)
+
+        # Navigate cursor to newly generated answer (always at the end)
+        self.exercise.cursor = len(self.exercise) - 1
+        self.update()
+
+    def save_answer(self) -> None:
+        """Save the currently active answer."""
+        current_answer = self.exercise.current_answer
+        clean_name = current_answer.name.replace(" ", "_")
+
+        from patkit.constants import PatkitDirectory
+        answers_dir = PatkitDirectory.ANSWERS
+        answer_dir = self.exercise_base_dir / answers_dir / clean_name
+
+        save_answer(answer=current_answer, output_dir=answer_dir)
+
+    def load_answer(self) -> None:
+        """Load an answer from disk into the active exercise."""
+        directory = QFileDialog.getExistingDirectory(
+            self, "Select Answer Directory"
+        )
+        if not directory:
+            return
+
+        answer = load_answer(answer_dir=directory, exercise=self.exercise)
+        self.exercise[answer.name] = answer
+        self.exercise.cursor = list(self.exercise.keys()).index(answer.name)
+        self.update()
 
     def compare_to_example(self):
         print("Comparing to model has not yet been implemented.")

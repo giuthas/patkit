@@ -32,33 +32,36 @@
 """PATKIT's main datastructures."""
 
 from __future__ import annotations
-from .metadata_classes import (
-    FileInformation, ModalityData, ModalityMetaData, PointAnnotations,
-    RecordingMetaData
-)
-from .base_classes import AbstractDataContainer, AbstractData, Statistic
-from patkit.patgrid import PatGrid
-from patkit.utility_functions import stem_path
-from patkit.errors import (
-    DimensionMismatchError, MissingDataError, OverwriteError
-)
-from patkit.constants import AnnotationType, SourceSuffix
-from patkit.configuration import SessionConfig
-import textgrids
-import numpy as np
 
 import abc
 import logging
 from collections import OrderedDict, UserDict, UserList
 from copy import deepcopy
+from datetime import datetime
 from pathlib import Path
 from textwrap import indent
 
+import textgrids
+import numpy as np
+
+from patkit.configuration import SessionConfig
+from patkit.constants import AnnotationType, ExerciseScrambler, SourceSuffix
+from patkit.errors import (
+    DimensionMismatchError, MissingDataError, OverwriteError
+)
+from patkit.patgrid import PatGrid
+from patkit.utility_functions import stem_path
+
+from .metadata_classes import (
+    FileInformation, ModalityData, ModalityMetaData, PointAnnotations,
+    RecordingMetaData
+)
+from .base_classes import AbstractDataContainer, AbstractData, Statistic
 
 _logger = logging.getLogger('patkit.data_structures')
 
 
-class Answer(UserList):
+class Answer(AbstractDataContainer, UserList):
     """
     Answer is an answer to an Exercise and consists of PatGrids.
 
@@ -73,7 +76,32 @@ class Answer(UserList):
         name: str = "",
         author: str = "",
         cursor: int = 0,
+        time_created: str | None = None,
+        time_last_edited: str | None = None,
+        file_info: FileInformation | None = None,
     ):
+        """
+        Initialize an Answer object containing PatGrids for an Exercise.
+
+        Parameters
+        ----------
+        container : Exercise
+            The Exercise this Answer belongs to.
+        scenario : Session
+            The Session containing the recordings.
+        scramble : bool
+            Whether to scramble the PatGrids upon creation.
+        name : str
+            The name of the answer.
+        author : str
+            The author/user of the answer.
+        cursor : int
+            The cursor index pointing to the active recording.
+        time_created : str | None
+            ISO formatted timestamp of when this answer was created.
+        time_last_edited : str | None
+            ISO formatted timestamp of when this answer was last edited.
+        """
         super().__init__()
         self.container = container
         self.scenario = scenario
@@ -92,6 +120,8 @@ class Answer(UserList):
             self.edited = [False for i in range(len(self))]
         else:
             self.edited = [True for i in range(len(self))]
+
+        self.file_info = file_info if file_info else FileInformation()
 
     def __repr__(self) -> str:
         representation = f"Answer - name: {self.name}, author: {self.author}"
@@ -151,7 +181,7 @@ class Answer(UserList):
         return self.cursor
 
 
-class Exercise(UserDict):
+class Exercise(AbstractDataContainer, UserDict):
     """
     Exercise is list of Answers relating to a Scenario (Session).
 
@@ -165,7 +195,28 @@ class Exercise(UserDict):
         answers: list[Answer] | None = None,
         example: dict[str, Answer] | None = None,
         index: int = 0,
+        time_created: str | None = None,
+        scrambling_method: ExerciseScrambler = ExerciseScrambler.EQUIDISTANT,
+        file_info: FileInformation | None = None,
     ):
+        """
+        Initialize an Exercise.
+
+        Parameters
+        ----------
+        scenario : Session
+            The Session containing the recordings for this exercise.
+        answers : list[Answer] | None
+            A list of Answer objects to populate the exercise.
+        example : dict[str, Answer] | None
+            The example scrambled Answer to present to the user.
+        index : int
+            The cursor index.
+        time_created : str | None
+            ISO formatted timestamp of when this exercise was created.
+        scrambling_method : str
+            The method used to scramble the exercise TextGrids.
+        """
         super().__init__()
         if example is None:
             _logger.debug("Creating an example answer")
@@ -179,9 +230,16 @@ class Exercise(UserDict):
         self.scenario = scenario
 
         if answers is not None:
-            self.update(answers)
+            for answer in answers:
+                self[answer.name] = answer
 
         self.cursor = index
+
+        now = datetime.now().isoformat()
+        self.time_created = time_created if time_created is not None else now
+
+        self.scrambling_method = scrambling_method
+        self.file_info = file_info if file_info else FileInformation()
 
     def __repr__(self) -> str:
         representation = "Exercise:\n"
@@ -202,6 +260,14 @@ class Exercise(UserDict):
     def current_answer(self) -> Answer:
         return self[list(self.keys())[self.cursor]]
 
+    @property
+    def patkit_path(self) -> Path | None:
+        return self.file_info.patkit_path
+
+    @patkit_path.setter
+    def patkit_path(self, path: Path) -> None:
+        self.file_info.patkit_path = path
+
     def new_blank_answer(
         self,
         cursor: int = 0,
@@ -218,7 +284,7 @@ class Exercise(UserDict):
         name : str | None
             Name of the new Answer, by default None. If None is passed the new
             name will be autogenerated and have the form
-            `f"Answer {len(self)+1}"`.
+            `f"Answer_{len(self)+1}"`.
         author : str
             Name of the new Answer's author, by default an empty string.
         """
@@ -226,12 +292,14 @@ class Exercise(UserDict):
 
         # TODO 1.0: Is this the best place to name answers?
         if name is None:
-            name = f"Answer {len(self)+1}"
+            name = f"Answer_{len(self)+1}"
 
         blank = Answer(
             container=self,
             scenario=self.scenario,
             scramble=True,
+            name=name,
+            author=author,
             cursor=cursor,
         )
         self[name] = blank

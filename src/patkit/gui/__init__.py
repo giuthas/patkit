@@ -34,6 +34,7 @@
 from .annotator_window import UiMainWindow
 from .audio_player import AudioPlayer
 from .boundary_animation import BoundaryAnimator
+from .exercise_dialogs import NewAnswerDialog, NewExerciseDialog
 from .image_save_dialog import ImageSaveDialog
 from .list_save_dialog import ListSaveDialog
 from .list_selection_dialog import ListSelectionDialog
