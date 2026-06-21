@@ -234,7 +234,6 @@ class Exercise(UserDict):
             scramble=True,
             cursor=cursor,
         )
-        name = f"Answer {len(self)+1}"
         self[name] = blank
 
 

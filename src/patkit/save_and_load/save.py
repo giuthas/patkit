@@ -34,6 +34,7 @@ Functions for saving patkit data.
 """
 
 from collections import OrderedDict
+import datetime
 import logging
 from pathlib import Path
 
@@ -42,15 +43,14 @@ import numpy as np
 
 from patkit.constants import (
     OverwriteConfirmation, PatkitConfigFile, PATKIT_FILE_VERSION,
-    PatkitSuffix,
+    PatkitDirectory, PatkitSuffix, SourceSuffix,
 )
 from patkit.data_structures import (
-    Manifest, Modality, Recording, Session, Statistic
+    Answer, Exercise, Manifest, Modality, Recording, Session, Statistic
 )
 from patkit.ui_callbacks import UiCallbacks
-
-from .save_and_load_schemas import nested_text_converters
-from ..data_structures.base_classes import AbstractDataContainer
+from patkit.save_and_load_schemas import nested_text_converters
+from patkit.data_structures.base_classes import AbstractDataContainer
 
 _logger = logging.getLogger('patkit.save')
 
@@ -453,3 +453,94 @@ def save_recording_session(
     save_manifest(session)
 
     return meta_name, confirmation
+
+
+def save_answer(answer: Answer, output_dir: Path | str) -> None:
+    """
+    Save an Answer's TextGrids and metadata to disk.
+
+    Parameters
+    ----------
+    answer : Answer
+        The Answer object to save.
+    output_dir : Path | str
+        The directory where the Answer should be stored. Will be created
+        if it does not exist.
+    """
+    # TODO: Fix the fact that native crashes occur on permission errors.
+    # Unlike, program logic errors this should be checked for and user warned
+    # accordingly instead of crashing the whole program.
+    # TODO: Build the safeguard into all save.py functions and load.py
+    # functions.
+    if isinstance(output_dir, str):
+        output_dir = Path(output_dir)
+
+    answer.time_last_edited = datetime.now().isoformat()
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    metadata = {
+        "name": answer.name,
+        "author": answer.author,
+        "cursor": answer.cursor,
+        "time_created": answer.time_created,
+        "time_last_edited": answer.time_last_edited
+    }
+
+    meta_path = output_dir / PatkitConfigFile.ANSWER
+    nestedtext.dump(
+        metadata, meta_path, converters=nested_text_converters
+    )
+
+    for index, patgrid in enumerate(answer):
+        recording = answer.scenario.recordings[index]
+        grid_path = output_dir / (
+            recording.basename + SourceSuffix.TEXTGRID
+        )
+        patgrid.write(grid_path)
+
+
+def save_exercise(exercise: Exercise, base_dir: Path | str) -> None:
+    """
+    Save an Exercise, its metadata, example, and all Answers to disk.
+
+    Parameters
+    ----------
+    exercise : Exercise
+        The Exercise object to save.
+    base_dir : Path | str
+        The base directory for the exercise. Usually named after the
+        exercise.
+    """
+    if isinstance(base_dir, str):
+        base_dir = Path(base_dir)
+
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    example_dir = base_dir/PatkitDirectory.EXAMPLE
+    answers_dir = base_dir/PatkitDirectory.ANSWERS
+    scenario_path = exercise.scenario.patkit_path
+
+    scenario_path = scenario_path.relative_to(base_dir, walk_up=True)
+
+    answer_dirs = [name.replace(" ", "_") for name in exercise]
+
+    metadata = {
+        "scenario_path": str(scenario_path),
+        "time_created": exercise.time_created,
+        "scrambling_method": exercise.scrambling_method,
+        "cursor": exercise.cursor,
+        "example_dir": str(example_dir),
+        "answers": answer_dirs,
+    }
+
+    meta_path = base_dir / PatkitConfigFile.EXERCISE
+    nestedtext.dump(
+        metadata, meta_path, converters=nested_text_converters
+    )
+
+    save_answer(answer=exercise.example, output_dir=example_dir)
+
+    for answer_name, answer in exercise.items():
+        clean_name = answer_name.replace(" ", "_")
+        answer_dir = answers_dir / clean_name
+        save_answer(answer=answer, output_dir=answer_dir)

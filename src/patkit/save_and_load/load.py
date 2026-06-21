@@ -46,13 +46,14 @@ from patkit.data_import import (
     modality_adders, add_splines
 )
 from patkit.data_structures import (
-    Exercise, ModalityData, Recording, Session
+    Answer, Exercise, ModalityData, Recording, Session
 )
 from patkit.data_structures.metadata_classes import FileInformation
 from patkit.metrics import metrics, statistics
 
 from .save_and_load_schemas import (
-    DataContainerListingLoadSchema, DataContainerLoadSchema,
+    AnswerLoadSchema, DataContainerListingLoadSchema,
+    ExerciseLoadSchema, DataContainerLoadSchema,
     RecordingLoadSchema, SessionLoadSchema
 )
 
@@ -377,16 +378,63 @@ def load_recording_session(
     return session
 
 
+def load_answer(
+        answer_dir: Path | str,
+        exercise: Exercise
+) -> Answer:
+    """
+    Load an Answer from a directory using schema validation.
+
+    Parameters
+    ----------
+    answer_dir : Path | str
+        The path to the saved answer directory.
+    exercise : Exercise
+        The parent Exercise context.
+
+    Returns
+    -------
+    Answer
+        The loaded Answer object.
+    """
+    if isinstance(answer_dir, str):
+        answer_dir = Path(answer_dir)
+
+    meta_path = answer_dir / PatkitConfigFile.ANSWER
+    raw_input = nestedtext.load(meta_path)
+    meta = AnswerLoadSchema.model_validate(raw_input)
+
+    from patkit.data_structures import Answer
+    answer = Answer(
+        container=exercise,
+        scenario=exercise.scenario,
+        scramble=False,
+        name=meta.name,
+        author=meta.author,
+        cursor=meta.cursor,
+        time_created=meta.time_created,
+        time_last_edited=meta.time_last_edited
+    )
+
+    from patkit.patgrid import PatGrid
+    from patkit.constants import SourceSuffix
+    for index, recording in enumerate(exercise.scenario.recordings):
+        grid_path = answer_dir / (recording.basename + SourceSuffix.TEXTGRID)
+        answer[index] = PatGrid(grid_path)
+
+    return answer
+
+
 def load_exercise(
         directory: Path | str,
         exercise_config_path: Path | None = None
 ) -> Exercise:
     """
-    Load an exercise from a directory.
+    Load an exercise from a directory using schema validation.
 
     Parameters
     ----------
-    directory: Path
+    directory: Path | str
         Root directory of the data.
     exercise_config_path : Path | None
         Path to the exercise configuration file. By default, None.
@@ -396,6 +444,31 @@ def load_exercise(
     Exercise
         The loaded Exercise object.
     """
+    if isinstance(directory, str):
+        directory = Path(directory)
 
     if exercise_config_path is None:
-        exercise_config_path = directory / PatkitConfigFile.ASSIGNMENT
+        exercise_config_path = directory / PatkitConfigFile.EXERCISE
+
+    raw_input = nestedtext.load(exercise_config_path)
+    meta = ExerciseLoadSchema.model_validate(raw_input)
+
+    session_dir = directory / meta.scenario_path
+    scenario = load_recording_session(directory=session_dir)
+
+    exercise = Exercise(
+        scenario=scenario,
+        time_created=meta.time_created,
+        scrambling_method=meta.scrambling_method,
+        index=meta.cursor
+    )
+
+    example_dir = directory / meta.example_dir
+    exercise.example = load_answer(answer_dir=example_dir, exercise=exercise)
+
+    for answer_dir_name in meta.answers:
+        ans_dir = directory / answer_dir_name
+        answer = load_answer(answer_dir=ans_dir, exercise=exercise)
+        exercise[answer.name] = answer
+
+    return exercise

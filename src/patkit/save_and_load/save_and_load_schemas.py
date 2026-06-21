@@ -126,3 +126,35 @@ class SessionLoadSchema(BaseModel):
     format_version: str
     parameters: SessionParameterLoadSchema
     recordings: list[str]
+
+
+class AnswerLoadSchema(BaseModel):
+    """
+    Loading schema for a saved Answer.
+
+    Answers contain metadata about the user's progress and references to the
+    saved PatGrid (TextGrid) files on disk.
+    """
+    name: str
+    author: str
+    cursor: int
+    scramble: bool
+    edited: list[bool]
+    patgrid_files: list[str]
+    generation_algorithm: str
+    generation_parameters: dict
+
+
+class ExerciseLoadSchema(BaseModel):
+    """
+    Loading schema for a saved Exercise.
+
+    Exercise links to the underlying Scenario (Session) and contains the
+    Example reference annotations and any user Answers.
+    """
+    object_type: SavedObjectTypes = SavedObjectTypes.EXERCISE
+    format_version: str
+    scenario_meta_file: str
+    example: AnswerLoadSchema
+    answers: dict[str, AnswerLoadSchema]
+    cursor: int
