@@ -766,9 +766,11 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
     def load_exercise(self) -> None:
         """Load an existing exercise from disk."""
         directory = QFileDialog.getExistingDirectory(
-            self, "Select Exercise Directory"
+            parent=self,
+            caption="Select Exercise Directory",
+            directory=str(self.session.patkit_path)
         )
-        if directory is None:
+        if directory == "":
             return
 
         self.exercise = load_exercise(directory)
@@ -794,7 +796,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
     def load_answer(self) -> None:
         """Load an answer from disk into the active exercise."""
-        answers_dir = self.exercise.patkit_path / PatkitDirectory.ANSWERS.value
+        answers_dir = self.exercise.patkit_path / PatkitDirectory.ANSWERS
 
         available_answers = [
             d.name for d in answers_dir.iterdir() if d.is_dir()

@@ -464,7 +464,7 @@ def save_answer(answer: Answer) -> None:
     output_dir = answer.patkit_data_path
     # TODO 1.0: is this in the right place? should this not be updated in the
     # ui rather than here?
-    answer.time_last_edited = datetime.now().isoformat()
+    answer.metadata.time_last_edited = datetime.now().isoformat()
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # TODO 1.0: This should really be a model dump not a dict.

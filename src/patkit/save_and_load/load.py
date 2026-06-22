@@ -41,21 +41,24 @@ import numpy as np
 import nestedtext
 
 from patkit.configuration import SessionConfig
-from patkit.constants import PatkitConfigFile, PatkitSuffix
+from patkit.constants import PatkitConfigFile, PatkitSuffix, SourceSuffix
 from patkit.data_import import (
     modality_adders, add_splines
 )
 from patkit.data_structures import (
-    Answer, Exercise, ModalityData, Recording, Session
+    Answer, AnswerMetadata, Exercise, ExerciseMetadata,
+    ModalityData, Recording, Session,
 )
 from patkit.data_structures.metadata_classes import FileInformation
 from patkit.metrics import metrics, statistics
+from patkit.patgrid import PatGrid
 
 from .save_and_load_schemas import (
     AnswerLoadSchema, DataContainerListingLoadSchema,
     ExerciseLoadSchema, DataContainerLoadSchema,
     RecordingLoadSchema, SessionLoadSchema
 )
+
 
 _logger = logging.getLogger('patkit.recording_loader')
 
@@ -404,20 +407,20 @@ def load_answer(
     raw_input = nestedtext.load(meta_path)
     meta = AnswerLoadSchema.model_validate(raw_input)
 
-    from patkit.data_structures import Answer
-    answer = Answer(
-        container=exercise,
-        scenario=exercise.scenario,
+    metadata = AnswerMetadata(
         scramble=False,
-        name=meta.name,
         author=meta.author,
-        cursor=meta.cursor,
         time_created=meta.time_created,
         time_last_edited=meta.time_last_edited
     )
 
-    from patkit.patgrid import PatGrid
-    from patkit.constants import SourceSuffix
+    answer = Answer(
+        container=exercise,
+        scenario=exercise.scenario,
+        metadata=metadata,
+        name=meta.name,
+        cursor=meta.cursor
+    )
     for index, recording in enumerate(exercise.scenario.recordings):
         grid_path = answer_dir / (recording.basename + SourceSuffix.TEXTGRID)
         answer[index] = PatGrid(grid_path)
@@ -456,10 +459,15 @@ def load_exercise(
     session_dir = directory / meta.scenario_path
     scenario = load_recording_session(directory=session_dir)
 
+    metadata = ExerciseMetadata(
+        time_created=meta.time_created,
+        scrambling_method=meta.scrambling_method
+    )
+
     exercise = Exercise(
         scenario=scenario,
         time_created=meta.time_created,
-        scrambling_method=meta.scrambling_method,
+        metadata=metadata,
         index=meta.cursor
     )
 
