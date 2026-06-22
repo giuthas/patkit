@@ -472,8 +472,10 @@ class ExerciseMode(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
     EXAMPLE = "Example"
 
 
-class ExerciseScrambler(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
+class ExerciseScrambler(
+    ListablePrintableEnum, metaclass=ValueComparedEnumMeta
+):
     """
-    Ways of scrambling boundaries for an Exercise.    
+    Ways of scrambling boundaries for an Exercise.
     """
     EQUIDISTANT = "Equidistant"

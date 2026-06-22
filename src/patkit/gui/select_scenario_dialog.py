@@ -79,5 +79,7 @@ class SelectScenarioDialog(QDialog):
 
 
 app = QApplication([])
-(ok, result) = SelectScenarioDialog.get_scenario_selection(filename='foobar.txt')
+(ok, result) = SelectScenarioDialog.get_scenario_selection(
+    filename='foobar.txt'
+)
 print("{} {}".format(ok, result))
