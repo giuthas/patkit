@@ -102,18 +102,17 @@ class NewAnswerDialog(QDialog):
         self.author_name = ""
         self.answer_name = ""
 
+        answer_box = QHBoxLayout()
+        self.answer_label = QLabel("Answer Name:", self)
+        self.answer_field = QLineEdit(self)
+        answer_box.addWidget(self.answer_label)
+        answer_box.addWidget(self.answer_field)
+
         author_box = QHBoxLayout()
-        self.author_label = QLabel("Author Name:", self)
+        self.author_label = QLabel("Author Name (optional):", self)
         self.author_field = QLineEdit(self)
         author_box.addWidget(self.author_label)
         author_box.addWidget(self.author_field)
-
-        answer_box = QHBoxLayout()
-        self.answer_label = QLabel("Answer Name (optional):", self)
-        self.answer_field = QLineEdit(self)
-        self.answer_field.setPlaceholderText("Leave blank to autogenerate")
-        answer_box.addWidget(self.answer_label)
-        answer_box.addWidget(self.answer_field)
 
         dialog_buttons = (
             QDialogButtonBox.StandardButton.Ok |
@@ -124,21 +123,37 @@ class NewAnswerDialog(QDialog):
         self.ok_cancel_buttons.rejected.connect(self.reject)
 
         vbox = QVBoxLayout(self)
-        vbox.addLayout(author_box)
         vbox.addLayout(answer_box)
+        vbox.addLayout(author_box)
         vbox.addWidget(self.ok_cancel_buttons)
         self.adjustSize()
 
     def _on_accepted(self) -> None:
         self.author_name = self.author_field.text()
         self.answer_name = self.answer_field.text()
+        if not self.answer_name:
+            self.reject()
         self.accept()
 
     @staticmethod
     def get_answer_params(
         parent: QWidget | None = None
     ) -> tuple[str | None, str | None]:
+        """
+        Open a dialog and query user for Answer name and author name. 
+
+        Parameters
+        ----------
+        parent : QWidget | None, optional
+            Parent window.
+
+        Returns
+        -------
+        tuple[str | None, str | None]
+            Either the Answer name and optionally the author name, or a pair of
+            Nones if the user cancelled.
+        """
         dialog = NewAnswerDialog(parent)
         if dialog.exec() == QDialog.DialogCode.Rejected:
             return None, None
-        return dialog.author_name, dialog.answer_name
+        return dialog.answer_name, dialog.author_name
