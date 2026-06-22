@@ -46,7 +46,7 @@ class UiMainWindow(object):
         # Main elements and sizing
         main_window.setObjectName("MainWindow")
         # main_window.resize(1087, 795)
-        main_window.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
+        # main_window.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.central_widget = QtWidgets.QWidget(main_window)
         self.central_widget.setObjectName("central_widget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.central_widget)
@@ -196,7 +196,8 @@ class UiMainWindow(object):
         main_window.setCentralWidget(self.central_widget)
 
         # Menu bar
-        self.menubar = QtWidgets.QMenuBar(main_window)
+        # self.menubar = QtWidgets.QMenuBar(main_window)
+        self.menubar = main_window.menuBar()
         self.menubar.setNativeMenuBar(False)
         self.menubar.setObjectName("menubar")
 
@@ -216,7 +217,7 @@ class UiMainWindow(object):
         self.menu_script = QtWidgets.QMenu(self.menubar)
         self.menu_script.setEnabled(False)
         self.menu_script.setObjectName("menu_script")
-        main_window.setMenuBar(self.menubar)
+        # main_window.setMenuBar(self.menubar)
 
         # Statusbar
         self.statusbar = QtWidgets.QStatusBar(main_window)

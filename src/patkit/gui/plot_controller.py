@@ -9,7 +9,6 @@ from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 from matplotlib.widgets import MultiCursor
 import numpy as np
-from PyQt6 import QtWidgets
 
 from patkit.data_structures import Recording
 from patkit.configuration import DataConfig, GuiConfig
@@ -28,36 +27,39 @@ from patkit.plot_and_publish import (
     plot_wav,
 )
 
+from .annotator_window import UiMainWindow
 from .boundary_animation import BoundaryAnimator
 
 _logger = logging.getLogger(__name__)
 
 
-class PlotController(QtWidgets.QWidget):
+class PlotController:
     """
     Manages the Matplotlib figure, canvas, and tracking cursors.
 
     Encapsulates the Matplotlib setup required for rendering and provides
     utility methods for updating playback cursors across all axes. Handles both
     the main data/tier canvas and the secondary ultrasound canvas.
-
-    Parameters
-    ----------
-    data_config : DataConfig
-        The data configuration.
-    gui_config : GuiConfig
-        The GUI configuration.
-    parent : QtWidgets.QWidget | None
-        The parent Qt widget.
     """
 
     def __init__(
         self,
         data_config: DataConfig,
         gui_config: GuiConfig,
-        parent: QtWidgets.QWidget | None = None
+        main_window: UiMainWindow
     ) -> None:
-        super().__init__(parent)
+        """
+
+        Parameters
+        ----------
+        data_config : DataConfig
+            The data configuration.
+        gui_config : GuiConfig
+            The GUI configuration.
+        main_window : UiMainWindow
+            The main window encapsulating the annotator.
+        """
+        self.main_window = main_window
 
         # Main Canvas Setup
         self.figure = Figure(layout="tight")
@@ -390,7 +392,7 @@ class PlotController(QtWidgets.QWidget):
                 for boundaries, interval in zip(
                         boundaries_by_boundary, tier_in_limits, strict=True):
                     animator = BoundaryAnimator(
-                        main_window=self.parent(),
+                        main_window=self.main_window,
                         boundaries=boundaries,
                         segment=interval,
                         epsilon=self.data_config.epsilon,
@@ -734,7 +736,7 @@ class PlotController(QtWidgets.QWidget):
                     _logger.info("Minimal difference: %f, epsilon: %f",
                                  min_difference, epsilon)
 
-                spline_config = self.parent().session.metadata.spline_config
+                spline_config = self.main_window.session.metadata.spline_config
                 if spline_config.data_config:
                     limits = spline_config.data_config.ignore_points
                     plot_spline(self.ultra_axes,

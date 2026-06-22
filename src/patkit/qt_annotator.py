@@ -255,7 +255,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.plot_controller = PlotController(
             data_config=self.data_config,
             gui_config=self.gui_config,
-            parent=self
+            main_window=self
         )
 
         # Add the canvases to their respective Qt Layouts
