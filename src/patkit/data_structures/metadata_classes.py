@@ -116,8 +116,7 @@ class FileInformation:
         return stem_path(basepath)
 
 
-@dataclass
-class AnswerMetaData(PatkitBaseModel):
+class AnswerMetadata(PatkitBaseModel):
     """
     Metadata of an Exercise Answer.
 
@@ -145,8 +144,7 @@ class AnswerMetaData(PatkitBaseModel):
             self.time_last_edited = now
 
 
-@dataclass
-class ExerciseMetaData(PatkitBaseModel):
+class ExerciseMetadata(PatkitBaseModel):
     """
     Metadata for an Exercise.
 

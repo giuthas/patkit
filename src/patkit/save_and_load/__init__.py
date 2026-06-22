@@ -29,6 +29,11 @@
 # articles listed in README.md. They can also be found in
 # citations.bib in BibTeX format.
 #
-from .load import load_exercise, load_recordings, load_recording_session
-from .save import save_manifest, save_recordings, save_recording_session
+from .load import (
+    load_answer, load_exercise, load_recordings, load_recording_session
+)
+from .save import (
+    save_answer, save_exercise, save_manifest, save_recordings,
+    save_recording_session
+)
 from .save_and_load_schemas import nested_text_converters

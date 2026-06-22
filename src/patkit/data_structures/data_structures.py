@@ -54,7 +54,7 @@ from patkit.patgrid import PatGrid
 from patkit.utility_functions import stem_path
 
 from .metadata_classes import (
-    AnswerMetaData, ExerciseMetaData, FileInformation,
+    AnswerMetadata, ExerciseMetadata, FileInformation,
     ModalityData, ModalityMetaData, PointAnnotations,
     RecordingMetaData
 )
@@ -74,8 +74,7 @@ class Answer(AbstractDataContainer, UserList):
         self,
         container: Exercise,
         scenario: Session,
-        metadata: AnswerMetaData,
-        scramble: bool,
+        metadata: AnswerMetadata,
         name: str = "",
         cursor: int = 0,
         file_info: FileInformation | None = None,
@@ -89,8 +88,6 @@ class Answer(AbstractDataContainer, UserList):
             The Exercise this Answer belongs to.
         scenario : Session
             The Session containing the recordings.
-        scramble : bool
-            Whether to scramble the PatGrids upon creation.
         name : str
             The name of the answer.
         cursor : int
@@ -105,7 +102,6 @@ class Answer(AbstractDataContainer, UserList):
                          container=container, file_info=file_info)
         self.container = container
         self.scenario = scenario
-        self.name = name
         self.cursor = cursor
 
         for recording in self.scenario:
@@ -113,7 +109,7 @@ class Answer(AbstractDataContainer, UserList):
             self.append(patgrid)
 
         # TODO: this will probably break loading edited answers
-        if scramble:
+        if self.metadata.scramble:
             for patgrid in self:
                 for tier in patgrid:
                     patgrid[tier].scramble()
@@ -205,7 +201,7 @@ class Exercise(AbstractDataContainer, UserDict):
         self,
         scenario: Session,
         name: str,
-        metadata: ExerciseMetaData,
+        metadata: ExerciseMetadata,
         answers: list[Answer] | None = None,
         example: dict[str, Answer] | None = None,
         index: int = 0,
@@ -228,10 +224,13 @@ class Exercise(AbstractDataContainer, UserDict):
         super().__init__(name=name, metadata=metadata, file_info=file_info)
         if example is None:
             _logger.debug("Creating an example answer")
+            metadata = AnswerMetadata(
+                scramble=False,
+            )
             self.example = Answer(
                 container=self,
                 scenario=scenario,
-                scramble=False,
+                metadata=metadata,
             )
         else:
             self.example = example

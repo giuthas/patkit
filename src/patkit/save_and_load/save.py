@@ -49,8 +49,9 @@ from patkit.data_structures import (
     Answer, Exercise, Manifest, Modality, Recording, Session, Statistic
 )
 from patkit.ui_callbacks import UiCallbacks
-from patkit.save_and_load_schemas import nested_text_converters
 from patkit.data_structures.base_classes import AbstractDataContainer
+
+from .save_and_load_schemas import nested_text_converters
 
 _logger = logging.getLogger('patkit.save')
 

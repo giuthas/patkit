@@ -764,9 +764,13 @@ class PlotController(QtWidgets.QWidget):
             self.multicursor.disconnect()
             self.multicursor = None
 
+        axes = self.data_axes + self.tier_axes
+        if not axes:
+            return
+
         self.multicursor = MultiCursor(
             self.canvas,
-            axes=self.data_axes + self.tier_axes,
+            axes=axes,
             color='deepskyblue',
             linestyle="--",
             lw=1

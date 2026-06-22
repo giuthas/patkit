@@ -54,15 +54,19 @@ from PyQt6.QtGui import (
     QShortcut,
 )
 from PyQt6.QtWidgets import (
-    QFileDialog, QMainWindow
+    QFileDialog, QInputDialog, QMainWindow
 )
 from qbstyles import mpl_style
 
 from patkit.configuration import Configuration
 from patkit.constants import (
-    AnnotatorMode, ExerciseMode, GuiColorScheme, GuiImageType, OpenPathType
+    AnnotatorMode, ExerciseMode, ExerciseScrambler, GuiColorScheme,
+    GuiImageType, OpenPathType, PatkitDirectory
 )
-from patkit.data_structures import Exercise, Session
+from patkit.data_structures import (
+    Answer, AnswerMetadata, Exercise, ExerciseMetadata, FileInformation,
+    Session
+)
 from patkit.export import (
     export_aggregate_image_and_meta,
     export_distance_matrix_and_meta,
@@ -152,7 +156,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.tongue_positions = PdQtAnnotator.default_tongue_positions
         self._add_annotations()
 
-        self.gui_mode = config.gui_config.color_scheme
+        self.gui_color_mode = config.gui_config.color_scheme
         self._update_color_mode()
 
         QGuiApplication.styleHints().colorSchemeChanged.connect(
@@ -316,12 +320,12 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
     def change_to_dark(self):
         """Activate dark mode."""
-        self.gui_mode = GuiColorScheme.DARK
+        self.gui_color_mode = GuiColorScheme.DARK
         mpl_style(dark=True)
 
     def change_to_light(self):
         """Activate light mode."""
-        self.gui_mode = GuiColorScheme.LIGHT
+        self.gui_color_mode = GuiColorScheme.LIGHT
         mpl_style(dark=False)
 
     @property
@@ -646,7 +650,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.config = config  # Update the annotator's config reference
         self.data_config = config.data_config
         self.gui_config = config.gui_config
-        self.gui_mode = self.gui_config.color_scheme
+        self.gui_color_mode = self.gui_config.color_scheme
         self._update_color_mode()
 
         # Reset Core State Variables
@@ -730,27 +734,31 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
                     "Wrote TextGrid to file %s.",
                     str(recording.textgrid_path))
 
-    def new_exercise(self):
+    def new_exercise(self) -> bool:
         """Create a new exercise based on the current Session."""
         base_dir, scrambling_method = NewExerciseDialog.get_exercise_params(
-            self)
+            parent=self,
+            path=self.session.patkit_path)
         if base_dir is None:
-            return
+            return False
 
+        file_info = FileInformation(patkit_path=base_dir)
+        metadata = ExerciseMetadata(
+            scrambling_method=ExerciseScrambler(scrambling_method),
+        )
         self.exercise = Exercise(
             scenario=self.session,
-            scrambling_method=scrambling_method
+            name=str(base_dir.name),
+            metadata=metadata,
+            file_info=file_info
         )
-        self.exercise_base_dir = base_dir
-        self.gui_mode = AnnotatorMode.EXERCISE
-        self.mode_selection()
+        self.gui_color_mode = AnnotatorMode.EXERCISE
+        self.to_exercise_mode()
+        return True
 
     def save_exercise(self) -> None:
         """Save the active exercise to disk."""
-        save_exercise(
-            exercise=self.exercise,
-            base_dir=self.exercise_base_dir
-        )
+        save_exercise(exercise=self.exercise)
 
     def load_exercise(self) -> None:
         """Load an existing exercise from disk."""
@@ -763,17 +771,16 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.exercise = load_exercise(directory)
         self.exercise_base_dir = Path(directory)
         self.session = self.exercise.scenario
-        self.gui_mode = AnnotatorMode.EXERCISE
+        self.gui_color_mode = AnnotatorMode.EXERCISE
         self.mode_selection()
 
     def new_answer(self) -> None:
         """Create a new blank answer for the current exercise."""
         author_name, answer_name = NewAnswerDialog.get_answer_params(self)
-        if author_name is None:
+        if answer_name is None:
             return
 
-        final_name = answer_name if answer_name else None
-        self.exercise.new_blank_answer(name=final_name, author=author_name)
+        self.exercise.new_blank_answer(name=answer_name, author=author_name)
 
         # Navigate cursor to newly generated answer (always at the end)
         self.exercise.cursor = len(self.exercise) - 1
@@ -781,23 +788,29 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
     def save_answer(self) -> None:
         """Save the currently active answer."""
-        current_answer = self.exercise.current_answer
-        clean_name = current_answer.name.replace(" ", "_")
-
-        from patkit.constants import PatkitDirectory
-        answers_dir = PatkitDirectory.ANSWERS
-        answer_dir = self.exercise_base_dir / answers_dir / clean_name
-
-        save_answer(answer=current_answer, output_dir=answer_dir)
+        save_answer(answer=self.exercise.current_answer)
 
     def load_answer(self) -> None:
         """Load an answer from disk into the active exercise."""
-        directory = QFileDialog.getExistingDirectory(
-            self, "Select Answer Directory"
+        answers_dir = self.exercise.patkit_path / PatkitDirectory.ANSWERS.value
+
+        available_answers = [
+            d.name for d in answers_dir.iterdir() if d.is_dir()
+        ]
+
+        answer_name, ok = QInputDialog.getItem(
+            self,
+            "Load Answer",
+            "Select answer to load:",
+            available_answers,
+            0,
+            False
         )
-        if not directory:
+
+        if not ok or not answer_name:
             return
 
+        directory = answers_dir / answer_name
         answer = load_answer(answer_dir=directory, exercise=self.exercise)
         self.exercise[answer.name] = answer
         self.exercise.cursor = list(self.exercise.keys()).index(answer.name)
@@ -819,11 +832,12 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Set the GUI to regular annotator mode.
         """
-        self.menu_exercise.setEnabled(False)
+        self.action_save_exercise.setEnabled(False)
+        self.action_save_answer.setEnabled(False)
         self.exercise_drop_down.setEnabled(False)
         self.action_save_all_textgrids.setEnabled(True)
         self.action_save_current_textgrid.setEnabled(True)
-        self.plot_controller.to_annotator_mode(self.gui_mode)
+        self.plot_controller.to_annotator_mode(self.gui_color_mode)
 
         self.update()
         self.update_ui()
@@ -832,19 +846,22 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Set the GUI to exercise mode.
         """
-        self.menu_exercise.setEnabled(True)
-        self.exercise_drop_down.setEnabled(True)
         if self.exercise is None:
-            self.exercise = Exercise(
-                scenario=self.session,
-            )
-            self.exercise.new_blank_answer(cursor=self.cursor)
-        self.action_save_all_textgrids.setEnabled(False)
-        self.action_save_current_textgrid.setEnabled(False)
-        self.plot_controller.to_exercise_mode(self.gui_mode)
+            self.new_exercise()
+            # self.exercise = Exercise(
+            #     scenario=self.session,
+            # )
+            # self.exercise.new_blank_answer(cursor=self.cursor)
+        else:
+            self.action_save_exercise.setEnabled(True)
+            self.action_save_answer.setEnabled(True)
+            self.exercise_drop_down.setEnabled(True)
+            self.action_save_all_textgrids.setEnabled(False)
+            self.action_save_current_textgrid.setEnabled(False)
+            self.plot_controller.to_exercise_mode(self.gui_color_mode)
 
-        self.update()
-        self.update_ui()
+            self.update()
+            self.update_ui()
 
     def to_example_mode(self) -> None:
         """
@@ -852,7 +869,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         if not self.action_show_example.isChecked():
             self.action_show_example.setChecked(True)
-        self.plot_controller.to_example_mode(self.gui_mode)
+        self.plot_controller.to_example_mode(self.gui_color_mode)
 
         self.update()
         self.update_ui()
@@ -863,7 +880,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         if self.action_show_example.isChecked():
             self.action_show_example.setChecked(False)
-        self.plot_controller.to_answer_mode(self.gui_mode)
+        self.plot_controller.to_answer_mode(self.gui_color_mode)
 
         self.update()
         self.update_ui()

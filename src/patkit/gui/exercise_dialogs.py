@@ -6,24 +6,35 @@ from pathlib import Path
 
 from PyQt6.QtWidgets import (
     QComboBox, QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout,
-    QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
+    QLabel, QLineEdit, QPushButton, QSizePolicy, QVBoxLayout, QWidget
 )
+
+from patkit.constants import ExerciseScrambler, PatkitDirectory
 
 
 class NewExerciseDialog(QDialog):
     """Dialog for configuring a new Exercise."""
 
-    def __init__(self, parent: QWidget | None = None):
+    def __init__(
+        self,
+        parent: QWidget | None = None,
+        path: Path | None = None
+    ):
         super().__init__(parent)
+
+        if path is None:
+            self.base_dir = Path.cwd()
+        else:
+            self.base_dir = path / 'exercise_name'
+
         self.setWindowTitle("New Exercise")
 
         self.scrambling_method = "equidistant"
-        self.base_dir = Path.cwd()
 
         method_box = QHBoxLayout()
         self.method_label = QLabel("Scrambling Method:", self)
         self.method_combo = QComboBox(self)
-        self.method_combo.addItems(["equidistant"])
+        self.method_combo.addItems(ExerciseScrambler.values())
         method_box.addWidget(self.method_label)
         method_box.addWidget(self.method_combo)
 
@@ -48,7 +59,12 @@ class NewExerciseDialog(QDialog):
         vbox.addLayout(method_box)
         vbox.addLayout(path_box)
         vbox.addWidget(self.ok_cancel_buttons)
-        self.adjustSize()
+
+        self.path_field.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding,
+                           QSizePolicy.Policy.Expanding)
+        self.setMinimumWidth(600)
 
     def _browse(self) -> None:
         directory = QFileDialog.getExistingDirectory(
@@ -67,9 +83,10 @@ class NewExerciseDialog(QDialog):
 
     @staticmethod
     def get_exercise_params(
-        parent: QWidget | None = None
+        parent: QWidget | None = None,
+        path: Path | None = None,
     ) -> tuple[Path | None, str | None]:
-        dialog = NewExerciseDialog(parent)
+        dialog = NewExerciseDialog(parent=parent, path=path)
         if dialog.exec() == QDialog.DialogCode.Rejected:
             return None, None
         return dialog.base_dir, dialog.scrambling_method
