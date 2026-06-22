@@ -79,7 +79,7 @@ class UiMainWindow(object):
         )
         self.side_panel.setSizePolicy(sizePolicy)
         self.side_panel.setMinimumSize(QtCore.QSize(300, 0))
-        self.side_panel.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.side_panel.setMaximumSize(QtCore.QSize(300, 16777215))
         self.side_panel.setObjectName("side_panel")
         self.side_panel_layout = QtWidgets.QVBoxLayout(self.side_panel)
         self.side_panel_layout.setContentsMargins(0, 0, 0, 0)
@@ -197,7 +197,7 @@ class UiMainWindow(object):
 
         # Menu bar
         self.menubar = QtWidgets.QMenuBar(main_window)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1087, 22))
+        self.menubar.setNativeMenuBar(False)
         self.menubar.setObjectName("menubar")
 
         # Menus
