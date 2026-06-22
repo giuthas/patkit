@@ -42,7 +42,7 @@ from pydantic import PositiveInt
 from patkit.configuration import (
     PointAnnotationParams
 )
-from patkit.constants import AnnotationType
+from patkit.constants import AnnotationType, ExerciseScrambler
 from patkit.external_class_extensions import PatkitBaseModel
 from patkit.utility_functions import (
     is_sequence_form, stem_path
@@ -114,6 +114,56 @@ class FileInformation:
             if self.patkit_meta_file is not None:
                 basepath = self.patkit_path/self.patkit_meta_file
         return stem_path(basepath)
+
+
+@dataclass
+class AnswerMetaData(PatkitBaseModel):
+    """
+    Metadata of an Exercise Answer.
+
+    Parameters
+    ----------
+    scramble : bool
+        Whether to scramble the PatGrids upon creation.
+    author : str
+        The author/user of the answer.
+    time_created : str | None
+        ISO formatted timestamp of when this answer was created.
+    time_last_edited : str | None
+        ISO formatted timestamp of when this answer was last edited.
+    """
+    scramble: bool
+    author: str = ""
+    time_created: str | None = None
+    time_last_edited: str | None = None
+
+    def model_post_init(self, __context):
+        now = datetime.now().isoformat()
+        if self.time_created is None:
+            self.time_created = now
+        if self.time_last_edited is not None:
+            self.time_last_edited = now
+
+
+@dataclass
+class ExerciseMetaData(PatkitBaseModel):
+    """
+    Metadata for an Exercise.
+
+    Parameters
+    ----------
+    time_created : str | None
+        ISO formatted timestamp of when this exercise was created.
+    scrambling_method : str
+        The method used to scramble the exercise TextGrids.
+    """
+    time_created: str | None = None
+    scrambling_method: ExerciseScrambler = ExerciseScrambler.EQUIDISTANT
+
+    def model_post_init(self, __context):
+        now = datetime.now().isoformat()
+        if self.time_created is None:
+            self.time_created = now
 
 
 @dataclass

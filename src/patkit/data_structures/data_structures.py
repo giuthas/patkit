@@ -37,7 +37,6 @@ import abc
 import logging
 from collections import OrderedDict, UserDict, UserList
 from copy import deepcopy
-from datetime import datetime
 from pathlib import Path
 from textwrap import indent
 
@@ -45,7 +44,9 @@ import textgrids
 import numpy as np
 
 from patkit.configuration import SessionConfig
-from patkit.constants import AnnotationType, ExerciseScrambler, SourceSuffix
+from patkit.constants import (
+    AnnotationType, PatkitDirectory, SourceSuffix
+)
 from patkit.errors import (
     DimensionMismatchError, MissingDataError, OverwriteError
 )
@@ -53,7 +54,8 @@ from patkit.patgrid import PatGrid
 from patkit.utility_functions import stem_path
 
 from .metadata_classes import (
-    FileInformation, ModalityData, ModalityMetaData, PointAnnotations,
+    AnswerMetaData, ExerciseMetaData, FileInformation,
+    ModalityData, ModalityMetaData, PointAnnotations,
     RecordingMetaData
 )
 from .base_classes import AbstractDataContainer, AbstractData, Statistic
@@ -72,12 +74,10 @@ class Answer(AbstractDataContainer, UserList):
         self,
         container: Exercise,
         scenario: Session,
+        metadata: AnswerMetaData,
         scramble: bool,
         name: str = "",
-        author: str = "",
         cursor: int = 0,
-        time_created: str | None = None,
-        time_last_edited: str | None = None,
         file_info: FileInformation | None = None,
     ):
         """
@@ -93,26 +93,26 @@ class Answer(AbstractDataContainer, UserList):
             Whether to scramble the PatGrids upon creation.
         name : str
             The name of the answer.
-        author : str
-            The author/user of the answer.
         cursor : int
             The cursor index pointing to the active recording.
-        time_created : str | None
-            ISO formatted timestamp of when this answer was created.
-        time_last_edited : str | None
-            ISO formatted timestamp of when this answer was last edited.
+        file_info : FileInformation | None
+            The FileInformation metadata for the answer.
         """
-        super().__init__()
+        if file_info is None:
+            file_info = FileInformation()
+
+        super().__init__(name=name, metadata=metadata,
+                         container=container, file_info=file_info)
         self.container = container
         self.scenario = scenario
         self.name = name
-        self.author = author
         self.cursor = cursor
 
         for recording in self.scenario:
             patgrid = deepcopy(recording.patgrid)
             self.append(patgrid)
 
+        # TODO: this will probably break loading edited answers
         if scramble:
             for patgrid in self:
                 for tier in patgrid:
@@ -121,14 +121,26 @@ class Answer(AbstractDataContainer, UserList):
         else:
             self.edited = [True for i in range(len(self))]
 
-        self.file_info = file_info if file_info else FileInformation()
-
     def __repr__(self) -> str:
         representation = f"Answer - name: {self.name}, author: {self.author}"
         for patgrid in self:
             patgrid_string = f"{patgrid}"
             representation += indent(text=patgrid_string, prefix="\t")
         return representation
+
+    @property
+    def patkit_data_path(self) -> Path:
+        """Dynamically compute the path to the answer directory."""
+        # Route example answers directly to the example directory
+        if (
+            self.container.example is not None and
+            self is self.container.example
+        ):
+            return self.container.patkit_path/PatkitDirectory.EXAMPLE
+
+        return (
+            self.container.patkit_path/PatkitDirectory.ANSWERS/self.name
+        )
 
     def current(self) -> PatGrid:
         """
@@ -192,11 +204,11 @@ class Exercise(AbstractDataContainer, UserDict):
     def __init__(
         self,
         scenario: Session,
+        name: str,
+        metadata: ExerciseMetaData,
         answers: list[Answer] | None = None,
         example: dict[str, Answer] | None = None,
         index: int = 0,
-        time_created: str | None = None,
-        scrambling_method: ExerciseScrambler = ExerciseScrambler.EQUIDISTANT,
         file_info: FileInformation | None = None,
     ):
         """
@@ -212,12 +224,8 @@ class Exercise(AbstractDataContainer, UserDict):
             The example scrambled Answer to present to the user.
         index : int
             The cursor index.
-        time_created : str | None
-            ISO formatted timestamp of when this exercise was created.
-        scrambling_method : str
-            The method used to scramble the exercise TextGrids.
         """
-        super().__init__()
+        super().__init__(name=name, metadata=metadata, file_info=file_info)
         if example is None:
             _logger.debug("Creating an example answer")
             self.example = Answer(
@@ -234,12 +242,6 @@ class Exercise(AbstractDataContainer, UserDict):
                 self[answer.name] = answer
 
         self.cursor = index
-
-        now = datetime.now().isoformat()
-        self.time_created = time_created if time_created is not None else now
-
-        self.scrambling_method = scrambling_method
-        self.file_info = file_info if file_info else FileInformation()
 
     def __repr__(self) -> str:
         representation = "Exercise:\n"
@@ -406,8 +408,11 @@ class Session(AbstractDataContainer, UserList):
             statistics: dict[str, Statistic] | None = None
     ) -> None:
         super().__init__(
-            container=None, name=name, metadata=config,
-            file_info=file_info, statistics=statistics)
+            container=None,
+            name=name,
+            metadata=config,
+            file_info=file_info,
+            statistics=statistics)
 
         if recordings is not None:
             for recording in recordings:
