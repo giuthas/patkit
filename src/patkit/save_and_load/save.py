@@ -378,7 +378,7 @@ def save_session_meta(
             confirmation = UiCallbacks.get_overwrite_confirmation(
                 str(filepath))
 
-    # TODO This should really be a model dump not a dict.
+    # TODO 1.0: This should really be a model dump not a dict.
     meta = OrderedDict()
     meta['object_type'] = type(session).__name__
     meta['name'] = session.name
@@ -455,35 +455,24 @@ def save_recording_session(
     return meta_name, confirmation
 
 
-def save_answer(answer: Answer, output_dir: Path | str) -> None:
+def save_answer(answer: Answer) -> None:
     """
     Save an Answer's TextGrids and metadata to disk.
-
-    Parameters
-    ----------
-    answer : Answer
-        The Answer object to save.
-    output_dir : Path | str
-        The directory where the Answer should be stored. Will be created
-        if it does not exist.
+    Path is natively computed by the Answer object.
     """
-    # TODO: Fix the fact that native crashes occur on permission errors.
-    # Unlike, program logic errors this should be checked for and user warned
-    # accordingly instead of crashing the whole program.
-    # TODO: Build the safeguard into all save.py functions and load.py
-    # functions.
-    if isinstance(output_dir, str):
-        output_dir = Path(output_dir)
-
+    output_dir = answer.patkit_data_path
+    # TODO 1.0: is this in the right place? should this not be updated in the
+    # ui rather than here?
     answer.time_last_edited = datetime.now().isoformat()
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # TODO 1.0: This should really be a model dump not a dict.
     metadata = {
         "name": answer.name,
-        "author": answer.author,
+        "author": answer.metadata.author,
         "cursor": answer.cursor,
-        "time_created": answer.time_created,
-        "time_last_edited": answer.time_last_edited
+        "time_created": answer.metadata.time_created,
+        "time_last_edited": answer.metadata.time_last_edited
     }
 
     meta_path = output_dir / PatkitConfigFile.ANSWER
@@ -499,38 +488,28 @@ def save_answer(answer: Answer, output_dir: Path | str) -> None:
         patgrid.write(grid_path)
 
 
-def save_exercise(exercise: Exercise, base_dir: Path | str) -> None:
+def save_exercise(exercise: Exercise) -> None:
     """
     Save an Exercise, its metadata, example, and all Answers to disk.
-
-    Parameters
-    ----------
-    exercise : Exercise
-        The Exercise object to save.
-    base_dir : Path | str
-        The base directory for the exercise. Usually named after the
-        exercise.
     """
-    if isinstance(base_dir, str):
-        base_dir = Path(base_dir)
-
+    base_dir = exercise.patkit_path
     base_dir.mkdir(parents=True, exist_ok=True)
 
-    example_dir = base_dir/PatkitDirectory.EXAMPLE
-    answers_dir = base_dir/PatkitDirectory.ANSWERS
-    scenario_path = exercise.scenario.patkit_path
+    example_dir_name = PatkitDirectory.EXAMPLE
+    scenario_path_str = str(
+        exercise.scenario.patkit_path.relative_to(base_dir, walk_up=True)
+    )
 
-    scenario_path = scenario_path.relative_to(base_dir, walk_up=True)
+    answer_names = [answer.clean_name for answer in exercise.values()]
 
-    answer_dirs = [name.replace(" ", "_") for name in exercise]
-
+    # TODO 1.0: This should really be a model dump not a dict.
     metadata = {
-        "scenario_path": str(scenario_path),
-        "time_created": exercise.time_created,
-        "scrambling_method": exercise.scrambling_method,
+        "scenario_path": scenario_path_str,
+        "time_created": exercise.metadata.time_created,
+        "scrambling_method": exercise.metadata.scrambling_method,
         "cursor": exercise.cursor,
-        "example_dir": str(example_dir),
-        "answers": answer_dirs,
+        "example_dir": example_dir_name,
+        "answers": answer_names,
     }
 
     meta_path = base_dir / PatkitConfigFile.EXERCISE
@@ -538,9 +517,7 @@ def save_exercise(exercise: Exercise, base_dir: Path | str) -> None:
         metadata, meta_path, converters=nested_text_converters
     )
 
-    save_answer(answer=exercise.example, output_dir=example_dir)
+    save_answer(answer=exercise.example)
 
-    for answer_name, answer in exercise.items():
-        clean_name = answer_name.replace(" ", "_")
-        answer_dir = answers_dir / clean_name
-        save_answer(answer=answer, output_dir=answer_dir)
+    for answer in exercise.values():
+        save_answer(answer=answer)
