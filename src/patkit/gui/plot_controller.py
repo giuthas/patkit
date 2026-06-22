@@ -106,51 +106,71 @@ class PlotController(QtWidgets.QWidget):
 
     def to_annotator_mode(
         self,
-        gui_mode: GuiColorScheme = GuiColorScheme.LIGHT
+        gui_color_mode: GuiColorScheme = GuiColorScheme.LIGHT
     ) -> None:
         """
         Set the GUI to regular annotator mode.
         """
-        if gui_mode is GuiColorScheme.DARK:
-            self.figure.patch.set_facecolor("black")
-        else:
-            self.figure.patch.set_facecolor("white")
+        match gui_color_mode:
+            case GuiColorScheme.DARK:
+                self.figure.patch.set_facecolor("black")
+            case GuiColorScheme.LIGHT:
+                self.figure.patch.set_facecolor("white")
+            case _:
+                raise ValueError(
+                    f"Unknown GUI color scheme: {gui_color_mode}"
+                )
 
     def to_exercise_mode(
         self,
-        gui_mode: GuiColorScheme = GuiColorScheme.LIGHT
+        gui_color_mode: GuiColorScheme = GuiColorScheme.LIGHT
     ) -> None:
         """
         Set the GUI to exercise mode.
         """
-        if gui_mode is GuiColorScheme.DARK:
-            self.figure.patch.set_facecolor("#001202")
-        else:
-            self.figure.patch.set_facecolor("#e6ffe9")
+        match gui_color_mode:
+            case GuiColorScheme.DARK:
+                self.figure.patch.set_facecolor("#001202")
+            case GuiColorScheme.LIGHT:
+                self.figure.patch.set_facecolor("#e6ffe9")
+            case _:
+                raise ValueError(
+                    f"Unknown GUI color scheme: {gui_color_mode}"
+                )
 
     def to_example_mode(
         self,
-        gui_mode: GuiColorScheme = GuiColorScheme.LIGHT
+        gui_color_mode: GuiColorScheme = GuiColorScheme.LIGHT
     ) -> None:
         """
         Set the GUI to showing example answer mode.
         """
-        if gui_mode is GuiColorScheme.DARK:
-            self.figure.patch.set_facecolor("#001202")
-        else:
-            self.figure.patch.set_facecolor("#e7eaff")
+        match gui_color_mode:
+            case GuiColorScheme.DARK:
+                self.figure.patch.set_facecolor("#001202")
+            case GuiColorScheme.LIGHT:
+                self.figure.patch.set_facecolor("#e7eaff")
+            case _:
+                raise ValueError(
+                    f"Unknown GUI color scheme: {gui_color_mode}"
+                )
 
     def to_answer_mode(
         self,
-        gui_mode: GuiColorScheme = GuiColorScheme.LIGHT
+        gui_color_mode: GuiColorScheme = GuiColorScheme.LIGHT
     ) -> None:
         """
         Set the GUI to answering exercise mode.
         """
-        if gui_mode is GuiColorScheme.DARK:
-            self.figure.patch.set_facecolor("#001202")
-        else:
-            self.figure.patch.set_facecolor("#e6ffe9")
+        match gui_color_mode:
+            case GuiColorScheme.DARK:
+                self.figure.patch.set_facecolor("#001202")
+            case GuiColorScheme.LIGHT:
+                self.figure.patch.set_facecolor("#e6ffe9")
+            case _:
+                raise ValueError(
+                    f"Unknown GUI color scheme: {gui_color_mode}"
+                )
 
     def setup_axes(self) -> None:
         """
