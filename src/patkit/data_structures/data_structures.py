@@ -75,7 +75,7 @@ class Answer(AbstractDataContainer, UserList):
         container: Exercise,
         scenario: Session,
         metadata: AnswerMetadata,
-        name: str = "",
+        name: str,
         cursor: int = 0,
         file_info: FileInformation | None = None,
     ):
@@ -132,10 +132,10 @@ class Answer(AbstractDataContainer, UserList):
             self.container.example is not None and
             self is self.container.example
         ):
-            return self.container.patkit_path/PatkitDirectory.EXAMPLE
+            return self.container.patkit_path / PatkitDirectory.EXAMPLE
 
         return (
-            self.container.patkit_path/PatkitDirectory.ANSWERS/self.name
+            self.container.patkit_path / PatkitDirectory.ANSWERS / self.name
         )
 
     def current(self) -> PatGrid:
@@ -231,6 +231,7 @@ class Exercise(AbstractDataContainer, UserDict):
                 container=self,
                 scenario=scenario,
                 metadata=metadata,
+                name=PatkitDirectory.EXAMPLE,
             )
         else:
             self.example = example
@@ -295,12 +296,15 @@ class Exercise(AbstractDataContainer, UserDict):
         if name is None:
             name = f"Answer_{len(self)+1}"
 
+        metadata = AnswerMetadata(
+            scramble=True,
+            author=author
+        )
         blank = Answer(
             container=self,
             scenario=self.scenario,
-            scramble=True,
             name=name,
-            author=author,
+            metadata=metadata,
             cursor=cursor,
         )
         self[name] = blank

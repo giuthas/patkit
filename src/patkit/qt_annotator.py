@@ -693,7 +693,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Save the current TextGrid.
         """
-        # TODO 0.22.2: write a call back for asking for overwrite confirmation.
+        # TODO 0.23: write a call back for asking for overwrite confirmation.
         if self.mode is AnnotatorMode.EXERCISE:
             return
 
@@ -752,7 +752,10 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             metadata=metadata,
             file_info=file_info
         )
-        self.gui_color_mode = AnnotatorMode.EXERCISE
+        if not self.new_answer():
+            self.exercise = None
+            return False
+
         self.to_exercise_mode()
         return True
 
@@ -771,20 +774,19 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.exercise = load_exercise(directory)
         self.exercise_base_dir = Path(directory)
         self.session = self.exercise.scenario
-        self.gui_color_mode = AnnotatorMode.EXERCISE
-        self.mode_selection()
 
-    def new_answer(self) -> None:
+    def new_answer(self) -> bool:
         """Create a new blank answer for the current exercise."""
-        author_name, answer_name = NewAnswerDialog.get_answer_params(self)
+        answer_name, author_name = NewAnswerDialog.get_answer_params(self)
         if answer_name is None:
-            return
+            return False
 
         self.exercise.new_blank_answer(name=answer_name, author=author_name)
 
         # Navigate cursor to newly generated answer (always at the end)
         self.exercise.cursor = len(self.exercise) - 1
         self.update()
+        return True
 
     def save_answer(self) -> None:
         """Save the currently active answer."""
@@ -847,11 +849,12 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         Set the GUI to exercise mode.
         """
         if self.exercise is None:
-            self.new_exercise()
-            # self.exercise = Exercise(
-            #     scenario=self.session,
-            # )
-            # self.exercise.new_blank_answer(cursor=self.cursor)
+            exercise_created = self.new_exercise()
+            if not exercise_created:
+                self.to_annotator_mode()
+            # new_exercise() calls to_exercise_mode() so we
+            # return now to avoid double execution.
+            return
         else:
             self.action_save_exercise.setEnabled(True)
             self.action_save_answer.setEnabled(True)

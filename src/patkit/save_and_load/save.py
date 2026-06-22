@@ -34,7 +34,7 @@ Functions for saving patkit data.
 """
 
 from collections import OrderedDict
-import datetime
+from datetime import datetime
 import logging
 from pathlib import Path
 
@@ -42,7 +42,8 @@ import nestedtext
 import numpy as np
 
 from patkit.constants import (
-    OverwriteConfirmation, PatkitConfigFile, PATKIT_FILE_VERSION,
+    DEFAULT_ENCODING, OverwriteConfirmation, PatkitConfigFile,
+    PATKIT_FILE_VERSION,
     PatkitDirectory, PatkitSuffix, SourceSuffix,
 )
 from patkit.data_structures import (
@@ -422,7 +423,6 @@ def save_manifest(session: Session) -> None:
 
     manifest = Manifest(manifest_path)
     # Manifest.append is safe against duplicates.
-    print(f"trying to add {session.patkit_meta_path}")
     manifest.append(session.patkit_meta_path)
     # Always write in case there is an update to the file format.
     manifest.save()
@@ -486,7 +486,8 @@ def save_answer(answer: Answer) -> None:
         grid_path = output_dir / (
             recording.basename + SourceSuffix.TEXTGRID
         )
-        patgrid.write(grid_path)
+        with open(grid_path, 'w', encoding=DEFAULT_ENCODING) as outfile:
+            outfile.write(patgrid.format_long())
 
 
 def save_exercise(exercise: Exercise) -> None:
@@ -501,13 +502,13 @@ def save_exercise(exercise: Exercise) -> None:
         exercise.scenario.patkit_path.relative_to(base_dir, walk_up=True)
     )
 
-    answer_names = [answer.clean_name for answer in exercise.values()]
+    answer_names = [answer.name for answer in exercise.values()]
 
     # TODO 1.0: This should really be a model dump not a dict.
     metadata = {
         "scenario_path": scenario_path_str,
         "time_created": exercise.metadata.time_created,
-        "scrambling_method": exercise.metadata.scrambling_method,
+        "scrambling_method": str(exercise.metadata.scrambling_method),
         "cursor": exercise.cursor,
         "example_dir": example_dir_name,
         "answers": answer_names,
