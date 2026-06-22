@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import (
     QLabel, QLineEdit, QPushButton, QSizePolicy, QVBoxLayout, QWidget
 )
 
-from patkit.constants import ExerciseScrambler, PatkitDirectory
+from patkit.constants import ExerciseScrambler
 
 
 class NewExerciseDialog(QDialog):
@@ -140,7 +140,7 @@ class NewAnswerDialog(QDialog):
         parent: QWidget | None = None
     ) -> tuple[str | None, str | None]:
         """
-        Open a dialog and query user for Answer name and author name. 
+        Open a dialog and query user for Answer name and author name.
 
         Parameters
         ----------
