@@ -290,6 +290,12 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.mode_selection_changed(self.mode.value)
         self.image_updater()
+
+        # For poster screencaps
+        # self.resize(1200, 600)
+        # self.show()
+
+        # For production
         self.showMaximized()
         self.update()
 

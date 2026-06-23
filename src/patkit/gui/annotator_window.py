@@ -46,7 +46,7 @@ class UiMainWindow(object):
         # Main elements and sizing
         main_window.setObjectName("MainWindow")
         # main_window.resize(1087, 795)
-        # main_window.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
+        main_window.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.central_widget = QtWidgets.QWidget(main_window)
         self.central_widget.setObjectName("central_widget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.central_widget)
