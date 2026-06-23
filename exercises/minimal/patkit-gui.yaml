@@ -4,7 +4,7 @@
 # tier displays, but instead controls the ratio between the sum of data
 # displays vs sum of tier displays.
 data_and_tier_height_ratios: 
-  data_axes: 2
+  data_axes: 3
   tier_axes: 1
 
 general_axes_params:

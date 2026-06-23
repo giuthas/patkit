@@ -400,7 +400,7 @@ class PlotController:
                     animator.connect()
                     self.animators.append(animator)
         if self.tier_axes:
-            self.tier_axes[-1].set_xlabel("Time (s), go-signal at 0 s.")
+            self.tier_axes[-1].set_xlabel("Time (s)")
 
         # Save clean ticks to avoid infinite accumulation
         # when adding selection ticks

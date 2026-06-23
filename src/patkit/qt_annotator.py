@@ -756,8 +756,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self.exercise = None
             return False
 
-        self.mode = AnnotatorMode.EXERCISE
-        self.to_exercise_mode()
+        self.mode_drop_down.setCurrentText(AnnotatorMode.EXERCISE.value)
         return True
 
     def save_exercise(self) -> None:
@@ -777,9 +776,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.exercise = load_exercise(directory)
         self.exercise_base_dir = Path(directory)
         self.session = self.exercise.scenario
-        # self.patgrid = self.exercise.current_answer.current
         self.mode_drop_down.setCurrentText(AnnotatorMode.EXERCISE.value)
-        # self.to_exercise_mode()
 
     def new_answer(self) -> bool:
         """Create a new blank answer for the current exercise."""
