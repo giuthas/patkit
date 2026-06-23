@@ -149,7 +149,7 @@ class PlotController:
         """
         match gui_color_mode:
             case GuiColorScheme.DARK:
-                self.figure.patch.set_facecolor("#001202")
+                self.figure.patch.set_facecolor("#000212")
             case GuiColorScheme.LIGHT:
                 self.figure.patch.set_facecolor("#e7eaff")
             case _:

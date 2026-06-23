@@ -78,7 +78,7 @@ class UiMainWindow(object):
             self.side_panel.sizePolicy().hasHeightForWidth()
         )
         self.side_panel.setSizePolicy(sizePolicy)
-        self.side_panel.setMinimumSize(QtCore.QSize(300, 0))
+        self.side_panel.setMinimumSize(QtCore.QSize(150, 0))
         # self.side_panel.setMaximumSize(QtCore.QSize(300, 16777215))
         self.side_panel.setObjectName("side_panel")
         self.side_panel_layout = QtWidgets.QVBoxLayout(self.side_panel)
@@ -98,7 +98,7 @@ class UiMainWindow(object):
         self.side_panel_splitter.addWidget(self.side_panel_top_widget)
 
         # Mode selection
-        self.mode_controls = QtWidgets.QGroupBox(self.side_panel_top_layout)
+        self.mode_controls = QtWidgets.QGroupBox(self.side_panel_top_widget)
         self.mode_controls.setMaximumSize(QtCore.QSize(16777215, 80))
         self.mode_controls.setObjectName("mode_box")
         self.mode_layout = QtWidgets.QHBoxLayout(self.mode_controls)
@@ -114,7 +114,7 @@ class UiMainWindow(object):
         self.side_panel_top_layout.addWidget(self.mode_controls)
 
         # Navigation buttons and widgets
-        self.go_to_group = QtWidgets.QGroupBox(self.side_panel_top_layout)
+        self.go_to_group = QtWidgets.QGroupBox(self.side_panel_top_widget)
         self.go_to_group.setMaximumSize(QtCore.QSize(16777215, 80))
         self.go_to_group.setObjectName("groupBox")
         self.go_to_layout = QtWidgets.QHBoxLayout(self.go_to_group)
@@ -142,19 +142,19 @@ class UiMainWindow(object):
         self.side_panel_top_layout.addWidget(self.go_to_group)
 
         # List view
-        self.database_view = QtWidgets.QListView(self.side_panel_top_layout)
+        self.database_view = QtWidgets.QListView(self.side_panel_top_widget)
         self.database_model = QtGui.QStandardItemModel()
         self.database_view.setModel(self.database_model)
         self.database_view.setObjectName("databaseView")
-        self.side_panel_layout.addWidget(self.database_view)
+        self.side_panel_top_layout.addWidget(self.database_view)
         self.database_view.clicked[QtCore.QModelIndex].connect(
             main_window.on_database_view_clicked)
 
-        self.play_controls = PlayerControls(self.side_panel_top_layout)
+        self.play_controls = PlayerControls(self.side_panel_top_widget)
         self.side_panel_top_layout.addWidget(self.play_controls)
 
         # Ultrasound frame display
-        self.ultrasoundFrame = QtWidgets.QWidget(self.side_panel_top_layout)
+        self.ultrasoundFrame = QtWidgets.QWidget(self.side_panel_top_widget)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Preferred,
             QtWidgets.QSizePolicy.Policy.Expanding
@@ -165,7 +165,7 @@ class UiMainWindow(object):
             self.ultrasoundFrame.sizePolicy().hasHeightForWidth()
         )
         self.ultrasoundFrame.setSizePolicy(sizePolicy)
-        self.ultrasoundFrame.setMinimumSize(QtCore.QSize(300, 100))
+        self.ultrasoundFrame.setMinimumSize(QtCore.QSize(150, 100))
         self.ultrasoundFrame.setObjectName("ultrasoundFrame")
 
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.ultrasoundFrame)
@@ -450,13 +450,13 @@ class UiMainWindow(object):
         self.action_new_exercise.setText(
             _translate("MainWindow", "New exercise..."))
         self.action_save_exercise.setText(
-            _translate("MainWindow", "Save exercise..."))
+            _translate("MainWindow", "Save exercise"))
         self.action_load_exercise.setText(
             _translate("MainWindow", "Load exercise..."))
         self.action_new_answer.setText(
             _translate("MainWindow", "New answer..."))
         self.action_save_answer.setText(
-            _translate("MainWindow", "Save answer..."))
+            _translate("MainWindow", "Save answer"))
         self.action_load_answer.setText(
             _translate("MainWindow", "Load answer..."))
         self.action_compare_to_example.setText(

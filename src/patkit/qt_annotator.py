@@ -292,13 +292,13 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.image_updater()
 
         # For poster screencaps
-        self.gui_config.color_scheme = GuiColorScheme.LIGHT
-        self.change_to_light()
-        self.resize(1200, 600)
-        self.show()
+        # self.gui_config.color_scheme = GuiColorScheme.LIGHT
+        # self.change_to_light()
+        # self.resize(1300, 600)
+        # self.show()
 
         # For production
-        # self.showMaximized()
+        self.showMaximized()
         self.update()
 
     def _update_color_mode(self) -> None:
