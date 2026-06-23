@@ -13,7 +13,8 @@ import numpy as np
 from patkit.data_structures import Recording
 from patkit.configuration import DataConfig, GuiConfig
 from patkit.constants import (
-    AnnotatorMode, ExerciseMode, GuiColorScheme, GuiImageType
+    AnnotatorMode, DefaultCanvasColors, DefaultCursorColors,
+    ExerciseMode, GuiColorScheme, GuiImageType
 )
 from patkit.plot_and_publish import (
     format_legend,
@@ -115,9 +116,11 @@ class PlotController:
         """
         match gui_color_mode:
             case GuiColorScheme.DARK:
-                self.figure.patch.set_facecolor("black")
+                self.figure.patch.set_facecolor(
+                    DefaultCanvasColors.ANNOTATOR_DARK)
             case GuiColorScheme.LIGHT:
-                self.figure.patch.set_facecolor("white")
+                self.figure.patch.set_facecolor(
+                    DefaultCanvasColors.ANNOTATOR_LIGHT)
             case _:
                 raise ValueError(
                     f"Unknown GUI color scheme: {gui_color_mode}"
@@ -132,9 +135,11 @@ class PlotController:
         """
         match gui_color_mode:
             case GuiColorScheme.DARK:
-                self.figure.patch.set_facecolor("#001202")
+                self.figure.patch.set_facecolor(
+                    DefaultCanvasColors.ANSWER_DARK)
             case GuiColorScheme.LIGHT:
-                self.figure.patch.set_facecolor("#e6ffe9")
+                self.figure.patch.set_facecolor(
+                    DefaultCanvasColors.ANSWER_LIGHT)
             case _:
                 raise ValueError(
                     f"Unknown GUI color scheme: {gui_color_mode}"
@@ -149,9 +154,11 @@ class PlotController:
         """
         match gui_color_mode:
             case GuiColorScheme.DARK:
-                self.figure.patch.set_facecolor("#000212")
+                self.figure.patch.set_facecolor(
+                    DefaultCanvasColors.EXAMPLE_DARK)
             case GuiColorScheme.LIGHT:
-                self.figure.patch.set_facecolor("#e7eaff")
+                self.figure.patch.set_facecolor(
+                    DefaultCanvasColors.EXAMPLE_LIGHT)
             case _:
                 raise ValueError(
                     f"Unknown GUI color scheme: {gui_color_mode}"
@@ -166,9 +173,11 @@ class PlotController:
         """
         match gui_color_mode:
             case GuiColorScheme.DARK:
-                self.figure.patch.set_facecolor("#001202")
+                self.figure.patch.set_facecolor(
+                    DefaultCanvasColors.ANSWER_DARK)
             case GuiColorScheme.LIGHT:
-                self.figure.patch.set_facecolor("#e6ffe9")
+                self.figure.patch.set_facecolor(
+                    DefaultCanvasColors.ANSWER_LIGHT)
             case _:
                 raise ValueError(
                     f"Unknown GUI color scheme: {gui_color_mode}"
@@ -422,7 +431,12 @@ class PlotController:
 
         self.playback_cursor_lines = []
         for ax in self.data_axes + self.tier_axes:
-            line = ax.axvline(x=0, color='red', linestyle='-', visible=False)
+            line = ax.axvline(
+                x=0,
+                color=DefaultCursorColors.PLAYBACK,
+                linestyle='-',
+                visible=False
+            )
             self.playback_cursor_lines.append(line)
 
         # Restore MultiCursor
@@ -478,17 +492,22 @@ class PlotController:
 
             xtick_labels = self.data_axes[0].get_xticklabels()
             if len(xtick_labels) > 1:
-                xtick_labels[1].set_color(color="deepskyblue")
+                xtick_labels[1].set_color(color=DefaultCursorColors.SELECTION)
 
             if self.tier_axes:
                 xtick_labels = self.tier_axes[-1].get_xticklabels()
                 if len(xtick_labels) > 1:
-                    xtick_labels[1].set_color(color="deepskyblue")
+                    xtick_labels[1].set_color(
+                        color=DefaultCursorColors.SELECTION)
 
             for axes in self.data_axes:
                 current_ylim = axes.get_ylim()
                 vline = axes.axvline(
-                    x=selected_time, linestyle=':', color="deepskyblue", lw=1)
+                    x=selected_time,
+                    linestyle=':',
+                    color=DefaultCursorColors.SELECTION,
+                    lw=1
+                )
                 self.selection_artists.append(vline)
 
                 lines = axes.get_lines()
@@ -542,22 +561,29 @@ class PlotController:
                     hline = axes.axhline(
                         y=selected_freq,
                         linestyle=':',
-                        color="deepskyblue",
+                        color=DefaultCursorColors.SELECTION,
                         lw=1
                     )
                     self.selection_artists.append(hline)
 
                     labels = axes.get_yticklabels()
                     if len(labels) > 2:
-                        labels[2].set_color(color="deepskyblue")
+                        labels[2].set_color(
+                            color=DefaultCursorColors.SELECTION)
                     ytick_lines = axes.yaxis.get_ticklines()
                     if len(ytick_lines) > 5:
-                        ytick_lines[4].set_color(color="deepskyblue")
-                        ytick_lines[5].set_color(color="deepskyblue")
+                        ytick_lines[4].set_color(
+                            color=DefaultCursorColors.SELECTION)
+                        ytick_lines[5].set_color(
+                            color=DefaultCursorColors.SELECTION)
 
             for axes in self.tier_axes:
                 vline = axes.axvline(
-                    x=selected_time, linestyle=':', color="deepskyblue", lw=1)
+                    x=selected_time,
+                    linestyle=':',
+                    color=DefaultCursorColors.SELECTION,
+                    lw=1
+                )
                 self.selection_artists.append(vline)
 
         # Force a synchronous draw to lock in the pixels immediately

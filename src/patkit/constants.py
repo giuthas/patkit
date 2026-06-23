@@ -479,3 +479,40 @@ class ExerciseScrambler(
     Ways of scrambling boundaries for an Exercise.
     """
     EQUIDISTANT = "Equidistant"
+
+
+class DefaultCanvasColors(str, Enum):
+    """
+    Default background colors for the Matplotlib figure canvas.
+
+    These represent the hardcoded default theme colors for different
+    annotator and exercise modes until config overrides are implemented.
+    """
+    ANNOTATOR_LIGHT = "white"
+    ANNOTATOR_DARK = "black"
+
+    EXAMPLE_LIGHT = "#e7eaff"
+    EXAMPLE_DARK = "#000212"
+
+    ANSWER_LIGHT = "#e6ffe9"
+    ANSWER_DARK = "#001202"
+
+    def __str__(self) -> str:
+        """
+        Ensure f-strings and print() output the string value.
+        """
+        return self.value
+
+
+class DefaultCursorColors(str, Enum):
+    """
+    Default colors for GUI cursor and selection elements.
+    """
+    SELECTION = "deepskyblue"
+    PLAYBACK = "red"
+
+    def __str__(self) -> str:
+        """
+        Ensure f-strings and print() output the string value.
+        """
+        return self.value
