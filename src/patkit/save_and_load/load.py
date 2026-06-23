@@ -41,7 +41,9 @@ import numpy as np
 import nestedtext
 
 from patkit.configuration import SessionConfig
-from patkit.constants import PatkitConfigFile, PatkitSuffix, SourceSuffix
+from patkit.constants import (
+    PatkitConfigFile, PatkitDirectory, PatkitSuffix, SourceSuffix
+)
 from patkit.data_import import (
     modality_adders, add_splines
 )
@@ -414,12 +416,18 @@ def load_answer(
         time_last_edited=meta.time_last_edited.isoformat()
     )
 
+    file_info = FileInformation(
+        patkit_meta_file=meta_path,
+        patkit_path=answer_dir,
+    )
+
     answer = Answer(
         container=exercise,
         scenario=exercise.scenario,
         metadata=metadata,
         name=meta.name,
-        cursor=meta.cursor
+        cursor=meta.cursor,
+        file_info=file_info,
     )
     for index, recording in enumerate(exercise.scenario.recordings):
         grid_path = answer_dir / (recording.basename + SourceSuffix.TEXTGRID)
@@ -454,7 +462,6 @@ def load_exercise(
         exercise_config_path = directory / PatkitConfigFile.EXERCISE
 
     raw_input = nestedtext.load(exercise_config_path)
-    print(raw_input)
     meta = ExerciseLoadSchema.model_validate(raw_input)
 
     session_dir = directory / meta.scenario_path
@@ -465,18 +472,24 @@ def load_exercise(
         scrambling_method=meta.scrambling_method
     )
 
+    file_info = FileInformation(
+        patkit_meta_file=exercise_config_path,
+        patkit_path=directory,
+    )
+
     exercise = Exercise(
         scenario=scenario,
         name=meta.name,
         metadata=metadata,
-        index=meta.cursor
+        index=meta.cursor,
+        file_info=file_info,
     )
 
     example_dir = directory / meta.example_dir
     exercise.example = load_answer(answer_dir=example_dir, exercise=exercise)
 
     for answer_dir_name in meta.answers:
-        ans_dir = directory / answer_dir_name
+        ans_dir = directory / PatkitDirectory.ANSWERS / answer_dir_name
         answer = load_answer(answer_dir=ans_dir, exercise=exercise)
         exercise[answer.name] = answer
 
