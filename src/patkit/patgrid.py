@@ -514,7 +514,7 @@ class PatGrid(OrderedDict):
         Parameters
         ----------
         textgrid : TextGrid | Path | str
-            An already parsed textgrids.TextGrid object, or a path to a 
+            An already parsed textgrids.TextGrid object, or a path to a
             TextGrid file on disk.
         """
         super().__init__()
