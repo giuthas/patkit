@@ -410,8 +410,8 @@ def load_answer(
     metadata = AnswerMetadata(
         scramble=False,
         author=meta.author,
-        time_created=meta.time_created,
-        time_last_edited=meta.time_last_edited
+        time_created=meta.time_created.isoformat(),
+        time_last_edited=meta.time_last_edited.isoformat()
     )
 
     answer = Answer(
@@ -454,19 +454,20 @@ def load_exercise(
         exercise_config_path = directory / PatkitConfigFile.EXERCISE
 
     raw_input = nestedtext.load(exercise_config_path)
+    print(raw_input)
     meta = ExerciseLoadSchema.model_validate(raw_input)
 
     session_dir = directory / meta.scenario_path
     scenario = load_recording_session(directory=session_dir)
 
     metadata = ExerciseMetadata(
-        time_created=meta.time_created,
+        time_created=meta.time_created.isoformat(),
         scrambling_method=meta.scrambling_method
     )
 
     exercise = Exercise(
         scenario=scenario,
-        time_created=meta.time_created,
+        name=meta.name,
         metadata=metadata,
         index=meta.cursor
     )

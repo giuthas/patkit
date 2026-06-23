@@ -506,6 +506,7 @@ def save_exercise(exercise: Exercise) -> None:
 
     # TODO 1.0: This should really be a model dump not a dict.
     metadata = {
+        "name": exercise.name,
         "scenario_path": scenario_path_str,
         "time_created": exercise.metadata.time_created,
         "scrambling_method": str(exercise.metadata.scrambling_method),

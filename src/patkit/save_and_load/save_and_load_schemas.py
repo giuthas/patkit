@@ -41,7 +41,7 @@ from pydantic import BaseModel, DirectoryPath
 
 from patkit.configuration import PathStructure
 from patkit.constants import (
-    DatasourceNames, SavedObjectTypes, SplineDiffsEnum,
+    DatasourceNames, ExerciseScrambler, SavedObjectTypes, SplineDiffsEnum,
     SplineNNDsEnum, SplineShapesEnum
 )
 from patkit.data_structures import RecordingMetaData
@@ -138,11 +138,8 @@ class AnswerLoadSchema(BaseModel):
     name: str
     author: str
     cursor: int
-    scramble: bool
-    edited: list[bool]
-    patgrid_files: list[str]
-    generation_algorithm: str
-    generation_parameters: dict
+    time_created: datetime
+    time_last_edited: datetime
 
 
 class ExerciseLoadSchema(BaseModel):
@@ -152,9 +149,10 @@ class ExerciseLoadSchema(BaseModel):
     Exercise links to the underlying Scenario (Session) and contains the
     Example reference annotations and any user Answers.
     """
-    object_type: SavedObjectTypes = SavedObjectTypes.EXERCISE
-    format_version: str
-    scenario_meta_file: str
-    example: AnswerLoadSchema
-    answers: dict[str, AnswerLoadSchema]
+    name: str
+    scenario_path: DirectoryPath
+    time_created: datetime
+    scrambling_method: ExerciseScrambler
     cursor: int
+    example_dir: Path
+    answers: list[str]
