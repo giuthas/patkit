@@ -156,6 +156,20 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.tongue_positions = PdQtAnnotator.default_tongue_positions
         self._add_annotations()
 
+        # Plot controller setup
+        self.plot_controller = PlotController(
+            data_config=self.data_config,
+            gui_config=self.gui_config,
+            main_window=self
+        )
+
+        # Add the canvases to their respective Qt Layouts
+        self.mplWindowVerticalLayout.addWidget(self.plot_controller.canvas)
+        self.verticalLayout_6.addWidget(self.plot_controller.ultra_canvas)
+
+        self.plot_controller.canvas.mpl_connect(
+            'button_press_event', self.onpick)
+
         self.gui_color_mode = config.gui_config.color_scheme
         self._update_color_mode()
 
@@ -251,20 +265,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.xlim = xlim
 
-        # Plot controller setup
-        self.plot_controller = PlotController(
-            data_config=self.data_config,
-            gui_config=self.gui_config,
-            main_window=self
-        )
-
-        # Add the canvases to their respective Qt Layouts
-        self.mplWindowVerticalLayout.addWidget(self.plot_controller.canvas)
-        self.verticalLayout_6.addWidget(self.plot_controller.ultra_canvas)
-
-        self.plot_controller.canvas.mpl_connect(
-            'button_press_event', self.onpick)
-
         # Audio playback setup
         self.audio_player = AudioPlayer(self)
         self.play_controls.play.connect(self.audio_player.play)
@@ -292,11 +292,13 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.image_updater()
 
         # For poster screencaps
-        # self.resize(1200, 600)
-        # self.show()
+        self.gui_config.color_scheme = GuiColorScheme.LIGHT
+        self.change_to_light()
+        self.resize(1200, 600)
+        self.show()
 
         # For production
-        self.showMaximized()
+        # self.showMaximized()
         self.update()
 
     def _update_color_mode(self) -> None:
@@ -328,11 +330,15 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """Activate dark mode."""
         self.gui_color_mode = GuiColorScheme.DARK
         mpl_style(dark=True)
+        self.plot_controller.to_annotator_mode(
+            gui_color_mode=self.gui_color_mode)
 
     def change_to_light(self):
         """Activate light mode."""
         self.gui_color_mode = GuiColorScheme.LIGHT
         mpl_style(dark=False)
+        self.plot_controller.to_annotator_mode(
+            gui_color_mode=self.gui_color_mode)
 
     @property
     def current(self):
@@ -373,9 +379,15 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Private helper function for generating a longer title for a figure.
         """
-        text = 'Recording: ' + str(self.index + 1) + '/' + str(self.max_index)
-        text += ', Speaker: ' + str(self.current.metadata.participant_id)
-        text += ', prompt: ' + self.current.metadata.prompt
+        text = ""
+        if self.exercise_drop_down.isEnabled():
+            text += self.exercise_drop_down.currentText() + ', '
+
+        text += 'Recording: ' + str(self.index + 1) + '/' + str(self.max_index)
+        if str(self.current.metadata.participant_id):
+            text += ', Speaker: ' + str(self.current.metadata.participant_id)
+        if self.current.metadata.prompt:
+            text += ', prompt: ' + self.current.metadata.prompt
         return text
 
     def _release_modality_memory(self):

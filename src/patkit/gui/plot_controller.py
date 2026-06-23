@@ -266,12 +266,23 @@ class PlotController:
                 axes.set_yticks([])
                 self.tier_axes.append(axes)
 
+        # Hide all bottom ticks for data axes initially
         for axes in self.data_axes:
             axes.xaxis.set_tick_params(bottom=False, labelbottom=False)
         self.data_axes[0].xaxis.set_tick_params(top=True, labeltop=True)
 
+        # Hide bottom ticks for all tier axes EXCEPT the last one
         for axes in self.tier_axes[:-1]:
             axes.xaxis.set_tick_params(bottom=False, labelbottom=False)
+
+        # Explicitly enforce ticks ON for the bottom-most axis so MultiCursor
+        # doesn't flush them away during updates.
+        if self.tier_axes:
+            self.tier_axes[-1].xaxis.set_tick_params(
+                bottom=True, labelbottom=True)
+        elif self.data_axes:
+            self.data_axes[-1].xaxis.set_tick_params(
+                bottom=True, labelbottom=True)
 
         if 'MonoAudio' not in recording.modalities:
             return
