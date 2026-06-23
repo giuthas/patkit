@@ -64,7 +64,7 @@ from patkit.constants import (
     GuiImageType, OpenPathType, PatkitDirectory
 )
 from patkit.data_structures import (
-    Answer, AnswerMetadata, Exercise, ExerciseMetadata, FileInformation,
+    Exercise, ExerciseMetadata, FileInformation,
     Session
 )
 from patkit.export import (
@@ -750,12 +750,13 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             scenario=self.session,
             name=str(base_dir.name),
             metadata=metadata,
-            file_info=file_info
+            file_info=file_info,
         )
         if not self.new_answer():
             self.exercise = None
             return False
 
+        self.mode = AnnotatorMode.EXERCISE
         self.to_exercise_mode()
         return True
 
@@ -776,6 +777,9 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.exercise = load_exercise(directory)
         self.exercise_base_dir = Path(directory)
         self.session = self.exercise.scenario
+        # self.patgrid = self.exercise.current_answer.current
+        self.mode_drop_down.setCurrentText(AnnotatorMode.EXERCISE.value)
+        # self.to_exercise_mode()
 
     def new_answer(self) -> bool:
         """Create a new blank answer for the current exercise."""
@@ -818,7 +822,9 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         answer = load_answer(answer_dir=directory, exercise=self.exercise)
         self.exercise[answer.name] = answer
         self.exercise.cursor = list(self.exercise.keys()).index(answer.name)
+        # self.patgrid = answer.current
         self.update()
+        self.update_ui()
 
     def compare_to_example(self):
         print("Comparing to model has not yet been implemented.")
