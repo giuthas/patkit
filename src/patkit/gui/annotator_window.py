@@ -79,14 +79,26 @@ class UiMainWindow(object):
         )
         self.side_panel.setSizePolicy(sizePolicy)
         self.side_panel.setMinimumSize(QtCore.QSize(300, 0))
-        self.side_panel.setMaximumSize(QtCore.QSize(300, 16777215))
+        # self.side_panel.setMaximumSize(QtCore.QSize(300, 16777215))
         self.side_panel.setObjectName("side_panel")
         self.side_panel_layout = QtWidgets.QVBoxLayout(self.side_panel)
         self.side_panel_layout.setContentsMargins(0, 0, 0, 0)
         self.side_panel_layout.setObjectName("side_panel_layout")
 
+        # Vertical splitter for side panel (to resize/collapse ultrasound)
+        self.side_panel_splitter = QtWidgets.QSplitter(
+            QtCore.Qt.Orientation.Vertical)
+        self.side_panel_layout.addWidget(self.side_panel_splitter)
+
+        # Top container for side panel
+        self.side_panel_top_widget = QtWidgets.QWidget()
+        self.side_panel_top_layout = QtWidgets.QVBoxLayout(
+            self.side_panel_top_widget)
+        self.side_panel_top_layout.setContentsMargins(0, 0, 0, 0)
+        self.side_panel_splitter.addWidget(self.side_panel_top_widget)
+
         # Mode selection
-        self.mode_controls = QtWidgets.QGroupBox(self.side_panel)
+        self.mode_controls = QtWidgets.QGroupBox(self.side_panel_top_layout)
         self.mode_controls.setMaximumSize(QtCore.QSize(16777215, 80))
         self.mode_controls.setObjectName("mode_box")
         self.mode_layout = QtWidgets.QHBoxLayout(self.mode_controls)
@@ -99,10 +111,10 @@ class UiMainWindow(object):
         self.exercise_drop_down = QtWidgets.QComboBox(self.mode_controls)
         self.exercise_drop_down.addItems(list(ExerciseMode.values()))
         self.mode_layout.addWidget(self.exercise_drop_down)
-        self.side_panel_layout.addWidget(self.mode_controls)
+        self.side_panel_top_layout.addWidget(self.mode_controls)
 
         # Navigation buttons and widgets
-        self.go_to_group = QtWidgets.QGroupBox(self.side_panel)
+        self.go_to_group = QtWidgets.QGroupBox(self.side_panel_top_layout)
         self.go_to_group.setMaximumSize(QtCore.QSize(16777215, 80))
         self.go_to_group.setObjectName("groupBox")
         self.go_to_layout = QtWidgets.QHBoxLayout(self.go_to_group)
@@ -127,10 +139,10 @@ class UiMainWindow(object):
         self.next_button.setMaximumSize(QtCore.QSize(80, 16777215))
         self.next_button.setObjectName("next_button")
         self.go_to_layout.addWidget(self.next_button)
-        self.side_panel_layout.addWidget(self.go_to_group)
+        self.side_panel_top_layout.addWidget(self.go_to_group)
 
         # List view
-        self.database_view = QtWidgets.QListView(self.side_panel)
+        self.database_view = QtWidgets.QListView(self.side_panel_top_layout)
         self.database_model = QtGui.QStandardItemModel()
         self.database_view.setModel(self.database_model)
         self.database_view.setObjectName("databaseView")
@@ -138,14 +150,14 @@ class UiMainWindow(object):
         self.database_view.clicked[QtCore.QModelIndex].connect(
             main_window.on_database_view_clicked)
 
-        self.play_controls = PlayerControls(self.side_panel)
-        self.side_panel_layout.addWidget(self.play_controls)
+        self.play_controls = PlayerControls(self.side_panel_top_layout)
+        self.side_panel_top_layout.addWidget(self.play_controls)
 
         # Ultrasound frame display
-        self.ultrasoundFrame = QtWidgets.QWidget(self.side_panel)
+        self.ultrasoundFrame = QtWidgets.QWidget(self.side_panel_top_layout)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Policy.Preferred,
-            QtWidgets.QSizePolicy.Policy.Fixed
+            QtWidgets.QSizePolicy.Policy.Expanding
         )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -153,13 +165,13 @@ class UiMainWindow(object):
             self.ultrasoundFrame.sizePolicy().hasHeightForWidth()
         )
         self.ultrasoundFrame.setSizePolicy(sizePolicy)
-        self.ultrasoundFrame.setMinimumSize(QtCore.QSize(300, 300))
+        self.ultrasoundFrame.setMinimumSize(QtCore.QSize(300, 100))
         self.ultrasoundFrame.setObjectName("ultrasoundFrame")
 
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.ultrasoundFrame)
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.side_panel_layout.addWidget(self.ultrasoundFrame)
+        self.side_panel_top_layout.addWidget(self.ultrasoundFrame)
 
         # TODO 1.1: Consider bringing these back as a e.g. a mode option like
         # exercises. Or build a customisation example from them. They are
@@ -190,8 +202,15 @@ class UiMainWindow(object):
         # self.verticalLayout_5.addWidget(self.positionRB_3)
         # self.side_panel_layout.addWidget(self.positionRB)
 
-        self.horizontalLayout.addWidget(self.side_panel)
-        self.horizontalLayout.addWidget(self.mplwindow)
+        # Main horizontal splitter for resizable side panel vs plots
+        self.main_splitter = QtWidgets.QSplitter(
+            QtCore.Qt.Orientation.Horizontal)
+        self.main_splitter.addWidget(self.side_panel)
+        self.main_splitter.addWidget(self.mplwindow)
+        # Give the plot window stretching priority when
+        # resizing the whole application
+        self.main_splitter.setStretchFactor(1, 1)
+        self.horizontalLayout.addWidget(self.main_splitter)
 
         main_window.setCentralWidget(self.central_widget)
 
