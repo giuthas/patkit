@@ -381,7 +381,10 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         text = ""
         if self.exercise_drop_down.isEnabled():
-            text += self.exercise_drop_down.currentText() + ', '
+            if self.exercise is not None:
+                text += "Exercise: " + self.exercise.name
+                text += ", Answer: " + self.exercise.current_answer.name
+            text += " -- Showing " + self.exercise_drop_down.currentText() + ' -- '
 
         text += 'Recording: ' + str(self.index + 1) + '/' + str(self.max_index)
         if str(self.current.metadata.participant_id):
@@ -875,19 +878,16 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             exercise_created = self.new_exercise()
             if not exercise_created:
                 self.to_annotator_mode()
-            # new_exercise() calls to_exercise_mode() so we
-            # return now to avoid double execution.
-            return
-        else:
-            self.action_save_exercise.setEnabled(True)
-            self.action_save_answer.setEnabled(True)
-            self.exercise_drop_down.setEnabled(True)
-            self.action_save_all_textgrids.setEnabled(False)
-            self.action_save_current_textgrid.setEnabled(False)
-            self.plot_controller.to_exercise_mode(self.gui_color_mode)
+                return
+        self.action_save_exercise.setEnabled(True)
+        self.action_save_answer.setEnabled(True)
+        self.exercise_drop_down.setEnabled(True)
+        self.action_save_all_textgrids.setEnabled(False)
+        self.action_save_current_textgrid.setEnabled(False)
+        self.plot_controller.to_exercise_mode(self.gui_color_mode)
 
-            self.update()
-            self.update_ui()
+        self.update()
+        self.update_ui()
 
     def to_example_mode(self) -> None:
         """
