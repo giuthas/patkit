@@ -35,22 +35,21 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - There will be a feature freeze at this point.
   - The alpha and beta versions will be mainly quality assurance and code clean up.
 
-## [0.22.2] - 2026-05-26
+## [0.22.2] - 2026-06-25
 
 ### Highlights
 
-- Save formats for Answers.
+- Save and load Exercises and Answers.
 
 ### Added
 
-- Save formats for Answers.
+- Save and load Exercises and Answers.
+- Create new Exercises and Answers.
+- More testing. 
 
 ### Bugs
 
 - [Old Bugs](Bugs.markdown).
-
-### Fixed
-
 
 
 ## [0.22.1] - 2026-05-23
