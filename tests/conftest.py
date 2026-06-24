@@ -4,7 +4,9 @@ from unittest.mock import MagicMock
 import pytest
 from pytestqt.plugin import QtBot
 
-from patkit.configuration import Configuration, DataConfig, GuiConfig
+from patkit.configuration import (
+    Configuration, DataConfig, GuiConfig
+)
 from patkit.constants import AnnotatorMode, GuiColorScheme
 from patkit.data_structures import Recording, Session
 from patkit.qt_annotator import PdQtAnnotator
@@ -13,31 +15,63 @@ from patkit.qt_annotator import PdQtAnnotator
 @pytest.fixture
 def mock_config() -> MagicMock:
     """
-    Create a mock Configuration object with standard nested attributes.
+    Create a robust mock Configuration object mimicking Pydantic models.
 
     Returns
     -------
     MagicMock
         The mocked configuration object.
     """
-    config = MagicMock(spec=Configuration)
-    data_config = MagicMock(spec=DataConfig)
-    gui_config = MagicMock(spec=GuiConfig)
+    config = MagicMock()
 
-    # Setup necessary configuration values for GUI boot
+    # --- DataConfig ---
+    data_config = MagicMock()
+    data_config.epsilon = 0.01
+    config.data_config = data_config
+
+    # --- GuiConfig ---
+    gui_config = MagicMock()
+
+    # 1. Scalar settings
     gui_config.color_scheme = GuiColorScheme.LIGHT
     gui_config.default_font_size = 10
-    gui_config.number_of_data_axes = 1
-    gui_config.data_axes = {}
-    gui_config.general_axes_params = None
+    gui_config.xlim = None
+    gui_config.auto_xlim = True
+    gui_config.display_image_info = True
+    gui_config.display_curve_values = True
+    gui_config.pervasive_tiers = []  # Must be an iterable list, not a mock
 
-    # Setup standard height ratios expected by the PlotController
+    # 2. Mocking the plotted_modality_names method
+    gui_config.plotted_modality_names.return_value = {"MonoAudio"}
+
+    # 3. Height Ratios setup
     height_ratios = MagicMock()
     height_ratios.data_axes = [1]
     height_ratios.tier_axes = [1]
     gui_config.data_and_tier_height_ratios = height_ratios
 
-    config.data_config = data_config
+    # 4. General axes parameters
+    # (Set to None to skip complex fallbacks in tests)
+    gui_config.general_axes_params = None
+
+    # 5. Data Axes definitions (Mimics dict[str, AxesDefinition])
+    axes_def = MagicMock()
+    axes_def.sharex = False
+    axes_def.ylim = None
+    axes_def.auto_ylim = True
+    axes_def.modalities = ["MonoAudio"]
+    axes_def.colors_in_sequence = False
+    axes_def.y_offset = 0
+    axes_def.normalisation = "none"
+    axes_def.modality_names = ["Audio"]
+    axes_def.mark_peaks = False
+    axes_def.legend = False
+
+    gui_config.data_axes = {"wav": axes_def}
+
+    # 6. Properties
+    gui_config.number_of_data_axes = 1
+
     config.gui_config = gui_config
 
     return config
@@ -79,7 +113,7 @@ def mock_session() -> MagicMock:
 
 @pytest.fixture
 def annotator(
-    bot: QtBot,
+    qtbot: QtBot,
     mock_session: MagicMock,
     mock_config: MagicMock,
 ) -> PdQtAnnotator:
@@ -106,7 +140,7 @@ def annotator(
         config=mock_config,
         annotator_mode=AnnotatorMode.ANALYSE,
     )
-    bot.addWidget(widget=widget)
+    qtbot.addWidget(widget=widget)
 
     yield widget
 
