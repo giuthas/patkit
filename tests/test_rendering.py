@@ -3,6 +3,8 @@
 from unittest.mock import MagicMock
 import pytest
 
+import numpy as np
+
 from patkit.constants import AnnotatorMode, ExerciseMode, GuiImageType
 from patkit.gui.plot_controller import PlotController
 
@@ -29,10 +31,10 @@ def rendering_controller(
     """
     mocker.patch("patkit.gui.plot_controller.plot_wav")
     mocker.patch("patkit.gui.plot_controller.plot_spectrogram")
-    mocker.patch("patkit.gui.plot_controller.plot_patgrid_tier")
 
     # We must patch boundary animator to avoid Qt signal connections
     mocker.patch("patkit.gui.plot_controller.BoundaryAnimator")
+    mocker.patch("patkit.gui.plot_controller.MultiCursor")
 
     return plot_controller
 
@@ -89,8 +91,8 @@ def test_draw_plots_with_audio_and_tiers(
 
     mock_audio = MagicMock()
     mock_audio.go_signal = 0.0
-    mock_audio.data = [0.1, 0.2]
-    mock_audio.timevector = [0.0, 1.0]
+    mock_audio.data = np.array([0.1, 0.2])
+    mock_audio.timevector = np.array([0.0, 1.0])
 
     mock_recording = MagicMock()
     mock_recording.excluded = False
@@ -100,15 +102,10 @@ def test_draw_plots_with_audio_and_tiers(
         "selected_frequency": -1
     }
 
-    # Setup a dummy patgrid containing one tier
-    mock_tier = MagicMock()
-    mock_tier.intersects.return_value = [MagicMock()]
-    dummy_patgrid = {"Words": mock_tier}
-
     # Execute
     rendering_controller.draw_plots(
         recording=mock_recording,
-        patgrid=dummy_patgrid,
+        patgrid=rendering_controller.main_window.session.recordings[0].patgrid,
         xlim=(0.0, 2.0),
         mode=AnnotatorMode.ANALYSE,
         exercise_mode=ExerciseMode.ANSWER,
@@ -116,8 +113,8 @@ def test_draw_plots_with_audio_and_tiers(
     )
 
     # Verification
-    # 1. Ensure at least one animator was attached to the tier
-    assert len(rendering_controller.animators) == 1
+    # 1. Ensure animators were attached to the intersecting boundaries
+    assert len(rendering_controller.animators) == 3
 
     # 2. Ensure bottom-most tier axis retains tick labels for Multicursor
     bottom_axis = rendering_controller.tier_axes[-1]

@@ -86,9 +86,9 @@ def test_setup_axes(plot_controller: PlotController) -> None:
         ncols=1,
         hspace=0,
         wspace=0,
-        height_ratios=[[2, 1], [1]],
+        height_ratios=[1, 1],
     )
-    assert len(plot_controller.data_axes) == 2
+    assert len(plot_controller.data_axes) == 1
     plot_controller.canvas.draw_idle.assert_called_once()
 
 

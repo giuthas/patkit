@@ -1,13 +1,90 @@
 """Pytest configuration and shared fixtures for PATKIT GUI testing."""
 
-from unittest.mock import MagicMock
+from pathlib import Path
 import pytest
+
+import numpy as np
+from PyQt6.QtWidgets import QDialog
 from pytestqt.plugin import QtBot
+from unittest.mock import MagicMock
 
 from patkit.constants import AnnotatorMode, GuiColorScheme
 from patkit.data_structures import Recording, Session
-from patkit.gui.plot_controller import PlotController
+from patkit.gui import NewExerciseDialog, NewAnswerDialog, PlotController
+from patkit.patgrid import PatGrid
 from patkit.qt_annotator import PdQtAnnotator
+
+TEXTGRID_CONTENT = """File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0.0
+xmax = 3.76155102041
+tiers? <exists>
+size = 2
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "word"
+        xmin = 0.0
+        xmax = 3.76155102041
+        intervals: size = 3
+            intervals [1]:
+                xmin = 0.0
+                xmax = 2.48151102041
+                text = ""
+            intervals [2]:
+                xmin = 2.48151102041
+                xmax = 2.70455102041
+                text = "ri"
+            intervals [3]:
+                xmin = 2.70455102041
+                xmax = 3.76155102041
+                text = ""
+    item [2]:
+        class = "IntervalTier"
+        name = "segment"
+        xmin = 0.0
+        xmax = 3.76155102041
+        intervals: size = 5
+            intervals [1]:
+                xmin = 0.0
+                xmax = 1.76138178001
+                text = ""
+            intervals [2]:
+                xmin = 1.76138178001
+                xmax = 2.48151102041
+                text = "beep"
+            intervals [3]:
+                xmin = 2.48151102041
+                xmax = 2.54368102041
+                text = "r"
+            intervals [4]:
+                xmin = 2.54368102041
+                xmax = 2.70455102041
+                text = "i"
+            intervals [5]:
+                xmin = 2.70455102041
+                xmax = 3.76155102041
+                text = ""
+"""
+
+
+@pytest.fixture(scope="session")
+def dummy_textgrid_file(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    """
+    Create a temporary TextGrid file for the test session.
+    """
+    file_path = tmp_path_factory.mktemp("data") / "dummy.TextGrid"
+    file_path.write_text(TEXTGRID_CONTENT, encoding="utf-8")
+    return file_path
+
+
+@pytest.fixture
+def real_patgrid(dummy_textgrid_file: Path) -> PatGrid:
+    """
+    Parse the dummy TextGrid file into a real patgrid object.
+    """
+    return PatGrid(dummy_textgrid_file)
 
 
 @pytest.fixture
@@ -76,7 +153,7 @@ def mock_config() -> MagicMock:
 
 
 @pytest.fixture
-def mock_session() -> MagicMock:
+def mock_session(real_patgrid) -> MagicMock:
     """
     Create a mock Session object populated with a dummy recording.
 
@@ -91,9 +168,22 @@ def mock_session() -> MagicMock:
     # Set attributes required by add_items_to_database_view and plots
     recording.basename = "test_recording"
     recording.excluded = False
-    recording.modalities = {"MonoAudio": MagicMock()}
-    recording.patgrid = MagicMock()
-    recording.annotations = {"selected_time": 0.5}
+
+    audio_mock = MagicMock()
+    audio_mock.go_signal = 0.0
+    audio_mock.data = np.array([0.1, 0.2])
+    audio_mock.timevector = np.array([0.0, 1.0])
+    recording.modalities = {"MonoAudio": audio_mock}
+
+    # Tell the mock how to behave when the controller
+    # does `if "MonoAudio" in recording:`
+    recording.__contains__.side_effect = (
+        lambda key: key in recording.modalities
+    )
+    recording.__getitem__.side_effect = lambda key: recording.modalities[key]
+
+    recording.patgrid = real_patgrid
+    recording.annotations = {"selected_time": 0.5, "selected_frequency": -1}
 
     metadata = MagicMock()
     metadata.prompt = "Dummy prompt text"
@@ -112,6 +202,7 @@ def mock_session() -> MagicMock:
 @pytest.fixture
 def annotator(
     qtbot: QtBot,
+    mocker: MagicMock,
     mock_session: MagicMock,
     mock_config: MagicMock,
 ) -> PdQtAnnotator:
@@ -132,6 +223,14 @@ def annotator(
     PdQtAnnotator
         The active, initialized annotator window instance.
     """
+    # 1. Stop accidental dialogs from freezing the test suite!
+    # If ANY test triggers these dialogs, they will instantly
+    # return "Rejected" (Cancel)
+    mocker.patch.object(NewExerciseDialog, "exec",
+                        return_value=QDialog.DialogCode.Rejected)
+    mocker.patch.object(NewAnswerDialog, "exec",
+                        return_value=QDialog.DialogCode.Rejected)
+
     widget = PdQtAnnotator(
         session=mock_session,
         display_tongue=False,

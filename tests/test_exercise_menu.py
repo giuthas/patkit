@@ -4,27 +4,42 @@ from pathlib import Path
 from unittest.mock import MagicMock
 
 from patkit.constants import AnnotatorMode, ExerciseMode, ExerciseScrambler
+from patkit.gui import NewExerciseDialog, NewAnswerDialog
+from patkit.qt_annotator import PdQtAnnotator
 
 
-def test_new_exercise_success(annotator, mocker):
+def test_new_exercise_success(
+    annotator: PdQtAnnotator,
+    mocker: MagicMock,
+) -> None:
     """Test successful creation of a new exercise."""
     mock_path = Path("/dummy/path/exercise_1")
     mock_scrambler = ExerciseScrambler.EQUIDISTANT
 
-    mocker.patch(
-        "patkit.qt_annotator.NewExerciseDialog.get_exercise_params",
+    # 1. Intercept the static method directly on the class
+    mocker.patch.object(
+        NewExerciseDialog, "get_exercise_params",
         return_value=(mock_path, mock_scrambler)
     )
 
-    # Mock new_answer so it doesn't trigger secondary UI dialogs
-    mocker.patch.object(annotator, "new_answer", return_value=True)
+    # 2. Intercept the mandatory answer dialog directly on the class
+    mocker.patch.object(
+        NewAnswerDialog, "get_answer_params",
+        return_value=("Test_Answer", "Test_Author")
+    )
 
+    # 3. Prevent Matplotlib from crashing on the fake test data
+    mocker.patch.object(annotator.plot_controller, "draw_plots")
+
+    # Execute the real logic
     result = annotator.new_exercise()
 
+    # Verify everything actually worked!
     assert result is True
     assert annotator.exercise is not None
     assert annotator.exercise.name == "exercise_1"
     assert annotator.exercise.metadata.scrambling_method == mock_scrambler
+    assert annotator.exercise.current_answer is not None
     assert (
         annotator.mode_drop_down.currentText() == AnnotatorMode.EXERCISE.value
     )
@@ -53,20 +68,30 @@ def test_save_exercise(annotator, mocker):
     mock_save.assert_called_once_with(exercise=dummy_exercise)
 
 
-def test_load_exercise_success(annotator, mocker):
+def test_load_exercise_success(
+    annotator: PdQtAnnotator,
+    mocker: MagicMock,
+) -> None:
     """Test loading an exercise updates the internal state and mode."""
+    # 1. Simulate user selecting a directory
     mocker.patch(
         "patkit.qt_annotator.QFileDialog.getExistingDirectory",
         return_value="/dummy/path/exercise_1"
     )
 
+    # 2. Mock the parsed exercise object being returned
     mock_exercise = MagicMock()
     mock_exercise.scenario = MagicMock()
     mocker.patch("patkit.qt_annotator.load_exercise",
                  return_value=mock_exercise)
 
+    # 3. Prevent Matplotlib from crashing on the mocked exercise data
+    mocker.patch.object(annotator.plot_controller, "draw_plots")
+
+    # Execute the real logic
     annotator.load_exercise()
 
+    # Verify internal states updated correctly
     assert annotator.exercise is mock_exercise
     assert annotator.exercise_base_dir == Path("/dummy/path/exercise_1")
     assert annotator.session is mock_exercise.scenario

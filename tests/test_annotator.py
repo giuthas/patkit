@@ -1,5 +1,7 @@
 """Unit and integration tests for the PdQtAnnotator window interface."""
 
+from unittest.mock import MagicMock
+
 from patkit.constants import AnnotatorMode
 from patkit.qt_annotator import PdQtAnnotator
 
@@ -18,7 +20,10 @@ def test_annotator_initialization(annotator: PdQtAnnotator) -> None:
     assert annotator.display_tongue is False
 
 
-def test_mode_change_updates_ui(annotator: PdQtAnnotator) -> None:
+def test_mode_change_updates_ui(
+    annotator: PdQtAnnotator,
+    mocker: MagicMock
+) -> None:
     """
     Verify that changing the dropdown text triggers the expected mode.
 
@@ -27,5 +32,9 @@ def test_mode_change_updates_ui(annotator: PdQtAnnotator) -> None:
     annotator : PdQtAnnotator
         The initialized annotator window fixture.
     """
-    annotator.mode_drop_down.setCurrentText(text="Exercise")
+    # Prevent the UI from attempting to redraw missing test
+    # data during fallback
+    mocker.patch.object(annotator, "update")
+
+    annotator.mode_drop_down.setCurrentText("Exercise")
     assert annotator.mode == AnnotatorMode.EXERCISE
