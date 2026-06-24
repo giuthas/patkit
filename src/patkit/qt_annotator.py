@@ -487,6 +487,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self._set_audio_for_player()
             self.update()
             self.update_ui()
+            if self.exercise is not None:
+                self.exercise.current_answer.next()
 
     def prev(self):
         """
@@ -499,6 +501,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self._set_audio_for_player()
             self.update()
             self.update_ui()
+            if self.exercise is not None:
+                self.exercise.current_answer.previous()
 
     def go_to_recording(self, index: int):
         """
@@ -514,6 +518,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self._set_audio_for_player()
         self.update()
         self.update_ui()
+        if self.exercise is not None:
+            self.exercise.current_answer.go_to_recording(index=index)
 
     def go_to_callback(self):
         """
@@ -840,7 +846,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         answer = load_answer(answer_dir=directory, exercise=self.exercise)
         self.exercise[answer.name] = answer
         self.exercise.cursor = list(self.exercise.keys()).index(answer.name)
-        # self.patgrid = answer.current
+        self.go_to_recording(self.exercise.current_answer.cursor)
         self.update()
         self.update_ui()
 
