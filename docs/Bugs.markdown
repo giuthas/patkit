@@ -44,6 +44,10 @@
   session. The fix will be removing the first two bindings which are
   unintentional.
 
+## Cursors
+- After playing a recording the plot cursors may take some time to function
+  properly again.
+
 ## Misc
 - Some perturbation related plotting functions have hard-coded subplot
   divisions because Comparison is not yet sortable.

@@ -45,11 +45,14 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 - Save and load Exercises and Answers.
 - Create new Exercises and Answers.
-- More testing. 
+- Cursor tracking playback.
+- More testing.
 
 ### Bugs
 
-- [Old Bugs](Bugs.markdown).
+- After playing a recording the plot cursors may take some time to function
+  properly again.
+- [All Bugs](Bugs.markdown).
 
 
 ## [0.22.1] - 2026-05-23
