@@ -216,6 +216,7 @@ class PatkitDirectory(str, Enum):
     """
     ANSWERS = "answers"
     EXAMPLE = "example"
+    EXERCISE = "exercise"
 
     def __str__(self) -> str:
         """

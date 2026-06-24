@@ -408,7 +408,8 @@ class Session(AbstractDataContainer, UserList):
             config: SessionConfig,
             file_info: FileInformation,
             recordings: list[Recording] | None = None,
-            statistics: dict[str, Statistic] | None = None
+            statistics: dict[str, Statistic] | None = None,
+            exercise: Exercise | None = None,
     ) -> None:
         super().__init__(
             container=None,
@@ -424,6 +425,7 @@ class Session(AbstractDataContainer, UserList):
             self.extend(recordings)
 
         self.config = config
+        self.exercise = exercise
 
     def __repr__(self) -> str:
         representation = "Session:\n"

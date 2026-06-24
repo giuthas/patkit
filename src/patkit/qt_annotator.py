@@ -384,7 +384,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             if self.exercise is not None:
                 text += "Exercise: " + self.exercise.name
                 text += ", Answer: " + self.exercise.current_answer.name
-            text += " -- Showing " + self.exercise_drop_down.currentText() + ' -- '
+            text += " -- Showing " + self.exercise_drop_down.currentText()
+            text += ' -- '
 
         text += 'Recording: ' + str(self.index + 1) + '/' + str(self.max_index)
         if str(self.current.metadata.participant_id):

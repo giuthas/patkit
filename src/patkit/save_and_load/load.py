@@ -365,10 +365,11 @@ def load_recording_session(
         recorded_path=meta.parameters.recorded_path,
         recorded_meta_file=session_config_path.name
     )
+
     session = Session(
         name=meta.name,
         config=session_config,
-        file_info=file_info
+        file_info=file_info,
     )
 
     recordings = load_recordings(
@@ -379,6 +380,15 @@ def load_recording_session(
     )
 
     session.extend(recordings)
+
+    exercise_path = directory / PatkitDirectory.EXERCISE
+    exercise = None
+    if exercise_path.is_dir:
+        exercise = load_exercise(
+            directory=exercise_path,
+            scenario=session,
+        )
+        session.exercise = exercise
 
     return session
 
@@ -438,6 +448,7 @@ def load_answer(
 
 def load_exercise(
         directory: Path | str,
+        scenario: Session,
         exercise_config_path: Path | None = None
 ) -> Exercise:
     """
@@ -447,6 +458,8 @@ def load_exercise(
     ----------
     directory: Path | str
         Root directory of the data.
+    scenario : Session
+        The Session the Exercise is part of.
     exercise_config_path : Path | None
         Path to the exercise configuration file. By default, None.
 
@@ -463,9 +476,6 @@ def load_exercise(
 
     raw_input = nestedtext.load(exercise_config_path)
     meta = ExerciseLoadSchema.model_validate(raw_input)
-
-    session_dir = directory / meta.scenario_path
-    scenario = load_recording_session(directory=session_dir)
 
     metadata = ExerciseMetadata(
         time_created=meta.time_created.isoformat(),
