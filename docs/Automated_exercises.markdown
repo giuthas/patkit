@@ -17,7 +17,7 @@ session_dir/
 ├── patkit_gui.yaml
 ├── trial_1.wav
 ├── trial_1.TextGrid          <-- Original textgrid (Editable as usual)
-└── exercise_name/            <-- Exercise data
+└── exercise/            <-- Exercise data
     ├── exercise_metadata.yaml  <-- Stores "scrambling method: equidistant", time created, etc.
     ├── example/                <-- The generated example/scrambled exercise
     │   └── trial_1.TextGrid    <-- Example is treated as immutable once the exercise has been created.
@@ -29,3 +29,9 @@ session_dir/
             ├── answer_metadata.yaml
             └── trial_1.TextGrid
 ```
+
+Currently, a Patkit Scenario will support only one Exercise, but each Exercise
+may have multiple answers each consisting of multiple TextGrids. If you want to
+create different Exercises based on the same data, then you should copy the
+Session directory in its entirety, delete the possibly existing exercise
+directory from it, and after opening the session in Patkit, run New Exercise.
