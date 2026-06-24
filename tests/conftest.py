@@ -4,11 +4,9 @@ from unittest.mock import MagicMock
 import pytest
 from pytestqt.plugin import QtBot
 
-from patkit.configuration import (
-    Configuration, DataConfig, GuiConfig
-)
 from patkit.constants import AnnotatorMode, GuiColorScheme
 from patkit.data_structures import Recording, Session
+from patkit.gui.plot_controller import PlotController
 from patkit.qt_annotator import PdQtAnnotator
 
 
@@ -46,8 +44,8 @@ def mock_config() -> MagicMock:
 
     # 3. Height Ratios setup
     height_ratios = MagicMock()
-    height_ratios.data_axes = [1]
-    height_ratios.tier_axes = [1]
+    height_ratios.data_axes = 1
+    height_ratios.tier_axes = 1
     gui_config.data_and_tier_height_ratios = height_ratios
 
     # 4. General axes parameters
@@ -145,3 +143,25 @@ def annotator(
     yield widget
 
     widget.close()
+
+
+@pytest.fixture
+def plot_controller(
+    mocker: MagicMock,
+    mock_config: MagicMock,
+    mock_session: MagicMock,
+) -> PlotController:
+    """Shared PlotController fixture with mocked Matplotlib canvas."""
+    mocker.patch("patkit.gui.plot_controller.Figure")
+    mocker.patch("patkit.gui.plot_controller.FigureCanvas")
+    mocker.patch("matplotlib.pyplot.style.use")
+
+    mock_main_window = MagicMock()
+    mock_main_window.session = mock_session
+
+    controller = PlotController(
+        data_config=mock_config.data_config,
+        gui_config=mock_config.gui_config,
+        main_window=mock_main_window
+    )
+    return controller

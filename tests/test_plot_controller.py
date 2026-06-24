@@ -6,54 +6,6 @@ from patkit.constants import GuiColorScheme
 from patkit.gui.plot_controller import PlotController
 
 
-@pytest.fixture
-def mock_gui_config() -> MagicMock:
-    """Fixture to provide a mocked GuiConfig object."""
-    config = MagicMock()
-    config.default_font_size = 10
-    config.number_of_data_axes = 2
-
-    # Mock height ratios configuration
-    ratios = MagicMock()
-    ratios.data_axes = [2, 1]
-    ratios.tier_axes = [1]
-    config.data_and_tier_height_ratios = ratios
-
-    # Mock dictionary structure for data axes
-    axis_1 = MagicMock()
-    axis_1.sharex = False
-    axis_2 = MagicMock()
-    axis_2.sharex = True
-
-    config.data_axes = {
-        "spectrogram": axis_1,
-        "wav": axis_2,
-    }
-    config.general_axes_params = None
-    return config
-
-
-@pytest.fixture
-def plot_controller(
-    mocker: MagicMock,
-    mock_gui_config: MagicMock
-) -> PlotController:
-    """Fixture providing PlotController with mocked matplotlib parts."""
-    mocker.patch(target="patkit.gui.plot_controller.Figure")
-    mocker.patch(target="patkit.gui.plot_controller.FigureCanvas")
-    mocker.patch(target="matplotlib.pyplot.style.use")
-
-    mock_data_config = MagicMock()
-    mock_main_window = MagicMock()
-
-    controller = PlotController(
-        data_config=mock_data_config,
-        gui_config=mock_gui_config,
-        main_window=mock_main_window
-    )
-    return controller
-
-
 def test_to_annotator_mode_light(plot_controller: PlotController) -> None:
     """Test background color change for annotator mode in light theme."""
     plot_controller.to_annotator_mode(gui_color_mode=GuiColorScheme.LIGHT)
