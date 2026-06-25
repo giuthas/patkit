@@ -383,7 +383,8 @@ def load_recording_session(
 
     exercise_path = directory / PatkitDirectory.EXERCISE
     exercise = None
-    if exercise_path.is_dir:
+    print(exercise_path)
+    if exercise_path.is_dir():
         exercise = load_exercise(
             directory=exercise_path,
             scenario=session,

@@ -82,7 +82,7 @@ from patkit.gui import (
 from patkit.initialise import initialise_config, initialise_patkit
 from patkit.path_resolution import get_manifest_scenarios, resolve_open_path
 from patkit.save_and_load import (
-    load_answer, load_exercise, save_answer, save_exercise,
+    load_answer, save_answer, save_exercise,
     save_recording_session,
 )
 from patkit.ui_callbacks import UiCallbacks
@@ -136,13 +136,14 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.display_tongue = display_tongue
 
-        self.mode_drop_down.setCurrentText(annotator_mode.value)
+        if self.session.exercise is None:
+            self.mode_drop_down.setCurrentText(AnnotatorMode.ANALYSE.value)
+            self.mode_drop_down.setEnabled(False)
+        else:
+            self.mode_drop_down.setCurrentText(annotator_mode.value)
+
         self.mode = annotator_mode
         self.exercise_mode = ExerciseMode.ANSWER
-        if annotator_mode is AnnotatorMode.EXERCISE:
-            self.exercise = Exercise(session)
-        else:
-            self.exercise = None
 
         self.data_config = config.data_config
         self.gui_config = config.gui_config
@@ -206,7 +207,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.action_new_exercise.triggered.connect(
             self.new_exercise)
         self.action_save_exercise.triggered.connect(self.save_exercise)
-        self.action_load_exercise.triggered.connect(self.load_exercise)
         self.action_new_answer.triggered.connect(self.new_answer)
         self.action_save_answer.triggered.connect(self.save_answer)
         self.action_load_answer.triggered.connect(self.load_answer)
@@ -380,10 +380,10 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         Private helper function for generating a longer title for a figure.
         """
         text = ""
-        if self.exercise_drop_down.isEnabled():
-            if self.exercise is not None:
-                text += "Exercise: " + self.exercise.name
-                text += ", Answer: " + self.exercise.current_answer.name
+        if self.session.exercise is not None:
+            # if self.session.exercise is not None:
+            text += "Exercise Mode -- "
+            text += "Answer: " + self.session.exercise.current_answer.name
             text += " -- Showing " + self.exercise_drop_down.currentText()
             text += ' -- '
 
@@ -425,7 +425,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self.mode is AnnotatorMode.EXERCISE and
             self.exercise_mode is ExerciseMode.ANSWER
         ):
-            self.patgrid = self.exercise.current_answer[self.index]
+            self.patgrid = self.session.exercise.current_answer[self.index]
         else:
             self.patgrid = self.current.patgrid
 
@@ -488,8 +488,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self._set_audio_for_player()
             self.update()
             self.update_ui()
-            if self.exercise is not None:
-                self.exercise.current_answer.next()
+            if self.session.exercise is not None:
+                self.session.exercise.current_answer.next()
 
     def prev(self):
         """
@@ -502,8 +502,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self._set_audio_for_player()
             self.update()
             self.update_ui()
-            if self.exercise is not None:
-                self.exercise.current_answer.previous()
+            if self.session.exercise is not None:
+                self.session.exercise.current_answer.previous()
 
     def go_to_recording(self, index: int):
         """
@@ -519,8 +519,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self._set_audio_for_player()
         self.update()
         self.update_ui()
-        if self.exercise is not None:
-            self.exercise.current_answer.go_to_recording(index=index)
+        if self.session.exercise is not None:
+            self.session.exercise.current_answer.go_to_recording(index=index)
 
     def go_to_callback(self):
         """
@@ -764,47 +764,35 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
     def new_exercise(self) -> bool:
         """Create a new exercise based on the current Session."""
-        base_dir, scrambling_method = NewExerciseDialog.get_exercise_params(
+        scrambling_method = NewExerciseDialog.get_exercise_params(
             parent=self,
             path=self.session.patkit_path)
-        if base_dir is None:
+        if scrambling_method is None:
             return False
 
-        file_info = FileInformation(patkit_path=base_dir)
+        file_info = FileInformation(
+            patkit_path=self.session.patkit_path / PatkitDirectory.EXERCISE
+        )
         metadata = ExerciseMetadata(
             scrambling_method=ExerciseScrambler(scrambling_method),
         )
-        self.exercise = Exercise(
+        self.session.exercise = Exercise(
             scenario=self.session,
-            name=str(base_dir.name),
+            name=str(PatkitDirectory.EXERCISE),
             metadata=metadata,
             file_info=file_info,
         )
         if not self.new_answer():
-            self.exercise = None
+            self.session.exercise = None
             return False
 
+        self.mode_drop_down.setEnabled(True)
         self.mode_drop_down.setCurrentText(AnnotatorMode.EXERCISE.value)
         return True
 
     def save_exercise(self) -> None:
         """Save the active exercise to disk."""
-        save_exercise(exercise=self.exercise)
-
-    def load_exercise(self) -> None:
-        """Load an existing exercise from disk."""
-        directory = QFileDialog.getExistingDirectory(
-            parent=self,
-            caption="Select Exercise Directory",
-            directory=str(self.session.patkit_path)
-        )
-        if directory == "":
-            return
-
-        self.exercise = load_exercise(directory)
-        self.exercise_base_dir = Path(directory)
-        self.session = self.exercise.scenario
-        self.mode_drop_down.setCurrentText(AnnotatorMode.EXERCISE.value)
+        save_exercise(exercise=self.session.exercise)
 
     def new_answer(self) -> bool:
         """Create a new blank answer for the current exercise."""
@@ -812,20 +800,23 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         if answer_name is None:
             return False
 
-        self.exercise.new_blank_answer(name=answer_name, author=author_name)
+        self.session.exercise.new_blank_answer(
+            name=answer_name, author=author_name)
 
         # Navigate cursor to newly generated answer (always at the end)
-        self.exercise.cursor = len(self.exercise) - 1
+        self.session.exercise.cursor = len(self.session.exercise) - 1
         self.update()
         return True
 
     def save_answer(self) -> None:
         """Save the currently active answer."""
-        save_answer(answer=self.exercise.current_answer)
+        save_answer(answer=self.session.exercise.current_answer)
 
     def load_answer(self) -> None:
         """Load an answer from disk into the active exercise."""
-        answers_dir = self.exercise.patkit_path / PatkitDirectory.ANSWERS
+        answers_dir = (
+            self.session.exercise.patkit_path / PatkitDirectory.ANSWERS
+        )
 
         available_answers = [
             d.name for d in answers_dir.iterdir() if d.is_dir()
@@ -844,10 +835,13 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             return
 
         directory = answers_dir / answer_name
-        answer = load_answer(answer_dir=directory, exercise=self.exercise)
-        self.exercise[answer.name] = answer
-        self.exercise.cursor = list(self.exercise.keys()).index(answer.name)
-        self.go_to_recording(self.exercise.current_answer.cursor)
+        answer = load_answer(
+            answer_dir=directory, exercise=self.session.exercise
+        )
+        self.session.exercise[answer.name] = answer
+        self.session.exercise.cursor = list(
+            self.session.exercise.keys()).index(answer.name)
+        self.go_to_recording(self.session.exercise.current_answer.cursor)
         self.update()
         self.update_ui()
 
@@ -881,11 +875,6 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Set the GUI to exercise mode.
         """
-        if self.exercise is None:
-            exercise_created = self.new_exercise()
-            if not exercise_created:
-                self.to_annotator_mode()
-                return
         self.action_save_exercise.setEnabled(True)
         self.action_save_answer.setEnabled(True)
         self.exercise_drop_down.setEnabled(True)

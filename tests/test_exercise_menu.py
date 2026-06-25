@@ -68,54 +68,6 @@ def test_save_exercise(annotator, mocker):
     mock_save.assert_called_once_with(exercise=dummy_exercise)
 
 
-def test_load_exercise_success(
-    annotator: PdQtAnnotator,
-    mocker: MagicMock,
-) -> None:
-    """Test loading an exercise updates the internal state and mode."""
-    # 1. Simulate user selecting a directory
-    mocker.patch(
-        "patkit.qt_annotator.QFileDialog.getExistingDirectory",
-        return_value="/dummy/path/exercise_1"
-    )
-
-    # 2. Mock the parsed exercise object being returned
-    mock_exercise = MagicMock()
-    mock_exercise.scenario = MagicMock()
-    mocker.patch("patkit.qt_annotator.load_exercise",
-                 return_value=mock_exercise)
-
-    # 3. Prevent Matplotlib from crashing on the mocked exercise data
-    mocker.patch.object(annotator.plot_controller, "draw_plots")
-
-    # Execute the real logic
-    annotator.load_exercise()
-
-    # Verify internal states updated correctly
-    assert annotator.exercise is mock_exercise
-    assert annotator.exercise_base_dir == Path("/dummy/path/exercise_1")
-    assert annotator.session is mock_exercise.scenario
-    assert (
-        annotator.mode_drop_down.currentText() == AnnotatorMode.EXERCISE.value
-    )
-
-
-def test_load_exercise_cancelled(annotator, mocker):
-    """Test load_exercise halts without side effects if dialog is cancelled."""
-    mocker.patch(
-        "patkit.qt_annotator.QFileDialog.getExistingDirectory",
-        return_value=""
-    )
-
-    # Setup dummy state to ensure it is not overwritten
-    original_exercise = MagicMock()
-    annotator.exercise = original_exercise
-
-    annotator.load_exercise()
-
-    assert annotator.exercise is original_exercise
-
-
 def test_new_answer_success(annotator, mocker):
     """Test new answer creation generates an answer and updates the cursor."""
     mocker.patch(

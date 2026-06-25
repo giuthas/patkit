@@ -6,7 +6,7 @@ from pathlib import Path
 
 from PyQt6.QtWidgets import (
     QComboBox, QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout,
-    QLabel, QLineEdit, QPushButton, QSizePolicy, QVBoxLayout, QWidget
+    QLabel, QLineEdit, QSizePolicy, QVBoxLayout, QWidget
 )
 
 from patkit.constants import ExerciseScrambler
@@ -38,14 +38,14 @@ class NewExerciseDialog(QDialog):
         method_box.addWidget(self.method_label)
         method_box.addWidget(self.method_combo)
 
-        path_box = QHBoxLayout()
-        self.path_label = QLabel("Exercise Directory:", self)
-        self.path_field = QLineEdit(str(self.base_dir), self)
-        self.browse_button = QPushButton("Browse...")
-        self.browse_button.clicked.connect(self._browse)
-        path_box.addWidget(self.path_label)
-        path_box.addWidget(self.path_field)
-        path_box.addWidget(self.browse_button)
+        # path_box = QHBoxLayout()
+        # self.path_label = QLabel("Exercise Directory:", self)
+        # self.path_field = QLineEdit(str(self.base_dir), self)
+        # self.browse_button = QPushButton("Browse...")
+        # self.browse_button.clicked.connect(self._browse)
+        # path_box.addWidget(self.path_label)
+        # path_box.addWidget(self.path_field)
+        # path_box.addWidget(self.browse_button)
 
         dialog_buttons = (
             QDialogButtonBox.StandardButton.Ok |
@@ -57,14 +57,14 @@ class NewExerciseDialog(QDialog):
 
         vbox = QVBoxLayout(self)
         vbox.addLayout(method_box)
-        vbox.addLayout(path_box)
+        # vbox.addLayout(path_box)
         vbox.addWidget(self.ok_cancel_buttons)
 
-        self.path_field.setSizePolicy(
-            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        # self.path_field.setSizePolicy(
+        #     QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.setSizePolicy(QSizePolicy.Policy.Expanding,
                            QSizePolicy.Policy.Expanding)
-        self.setMinimumWidth(600)
+        self.setMinimumWidth(400)
 
     def _browse(self) -> None:
         directory = QFileDialog.getExistingDirectory(
@@ -78,18 +78,18 @@ class NewExerciseDialog(QDialog):
 
     def _on_accepted(self) -> None:
         self.scrambling_method = self.method_combo.currentText()
-        self.base_dir = Path(self.path_field.text())
+        # self.base_dir = Path(self.path_field.text())
         self.accept()
 
     @staticmethod
     def get_exercise_params(
         parent: QWidget | None = None,
         path: Path | None = None,
-    ) -> tuple[Path | None, str | None]:
+    ) -> str | None:
         dialog = NewExerciseDialog(parent=parent, path=path)
         if dialog.exec() == QDialog.DialogCode.Rejected:
-            return None, None
-        return dialog.base_dir, dialog.scrambling_method
+            return None
+        return dialog.scrambling_method
 
 
 class NewAnswerDialog(QDialog):
