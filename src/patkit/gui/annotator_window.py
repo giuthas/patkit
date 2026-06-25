@@ -446,14 +446,22 @@ class UiMainWindow(object):
 
         self.action_new_exercise.setText(
             _translate("MainWindow", "New exercise..."))
+        self.action_new_exercise.setShortcut(
+            _translate("MainWindow", "Ctrl+Shift+N"))
         self.action_save_exercise.setText(
             _translate("MainWindow", "Save exercise"))
         self.action_new_answer.setText(
             _translate("MainWindow", "New answer..."))
+        self.action_new_answer.setShortcut(
+            _translate("MainWindow", "Ctrl+N"))
         self.action_save_answer.setText(
             _translate("MainWindow", "Save answer"))
+        self.action_save_answer.setShortcut(
+            _translate("MainWindow", "Ctrl+S"))
         self.action_open_answer.setText(
             _translate("MainWindow", "Open answer..."))
+        self.action_open_answer.setShortcut(
+            _translate("MainWindow", "Ctrl+O"))
         self.action_compare_to_example.setText(
             _translate("MainWindow", "Compare to example"))
         self.action_show_example.setText(
@@ -463,7 +471,8 @@ class UiMainWindow(object):
 
         self.actionNew.setText(_translate("MainWindow", "New"))
         self.action_open.setText(_translate("MainWindow", "Open..."))
-        self.action_open.setShortcut(_translate("MainWindow", "Ctrl+O"))
+        self.action_open.setShortcut(
+            _translate("MainWindow", "Ctrl+Shift+O"))
         self.action_save_all.setText(_translate("MainWindow", "Save all"))
         self.action_save_all.setShortcut(
             _translate("MainWindow", "Ctrl+Shift+S"))
