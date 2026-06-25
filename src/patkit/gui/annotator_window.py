@@ -279,8 +279,8 @@ class UiMainWindow(object):
         self.action_new_answer.setObjectName("action_new_answer")
         self.action_save_answer = QtGui.QAction(main_window)
         self.action_save_answer.setObjectName("action_save_answer")
-        self.action_load_answer = QtGui.QAction(main_window)
-        self.action_load_answer.setObjectName("action_load_answer")
+        self.action_open_answer = QtGui.QAction(main_window)
+        self.action_open_answer.setObjectName("action_open_answer")
         self.action_compare_to_example = QtGui.QAction(main_window)
         self.action_compare_to_example.setObjectName(
             "action_compare_to_example")
@@ -292,7 +292,7 @@ class UiMainWindow(object):
         self.menu_exercise.addSeparator()
         self.menu_exercise.addAction(self.action_new_answer)
         self.menu_exercise.addAction(self.action_save_answer)
-        self.menu_exercise.addAction(self.action_load_answer)
+        self.menu_exercise.addAction(self.action_open_answer)
         self.menu_exercise.addSeparator()
         self.menu_exercise.addAction(self.action_compare_to_example)
         self.menu_exercise.addAction(self.action_show_example)
@@ -452,8 +452,8 @@ class UiMainWindow(object):
             _translate("MainWindow", "New answer..."))
         self.action_save_answer.setText(
             _translate("MainWindow", "Save answer"))
-        self.action_load_answer.setText(
-            _translate("MainWindow", "Load answer..."))
+        self.action_open_answer.setText(
+            _translate("MainWindow", "Open answer..."))
         self.action_compare_to_example.setText(
             _translate("MainWindow", "Compare to example"))
         self.action_show_example.setText(

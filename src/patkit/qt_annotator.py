@@ -136,15 +136,10 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.display_tongue = display_tongue
 
-        if self.session.exercise is None:
-            self.mode_drop_down.setCurrentText(AnnotatorMode.ANALYSE.value)
-            self.mode_drop_down.setEnabled(False)
-        else:
-            self.action_new_exercise.setEnabled(False)
-            self.mode_drop_down.setCurrentText(annotator_mode.value)
-
-        self.mode = annotator_mode
+        self.annotator_mode = annotator_mode
         self.exercise_mode = ExerciseMode.ANSWER
+
+        self._update_exercise_controls()
 
         self.data_config = config.data_config
         self.gui_config = config.gui_config
@@ -210,7 +205,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.action_save_exercise.triggered.connect(self.save_exercise)
         self.action_new_answer.triggered.connect(self.new_answer)
         self.action_save_answer.triggered.connect(self.save_answer)
-        self.action_load_answer.triggered.connect(self.load_answer)
+        self.action_open_answer.triggered.connect(self.open_answer)
         self.action_compare_to_example.triggered.connect(
             self.compare_to_example)
         self.action_show_example.triggered.connect(self.show_example)
@@ -289,7 +284,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.plot_controller.figure.align_ylabels()
 
-        self.mode_selection_changed(self.mode.value)
+        self.mode_selection_changed(self.annotator_mode.value)
         self.image_updater()
 
         # For poster screencaps
@@ -326,6 +321,22 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
                 _logger.warning(
                     "Unrecognised gui style %s.",
                     self.gui_config.color_scheme)
+
+    def _update_exercise_controls(self):
+        if self.session.exercise is None:
+            self.action_new_exercise.setEnabled(True)
+            self.mode_drop_down.setCurrentText(AnnotatorMode.ANALYSE.value)
+            self.mode_drop_down.setEnabled(False)
+            self.action_new_answer.setEnabled(False)
+            self.action_open_answer.setEnabled(False)
+            self.action_show_example.setEnabled(False)
+        else:
+            self.action_new_exercise.setEnabled(False)
+            self.mode_drop_down.setCurrentText(self.annotator_mode.value)
+            self.mode_drop_down.setEnabled(True)
+            self.action_new_answer.setEnabled(True)
+            self.action_open_answer.setEnabled(True)
+            self.action_show_example.setEnabled(True)
 
     def change_to_dark(self):
         """Activate dark mode."""
@@ -381,7 +392,10 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         Private helper function for generating a longer title for a figure.
         """
         text = ""
-        if self.exercise_drop_down.isEnabled():
+        if (
+            self.session.exercise is not None and
+            self.exercise_drop_down.isEnabled()
+        ):
             text += "Exercise Mode -- "
             text += "Answer: " + self.session.exercise.current_answer.name
             text += " -- Showing " + self.exercise_drop_down.currentText()
@@ -422,7 +436,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
     def update(self) -> None:
         """Updates the graphs but not the buttons."""
         if (
-            self.mode is AnnotatorMode.EXERCISE and
+            self.annotator_mode is AnnotatorMode.EXERCISE and
             self.exercise_mode is ExerciseMode.ANSWER
         ):
             self.patgrid = self.session.exercise.current_answer[self.index]
@@ -433,7 +447,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             recording=self.current,
             patgrid=self.patgrid,
             xlim=self.xlim,
-            mode=self.mode,
+            mode=self.annotator_mode,
             exercise_mode=self.exercise_mode,
             title=self._get_long_title(),
         )
@@ -722,7 +736,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         Save the current TextGrid.
         """
         # TODO 0.23: write a call back for asking for overwrite confirmation.
-        if self.mode is AnnotatorMode.EXERCISE:
+        if self.annotator_mode is AnnotatorMode.EXERCISE:
             return
 
         if not self.current.textgrid_path:
@@ -742,7 +756,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         Save the all TextGrids in this Session.
         """
         # TODO 0.22.2: write a call back for asking for overwrite confirmation.
-        if self.mode is AnnotatorMode.EXERCISE:
+        if self.annotator_mode is AnnotatorMode.EXERCISE:
             return
 
         for recording in self.session:
@@ -786,9 +800,9 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self.session.exercise = None
             return False
 
-        self.mode_drop_down.setEnabled(True)
-        self.mode_drop_down.setCurrentText(AnnotatorMode.EXERCISE.value)
-        self.action_new_exercise.setEnabled(False)
+        self.save_exercise()
+        self.annotator_mode = AnnotatorMode.EXERCISE
+        self._update_exercise_controls()
         return True
 
     def save_exercise(self) -> None:
@@ -804,8 +818,12 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.session.exercise.new_blank_answer(
             name=answer_name, author=author_name)
 
-        # Navigate cursor to newly generated answer (always at the end)
+        # Move cursor to newly generated answer (always at the end)
         self.session.exercise.cursor = len(self.session.exercise) - 1
+        self.save_answer()
+
+        self.annotator_mode = AnnotatorMode.EXERCISE
+        self._update_exercise_controls()
         self.update()
         return True
 
@@ -813,8 +831,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """Save the currently active answer."""
         save_answer(answer=self.session.exercise.current_answer)
 
-    def load_answer(self) -> None:
-        """Load an answer from disk into the active exercise."""
+    def open_answer(self) -> None:
+        """Load an Answer and open it in the GUI."""
         answers_dir = (
             self.session.exercise.patkit_path / PatkitDirectory.ANSWERS
         )
@@ -843,6 +861,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.session.exercise.cursor = list(
             self.session.exercise.keys()).index(answer.name)
         self.go_to_recording(self.session.exercise.current_answer.cursor)
+        self.annotator_mode = AnnotatorMode.EXERCISE
+        self._update_exercise_controls()
         self.update()
         self.update_ui()
 
@@ -922,8 +942,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         ValueError
             If encountering an unimplemented mode an Error will be raised.
         """
-        self.mode = AnnotatorMode(mode)
-        match self.mode:
+        self.annotator_mode = AnnotatorMode(mode)
+        match self.annotator_mode:
             case AnnotatorMode.ANALYSE:
                 self.to_annotator_mode()
             case AnnotatorMode.EXERCISE:

@@ -136,7 +136,7 @@ def test_load_answer_success(annotator, mocker, tmp_path):
     mocker.patch.object(annotator, "update")
     mocker.patch.object(annotator, "update_ui")
 
-    annotator.load_answer()
+    annotator.open_answer()
 
     # Verify the answer was loaded and dictionary set
     annotator.exercise.__setitem__.assert_called_once_with(

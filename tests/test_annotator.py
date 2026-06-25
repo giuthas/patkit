@@ -16,7 +16,7 @@ def test_annotator_initialization(annotator: PdQtAnnotator) -> None:
         The initialized annotator window fixture.
     """
     assert annotator.index == 0
-    assert annotator.mode == AnnotatorMode.ANALYSE
+    assert annotator.annotator_mode == AnnotatorMode.ANALYSE
     assert annotator.display_tongue is False
 
 
@@ -37,4 +37,4 @@ def test_mode_change_updates_ui(
     mocker.patch.object(annotator, "update")
 
     annotator.mode_drop_down.setCurrentText("Exercise")
-    assert annotator.mode == AnnotatorMode.EXERCISE
+    assert annotator.annotator_mode == AnnotatorMode.EXERCISE
