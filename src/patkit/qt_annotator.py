@@ -140,6 +140,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             self.mode_drop_down.setCurrentText(AnnotatorMode.ANALYSE.value)
             self.mode_drop_down.setEnabled(False)
         else:
+            self.action_new_exercise.setEnabled(False)
             self.mode_drop_down.setCurrentText(annotator_mode.value)
 
         self.mode = annotator_mode
@@ -380,8 +381,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         Private helper function for generating a longer title for a figure.
         """
         text = ""
-        if self.session.exercise is not None:
-            # if self.session.exercise is not None:
+        if self.exercise_drop_down.isEnabled():
             text += "Exercise Mode -- "
             text += "Answer: " + self.session.exercise.current_answer.name
             text += " -- Showing " + self.exercise_drop_down.currentText()
@@ -788,6 +788,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.mode_drop_down.setEnabled(True)
         self.mode_drop_down.setCurrentText(AnnotatorMode.EXERCISE.value)
+        self.action_new_exercise.setEnabled(False)
         return True
 
     def save_exercise(self) -> None:
