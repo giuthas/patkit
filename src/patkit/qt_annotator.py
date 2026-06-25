@@ -840,6 +840,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         available_answers = [
             d.name for d in answers_dir.iterdir() if d.is_dir()
         ]
+        available_answers.sort()
 
         answer_name, ok = QInputDialog.getItem(
             self,
