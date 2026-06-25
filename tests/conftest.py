@@ -163,6 +163,9 @@ def mock_session(real_patgrid) -> MagicMock:
         The mocked session object containing a minimal Recording structure.
     """
     session = MagicMock(spec=Session)
+    # Prevent PdQtAnnotator.__init__ from crashing when it checks for an exercise
+    session.exercise = None
+
     recording = MagicMock(spec=Recording)
 
     # Set attributes required by add_items_to_database_view and plots

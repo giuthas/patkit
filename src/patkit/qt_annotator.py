@@ -864,11 +864,9 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.session.exercise.cursor = list(
             self.session.exercise.keys()).index(answer.name)
-        self.go_to_recording(self.session.exercise.current_answer.cursor)
         self.annotator_mode = AnnotatorMode.EXERCISE
         self._update_exercise_controls()
-        self.update()
-        self.update_ui()
+        self.go_to_recording(self.session.exercise.current_answer.cursor)
 
     def compare_to_example(self):
         print("Comparing to model has not yet been implemented.")

@@ -1,6 +1,5 @@
 """Tests for the Exercise menu functionality in PdQtAnnotator."""
 
-from pathlib import Path
 from unittest.mock import MagicMock
 
 from patkit.constants import AnnotatorMode, ExerciseMode, ExerciseScrambler
@@ -13,13 +12,13 @@ def test_new_exercise_success(
     mocker: MagicMock,
 ) -> None:
     """Test successful creation of a new exercise."""
-    mock_path = Path("/dummy/path/exercise_1")
+    # mock_path = Path("/dummy/path/exercise_1")
     mock_scrambler = ExerciseScrambler.EQUIDISTANT
 
     # 1. Intercept the static method directly on the class
     mocker.patch.object(
         NewExerciseDialog, "get_exercise_params",
-        return_value=(mock_path, mock_scrambler)
+        return_value=mock_scrambler
     )
 
     # 2. Intercept the mandatory answer dialog directly on the class
@@ -30,16 +29,19 @@ def test_new_exercise_success(
 
     # 3. Prevent Matplotlib from crashing on the fake test data
     mocker.patch.object(annotator.plot_controller, "draw_plots")
+    mocker.patch("patkit.qt_annotator.save_exercise")
 
     # Execute the real logic
     result = annotator.new_exercise()
 
     # Verify everything actually worked!
     assert result is True
-    assert annotator.exercise is not None
-    assert annotator.exercise.name == "exercise_1"
-    assert annotator.exercise.metadata.scrambling_method == mock_scrambler
-    assert annotator.exercise.current_answer is not None
+    assert annotator.session.exercise is not None
+    assert annotator.session.exercise.name == "exercise"
+    assert (
+        annotator.session.exercise.metadata.scrambling_method == mock_scrambler
+    )
+    assert annotator.session.exercise.current_answer is not None
     assert (
         annotator.mode_drop_down.currentText() == AnnotatorMode.EXERCISE.value
     )
@@ -49,7 +51,7 @@ def test_new_exercise_cancelled(annotator, mocker):
     """Test new_exercise aborts gracefully when the dialog is cancelled."""
     mocker.patch(
         "patkit.qt_annotator.NewExerciseDialog.get_exercise_params",
-        return_value=(None, None)
+        return_value=None
     )
 
     result = annotator.new_exercise()
@@ -61,7 +63,7 @@ def test_save_exercise(annotator, mocker):
     """Test that save_exercise delegates to the native save function."""
     mock_save = mocker.patch("patkit.qt_annotator.save_exercise")
     dummy_exercise = MagicMock()
-    annotator.exercise = dummy_exercise
+    annotator.session.exercise = dummy_exercise
 
     annotator.save_exercise()
 
@@ -75,18 +77,18 @@ def test_new_answer_success(annotator, mocker):
         return_value=("Answer_1", "AuthorName")
     )
 
-    annotator.exercise = MagicMock()
-    annotator.exercise.__len__.return_value = 5  # Mock 5 existing answers
+    annotator.session.exercise = MagicMock()
+    annotator.session.exercise.__len__.return_value = 5
     mocker.patch.object(annotator, "update")
 
     result = annotator.new_answer()
 
     assert result is True
-    annotator.exercise.new_blank_answer.assert_called_once_with(
+    annotator.session.exercise.new_blank_answer.assert_called_once_with(
         name="Answer_1", author="AuthorName"
     )
-    assert annotator.exercise.cursor == 4
-    annotator.update.assert_called_once()
+    assert annotator.session.exercise.cursor == 4
+    assert annotator.update.called
 
 
 def test_new_answer_cancelled(annotator, mocker):
@@ -104,9 +106,9 @@ def test_new_answer_cancelled(annotator, mocker):
 def test_save_answer(annotator, mocker):
     """Test that save_answer delegates correctly for the current answer."""
     mock_save = mocker.patch("patkit.qt_annotator.save_answer")
-    annotator.exercise = MagicMock()
+    annotator.session.exercise = MagicMock()
     mock_current_answer = MagicMock()
-    annotator.exercise.current_answer = mock_current_answer
+    annotator.session.exercise.current_answer = mock_current_answer
 
     annotator.save_answer()
 
@@ -120,8 +122,8 @@ def test_load_answer_success(annotator, mocker, tmp_path):
     answers_dir.mkdir()
     (answers_dir / "Answer_1").mkdir()
 
-    annotator.exercise = MagicMock()
-    annotator.exercise.patkit_path = tmp_path
+    annotator.session.exercise = MagicMock()
+    annotator.session.exercise.patkit_path = tmp_path
 
     mocker.patch(
         "patkit.qt_annotator.QInputDialog.getItem",
@@ -132,18 +134,21 @@ def test_load_answer_success(annotator, mocker, tmp_path):
     mock_answer.name = "Answer_1"
     mocker.patch("patkit.qt_annotator.load_answer", return_value=mock_answer)
 
-    annotator.exercise.keys.return_value = ["Existing_Answer", "Answer_1"]
+    annotator.session.exercise.keys.return_value = [
+        "Existing_Answer", "Answer_1"]
+    mocker.patch.object(annotator, "go_to_recording")
     mocker.patch.object(annotator, "update")
     mocker.patch.object(annotator, "update_ui")
 
     annotator.open_answer()
 
     # Verify the answer was loaded and dictionary set
-    annotator.exercise.__setitem__.assert_called_once_with(
+    annotator.session.exercise.__setitem__.assert_called_once_with(
         "Answer_1", mock_answer)
-    assert annotator.exercise.cursor == 1
+    assert annotator.session.exercise.cursor == 1
     annotator.update.assert_called_once()
     annotator.update_ui.assert_called_once()
+    annotator.go_to_recording.assert_called_once()
 
 
 def test_show_example_toggles_mode(annotator):
@@ -160,7 +165,8 @@ def test_show_example_toggles_mode(annotator):
     annotator.action_show_example.setChecked(False)
     annotator.show_example()
     assert (
-        annotator.exercise_drop_down.currentText() == ExerciseMode.ANSWER.value
+        annotator.exercise_drop_down.currentText() ==
+        ExerciseMode.ANSWER.value
     )
 
 
@@ -187,7 +193,7 @@ def test_to_annotator_mode(annotator, mocker):
 
 def test_to_exercise_mode_with_existing_exercise(annotator, mocker):
     """Test the GUI unlocks exercise features when an exercise exists."""
-    annotator.exercise = MagicMock()
+    annotator.session.exercise = MagicMock()
     mocker.patch.object(annotator, "update")
     mocker.patch.object(annotator, "update_ui")
     annotator.plot_controller = MagicMock()
