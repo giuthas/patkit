@@ -88,6 +88,9 @@ def test_new_answer_success(annotator, mocker):
         name="Answer_1", author="AuthorName"
     )
     assert annotator.session.exercise.cursor == 4
+    # TODO: if possible alter the code to only call update once. Currently not
+    # that easy as changing the mode dropdown value triggers an update, but
+    # assigning the same value does not.
     assert annotator.update.called
 
 
