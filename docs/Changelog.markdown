@@ -35,17 +35,17 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - There will be a feature freeze at this point.
   - The alpha and beta versions will be mainly quality assurance and code clean up.
 
-## [0.22.2] - 2026-06-25
+## [0.22.2] - 2026-06-26
 
 ### Highlights
 
-- Save and load Exercises and Answers.
+- Save and open Exercises and Answers.
 
 ### Added
 
-- Save and load Exercises and Answers.
+- Save and open Exercises and Answers.
 - Create new Exercises and Answers.
-- Cursor tracking playback.
+- Cursor tracking audio playback.
 - More testing.
 
 ### Bugs

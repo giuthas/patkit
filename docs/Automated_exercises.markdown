@@ -1,10 +1,84 @@
 # Automated exercises
 
-## Alignment exercises
+Exercises in Patkit are managed within a [Session
+directory](DataManagement.markdown), which serves as the base Scenario.
 
-TODO: description of how to create exercises, share them, and answer them. 
+## Annotator modes
 
-### Directory structure
+The Annotator has two modes - Analyse and Exercise - and the Exercise mode is
+split into tow submodes: Answer and Example.
+
+In Exercise mode, Patkit isolates the Answer TextGrids to protect the primary
+reference data. In the current implementation (v0.22.2). The Session's
+TextGrids are copied into a immutable example set when an exercise is created.
+The original TextGrids remain editable in Analyse mode, but editing them will
+not update the example TextGrids after creating an Exercise.
+
+## Creating Exercises
+
+Converting a Session into an Exercise Patkit will automatically generate an
+`exercise` folder containing the exercise metadata file
+(`exercise_metadata.yaml`) and an `answers` folder with one new answer (see
+[Directory Structure](Automated_exercises.markdown#directory-structure) below
+for more detail).
+
+1. Open your session in Patkit and in the **Exercise** menu select **New
+   Exercise**.
+2. A setup dialog will prompt you to select a scrambling method (at the moment
+   only option is `Equidistant`) to scramble the alignment boundaries. 
+3. Creating a new exercise immediately opens a dialogue window for a **"New
+   Answer"**. You must provide an answer name to proceed. Cancelling
+   this subsequent answer dialog aborts the exercise creation process.
+4. Upon successful creation, Patkit automatically saves the exercise parameters
+   to disk and shifts the main application window from **Analyse** mode into
+   **Exercise** mode.
+
+### Handling Multiple Exercises 
+
+Patkit Scenarios/Sessions can only support a single Exercise at a time. To
+create a different exercise variant using the same source data, duplicate the
+entire Session directory, delete the existing `exercise/` folder within that
+copy, open the cloned session in Patkit, and run the "New Exercise" process
+fresh.
+
+
+## Answering and Managing Exercises
+
+**Creating a new answer:** In the **Exercise** menu select **New answer...**. This opens a dialog prompting for a name for the answer and an optional Author Name. On pressing 'OK' Patkit will open the new Answer in the GUI.
+
+**Saving Progress:** Save Answer writes the current answer's TextGrids into the `answers` directory. 
+
+**Resuming an Assignment:** Open the Session in Patkit and in the **Exercise**
+menu select **Open answer...**. This shows a dialog window with dropdown menu
+to select an Answer to open.
+
+**Reviewing Examples:** Toggle **Show example** in the **Exercise** menu or
+change the exercise dropdown selector from **Answer** to **Example** - also via
+the shortcut Alt+E. This swaps the display to the example answer and vice
+versa.
+
+
+## Sharing Exercises
+
+To distribute an exercise as an assignment, you must bundle the baseline scenario data and the scrambled structures while ensuring active or completed answers are excluded.
+
+### What to Include 
+
+1. The full Session directory—which encompasses primary data files (like `.wav`
+   recordings), system manifests, GUI color/layout configuration parameters,
+   and the original baseline text grids.
+2. The generated `exercise/` folder containing the `exercise_metadata.yaml`
+   manifest and scrambled tier data.
+
+### Crucial Deletion Step 
+
+Before sharing the zipped or bundled directory, you will probably want to
+completely delete the `answers/` sub-directory located inside the `exercise/`
+folder. This strips out any active or local test workspaces so recipients
+receive a perfectly clean assignment.
+
+
+## Directory Structure
 
 Below is a simple example of how Exercise and Answer files are saved when the
 Exercise is based on a Patkit Scenario that has all its files in the same
@@ -35,3 +109,5 @@ may have multiple answers each consisting of multiple TextGrids. If you want to
 create different Exercises based on the same data, then you should copy the
 Session directory in its entirety, delete the possibly existing exercise
 directory from it, and after opening the session in Patkit, run New Exercise.
+
+
