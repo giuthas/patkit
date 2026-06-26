@@ -44,9 +44,12 @@ fresh.
 
 ## Answering and Managing Exercises
 
-**Creating a new answer:** In the **Exercise** menu select **New answer...**. This opens a dialog prompting for a name for the answer and an optional Author Name. On pressing 'OK' Patkit will open the new Answer in the GUI.
+**Creating a new answer:** In the **Exercise** menu select **New answer...**.
+This opens a dialog prompting for a name for the answer and an optional Author
+Name. On pressing 'OK' Patkit will open the new Answer in the GUI.
 
-**Saving Progress:** Save Answer writes the current answer's TextGrids into the `answers` directory. 
+**Saving Progress:** Save Answer writes the current answer's TextGrids into the
+`answers` directory. 
 
 **Resuming an Assignment:** Open the Session in Patkit and in the **Exercise**
 menu select **Open answer...**. This shows a dialog window with dropdown menu
@@ -60,22 +63,9 @@ versa.
 
 ## Sharing Exercises
 
-To distribute an exercise as an assignment, you must bundle the baseline scenario data and the scrambled structures while ensuring active or completed answers are excluded.
-
-### What to Include 
-
-1. The full Session directory—which encompasses primary data files (like `.wav`
-   recordings), system manifests, GUI color/layout configuration parameters,
-   and the original baseline text grids.
-2. The generated `exercise/` folder containing the `exercise_metadata.yaml`
-   manifest and scrambled tier data.
-
-### Crucial Deletion Step 
-
-Before sharing the zipped or bundled directory, you will probably want to
-completely delete the `answers/` sub-directory located inside the `exercise/`
-folder. This strips out any active or local test workspaces so recipients
-receive a perfectly clean assignment.
+Sharing exercises is currently (v0.22.2) a somewhat manual process. However,
+the next release (v0.22.3) will include an automated way of bundling an
+Exercise for sharing.
 
 
 ## Directory Structure
