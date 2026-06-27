@@ -43,7 +43,7 @@ from .data_structures import (
     Exercise, Answer, Manifest, Modality, Recording, Session
 )
 from .metadata_classes import (
-    FileInformation,
+    AnswerMetadata, ExerciseMetadata, FileInformation,
     ModalityData, ModalityMetaData, PointAnnotations,
     RecordingMetaData, StatisticMetaData
 )

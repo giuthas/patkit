@@ -64,6 +64,36 @@
 
             </li>
             <li>
+                    <a class="class" href="#AnswerMetadata">AnswerMetadata</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#AnswerMetadata.scramble">scramble</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#AnswerMetadata.author">author</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#AnswerMetadata.time_created">time_created</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#AnswerMetadata.time_last_edited">time_last_edited</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#ExerciseMetadata">ExerciseMetadata</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#ExerciseMetadata.time_created">time_created</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExerciseMetadata.scrambling_method">scrambling_method</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
                     <a class="class" href="#ModalityData">ModalityData</a>
                             <ul class="memberlist">
                         <li>
@@ -223,7 +253,7 @@
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>    <span class="n">PointAnnotationParams</span>
 </span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="p">)</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnnotationType</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnnotationType</span><span class="p">,</span> <span class="n">ExerciseScrambler</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.external_class_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PatkitBaseModel</span>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.utility_functions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>    <span class="n">is_sequence_form</span><span class="p">,</span> <span class="n">stem_path</span>
@@ -297,146 +327,194 @@
 </span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>        <span class="k">return</span> <span class="n">stem_path</span><span class="p">(</span><span class="n">basepath</span><span class="p">)</span>
 </span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>
 </span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="nd">@dataclass</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModalityData</span><span class="p">:</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">    Data passed from Modality generation into Modality.</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">    None of the fields are optional. This class represents already loaded data.</span>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">    Axes order for the data field is [time, coordinate axes and datatypes,</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="sd">    data points] and further structure. For example stereo audio data would be</span>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="sd">    [time, channels] or just [time] for mono audio. For a more complex example,</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="sd">    splines from AAA have [time, x-y-confidence, spline points] or [time,</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="sd">    r-phi-confidence, spline points] for data in polar coordinates.</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>    <span class="n">sampling_rate</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>    <span class="n">timevector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>
-</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModalityMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
-</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a><span class="sd">    Baseclass of Modalities&#39; metadata classes.</span>
-</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>    <span class="n">parent_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>    <span class="n">is_downsampled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>    <span class="n">downsampling_ratio</span><span class="p">:</span> <span class="n">PositiveInt</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>    <span class="n">timestep_matched_downsampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AnswerMetadata</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">    Metadata of an Exercise Answer.</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">    Parameters</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">    ----------</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">    scramble : bool</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">        Whether to scramble the PatGrids upon creation.</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="sd">    author : str</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="sd">        The author/user of the answer.</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="sd">    time_created : str | None</span>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="sd">        ISO formatted timestamp of when this answer was created.</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="sd">    time_last_edited : str | None</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">        ISO formatted timestamp of when this answer was last edited.</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>    <span class="n">scramble</span><span class="p">:</span> <span class="nb">bool</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>    <span class="n">author</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>    <span class="n">time_created</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>    <span class="n">time_last_edited</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">model_post_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">__context</span><span class="p">):</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_created</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">time_created</span> <span class="o">=</span> <span class="n">now</span>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_last_edited</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">time_last_edited</span> <span class="o">=</span> <span class="n">now</span>
 </span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>
 </span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>
-</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="nd">@dataclass</span>
-</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="k">class</span><span class="w"> </span><span class="nc">PointAnnotations</span><span class="p">:</span>
-</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a><span class="sd">    Time point annotations for a Modality.</span>
-</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a>
-</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="sd">    For each modality there should be only one of these for each kind of</span>
-</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="sd">    annotation type.</span>
-</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a>
-</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a><span class="sd">    annotation_type : AnnotationType</span>
-</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a><span class="sd">        unique identifier for the annotation type</span>
-</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="sd">    indeces : np.ndarray</span>
-</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a><span class="sd">        indeces of the annotation points. `modality_data.data[indeces[i]]` and</span>
-</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a><span class="sd">        `modality_data.timevector[indeces[i]]` correspond to the annotation at</span>
-</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a><span class="sd">        `i`.</span>
-</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a><span class="sd">    times : np.ndarray</span>
-</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="sd">        timestamps of the annotation points</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="sd">    generating_parameters : dict</span>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a><span class="sd">        the function call arguments and other parameters used in generating</span>
-</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="sd">        these annotations.</span>
-</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a><span class="sd">    properties : dict</span>
-</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a><span class="sd">        a dictionary containing arrays of each of the annotation properties</span>
-</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a><span class="sd">        expected for this annotation type.</span>
-</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>    <span class="n">annotation_type</span><span class="p">:</span> <span class="n">AnnotationType</span>
-</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>    <span class="n">indeces</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>    <span class="n">times</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>    <span class="n">generating_parameters</span><span class="p">:</span> <span class="n">PointAnnotationParams</span>
-</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>    <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span>
-</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>
-</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_annotation</span><span class="p">(</span>
-</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>            <span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="sd">        This method has not been implemented yet.</span>
-</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="sd">        Index and time should be mutually exclusive.</span>
-</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>
-</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="sd">        Parameters</span>
-</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a><span class="sd">        ----------</span>
-</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="sd">        index : int</span>
-</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="sd">            index at which the annotation is to be added</span>
-</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="sd">        time : float</span>
-</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a><span class="sd">            time at which the annotation is to be added</span>
-</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a><span class="sd">        properties : dict</span>
-</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a><span class="sd">            the annotation properties that will be added to the arrays in this</span>
-</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="sd">            PointAnnotations&#39; properties dict.</span>
-</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="sd">        Raises</span>
-</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="sd">        ------</span>
-</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="sd">        NotImplementedError</span>
-</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a><span class="sd">            This method has not been implemented yet.</span>
-</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>            <span class="s2">&quot;Adding annotations to &quot;</span>
-</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>            <span class="s2">&quot;PointAnnotations hasn&#39;t been implemented yet.&quot;</span><span class="p">)</span>
-</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>
-</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_lower_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a><span class="sd">        Apply a lower time limit to the annotations.</span>
-</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>
-</span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a><span class="sd">        This removes the annotation points before the given time limit.</span>
-</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a>
-</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a><span class="sd">        Parameters</span>
-</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a><span class="sd">        ----------</span>
-</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a><span class="sd">        time_min : float</span>
-</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a><span class="sd">            The time limit.</span>
-</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&gt;=</span> <span class="n">time_min</span><span class="p">)</span>
-</span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a>
-</span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
-</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
-</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">limit</span><span class="p">:]</span>
-</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-</span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ExerciseMetadata</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="sd">    Metadata for an Exercise.</span>
+</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">    Parameters</span>
+</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="sd">    ----------</span>
+</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="sd">    time_created : str | None</span>
+</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a><span class="sd">        ISO formatted timestamp of when this exercise was created.</span>
+</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a><span class="sd">    scrambling_method : str</span>
+</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a><span class="sd">        The method used to scramble the exercise TextGrids.</span>
+</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a>    <span class="n">time_created</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>    <span class="n">scrambling_method</span><span class="p">:</span> <span class="n">ExerciseScrambler</span> <span class="o">=</span> <span class="n">ExerciseScrambler</span><span class="o">.</span><span class="n">EQUIDISTANT</span>
+</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a>
+</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">model_post_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">__context</span><span class="p">):</span>
+</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a>        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_created</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">time_created</span> <span class="o">=</span> <span class="n">now</span>
+</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a>
+</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>
+</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a><span class="nd">@dataclass</span>
+</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModalityData</span><span class="p">:</span>
+</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a><span class="sd">    Data passed from Modality generation into Modality.</span>
+</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>
+</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="sd">    None of the fields are optional. This class represents already loaded data.</span>
+</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>
+</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a><span class="sd">    Axes order for the data field is [time, coordinate axes and datatypes,</span>
+</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a><span class="sd">    data points] and further structure. For example stereo audio data would be</span>
+</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a><span class="sd">    [time, channels] or just [time] for mono audio. For a more complex example,</span>
+</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a><span class="sd">    splines from AAA have [time, x-y-confidence, spline points] or [time,</span>
+</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="sd">    r-phi-confidence, spline points] for data in polar coordinates.</span>
+</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>    <span class="n">sampling_rate</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>    <span class="n">timevector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>
+</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModalityMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="sd">    Baseclass of Modalities&#39; metadata classes.</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>    <span class="n">parent_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>    <span class="n">is_downsampled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>    <span class="n">downsampling_ratio</span><span class="p">:</span> <span class="n">PositiveInt</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>    <span class="n">timestep_matched_downsampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="nd">@dataclass</span>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a><span class="k">class</span><span class="w"> </span><span class="nc">PointAnnotations</span><span class="p">:</span>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a><span class="sd">    Time point annotations for a Modality.</span>
+</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>
+</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a><span class="sd">    For each modality there should be only one of these for each kind of</span>
+</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a><span class="sd">    annotation type.</span>
+</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>
+</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a><span class="sd">    annotation_type : AnnotationType</span>
+</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a><span class="sd">        unique identifier for the annotation type</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a><span class="sd">    indeces : np.ndarray</span>
+</span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a><span class="sd">        indeces of the annotation points. `modality_data.data[indeces[i]]` and</span>
+</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a><span class="sd">        `modality_data.timevector[indeces[i]]` correspond to the annotation at</span>
+</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a><span class="sd">        `i`.</span>
+</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a><span class="sd">    times : np.ndarray</span>
+</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a><span class="sd">        timestamps of the annotation points</span>
+</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a><span class="sd">    generating_parameters : dict</span>
+</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a><span class="sd">        the function call arguments and other parameters used in generating</span>
+</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a><span class="sd">        these annotations.</span>
+</span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a><span class="sd">    properties : dict</span>
+</span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a><span class="sd">        a dictionary containing arrays of each of the annotation properties</span>
+</span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a><span class="sd">        expected for this annotation type.</span>
+</span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>    <span class="n">annotation_type</span><span class="p">:</span> <span class="n">AnnotationType</span>
+</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a>    <span class="n">indeces</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>    <span class="n">times</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>    <span class="n">generating_parameters</span><span class="p">:</span> <span class="n">PointAnnotationParams</span>
+</span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a>    <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span>
 </span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a>
-</span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_upper_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a><span class="sd">        Apply an upper time limit to the annotations.</span>
-</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a>
-</span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a><span class="sd">        This removes the annotation points after the given time limit.</span>
-</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>
-</span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a><span class="sd">        Parameters</span>
-</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a><span class="sd">        ----------</span>
-</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a><span class="sd">        time_max : float</span>
-</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a><span class="sd">            The time limit.</span>
-</span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&lt;=</span> <span class="n">time_max</span><span class="p">)</span>
-</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>
-</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
-</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
-</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][:</span><span class="n">limit</span><span class="p">]</span>
-</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-</span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>
-</span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>
-</span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RecordingMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
-</span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Basic metadata that any Recording should reasonably have.&quot;&quot;&quot;</span>
-</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a>    <span class="n">time_of_recording</span><span class="p">:</span> <span class="n">datetime</span>
-</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a>    <span class="n">participant_id</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a>
+</span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_annotation</span><span class="p">(</span>
+</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a>            <span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a><span class="sd">        This method has not been implemented yet.</span>
+</span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a>
+</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a><span class="sd">        Index and time should be mutually exclusive.</span>
+</span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a>
+</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a><span class="sd">        Parameters</span>
+</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a><span class="sd">        ----------</span>
+</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a><span class="sd">        index : int</span>
+</span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a><span class="sd">            index at which the annotation is to be added</span>
+</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a><span class="sd">        time : float</span>
+</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a><span class="sd">            time at which the annotation is to be added</span>
+</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a><span class="sd">        properties : dict</span>
+</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a><span class="sd">            the annotation properties that will be added to the arrays in this</span>
+</span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a><span class="sd">            PointAnnotations&#39; properties dict.</span>
+</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>
+</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a><span class="sd">        Raises</span>
+</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a><span class="sd">        ------</span>
+</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a><span class="sd">        NotImplementedError</span>
+</span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a><span class="sd">            This method has not been implemented yet.</span>
+</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+</span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a>            <span class="s2">&quot;Adding annotations to &quot;</span>
+</span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a>            <span class="s2">&quot;PointAnnotations hasn&#39;t been implemented yet.&quot;</span><span class="p">)</span>
+</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>
+</span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_lower_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a><span class="sd">        Apply a lower time limit to the annotations.</span>
 </span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>
-</span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StatisticMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
-</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a><span class="sd">    Baseclass of Statistics&#39; metadata classes.</span>
-</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a>    <span class="n">parent_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a><span class="sd">        This removes the annotation points before the given time limit.</span>
+</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>
+</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a><span class="sd">        Parameters</span>
+</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a><span class="sd">        ----------</span>
+</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a><span class="sd">        time_min : float</span>
+</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a><span class="sd">            The time limit.</span>
+</span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&gt;=</span> <span class="n">time_min</span><span class="p">)</span>
+</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>
+</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+</span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+</span><span id="L-268"><a href="#L-268"><span class="linenos">268</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">limit</span><span class="p">:]</span>
+</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+</span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a>
+</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_upper_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a><span class="sd">        Apply an upper time limit to the annotations.</span>
+</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>
+</span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a><span class="sd">        This removes the annotation points after the given time limit.</span>
+</span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a>
+</span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a><span class="sd">        Parameters</span>
+</span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a><span class="sd">        ----------</span>
+</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a><span class="sd">        time_max : float</span>
+</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a><span class="sd">            The time limit.</span>
+</span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&lt;=</span> <span class="n">time_max</span><span class="p">)</span>
+</span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a>
+</span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+</span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][:</span><span class="n">limit</span><span class="p">]</span>
+</span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+</span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a>
+</span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a>
+</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RecordingMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Basic metadata that any Recording should reasonably have.&quot;&quot;&quot;</span>
+</span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a>    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a>    <span class="n">time_of_recording</span><span class="p">:</span> <span class="n">datetime</span>
+</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a>    <span class="n">participant_id</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a>
+</span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a>
+</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StatisticMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a><span class="sd">    Baseclass of Statistics&#39; metadata classes.</span>
+</span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>    <span class="n">parent_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 </span></pre></div>
 
 
@@ -709,6 +787,200 @@ Modality's parent's path) and the name with the suffix(es) dropped.</p>
 
                             </div>
                 </section>
+                <section id="AnswerMetadata">
+                            <input id="AnswerMetadata-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">AnswerMetadata</span><wbr>(<span class="base"><a href="../external_class_extensions/base_model_extensions.html#PatkitBaseModel">patkit.external_class_extensions.base_model_extensions.PatkitBaseModel</a></span>):
+
+                <label class="view-source-button" for="AnswerMetadata-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#AnswerMetadata"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AnswerMetadata-120"><a href="#AnswerMetadata-120"><span class="linenos">120</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AnswerMetadata</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="AnswerMetadata-121"><a href="#AnswerMetadata-121"><span class="linenos">121</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="AnswerMetadata-122"><a href="#AnswerMetadata-122"><span class="linenos">122</span></a><span class="sd">    Metadata of an Exercise Answer.</span>
+</span><span id="AnswerMetadata-123"><a href="#AnswerMetadata-123"><span class="linenos">123</span></a>
+</span><span id="AnswerMetadata-124"><a href="#AnswerMetadata-124"><span class="linenos">124</span></a><span class="sd">    Parameters</span>
+</span><span id="AnswerMetadata-125"><a href="#AnswerMetadata-125"><span class="linenos">125</span></a><span class="sd">    ----------</span>
+</span><span id="AnswerMetadata-126"><a href="#AnswerMetadata-126"><span class="linenos">126</span></a><span class="sd">    scramble : bool</span>
+</span><span id="AnswerMetadata-127"><a href="#AnswerMetadata-127"><span class="linenos">127</span></a><span class="sd">        Whether to scramble the PatGrids upon creation.</span>
+</span><span id="AnswerMetadata-128"><a href="#AnswerMetadata-128"><span class="linenos">128</span></a><span class="sd">    author : str</span>
+</span><span id="AnswerMetadata-129"><a href="#AnswerMetadata-129"><span class="linenos">129</span></a><span class="sd">        The author/user of the answer.</span>
+</span><span id="AnswerMetadata-130"><a href="#AnswerMetadata-130"><span class="linenos">130</span></a><span class="sd">    time_created : str | None</span>
+</span><span id="AnswerMetadata-131"><a href="#AnswerMetadata-131"><span class="linenos">131</span></a><span class="sd">        ISO formatted timestamp of when this answer was created.</span>
+</span><span id="AnswerMetadata-132"><a href="#AnswerMetadata-132"><span class="linenos">132</span></a><span class="sd">    time_last_edited : str | None</span>
+</span><span id="AnswerMetadata-133"><a href="#AnswerMetadata-133"><span class="linenos">133</span></a><span class="sd">        ISO formatted timestamp of when this answer was last edited.</span>
+</span><span id="AnswerMetadata-134"><a href="#AnswerMetadata-134"><span class="linenos">134</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AnswerMetadata-135"><a href="#AnswerMetadata-135"><span class="linenos">135</span></a>    <span class="n">scramble</span><span class="p">:</span> <span class="nb">bool</span>
+</span><span id="AnswerMetadata-136"><a href="#AnswerMetadata-136"><span class="linenos">136</span></a>    <span class="n">author</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="AnswerMetadata-137"><a href="#AnswerMetadata-137"><span class="linenos">137</span></a>    <span class="n">time_created</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="AnswerMetadata-138"><a href="#AnswerMetadata-138"><span class="linenos">138</span></a>    <span class="n">time_last_edited</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="AnswerMetadata-139"><a href="#AnswerMetadata-139"><span class="linenos">139</span></a>
+</span><span id="AnswerMetadata-140"><a href="#AnswerMetadata-140"><span class="linenos">140</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">model_post_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">__context</span><span class="p">):</span>
+</span><span id="AnswerMetadata-141"><a href="#AnswerMetadata-141"><span class="linenos">141</span></a>        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+</span><span id="AnswerMetadata-142"><a href="#AnswerMetadata-142"><span class="linenos">142</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_created</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="AnswerMetadata-143"><a href="#AnswerMetadata-143"><span class="linenos">143</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">time_created</span> <span class="o">=</span> <span class="n">now</span>
+</span><span id="AnswerMetadata-144"><a href="#AnswerMetadata-144"><span class="linenos">144</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_last_edited</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="AnswerMetadata-145"><a href="#AnswerMetadata-145"><span class="linenos">145</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">time_last_edited</span> <span class="o">=</span> <span class="n">now</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Metadata of an Exercise Answer.</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<ul>
+<li><strong>scramble</strong> (bool):
+Whether to scramble the PatGrids upon creation.</li>
+<li><strong>author</strong> (str):
+The author/user of the answer.</li>
+<li><strong>time_created</strong> (str | None):
+ISO formatted timestamp of when this answer was created.</li>
+<li><strong>time_last_edited</strong> (str | None):
+ISO formatted timestamp of when this answer was last edited.</li>
+</ul>
+</div>
+
+
+                            <div id="AnswerMetadata.scramble" class="classattr">
+                                <div class="attr variable">
+            <span class="name">scramble</span><span class="annotation">: bool</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerMetadata.scramble"></a>
+    
+    
+
+                            </div>
+                            <div id="AnswerMetadata.author" class="classattr">
+                                <div class="attr variable">
+            <span class="name">author</span><span class="annotation">: str</span>        =
+<span class="default_value">&#39;&#39;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerMetadata.author"></a>
+    
+    
+
+                            </div>
+                            <div id="AnswerMetadata.time_created" class="classattr">
+                                <div class="attr variable">
+            <span class="name">time_created</span><span class="annotation">: str | None</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerMetadata.time_created"></a>
+    
+    
+
+                            </div>
+                            <div id="AnswerMetadata.time_last_edited" class="classattr">
+                                <div class="attr variable">
+            <span class="name">time_last_edited</span><span class="annotation">: str | None</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerMetadata.time_last_edited"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="../external_class_extensions/base_model_extensions.html#PatkitBaseModel">patkit.external_class_extensions.base_model_extensions.PatkitBaseModel</a></dt>
+                                <dd id="AnswerMetadata.empty_str_to_none" class="function"><a href="../external_class_extensions/base_model_extensions.html#PatkitBaseModel.empty_str_to_none">empty_str_to_none</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="ExerciseMetadata">
+                            <input id="ExerciseMetadata-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ExerciseMetadata</span><wbr>(<span class="base"><a href="../external_class_extensions/base_model_extensions.html#PatkitBaseModel">patkit.external_class_extensions.base_model_extensions.PatkitBaseModel</a></span>):
+
+                <label class="view-source-button" for="ExerciseMetadata-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ExerciseMetadata"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ExerciseMetadata-148"><a href="#ExerciseMetadata-148"><span class="linenos">148</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ExerciseMetadata</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="ExerciseMetadata-149"><a href="#ExerciseMetadata-149"><span class="linenos">149</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ExerciseMetadata-150"><a href="#ExerciseMetadata-150"><span class="linenos">150</span></a><span class="sd">    Metadata for an Exercise.</span>
+</span><span id="ExerciseMetadata-151"><a href="#ExerciseMetadata-151"><span class="linenos">151</span></a>
+</span><span id="ExerciseMetadata-152"><a href="#ExerciseMetadata-152"><span class="linenos">152</span></a><span class="sd">    Parameters</span>
+</span><span id="ExerciseMetadata-153"><a href="#ExerciseMetadata-153"><span class="linenos">153</span></a><span class="sd">    ----------</span>
+</span><span id="ExerciseMetadata-154"><a href="#ExerciseMetadata-154"><span class="linenos">154</span></a><span class="sd">    time_created : str | None</span>
+</span><span id="ExerciseMetadata-155"><a href="#ExerciseMetadata-155"><span class="linenos">155</span></a><span class="sd">        ISO formatted timestamp of when this exercise was created.</span>
+</span><span id="ExerciseMetadata-156"><a href="#ExerciseMetadata-156"><span class="linenos">156</span></a><span class="sd">    scrambling_method : str</span>
+</span><span id="ExerciseMetadata-157"><a href="#ExerciseMetadata-157"><span class="linenos">157</span></a><span class="sd">        The method used to scramble the exercise TextGrids.</span>
+</span><span id="ExerciseMetadata-158"><a href="#ExerciseMetadata-158"><span class="linenos">158</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ExerciseMetadata-159"><a href="#ExerciseMetadata-159"><span class="linenos">159</span></a>    <span class="n">time_created</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="ExerciseMetadata-160"><a href="#ExerciseMetadata-160"><span class="linenos">160</span></a>    <span class="n">scrambling_method</span><span class="p">:</span> <span class="n">ExerciseScrambler</span> <span class="o">=</span> <span class="n">ExerciseScrambler</span><span class="o">.</span><span class="n">EQUIDISTANT</span>
+</span><span id="ExerciseMetadata-161"><a href="#ExerciseMetadata-161"><span class="linenos">161</span></a>
+</span><span id="ExerciseMetadata-162"><a href="#ExerciseMetadata-162"><span class="linenos">162</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">model_post_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">__context</span><span class="p">):</span>
+</span><span id="ExerciseMetadata-163"><a href="#ExerciseMetadata-163"><span class="linenos">163</span></a>        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+</span><span id="ExerciseMetadata-164"><a href="#ExerciseMetadata-164"><span class="linenos">164</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_created</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="ExerciseMetadata-165"><a href="#ExerciseMetadata-165"><span class="linenos">165</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">time_created</span> <span class="o">=</span> <span class="n">now</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Metadata for an Exercise.</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<ul>
+<li><strong>time_created</strong> (str | None):
+ISO formatted timestamp of when this exercise was created.</li>
+<li><strong>scrambling_method</strong> (str):
+The method used to scramble the exercise TextGrids.</li>
+</ul>
+</div>
+
+
+                            <div id="ExerciseMetadata.time_created" class="classattr">
+                                <div class="attr variable">
+            <span class="name">time_created</span><span class="annotation">: str | None</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseMetadata.time_created"></a>
+    
+    
+
+                            </div>
+                            <div id="ExerciseMetadata.scrambling_method" class="classattr">
+                                <div class="attr variable">
+            <span class="name">scrambling_method</span><span class="annotation">: <a href="../constants.html#ExerciseScrambler">patkit.constants.ExerciseScrambler</a></span>        =
+<span class="default_value">&lt;ExerciseScrambler.EQUIDISTANT: &#39;Equidistant&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseMetadata.scrambling_method"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="../external_class_extensions/base_model_extensions.html#PatkitBaseModel">patkit.external_class_extensions.base_model_extensions.PatkitBaseModel</a></dt>
+                                <dd id="ExerciseMetadata.empty_str_to_none" class="function"><a href="../external_class_extensions/base_model_extensions.html#PatkitBaseModel.empty_str_to_none">empty_str_to_none</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
                 <section id="ModalityData">
                             <input id="ModalityData-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
@@ -721,22 +993,22 @@ Modality's parent's path) and the name with the suffix(es) dropped.</p>
 
     </div>
     <a class="headerlink" href="#ModalityData"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ModalityData-120"><a href="#ModalityData-120"><span class="linenos">120</span></a><span class="nd">@dataclass</span>
-</span><span id="ModalityData-121"><a href="#ModalityData-121"><span class="linenos">121</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModalityData</span><span class="p">:</span>
-</span><span id="ModalityData-122"><a href="#ModalityData-122"><span class="linenos">122</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="ModalityData-123"><a href="#ModalityData-123"><span class="linenos">123</span></a><span class="sd">    Data passed from Modality generation into Modality.</span>
-</span><span id="ModalityData-124"><a href="#ModalityData-124"><span class="linenos">124</span></a>
-</span><span id="ModalityData-125"><a href="#ModalityData-125"><span class="linenos">125</span></a><span class="sd">    None of the fields are optional. This class represents already loaded data.</span>
-</span><span id="ModalityData-126"><a href="#ModalityData-126"><span class="linenos">126</span></a>
-</span><span id="ModalityData-127"><a href="#ModalityData-127"><span class="linenos">127</span></a><span class="sd">    Axes order for the data field is [time, coordinate axes and datatypes,</span>
-</span><span id="ModalityData-128"><a href="#ModalityData-128"><span class="linenos">128</span></a><span class="sd">    data points] and further structure. For example stereo audio data would be</span>
-</span><span id="ModalityData-129"><a href="#ModalityData-129"><span class="linenos">129</span></a><span class="sd">    [time, channels] or just [time] for mono audio. For a more complex example,</span>
-</span><span id="ModalityData-130"><a href="#ModalityData-130"><span class="linenos">130</span></a><span class="sd">    splines from AAA have [time, x-y-confidence, spline points] or [time,</span>
-</span><span id="ModalityData-131"><a href="#ModalityData-131"><span class="linenos">131</span></a><span class="sd">    r-phi-confidence, spline points] for data in polar coordinates.</span>
-</span><span id="ModalityData-132"><a href="#ModalityData-132"><span class="linenos">132</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="ModalityData-133"><a href="#ModalityData-133"><span class="linenos">133</span></a>    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-</span><span id="ModalityData-134"><a href="#ModalityData-134"><span class="linenos">134</span></a>    <span class="n">sampling_rate</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="ModalityData-135"><a href="#ModalityData-135"><span class="linenos">135</span></a>    <span class="n">timevector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ModalityData-168"><a href="#ModalityData-168"><span class="linenos">168</span></a><span class="nd">@dataclass</span>
+</span><span id="ModalityData-169"><a href="#ModalityData-169"><span class="linenos">169</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModalityData</span><span class="p">:</span>
+</span><span id="ModalityData-170"><a href="#ModalityData-170"><span class="linenos">170</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ModalityData-171"><a href="#ModalityData-171"><span class="linenos">171</span></a><span class="sd">    Data passed from Modality generation into Modality.</span>
+</span><span id="ModalityData-172"><a href="#ModalityData-172"><span class="linenos">172</span></a>
+</span><span id="ModalityData-173"><a href="#ModalityData-173"><span class="linenos">173</span></a><span class="sd">    None of the fields are optional. This class represents already loaded data.</span>
+</span><span id="ModalityData-174"><a href="#ModalityData-174"><span class="linenos">174</span></a>
+</span><span id="ModalityData-175"><a href="#ModalityData-175"><span class="linenos">175</span></a><span class="sd">    Axes order for the data field is [time, coordinate axes and datatypes,</span>
+</span><span id="ModalityData-176"><a href="#ModalityData-176"><span class="linenos">176</span></a><span class="sd">    data points] and further structure. For example stereo audio data would be</span>
+</span><span id="ModalityData-177"><a href="#ModalityData-177"><span class="linenos">177</span></a><span class="sd">    [time, channels] or just [time] for mono audio. For a more complex example,</span>
+</span><span id="ModalityData-178"><a href="#ModalityData-178"><span class="linenos">178</span></a><span class="sd">    splines from AAA have [time, x-y-confidence, spline points] or [time,</span>
+</span><span id="ModalityData-179"><a href="#ModalityData-179"><span class="linenos">179</span></a><span class="sd">    r-phi-confidence, spline points] for data in polar coordinates.</span>
+</span><span id="ModalityData-180"><a href="#ModalityData-180"><span class="linenos">180</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ModalityData-181"><a href="#ModalityData-181"><span class="linenos">181</span></a>    <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</span><span id="ModalityData-182"><a href="#ModalityData-182"><span class="linenos">182</span></a>    <span class="n">sampling_rate</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="ModalityData-183"><a href="#ModalityData-183"><span class="linenos">183</span></a>    <span class="n">timevector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
 </span></pre></div>
 
 
@@ -809,14 +1081,14 @@ r-phi-confidence, spline points] for data in polar coordinates.</p>
 
     </div>
     <a class="headerlink" href="#ModalityMetaData"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ModalityMetaData-138"><a href="#ModalityMetaData-138"><span class="linenos">138</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModalityMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
-</span><span id="ModalityMetaData-139"><a href="#ModalityMetaData-139"><span class="linenos">139</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="ModalityMetaData-140"><a href="#ModalityMetaData-140"><span class="linenos">140</span></a><span class="sd">    Baseclass of Modalities&#39; metadata classes.</span>
-</span><span id="ModalityMetaData-141"><a href="#ModalityMetaData-141"><span class="linenos">141</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="ModalityMetaData-142"><a href="#ModalityMetaData-142"><span class="linenos">142</span></a>    <span class="n">parent_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="ModalityMetaData-143"><a href="#ModalityMetaData-143"><span class="linenos">143</span></a>    <span class="n">is_downsampled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="ModalityMetaData-144"><a href="#ModalityMetaData-144"><span class="linenos">144</span></a>    <span class="n">downsampling_ratio</span><span class="p">:</span> <span class="n">PositiveInt</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="ModalityMetaData-145"><a href="#ModalityMetaData-145"><span class="linenos">145</span></a>    <span class="n">timestep_matched_downsampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ModalityMetaData-186"><a href="#ModalityMetaData-186"><span class="linenos">186</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ModalityMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="ModalityMetaData-187"><a href="#ModalityMetaData-187"><span class="linenos">187</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ModalityMetaData-188"><a href="#ModalityMetaData-188"><span class="linenos">188</span></a><span class="sd">    Baseclass of Modalities&#39; metadata classes.</span>
+</span><span id="ModalityMetaData-189"><a href="#ModalityMetaData-189"><span class="linenos">189</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ModalityMetaData-190"><a href="#ModalityMetaData-190"><span class="linenos">190</span></a>    <span class="n">parent_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="ModalityMetaData-191"><a href="#ModalityMetaData-191"><span class="linenos">191</span></a>    <span class="n">is_downsampled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="ModalityMetaData-192"><a href="#ModalityMetaData-192"><span class="linenos">192</span></a>    <span class="n">downsampling_ratio</span><span class="p">:</span> <span class="n">PositiveInt</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="ModalityMetaData-193"><a href="#ModalityMetaData-193"><span class="linenos">193</span></a>    <span class="n">timestep_matched_downsampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 </span></pre></div>
 
 
@@ -894,104 +1166,104 @@ r-phi-confidence, spline points] for data in polar coordinates.</p>
 
     </div>
     <a class="headerlink" href="#PointAnnotations"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="PointAnnotations-148"><a href="#PointAnnotations-148"><span class="linenos">148</span></a><span class="nd">@dataclass</span>
-</span><span id="PointAnnotations-149"><a href="#PointAnnotations-149"><span class="linenos">149</span></a><span class="k">class</span><span class="w"> </span><span class="nc">PointAnnotations</span><span class="p">:</span>
-</span><span id="PointAnnotations-150"><a href="#PointAnnotations-150"><span class="linenos">150</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="PointAnnotations-151"><a href="#PointAnnotations-151"><span class="linenos">151</span></a><span class="sd">    Time point annotations for a Modality.</span>
-</span><span id="PointAnnotations-152"><a href="#PointAnnotations-152"><span class="linenos">152</span></a>
-</span><span id="PointAnnotations-153"><a href="#PointAnnotations-153"><span class="linenos">153</span></a><span class="sd">    For each modality there should be only one of these for each kind of</span>
-</span><span id="PointAnnotations-154"><a href="#PointAnnotations-154"><span class="linenos">154</span></a><span class="sd">    annotation type.</span>
-</span><span id="PointAnnotations-155"><a href="#PointAnnotations-155"><span class="linenos">155</span></a>
-</span><span id="PointAnnotations-156"><a href="#PointAnnotations-156"><span class="linenos">156</span></a><span class="sd">    annotation_type : AnnotationType</span>
-</span><span id="PointAnnotations-157"><a href="#PointAnnotations-157"><span class="linenos">157</span></a><span class="sd">        unique identifier for the annotation type</span>
-</span><span id="PointAnnotations-158"><a href="#PointAnnotations-158"><span class="linenos">158</span></a><span class="sd">    indeces : np.ndarray</span>
-</span><span id="PointAnnotations-159"><a href="#PointAnnotations-159"><span class="linenos">159</span></a><span class="sd">        indeces of the annotation points. `modality_data.data[indeces[i]]` and</span>
-</span><span id="PointAnnotations-160"><a href="#PointAnnotations-160"><span class="linenos">160</span></a><span class="sd">        `modality_data.timevector[indeces[i]]` correspond to the annotation at</span>
-</span><span id="PointAnnotations-161"><a href="#PointAnnotations-161"><span class="linenos">161</span></a><span class="sd">        `i`.</span>
-</span><span id="PointAnnotations-162"><a href="#PointAnnotations-162"><span class="linenos">162</span></a><span class="sd">    times : np.ndarray</span>
-</span><span id="PointAnnotations-163"><a href="#PointAnnotations-163"><span class="linenos">163</span></a><span class="sd">        timestamps of the annotation points</span>
-</span><span id="PointAnnotations-164"><a href="#PointAnnotations-164"><span class="linenos">164</span></a><span class="sd">    generating_parameters : dict</span>
-</span><span id="PointAnnotations-165"><a href="#PointAnnotations-165"><span class="linenos">165</span></a><span class="sd">        the function call arguments and other parameters used in generating</span>
-</span><span id="PointAnnotations-166"><a href="#PointAnnotations-166"><span class="linenos">166</span></a><span class="sd">        these annotations.</span>
-</span><span id="PointAnnotations-167"><a href="#PointAnnotations-167"><span class="linenos">167</span></a><span class="sd">    properties : dict</span>
-</span><span id="PointAnnotations-168"><a href="#PointAnnotations-168"><span class="linenos">168</span></a><span class="sd">        a dictionary containing arrays of each of the annotation properties</span>
-</span><span id="PointAnnotations-169"><a href="#PointAnnotations-169"><span class="linenos">169</span></a><span class="sd">        expected for this annotation type.</span>
-</span><span id="PointAnnotations-170"><a href="#PointAnnotations-170"><span class="linenos">170</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="PointAnnotations-171"><a href="#PointAnnotations-171"><span class="linenos">171</span></a>    <span class="n">annotation_type</span><span class="p">:</span> <span class="n">AnnotationType</span>
-</span><span id="PointAnnotations-172"><a href="#PointAnnotations-172"><span class="linenos">172</span></a>    <span class="n">indeces</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-</span><span id="PointAnnotations-173"><a href="#PointAnnotations-173"><span class="linenos">173</span></a>    <span class="n">times</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
-</span><span id="PointAnnotations-174"><a href="#PointAnnotations-174"><span class="linenos">174</span></a>    <span class="n">generating_parameters</span><span class="p">:</span> <span class="n">PointAnnotationParams</span>
-</span><span id="PointAnnotations-175"><a href="#PointAnnotations-175"><span class="linenos">175</span></a>    <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span>
-</span><span id="PointAnnotations-176"><a href="#PointAnnotations-176"><span class="linenos">176</span></a>
-</span><span id="PointAnnotations-177"><a href="#PointAnnotations-177"><span class="linenos">177</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_annotation</span><span class="p">(</span>
-</span><span id="PointAnnotations-178"><a href="#PointAnnotations-178"><span class="linenos">178</span></a>            <span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="PointAnnotations-179"><a href="#PointAnnotations-179"><span class="linenos">179</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="PointAnnotations-180"><a href="#PointAnnotations-180"><span class="linenos">180</span></a><span class="sd">        This method has not been implemented yet.</span>
-</span><span id="PointAnnotations-181"><a href="#PointAnnotations-181"><span class="linenos">181</span></a>
-</span><span id="PointAnnotations-182"><a href="#PointAnnotations-182"><span class="linenos">182</span></a><span class="sd">        Index and time should be mutually exclusive.</span>
-</span><span id="PointAnnotations-183"><a href="#PointAnnotations-183"><span class="linenos">183</span></a>
-</span><span id="PointAnnotations-184"><a href="#PointAnnotations-184"><span class="linenos">184</span></a><span class="sd">        Parameters</span>
-</span><span id="PointAnnotations-185"><a href="#PointAnnotations-185"><span class="linenos">185</span></a><span class="sd">        ----------</span>
-</span><span id="PointAnnotations-186"><a href="#PointAnnotations-186"><span class="linenos">186</span></a><span class="sd">        index : int</span>
-</span><span id="PointAnnotations-187"><a href="#PointAnnotations-187"><span class="linenos">187</span></a><span class="sd">            index at which the annotation is to be added</span>
-</span><span id="PointAnnotations-188"><a href="#PointAnnotations-188"><span class="linenos">188</span></a><span class="sd">        time : float</span>
-</span><span id="PointAnnotations-189"><a href="#PointAnnotations-189"><span class="linenos">189</span></a><span class="sd">            time at which the annotation is to be added</span>
-</span><span id="PointAnnotations-190"><a href="#PointAnnotations-190"><span class="linenos">190</span></a><span class="sd">        properties : dict</span>
-</span><span id="PointAnnotations-191"><a href="#PointAnnotations-191"><span class="linenos">191</span></a><span class="sd">            the annotation properties that will be added to the arrays in this</span>
-</span><span id="PointAnnotations-192"><a href="#PointAnnotations-192"><span class="linenos">192</span></a><span class="sd">            PointAnnotations&#39; properties dict.</span>
-</span><span id="PointAnnotations-193"><a href="#PointAnnotations-193"><span class="linenos">193</span></a>
-</span><span id="PointAnnotations-194"><a href="#PointAnnotations-194"><span class="linenos">194</span></a><span class="sd">        Raises</span>
-</span><span id="PointAnnotations-195"><a href="#PointAnnotations-195"><span class="linenos">195</span></a><span class="sd">        ------</span>
-</span><span id="PointAnnotations-196"><a href="#PointAnnotations-196"><span class="linenos">196</span></a><span class="sd">        NotImplementedError</span>
-</span><span id="PointAnnotations-197"><a href="#PointAnnotations-197"><span class="linenos">197</span></a><span class="sd">            This method has not been implemented yet.</span>
-</span><span id="PointAnnotations-198"><a href="#PointAnnotations-198"><span class="linenos">198</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="PointAnnotations-199"><a href="#PointAnnotations-199"><span class="linenos">199</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-</span><span id="PointAnnotations-200"><a href="#PointAnnotations-200"><span class="linenos">200</span></a>            <span class="s2">&quot;Adding annotations to &quot;</span>
-</span><span id="PointAnnotations-201"><a href="#PointAnnotations-201"><span class="linenos">201</span></a>            <span class="s2">&quot;PointAnnotations hasn&#39;t been implemented yet.&quot;</span><span class="p">)</span>
-</span><span id="PointAnnotations-202"><a href="#PointAnnotations-202"><span class="linenos">202</span></a>
-</span><span id="PointAnnotations-203"><a href="#PointAnnotations-203"><span class="linenos">203</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_lower_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="PointAnnotations-204"><a href="#PointAnnotations-204"><span class="linenos">204</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="PointAnnotations-205"><a href="#PointAnnotations-205"><span class="linenos">205</span></a><span class="sd">        Apply a lower time limit to the annotations.</span>
-</span><span id="PointAnnotations-206"><a href="#PointAnnotations-206"><span class="linenos">206</span></a>
-</span><span id="PointAnnotations-207"><a href="#PointAnnotations-207"><span class="linenos">207</span></a><span class="sd">        This removes the annotation points before the given time limit.</span>
-</span><span id="PointAnnotations-208"><a href="#PointAnnotations-208"><span class="linenos">208</span></a>
-</span><span id="PointAnnotations-209"><a href="#PointAnnotations-209"><span class="linenos">209</span></a><span class="sd">        Parameters</span>
-</span><span id="PointAnnotations-210"><a href="#PointAnnotations-210"><span class="linenos">210</span></a><span class="sd">        ----------</span>
-</span><span id="PointAnnotations-211"><a href="#PointAnnotations-211"><span class="linenos">211</span></a><span class="sd">        time_min : float</span>
-</span><span id="PointAnnotations-212"><a href="#PointAnnotations-212"><span class="linenos">212</span></a><span class="sd">            The time limit.</span>
-</span><span id="PointAnnotations-213"><a href="#PointAnnotations-213"><span class="linenos">213</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="PointAnnotations-214"><a href="#PointAnnotations-214"><span class="linenos">214</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&gt;=</span> <span class="n">time_min</span><span class="p">)</span>
-</span><span id="PointAnnotations-215"><a href="#PointAnnotations-215"><span class="linenos">215</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="PointAnnotations-216"><a href="#PointAnnotations-216"><span class="linenos">216</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="PointAnnotations-217"><a href="#PointAnnotations-217"><span class="linenos">217</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="PointAnnotations-218"><a href="#PointAnnotations-218"><span class="linenos">218</span></a>
-</span><span id="PointAnnotations-219"><a href="#PointAnnotations-219"><span class="linenos">219</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
-</span><span id="PointAnnotations-220"><a href="#PointAnnotations-220"><span class="linenos">220</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
-</span><span id="PointAnnotations-221"><a href="#PointAnnotations-221"><span class="linenos">221</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">limit</span><span class="p">:]</span>
-</span><span id="PointAnnotations-222"><a href="#PointAnnotations-222"><span class="linenos">222</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-</span><span id="PointAnnotations-223"><a href="#PointAnnotations-223"><span class="linenos">223</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="PointAnnotations-196"><a href="#PointAnnotations-196"><span class="linenos">196</span></a><span class="nd">@dataclass</span>
+</span><span id="PointAnnotations-197"><a href="#PointAnnotations-197"><span class="linenos">197</span></a><span class="k">class</span><span class="w"> </span><span class="nc">PointAnnotations</span><span class="p">:</span>
+</span><span id="PointAnnotations-198"><a href="#PointAnnotations-198"><span class="linenos">198</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PointAnnotations-199"><a href="#PointAnnotations-199"><span class="linenos">199</span></a><span class="sd">    Time point annotations for a Modality.</span>
+</span><span id="PointAnnotations-200"><a href="#PointAnnotations-200"><span class="linenos">200</span></a>
+</span><span id="PointAnnotations-201"><a href="#PointAnnotations-201"><span class="linenos">201</span></a><span class="sd">    For each modality there should be only one of these for each kind of</span>
+</span><span id="PointAnnotations-202"><a href="#PointAnnotations-202"><span class="linenos">202</span></a><span class="sd">    annotation type.</span>
+</span><span id="PointAnnotations-203"><a href="#PointAnnotations-203"><span class="linenos">203</span></a>
+</span><span id="PointAnnotations-204"><a href="#PointAnnotations-204"><span class="linenos">204</span></a><span class="sd">    annotation_type : AnnotationType</span>
+</span><span id="PointAnnotations-205"><a href="#PointAnnotations-205"><span class="linenos">205</span></a><span class="sd">        unique identifier for the annotation type</span>
+</span><span id="PointAnnotations-206"><a href="#PointAnnotations-206"><span class="linenos">206</span></a><span class="sd">    indeces : np.ndarray</span>
+</span><span id="PointAnnotations-207"><a href="#PointAnnotations-207"><span class="linenos">207</span></a><span class="sd">        indeces of the annotation points. `modality_data.data[indeces[i]]` and</span>
+</span><span id="PointAnnotations-208"><a href="#PointAnnotations-208"><span class="linenos">208</span></a><span class="sd">        `modality_data.timevector[indeces[i]]` correspond to the annotation at</span>
+</span><span id="PointAnnotations-209"><a href="#PointAnnotations-209"><span class="linenos">209</span></a><span class="sd">        `i`.</span>
+</span><span id="PointAnnotations-210"><a href="#PointAnnotations-210"><span class="linenos">210</span></a><span class="sd">    times : np.ndarray</span>
+</span><span id="PointAnnotations-211"><a href="#PointAnnotations-211"><span class="linenos">211</span></a><span class="sd">        timestamps of the annotation points</span>
+</span><span id="PointAnnotations-212"><a href="#PointAnnotations-212"><span class="linenos">212</span></a><span class="sd">    generating_parameters : dict</span>
+</span><span id="PointAnnotations-213"><a href="#PointAnnotations-213"><span class="linenos">213</span></a><span class="sd">        the function call arguments and other parameters used in generating</span>
+</span><span id="PointAnnotations-214"><a href="#PointAnnotations-214"><span class="linenos">214</span></a><span class="sd">        these annotations.</span>
+</span><span id="PointAnnotations-215"><a href="#PointAnnotations-215"><span class="linenos">215</span></a><span class="sd">    properties : dict</span>
+</span><span id="PointAnnotations-216"><a href="#PointAnnotations-216"><span class="linenos">216</span></a><span class="sd">        a dictionary containing arrays of each of the annotation properties</span>
+</span><span id="PointAnnotations-217"><a href="#PointAnnotations-217"><span class="linenos">217</span></a><span class="sd">        expected for this annotation type.</span>
+</span><span id="PointAnnotations-218"><a href="#PointAnnotations-218"><span class="linenos">218</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="PointAnnotations-219"><a href="#PointAnnotations-219"><span class="linenos">219</span></a>    <span class="n">annotation_type</span><span class="p">:</span> <span class="n">AnnotationType</span>
+</span><span id="PointAnnotations-220"><a href="#PointAnnotations-220"><span class="linenos">220</span></a>    <span class="n">indeces</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</span><span id="PointAnnotations-221"><a href="#PointAnnotations-221"><span class="linenos">221</span></a>    <span class="n">times</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+</span><span id="PointAnnotations-222"><a href="#PointAnnotations-222"><span class="linenos">222</span></a>    <span class="n">generating_parameters</span><span class="p">:</span> <span class="n">PointAnnotationParams</span>
+</span><span id="PointAnnotations-223"><a href="#PointAnnotations-223"><span class="linenos">223</span></a>    <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span>
 </span><span id="PointAnnotations-224"><a href="#PointAnnotations-224"><span class="linenos">224</span></a>
-</span><span id="PointAnnotations-225"><a href="#PointAnnotations-225"><span class="linenos">225</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_upper_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="PointAnnotations-226"><a href="#PointAnnotations-226"><span class="linenos">226</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="PointAnnotations-227"><a href="#PointAnnotations-227"><span class="linenos">227</span></a><span class="sd">        Apply an upper time limit to the annotations.</span>
-</span><span id="PointAnnotations-228"><a href="#PointAnnotations-228"><span class="linenos">228</span></a>
-</span><span id="PointAnnotations-229"><a href="#PointAnnotations-229"><span class="linenos">229</span></a><span class="sd">        This removes the annotation points after the given time limit.</span>
-</span><span id="PointAnnotations-230"><a href="#PointAnnotations-230"><span class="linenos">230</span></a>
-</span><span id="PointAnnotations-231"><a href="#PointAnnotations-231"><span class="linenos">231</span></a><span class="sd">        Parameters</span>
-</span><span id="PointAnnotations-232"><a href="#PointAnnotations-232"><span class="linenos">232</span></a><span class="sd">        ----------</span>
-</span><span id="PointAnnotations-233"><a href="#PointAnnotations-233"><span class="linenos">233</span></a><span class="sd">        time_max : float</span>
-</span><span id="PointAnnotations-234"><a href="#PointAnnotations-234"><span class="linenos">234</span></a><span class="sd">            The time limit.</span>
-</span><span id="PointAnnotations-235"><a href="#PointAnnotations-235"><span class="linenos">235</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="PointAnnotations-236"><a href="#PointAnnotations-236"><span class="linenos">236</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&lt;=</span> <span class="n">time_max</span><span class="p">)</span>
-</span><span id="PointAnnotations-237"><a href="#PointAnnotations-237"><span class="linenos">237</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="PointAnnotations-238"><a href="#PointAnnotations-238"><span class="linenos">238</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="PointAnnotations-239"><a href="#PointAnnotations-239"><span class="linenos">239</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span><span id="PointAnnotations-240"><a href="#PointAnnotations-240"><span class="linenos">240</span></a>
-</span><span id="PointAnnotations-241"><a href="#PointAnnotations-241"><span class="linenos">241</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
-</span><span id="PointAnnotations-242"><a href="#PointAnnotations-242"><span class="linenos">242</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
-</span><span id="PointAnnotations-243"><a href="#PointAnnotations-243"><span class="linenos">243</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][:</span><span class="n">limit</span><span class="p">]</span>
-</span><span id="PointAnnotations-244"><a href="#PointAnnotations-244"><span class="linenos">244</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-</span><span id="PointAnnotations-245"><a href="#PointAnnotations-245"><span class="linenos">245</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations-225"><a href="#PointAnnotations-225"><span class="linenos">225</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_annotation</span><span class="p">(</span>
+</span><span id="PointAnnotations-226"><a href="#PointAnnotations-226"><span class="linenos">226</span></a>            <span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PointAnnotations-227"><a href="#PointAnnotations-227"><span class="linenos">227</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PointAnnotations-228"><a href="#PointAnnotations-228"><span class="linenos">228</span></a><span class="sd">        This method has not been implemented yet.</span>
+</span><span id="PointAnnotations-229"><a href="#PointAnnotations-229"><span class="linenos">229</span></a>
+</span><span id="PointAnnotations-230"><a href="#PointAnnotations-230"><span class="linenos">230</span></a><span class="sd">        Index and time should be mutually exclusive.</span>
+</span><span id="PointAnnotations-231"><a href="#PointAnnotations-231"><span class="linenos">231</span></a>
+</span><span id="PointAnnotations-232"><a href="#PointAnnotations-232"><span class="linenos">232</span></a><span class="sd">        Parameters</span>
+</span><span id="PointAnnotations-233"><a href="#PointAnnotations-233"><span class="linenos">233</span></a><span class="sd">        ----------</span>
+</span><span id="PointAnnotations-234"><a href="#PointAnnotations-234"><span class="linenos">234</span></a><span class="sd">        index : int</span>
+</span><span id="PointAnnotations-235"><a href="#PointAnnotations-235"><span class="linenos">235</span></a><span class="sd">            index at which the annotation is to be added</span>
+</span><span id="PointAnnotations-236"><a href="#PointAnnotations-236"><span class="linenos">236</span></a><span class="sd">        time : float</span>
+</span><span id="PointAnnotations-237"><a href="#PointAnnotations-237"><span class="linenos">237</span></a><span class="sd">            time at which the annotation is to be added</span>
+</span><span id="PointAnnotations-238"><a href="#PointAnnotations-238"><span class="linenos">238</span></a><span class="sd">        properties : dict</span>
+</span><span id="PointAnnotations-239"><a href="#PointAnnotations-239"><span class="linenos">239</span></a><span class="sd">            the annotation properties that will be added to the arrays in this</span>
+</span><span id="PointAnnotations-240"><a href="#PointAnnotations-240"><span class="linenos">240</span></a><span class="sd">            PointAnnotations&#39; properties dict.</span>
+</span><span id="PointAnnotations-241"><a href="#PointAnnotations-241"><span class="linenos">241</span></a>
+</span><span id="PointAnnotations-242"><a href="#PointAnnotations-242"><span class="linenos">242</span></a><span class="sd">        Raises</span>
+</span><span id="PointAnnotations-243"><a href="#PointAnnotations-243"><span class="linenos">243</span></a><span class="sd">        ------</span>
+</span><span id="PointAnnotations-244"><a href="#PointAnnotations-244"><span class="linenos">244</span></a><span class="sd">        NotImplementedError</span>
+</span><span id="PointAnnotations-245"><a href="#PointAnnotations-245"><span class="linenos">245</span></a><span class="sd">            This method has not been implemented yet.</span>
+</span><span id="PointAnnotations-246"><a href="#PointAnnotations-246"><span class="linenos">246</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PointAnnotations-247"><a href="#PointAnnotations-247"><span class="linenos">247</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+</span><span id="PointAnnotations-248"><a href="#PointAnnotations-248"><span class="linenos">248</span></a>            <span class="s2">&quot;Adding annotations to &quot;</span>
+</span><span id="PointAnnotations-249"><a href="#PointAnnotations-249"><span class="linenos">249</span></a>            <span class="s2">&quot;PointAnnotations hasn&#39;t been implemented yet.&quot;</span><span class="p">)</span>
+</span><span id="PointAnnotations-250"><a href="#PointAnnotations-250"><span class="linenos">250</span></a>
+</span><span id="PointAnnotations-251"><a href="#PointAnnotations-251"><span class="linenos">251</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_lower_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PointAnnotations-252"><a href="#PointAnnotations-252"><span class="linenos">252</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PointAnnotations-253"><a href="#PointAnnotations-253"><span class="linenos">253</span></a><span class="sd">        Apply a lower time limit to the annotations.</span>
+</span><span id="PointAnnotations-254"><a href="#PointAnnotations-254"><span class="linenos">254</span></a>
+</span><span id="PointAnnotations-255"><a href="#PointAnnotations-255"><span class="linenos">255</span></a><span class="sd">        This removes the annotation points before the given time limit.</span>
+</span><span id="PointAnnotations-256"><a href="#PointAnnotations-256"><span class="linenos">256</span></a>
+</span><span id="PointAnnotations-257"><a href="#PointAnnotations-257"><span class="linenos">257</span></a><span class="sd">        Parameters</span>
+</span><span id="PointAnnotations-258"><a href="#PointAnnotations-258"><span class="linenos">258</span></a><span class="sd">        ----------</span>
+</span><span id="PointAnnotations-259"><a href="#PointAnnotations-259"><span class="linenos">259</span></a><span class="sd">        time_min : float</span>
+</span><span id="PointAnnotations-260"><a href="#PointAnnotations-260"><span class="linenos">260</span></a><span class="sd">            The time limit.</span>
+</span><span id="PointAnnotations-261"><a href="#PointAnnotations-261"><span class="linenos">261</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PointAnnotations-262"><a href="#PointAnnotations-262"><span class="linenos">262</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&gt;=</span> <span class="n">time_min</span><span class="p">)</span>
+</span><span id="PointAnnotations-263"><a href="#PointAnnotations-263"><span class="linenos">263</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations-264"><a href="#PointAnnotations-264"><span class="linenos">264</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations-265"><a href="#PointAnnotations-265"><span class="linenos">265</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="PointAnnotations-266"><a href="#PointAnnotations-266"><span class="linenos">266</span></a>
+</span><span id="PointAnnotations-267"><a href="#PointAnnotations-267"><span class="linenos">267</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+</span><span id="PointAnnotations-268"><a href="#PointAnnotations-268"><span class="linenos">268</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+</span><span id="PointAnnotations-269"><a href="#PointAnnotations-269"><span class="linenos">269</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">limit</span><span class="p">:]</span>
+</span><span id="PointAnnotations-270"><a href="#PointAnnotations-270"><span class="linenos">270</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+</span><span id="PointAnnotations-271"><a href="#PointAnnotations-271"><span class="linenos">271</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations-272"><a href="#PointAnnotations-272"><span class="linenos">272</span></a>
+</span><span id="PointAnnotations-273"><a href="#PointAnnotations-273"><span class="linenos">273</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_upper_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PointAnnotations-274"><a href="#PointAnnotations-274"><span class="linenos">274</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PointAnnotations-275"><a href="#PointAnnotations-275"><span class="linenos">275</span></a><span class="sd">        Apply an upper time limit to the annotations.</span>
+</span><span id="PointAnnotations-276"><a href="#PointAnnotations-276"><span class="linenos">276</span></a>
+</span><span id="PointAnnotations-277"><a href="#PointAnnotations-277"><span class="linenos">277</span></a><span class="sd">        This removes the annotation points after the given time limit.</span>
+</span><span id="PointAnnotations-278"><a href="#PointAnnotations-278"><span class="linenos">278</span></a>
+</span><span id="PointAnnotations-279"><a href="#PointAnnotations-279"><span class="linenos">279</span></a><span class="sd">        Parameters</span>
+</span><span id="PointAnnotations-280"><a href="#PointAnnotations-280"><span class="linenos">280</span></a><span class="sd">        ----------</span>
+</span><span id="PointAnnotations-281"><a href="#PointAnnotations-281"><span class="linenos">281</span></a><span class="sd">        time_max : float</span>
+</span><span id="PointAnnotations-282"><a href="#PointAnnotations-282"><span class="linenos">282</span></a><span class="sd">            The time limit.</span>
+</span><span id="PointAnnotations-283"><a href="#PointAnnotations-283"><span class="linenos">283</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PointAnnotations-284"><a href="#PointAnnotations-284"><span class="linenos">284</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&lt;=</span> <span class="n">time_max</span><span class="p">)</span>
+</span><span id="PointAnnotations-285"><a href="#PointAnnotations-285"><span class="linenos">285</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations-286"><a href="#PointAnnotations-286"><span class="linenos">286</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations-287"><a href="#PointAnnotations-287"><span class="linenos">287</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="PointAnnotations-288"><a href="#PointAnnotations-288"><span class="linenos">288</span></a>
+</span><span id="PointAnnotations-289"><a href="#PointAnnotations-289"><span class="linenos">289</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+</span><span id="PointAnnotations-290"><a href="#PointAnnotations-290"><span class="linenos">290</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+</span><span id="PointAnnotations-291"><a href="#PointAnnotations-291"><span class="linenos">291</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][:</span><span class="n">limit</span><span class="p">]</span>
+</span><span id="PointAnnotations-292"><a href="#PointAnnotations-292"><span class="linenos">292</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+</span><span id="PointAnnotations-293"><a href="#PointAnnotations-293"><span class="linenos">293</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -1095,31 +1367,31 @@ properties : dict
 
     </div>
     <a class="headerlink" href="#PointAnnotations.add_annotation"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="PointAnnotations.add_annotation-177"><a href="#PointAnnotations.add_annotation-177"><span class="linenos">177</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_annotation</span><span class="p">(</span>
-</span><span id="PointAnnotations.add_annotation-178"><a href="#PointAnnotations.add_annotation-178"><span class="linenos">178</span></a>            <span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="PointAnnotations.add_annotation-179"><a href="#PointAnnotations.add_annotation-179"><span class="linenos">179</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="PointAnnotations.add_annotation-180"><a href="#PointAnnotations.add_annotation-180"><span class="linenos">180</span></a><span class="sd">        This method has not been implemented yet.</span>
-</span><span id="PointAnnotations.add_annotation-181"><a href="#PointAnnotations.add_annotation-181"><span class="linenos">181</span></a>
-</span><span id="PointAnnotations.add_annotation-182"><a href="#PointAnnotations.add_annotation-182"><span class="linenos">182</span></a><span class="sd">        Index and time should be mutually exclusive.</span>
-</span><span id="PointAnnotations.add_annotation-183"><a href="#PointAnnotations.add_annotation-183"><span class="linenos">183</span></a>
-</span><span id="PointAnnotations.add_annotation-184"><a href="#PointAnnotations.add_annotation-184"><span class="linenos">184</span></a><span class="sd">        Parameters</span>
-</span><span id="PointAnnotations.add_annotation-185"><a href="#PointAnnotations.add_annotation-185"><span class="linenos">185</span></a><span class="sd">        ----------</span>
-</span><span id="PointAnnotations.add_annotation-186"><a href="#PointAnnotations.add_annotation-186"><span class="linenos">186</span></a><span class="sd">        index : int</span>
-</span><span id="PointAnnotations.add_annotation-187"><a href="#PointAnnotations.add_annotation-187"><span class="linenos">187</span></a><span class="sd">            index at which the annotation is to be added</span>
-</span><span id="PointAnnotations.add_annotation-188"><a href="#PointAnnotations.add_annotation-188"><span class="linenos">188</span></a><span class="sd">        time : float</span>
-</span><span id="PointAnnotations.add_annotation-189"><a href="#PointAnnotations.add_annotation-189"><span class="linenos">189</span></a><span class="sd">            time at which the annotation is to be added</span>
-</span><span id="PointAnnotations.add_annotation-190"><a href="#PointAnnotations.add_annotation-190"><span class="linenos">190</span></a><span class="sd">        properties : dict</span>
-</span><span id="PointAnnotations.add_annotation-191"><a href="#PointAnnotations.add_annotation-191"><span class="linenos">191</span></a><span class="sd">            the annotation properties that will be added to the arrays in this</span>
-</span><span id="PointAnnotations.add_annotation-192"><a href="#PointAnnotations.add_annotation-192"><span class="linenos">192</span></a><span class="sd">            PointAnnotations&#39; properties dict.</span>
-</span><span id="PointAnnotations.add_annotation-193"><a href="#PointAnnotations.add_annotation-193"><span class="linenos">193</span></a>
-</span><span id="PointAnnotations.add_annotation-194"><a href="#PointAnnotations.add_annotation-194"><span class="linenos">194</span></a><span class="sd">        Raises</span>
-</span><span id="PointAnnotations.add_annotation-195"><a href="#PointAnnotations.add_annotation-195"><span class="linenos">195</span></a><span class="sd">        ------</span>
-</span><span id="PointAnnotations.add_annotation-196"><a href="#PointAnnotations.add_annotation-196"><span class="linenos">196</span></a><span class="sd">        NotImplementedError</span>
-</span><span id="PointAnnotations.add_annotation-197"><a href="#PointAnnotations.add_annotation-197"><span class="linenos">197</span></a><span class="sd">            This method has not been implemented yet.</span>
-</span><span id="PointAnnotations.add_annotation-198"><a href="#PointAnnotations.add_annotation-198"><span class="linenos">198</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="PointAnnotations.add_annotation-199"><a href="#PointAnnotations.add_annotation-199"><span class="linenos">199</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-</span><span id="PointAnnotations.add_annotation-200"><a href="#PointAnnotations.add_annotation-200"><span class="linenos">200</span></a>            <span class="s2">&quot;Adding annotations to &quot;</span>
-</span><span id="PointAnnotations.add_annotation-201"><a href="#PointAnnotations.add_annotation-201"><span class="linenos">201</span></a>            <span class="s2">&quot;PointAnnotations hasn&#39;t been implemented yet.&quot;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="PointAnnotations.add_annotation-225"><a href="#PointAnnotations.add_annotation-225"><span class="linenos">225</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_annotation</span><span class="p">(</span>
+</span><span id="PointAnnotations.add_annotation-226"><a href="#PointAnnotations.add_annotation-226"><span class="linenos">226</span></a>            <span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PointAnnotations.add_annotation-227"><a href="#PointAnnotations.add_annotation-227"><span class="linenos">227</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PointAnnotations.add_annotation-228"><a href="#PointAnnotations.add_annotation-228"><span class="linenos">228</span></a><span class="sd">        This method has not been implemented yet.</span>
+</span><span id="PointAnnotations.add_annotation-229"><a href="#PointAnnotations.add_annotation-229"><span class="linenos">229</span></a>
+</span><span id="PointAnnotations.add_annotation-230"><a href="#PointAnnotations.add_annotation-230"><span class="linenos">230</span></a><span class="sd">        Index and time should be mutually exclusive.</span>
+</span><span id="PointAnnotations.add_annotation-231"><a href="#PointAnnotations.add_annotation-231"><span class="linenos">231</span></a>
+</span><span id="PointAnnotations.add_annotation-232"><a href="#PointAnnotations.add_annotation-232"><span class="linenos">232</span></a><span class="sd">        Parameters</span>
+</span><span id="PointAnnotations.add_annotation-233"><a href="#PointAnnotations.add_annotation-233"><span class="linenos">233</span></a><span class="sd">        ----------</span>
+</span><span id="PointAnnotations.add_annotation-234"><a href="#PointAnnotations.add_annotation-234"><span class="linenos">234</span></a><span class="sd">        index : int</span>
+</span><span id="PointAnnotations.add_annotation-235"><a href="#PointAnnotations.add_annotation-235"><span class="linenos">235</span></a><span class="sd">            index at which the annotation is to be added</span>
+</span><span id="PointAnnotations.add_annotation-236"><a href="#PointAnnotations.add_annotation-236"><span class="linenos">236</span></a><span class="sd">        time : float</span>
+</span><span id="PointAnnotations.add_annotation-237"><a href="#PointAnnotations.add_annotation-237"><span class="linenos">237</span></a><span class="sd">            time at which the annotation is to be added</span>
+</span><span id="PointAnnotations.add_annotation-238"><a href="#PointAnnotations.add_annotation-238"><span class="linenos">238</span></a><span class="sd">        properties : dict</span>
+</span><span id="PointAnnotations.add_annotation-239"><a href="#PointAnnotations.add_annotation-239"><span class="linenos">239</span></a><span class="sd">            the annotation properties that will be added to the arrays in this</span>
+</span><span id="PointAnnotations.add_annotation-240"><a href="#PointAnnotations.add_annotation-240"><span class="linenos">240</span></a><span class="sd">            PointAnnotations&#39; properties dict.</span>
+</span><span id="PointAnnotations.add_annotation-241"><a href="#PointAnnotations.add_annotation-241"><span class="linenos">241</span></a>
+</span><span id="PointAnnotations.add_annotation-242"><a href="#PointAnnotations.add_annotation-242"><span class="linenos">242</span></a><span class="sd">        Raises</span>
+</span><span id="PointAnnotations.add_annotation-243"><a href="#PointAnnotations.add_annotation-243"><span class="linenos">243</span></a><span class="sd">        ------</span>
+</span><span id="PointAnnotations.add_annotation-244"><a href="#PointAnnotations.add_annotation-244"><span class="linenos">244</span></a><span class="sd">        NotImplementedError</span>
+</span><span id="PointAnnotations.add_annotation-245"><a href="#PointAnnotations.add_annotation-245"><span class="linenos">245</span></a><span class="sd">            This method has not been implemented yet.</span>
+</span><span id="PointAnnotations.add_annotation-246"><a href="#PointAnnotations.add_annotation-246"><span class="linenos">246</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PointAnnotations.add_annotation-247"><a href="#PointAnnotations.add_annotation-247"><span class="linenos">247</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+</span><span id="PointAnnotations.add_annotation-248"><a href="#PointAnnotations.add_annotation-248"><span class="linenos">248</span></a>            <span class="s2">&quot;Adding annotations to &quot;</span>
+</span><span id="PointAnnotations.add_annotation-249"><a href="#PointAnnotations.add_annotation-249"><span class="linenos">249</span></a>            <span class="s2">&quot;PointAnnotations hasn&#39;t been implemented yet.&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -1159,27 +1431,27 @@ PointAnnotations' properties dict.</li>
 
     </div>
     <a class="headerlink" href="#PointAnnotations.apply_lower_time_limit"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="PointAnnotations.apply_lower_time_limit-203"><a href="#PointAnnotations.apply_lower_time_limit-203"><span class="linenos">203</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_lower_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-204"><a href="#PointAnnotations.apply_lower_time_limit-204"><span class="linenos">204</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-205"><a href="#PointAnnotations.apply_lower_time_limit-205"><span class="linenos">205</span></a><span class="sd">        Apply a lower time limit to the annotations.</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-206"><a href="#PointAnnotations.apply_lower_time_limit-206"><span class="linenos">206</span></a>
-</span><span id="PointAnnotations.apply_lower_time_limit-207"><a href="#PointAnnotations.apply_lower_time_limit-207"><span class="linenos">207</span></a><span class="sd">        This removes the annotation points before the given time limit.</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-208"><a href="#PointAnnotations.apply_lower_time_limit-208"><span class="linenos">208</span></a>
-</span><span id="PointAnnotations.apply_lower_time_limit-209"><a href="#PointAnnotations.apply_lower_time_limit-209"><span class="linenos">209</span></a><span class="sd">        Parameters</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-210"><a href="#PointAnnotations.apply_lower_time_limit-210"><span class="linenos">210</span></a><span class="sd">        ----------</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-211"><a href="#PointAnnotations.apply_lower_time_limit-211"><span class="linenos">211</span></a><span class="sd">        time_min : float</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-212"><a href="#PointAnnotations.apply_lower_time_limit-212"><span class="linenos">212</span></a><span class="sd">            The time limit.</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-213"><a href="#PointAnnotations.apply_lower_time_limit-213"><span class="linenos">213</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-214"><a href="#PointAnnotations.apply_lower_time_limit-214"><span class="linenos">214</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&gt;=</span> <span class="n">time_min</span><span class="p">)</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-215"><a href="#PointAnnotations.apply_lower_time_limit-215"><span class="linenos">215</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-216"><a href="#PointAnnotations.apply_lower_time_limit-216"><span class="linenos">216</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-217"><a href="#PointAnnotations.apply_lower_time_limit-217"><span class="linenos">217</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-218"><a href="#PointAnnotations.apply_lower_time_limit-218"><span class="linenos">218</span></a>
-</span><span id="PointAnnotations.apply_lower_time_limit-219"><a href="#PointAnnotations.apply_lower_time_limit-219"><span class="linenos">219</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-220"><a href="#PointAnnotations.apply_lower_time_limit-220"><span class="linenos">220</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-221"><a href="#PointAnnotations.apply_lower_time_limit-221"><span class="linenos">221</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">limit</span><span class="p">:]</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-222"><a href="#PointAnnotations.apply_lower_time_limit-222"><span class="linenos">222</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-</span><span id="PointAnnotations.apply_lower_time_limit-223"><a href="#PointAnnotations.apply_lower_time_limit-223"><span class="linenos">223</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="PointAnnotations.apply_lower_time_limit-251"><a href="#PointAnnotations.apply_lower_time_limit-251"><span class="linenos">251</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_lower_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-252"><a href="#PointAnnotations.apply_lower_time_limit-252"><span class="linenos">252</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-253"><a href="#PointAnnotations.apply_lower_time_limit-253"><span class="linenos">253</span></a><span class="sd">        Apply a lower time limit to the annotations.</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-254"><a href="#PointAnnotations.apply_lower_time_limit-254"><span class="linenos">254</span></a>
+</span><span id="PointAnnotations.apply_lower_time_limit-255"><a href="#PointAnnotations.apply_lower_time_limit-255"><span class="linenos">255</span></a><span class="sd">        This removes the annotation points before the given time limit.</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-256"><a href="#PointAnnotations.apply_lower_time_limit-256"><span class="linenos">256</span></a>
+</span><span id="PointAnnotations.apply_lower_time_limit-257"><a href="#PointAnnotations.apply_lower_time_limit-257"><span class="linenos">257</span></a><span class="sd">        Parameters</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-258"><a href="#PointAnnotations.apply_lower_time_limit-258"><span class="linenos">258</span></a><span class="sd">        ----------</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-259"><a href="#PointAnnotations.apply_lower_time_limit-259"><span class="linenos">259</span></a><span class="sd">        time_min : float</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-260"><a href="#PointAnnotations.apply_lower_time_limit-260"><span class="linenos">260</span></a><span class="sd">            The time limit.</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-261"><a href="#PointAnnotations.apply_lower_time_limit-261"><span class="linenos">261</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-262"><a href="#PointAnnotations.apply_lower_time_limit-262"><span class="linenos">262</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&gt;=</span> <span class="n">time_min</span><span class="p">)</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-263"><a href="#PointAnnotations.apply_lower_time_limit-263"><span class="linenos">263</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-264"><a href="#PointAnnotations.apply_lower_time_limit-264"><span class="linenos">264</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-265"><a href="#PointAnnotations.apply_lower_time_limit-265"><span class="linenos">265</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-266"><a href="#PointAnnotations.apply_lower_time_limit-266"><span class="linenos">266</span></a>
+</span><span id="PointAnnotations.apply_lower_time_limit-267"><a href="#PointAnnotations.apply_lower_time_limit-267"><span class="linenos">267</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-268"><a href="#PointAnnotations.apply_lower_time_limit-268"><span class="linenos">268</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-269"><a href="#PointAnnotations.apply_lower_time_limit-269"><span class="linenos">269</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">limit</span><span class="p">:]</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-270"><a href="#PointAnnotations.apply_lower_time_limit-270"><span class="linenos">270</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+</span><span id="PointAnnotations.apply_lower_time_limit-271"><a href="#PointAnnotations.apply_lower_time_limit-271"><span class="linenos">271</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -1208,27 +1480,27 @@ The time limit.</li>
 
     </div>
     <a class="headerlink" href="#PointAnnotations.apply_upper_time_limit"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="PointAnnotations.apply_upper_time_limit-225"><a href="#PointAnnotations.apply_upper_time_limit-225"><span class="linenos">225</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_upper_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-226"><a href="#PointAnnotations.apply_upper_time_limit-226"><span class="linenos">226</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-227"><a href="#PointAnnotations.apply_upper_time_limit-227"><span class="linenos">227</span></a><span class="sd">        Apply an upper time limit to the annotations.</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-228"><a href="#PointAnnotations.apply_upper_time_limit-228"><span class="linenos">228</span></a>
-</span><span id="PointAnnotations.apply_upper_time_limit-229"><a href="#PointAnnotations.apply_upper_time_limit-229"><span class="linenos">229</span></a><span class="sd">        This removes the annotation points after the given time limit.</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-230"><a href="#PointAnnotations.apply_upper_time_limit-230"><span class="linenos">230</span></a>
-</span><span id="PointAnnotations.apply_upper_time_limit-231"><a href="#PointAnnotations.apply_upper_time_limit-231"><span class="linenos">231</span></a><span class="sd">        Parameters</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-232"><a href="#PointAnnotations.apply_upper_time_limit-232"><span class="linenos">232</span></a><span class="sd">        ----------</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-233"><a href="#PointAnnotations.apply_upper_time_limit-233"><span class="linenos">233</span></a><span class="sd">        time_max : float</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-234"><a href="#PointAnnotations.apply_upper_time_limit-234"><span class="linenos">234</span></a><span class="sd">            The time limit.</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-235"><a href="#PointAnnotations.apply_upper_time_limit-235"><span class="linenos">235</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-236"><a href="#PointAnnotations.apply_upper_time_limit-236"><span class="linenos">236</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&lt;=</span> <span class="n">time_max</span><span class="p">)</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-237"><a href="#PointAnnotations.apply_upper_time_limit-237"><span class="linenos">237</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-238"><a href="#PointAnnotations.apply_upper_time_limit-238"><span class="linenos">238</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-239"><a href="#PointAnnotations.apply_upper_time_limit-239"><span class="linenos">239</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-240"><a href="#PointAnnotations.apply_upper_time_limit-240"><span class="linenos">240</span></a>
-</span><span id="PointAnnotations.apply_upper_time_limit-241"><a href="#PointAnnotations.apply_upper_time_limit-241"><span class="linenos">241</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-242"><a href="#PointAnnotations.apply_upper_time_limit-242"><span class="linenos">242</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-243"><a href="#PointAnnotations.apply_upper_time_limit-243"><span class="linenos">243</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][:</span><span class="n">limit</span><span class="p">]</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-244"><a href="#PointAnnotations.apply_upper_time_limit-244"><span class="linenos">244</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-</span><span id="PointAnnotations.apply_upper_time_limit-245"><a href="#PointAnnotations.apply_upper_time_limit-245"><span class="linenos">245</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="PointAnnotations.apply_upper_time_limit-273"><a href="#PointAnnotations.apply_upper_time_limit-273"><span class="linenos">273</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_upper_time_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-274"><a href="#PointAnnotations.apply_upper_time_limit-274"><span class="linenos">274</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-275"><a href="#PointAnnotations.apply_upper_time_limit-275"><span class="linenos">275</span></a><span class="sd">        Apply an upper time limit to the annotations.</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-276"><a href="#PointAnnotations.apply_upper_time_limit-276"><span class="linenos">276</span></a>
+</span><span id="PointAnnotations.apply_upper_time_limit-277"><a href="#PointAnnotations.apply_upper_time_limit-277"><span class="linenos">277</span></a><span class="sd">        This removes the annotation points after the given time limit.</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-278"><a href="#PointAnnotations.apply_upper_time_limit-278"><span class="linenos">278</span></a>
+</span><span id="PointAnnotations.apply_upper_time_limit-279"><a href="#PointAnnotations.apply_upper_time_limit-279"><span class="linenos">279</span></a><span class="sd">        Parameters</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-280"><a href="#PointAnnotations.apply_upper_time_limit-280"><span class="linenos">280</span></a><span class="sd">        ----------</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-281"><a href="#PointAnnotations.apply_upper_time_limit-281"><span class="linenos">281</span></a><span class="sd">        time_max : float</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-282"><a href="#PointAnnotations.apply_upper_time_limit-282"><span class="linenos">282</span></a><span class="sd">            The time limit.</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-283"><a href="#PointAnnotations.apply_upper_time_limit-283"><span class="linenos">283</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-284"><a href="#PointAnnotations.apply_upper_time_limit-284"><span class="linenos">284</span></a>        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">&lt;=</span> <span class="n">time_max</span><span class="p">)</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-285"><a href="#PointAnnotations.apply_upper_time_limit-285"><span class="linenos">285</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indeces</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-286"><a href="#PointAnnotations.apply_upper_time_limit-286"><span class="linenos">286</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-287"><a href="#PointAnnotations.apply_upper_time_limit-287"><span class="linenos">287</span></a>        <span class="n">limit</span> <span class="o">=</span> <span class="n">selected</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-288"><a href="#PointAnnotations.apply_upper_time_limit-288"><span class="linenos">288</span></a>
+</span><span id="PointAnnotations.apply_upper_time_limit-289"><a href="#PointAnnotations.apply_upper_time_limit-289"><span class="linenos">289</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-290"><a href="#PointAnnotations.apply_upper_time_limit-290"><span class="linenos">290</span></a>            <span class="k">if</span> <span class="n">is_sequence_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-291"><a href="#PointAnnotations.apply_upper_time_limit-291"><span class="linenos">291</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][:</span><span class="n">limit</span><span class="p">]</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-292"><a href="#PointAnnotations.apply_upper_time_limit-292"><span class="linenos">292</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+</span><span id="PointAnnotations.apply_upper_time_limit-293"><a href="#PointAnnotations.apply_upper_time_limit-293"><span class="linenos">293</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">selected</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -1258,11 +1530,11 @@ The time limit.</li>
 
     </div>
     <a class="headerlink" href="#RecordingMetaData"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RecordingMetaData-248"><a href="#RecordingMetaData-248"><span class="linenos">248</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RecordingMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
-</span><span id="RecordingMetaData-249"><a href="#RecordingMetaData-249"><span class="linenos">249</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Basic metadata that any Recording should reasonably have.&quot;&quot;&quot;</span>
-</span><span id="RecordingMetaData-250"><a href="#RecordingMetaData-250"><span class="linenos">250</span></a>    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="RecordingMetaData-251"><a href="#RecordingMetaData-251"><span class="linenos">251</span></a>    <span class="n">time_of_recording</span><span class="p">:</span> <span class="n">datetime</span>
-</span><span id="RecordingMetaData-252"><a href="#RecordingMetaData-252"><span class="linenos">252</span></a>    <span class="n">participant_id</span><span class="p">:</span> <span class="nb">str</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RecordingMetaData-296"><a href="#RecordingMetaData-296"><span class="linenos">296</span></a><span class="k">class</span><span class="w"> </span><span class="nc">RecordingMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="RecordingMetaData-297"><a href="#RecordingMetaData-297"><span class="linenos">297</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Basic metadata that any Recording should reasonably have.&quot;&quot;&quot;</span>
+</span><span id="RecordingMetaData-298"><a href="#RecordingMetaData-298"><span class="linenos">298</span></a>    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="RecordingMetaData-299"><a href="#RecordingMetaData-299"><span class="linenos">299</span></a>    <span class="n">time_of_recording</span><span class="p">:</span> <span class="n">datetime</span>
+</span><span id="RecordingMetaData-300"><a href="#RecordingMetaData-300"><span class="linenos">300</span></a>    <span class="n">participant_id</span><span class="p">:</span> <span class="nb">str</span>
 </span></pre></div>
 
 
@@ -1327,11 +1599,11 @@ The time limit.</li>
 
     </div>
     <a class="headerlink" href="#StatisticMetaData"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="StatisticMetaData-255"><a href="#StatisticMetaData-255"><span class="linenos">255</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StatisticMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
-</span><span id="StatisticMetaData-256"><a href="#StatisticMetaData-256"><span class="linenos">256</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="StatisticMetaData-257"><a href="#StatisticMetaData-257"><span class="linenos">257</span></a><span class="sd">    Baseclass of Statistics&#39; metadata classes.</span>
-</span><span id="StatisticMetaData-258"><a href="#StatisticMetaData-258"><span class="linenos">258</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="StatisticMetaData-259"><a href="#StatisticMetaData-259"><span class="linenos">259</span></a>    <span class="n">parent_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="StatisticMetaData-303"><a href="#StatisticMetaData-303"><span class="linenos">303</span></a><span class="k">class</span><span class="w"> </span><span class="nc">StatisticMetaData</span><span class="p">(</span><span class="n">PatkitBaseModel</span><span class="p">):</span>
+</span><span id="StatisticMetaData-304"><a href="#StatisticMetaData-304"><span class="linenos">304</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="StatisticMetaData-305"><a href="#StatisticMetaData-305"><span class="linenos">305</span></a><span class="sd">    Baseclass of Statistics&#39; metadata classes.</span>
+</span><span id="StatisticMetaData-306"><a href="#StatisticMetaData-306"><span class="linenos">306</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="StatisticMetaData-307"><a href="#StatisticMetaData-307"><span class="linenos">307</span></a>    <span class="n">parent_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 </span></pre></div>
 
 

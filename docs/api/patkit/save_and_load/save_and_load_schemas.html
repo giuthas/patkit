@@ -144,6 +144,54 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#AnswerLoadSchema">AnswerLoadSchema</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#AnswerLoadSchema.name">name</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#AnswerLoadSchema.author">author</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#AnswerLoadSchema.cursor">cursor</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#AnswerLoadSchema.time_created">time_created</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#AnswerLoadSchema.time_last_edited">time_last_edited</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#ExerciseLoadSchema">ExerciseLoadSchema</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#ExerciseLoadSchema.name">name</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExerciseLoadSchema.scenario_path">scenario_path</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExerciseLoadSchema.time_created">time_created</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExerciseLoadSchema.scrambling_method">scrambling_method</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExerciseLoadSchema.cursor">cursor</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExerciseLoadSchema.example_dir">example_dir</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ExerciseLoadSchema.answers">answers</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -210,7 +258,7 @@
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">PathStructure</span>
 </span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.constants</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>    <span class="n">DatasourceNames</span><span class="p">,</span> <span class="n">SavedObjectTypes</span><span class="p">,</span> <span class="n">SplineDiffsEnum</span><span class="p">,</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>    <span class="n">DatasourceNames</span><span class="p">,</span> <span class="n">ExerciseScrambler</span><span class="p">,</span> <span class="n">SavedObjectTypes</span><span class="p">,</span> <span class="n">SplineDiffsEnum</span><span class="p">,</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>    <span class="n">SplineNNDsEnum</span><span class="p">,</span> <span class="n">SplineShapesEnum</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="p">)</span>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.data_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecordingMetaData</span>
@@ -295,6 +343,36 @@
 </span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="n">format_version</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>    <span class="n">parameters</span><span class="p">:</span> <span class="n">SessionParameterLoadSchema</span>
 </span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>    <span class="n">recordings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AnswerLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">    Loading schema for a saved Answer.</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a><span class="sd">    Answers contain metadata about the user&#39;s progress and references to the</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a><span class="sd">    saved PatGrid (TextGrid) files on disk.</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>    <span class="n">author</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>    <span class="n">cursor</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>    <span class="n">time_created</span><span class="p">:</span> <span class="n">datetime</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>    <span class="n">time_last_edited</span><span class="p">:</span> <span class="n">datetime</span>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ExerciseLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="sd">    Loading schema for a saved Exercise.</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a>
+</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="sd">    Exercise links to the underlying Scenario (Session) and contains the</span>
+</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a><span class="sd">    Example reference annotations and any user Answers.</span>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a>    <span class="n">scenario_path</span><span class="p">:</span> <span class="n">DirectoryPath</span>
+</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a>    <span class="n">time_created</span><span class="p">:</span> <span class="n">datetime</span>
+</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a>    <span class="n">scrambling_method</span><span class="p">:</span> <span class="n">ExerciseScrambler</span>
+</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>    <span class="n">cursor</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a>    <span class="n">example_dir</span><span class="p">:</span> <span class="n">Path</span>
+</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a>    <span class="n">answers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -790,6 +868,220 @@
         
     </div>
     <a class="headerlink" href="#SessionLoadSchema.recordings"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="AnswerLoadSchema">
+                            <input id="AnswerLoadSchema-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">AnswerLoadSchema</span><wbr>(<span class="base">pydantic.main.BaseModel</span>):
+
+                <label class="view-source-button" for="AnswerLoadSchema-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#AnswerLoadSchema"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AnswerLoadSchema-132"><a href="#AnswerLoadSchema-132"><span class="linenos">132</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AnswerLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="AnswerLoadSchema-133"><a href="#AnswerLoadSchema-133"><span class="linenos">133</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="AnswerLoadSchema-134"><a href="#AnswerLoadSchema-134"><span class="linenos">134</span></a><span class="sd">    Loading schema for a saved Answer.</span>
+</span><span id="AnswerLoadSchema-135"><a href="#AnswerLoadSchema-135"><span class="linenos">135</span></a>
+</span><span id="AnswerLoadSchema-136"><a href="#AnswerLoadSchema-136"><span class="linenos">136</span></a><span class="sd">    Answers contain metadata about the user&#39;s progress and references to the</span>
+</span><span id="AnswerLoadSchema-137"><a href="#AnswerLoadSchema-137"><span class="linenos">137</span></a><span class="sd">    saved PatGrid (TextGrid) files on disk.</span>
+</span><span id="AnswerLoadSchema-138"><a href="#AnswerLoadSchema-138"><span class="linenos">138</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AnswerLoadSchema-139"><a href="#AnswerLoadSchema-139"><span class="linenos">139</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="AnswerLoadSchema-140"><a href="#AnswerLoadSchema-140"><span class="linenos">140</span></a>    <span class="n">author</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="AnswerLoadSchema-141"><a href="#AnswerLoadSchema-141"><span class="linenos">141</span></a>    <span class="n">cursor</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="AnswerLoadSchema-142"><a href="#AnswerLoadSchema-142"><span class="linenos">142</span></a>    <span class="n">time_created</span><span class="p">:</span> <span class="n">datetime</span>
+</span><span id="AnswerLoadSchema-143"><a href="#AnswerLoadSchema-143"><span class="linenos">143</span></a>    <span class="n">time_last_edited</span><span class="p">:</span> <span class="n">datetime</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Loading schema for a saved Answer.</p>
+
+<p>Answers contain metadata about the user's progress and references to the
+saved PatGrid (TextGrid) files on disk.</p>
+</div>
+
+
+                            <div id="AnswerLoadSchema.name" class="classattr">
+                                <div class="attr variable">
+            <span class="name">name</span><span class="annotation">: str</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerLoadSchema.name"></a>
+    
+    
+
+                            </div>
+                            <div id="AnswerLoadSchema.author" class="classattr">
+                                <div class="attr variable">
+            <span class="name">author</span><span class="annotation">: str</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerLoadSchema.author"></a>
+    
+    
+
+                            </div>
+                            <div id="AnswerLoadSchema.cursor" class="classattr">
+                                <div class="attr variable">
+            <span class="name">cursor</span><span class="annotation">: int</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerLoadSchema.cursor"></a>
+    
+    
+
+                            </div>
+                            <div id="AnswerLoadSchema.time_created" class="classattr">
+                                <div class="attr variable">
+            <span class="name">time_created</span><span class="annotation">: datetime.datetime</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerLoadSchema.time_created"></a>
+    
+    
+
+                            </div>
+                            <div id="AnswerLoadSchema.time_last_edited" class="classattr">
+                                <div class="attr variable">
+            <span class="name">time_last_edited</span><span class="annotation">: datetime.datetime</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#AnswerLoadSchema.time_last_edited"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="ExerciseLoadSchema">
+                            <input id="ExerciseLoadSchema-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ExerciseLoadSchema</span><wbr>(<span class="base">pydantic.main.BaseModel</span>):
+
+                <label class="view-source-button" for="ExerciseLoadSchema-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ExerciseLoadSchema"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ExerciseLoadSchema-146"><a href="#ExerciseLoadSchema-146"><span class="linenos">146</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ExerciseLoadSchema</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span id="ExerciseLoadSchema-147"><a href="#ExerciseLoadSchema-147"><span class="linenos">147</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ExerciseLoadSchema-148"><a href="#ExerciseLoadSchema-148"><span class="linenos">148</span></a><span class="sd">    Loading schema for a saved Exercise.</span>
+</span><span id="ExerciseLoadSchema-149"><a href="#ExerciseLoadSchema-149"><span class="linenos">149</span></a>
+</span><span id="ExerciseLoadSchema-150"><a href="#ExerciseLoadSchema-150"><span class="linenos">150</span></a><span class="sd">    Exercise links to the underlying Scenario (Session) and contains the</span>
+</span><span id="ExerciseLoadSchema-151"><a href="#ExerciseLoadSchema-151"><span class="linenos">151</span></a><span class="sd">    Example reference annotations and any user Answers.</span>
+</span><span id="ExerciseLoadSchema-152"><a href="#ExerciseLoadSchema-152"><span class="linenos">152</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ExerciseLoadSchema-153"><a href="#ExerciseLoadSchema-153"><span class="linenos">153</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="ExerciseLoadSchema-154"><a href="#ExerciseLoadSchema-154"><span class="linenos">154</span></a>    <span class="n">scenario_path</span><span class="p">:</span> <span class="n">DirectoryPath</span>
+</span><span id="ExerciseLoadSchema-155"><a href="#ExerciseLoadSchema-155"><span class="linenos">155</span></a>    <span class="n">time_created</span><span class="p">:</span> <span class="n">datetime</span>
+</span><span id="ExerciseLoadSchema-156"><a href="#ExerciseLoadSchema-156"><span class="linenos">156</span></a>    <span class="n">scrambling_method</span><span class="p">:</span> <span class="n">ExerciseScrambler</span>
+</span><span id="ExerciseLoadSchema-157"><a href="#ExerciseLoadSchema-157"><span class="linenos">157</span></a>    <span class="n">cursor</span><span class="p">:</span> <span class="nb">int</span>
+</span><span id="ExerciseLoadSchema-158"><a href="#ExerciseLoadSchema-158"><span class="linenos">158</span></a>    <span class="n">example_dir</span><span class="p">:</span> <span class="n">Path</span>
+</span><span id="ExerciseLoadSchema-159"><a href="#ExerciseLoadSchema-159"><span class="linenos">159</span></a>    <span class="n">answers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Loading schema for a saved Exercise.</p>
+
+<p>Exercise links to the underlying Scenario (Session) and contains the
+Example reference annotations and any user Answers.</p>
+</div>
+
+
+                            <div id="ExerciseLoadSchema.name" class="classattr">
+                                <div class="attr variable">
+            <span class="name">name</span><span class="annotation">: str</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseLoadSchema.name"></a>
+    
+    
+
+                            </div>
+                            <div id="ExerciseLoadSchema.scenario_path" class="classattr">
+                                <div class="attr variable">
+            <span class="name">scenario_path</span><span class="annotation">: Annotated[pathlib._local.Path, PathType(path_type=&#39;dir&#39;)]</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseLoadSchema.scenario_path"></a>
+    
+    
+
+                            </div>
+                            <div id="ExerciseLoadSchema.time_created" class="classattr">
+                                <div class="attr variable">
+            <span class="name">time_created</span><span class="annotation">: datetime.datetime</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseLoadSchema.time_created"></a>
+    
+    
+
+                            </div>
+                            <div id="ExerciseLoadSchema.scrambling_method" class="classattr">
+                                <div class="attr variable">
+            <span class="name">scrambling_method</span><span class="annotation">: <a href="../constants.html#ExerciseScrambler">patkit.constants.ExerciseScrambler</a></span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseLoadSchema.scrambling_method"></a>
+    
+    
+
+                            </div>
+                            <div id="ExerciseLoadSchema.cursor" class="classattr">
+                                <div class="attr variable">
+            <span class="name">cursor</span><span class="annotation">: int</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseLoadSchema.cursor"></a>
+    
+    
+
+                            </div>
+                            <div id="ExerciseLoadSchema.example_dir" class="classattr">
+                                <div class="attr variable">
+            <span class="name">example_dir</span><span class="annotation">: pathlib._local.Path</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseLoadSchema.example_dir"></a>
+    
+    
+
+                            </div>
+                            <div id="ExerciseLoadSchema.answers" class="classattr">
+                                <div class="attr variable">
+            <span class="name">answers</span><span class="annotation">: list[str]</span>        =
+<span class="default_value">PydanticUndefined</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ExerciseLoadSchema.answers"></a>
     
     
 

@@ -36,6 +36,7 @@ PatGrid and its components are a GUI friendly encapsulation of
 from abc import ABC, abstractmethod
 from collections import OrderedDict
 from copy import deepcopy
+from pathlib import Path
 
 import numpy as np
 from textgrids import Interval, Point, TextGrid, Tier, Transcript
@@ -150,10 +151,10 @@ class PatInterval(PatAnnotation):
 
         Only xmin and text are copied from the original Interval. xmax is
         assumed to be handled by either the next PatInterval or the
-        constructing method if this is the last Interval. 
+        constructing method if this is the last Interval.
 
         Since PatIntervals are doubly linked, an attempt will be made to link
-        prev and next to this interval. 
+        prev and next to this interval.
 
         Returns the newly created PatInterval.
         """
@@ -343,7 +344,7 @@ class PatTier(list):
         """
         If there is a boundary at time, return it.
 
-        Returns None, if there is no boundary at time. 
+        Returns None, if there is no boundary at time.
 
         'Being at time' is defined as being within patkit epsilon of the given
         timestamp.
@@ -506,8 +507,21 @@ class PatGrid(OrderedDict):
     details.
     """
 
-    def __init__(self, textgrid: TextGrid) -> None:
+    def __init__(self, textgrid: TextGrid | Path | str) -> None:
+        """
+        Initialize a PatGrid.
+
+        Parameters
+        ----------
+        textgrid : TextGrid | Path | str
+            An already parsed textgrids.TextGrid object, or a path to a
+            TextGrid file on disk.
+        """
         super().__init__()
+
+        if isinstance(textgrid, (Path, str)):
+            textgrid = TextGrid(textgrid)
+
         for tier_name in textgrid:
             self[tier_name] = PatTier.from_textgrid_tier(textgrid[tier_name])
 

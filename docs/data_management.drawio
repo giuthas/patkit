@@ -1,65 +1,65 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.16 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.16">
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
   <diagram name="Page-1" id="gr8mzfqvKAO1tlBIOGvY">
-    <mxGraphModel dx="1017" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1009" dy="765" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="oyUO188eo5SSlazpLvbr-2" value="&lt;b&gt;Copies of original data&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
-          <mxGeometry x="80" y="65" width="220" height="160" as="geometry" />
+        <mxCell id="oyUO188eo5SSlazpLvbr-2" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;dashed=1;" value="&lt;b&gt;Copies of original data&lt;/b&gt;" vertex="1">
+          <mxGeometry height="160" width="220" x="80" y="65" as="geometry" />
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-4" value="- Never manipulated by PATKIT&lt;div&gt;- Good idea is to follow the 3-2-1 rule:&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 3 copies&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 2 different media&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 1 copy off-site&lt;br&gt;&lt;/div&gt;&lt;div&gt;- You may also want to follow this rule&amp;nbsp; &amp;nbsp; for&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;the PATKIT data, but separately&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; from&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;the copies of original data.&lt;/span&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;dashed=1;" parent="oyUO188eo5SSlazpLvbr-2" vertex="1">
-          <mxGeometry y="26" width="220" height="134" as="geometry" />
+        <mxCell id="oyUO188eo5SSlazpLvbr-4" parent="oyUO188eo5SSlazpLvbr-2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;dashed=1;" value="- Never manipulated by PATKIT&lt;div&gt;- Good idea is to follow the 3-2-1 rule:&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 3 copies&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 2 different media&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- 1 copy off-site&lt;br&gt;&lt;/div&gt;&lt;div&gt;- You may also want to follow this rule&amp;nbsp; &amp;nbsp; for&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;the PATKIT data, but separately&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; from&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;the copies of original data.&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="134" width="220" y="26" as="geometry" />
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-6" value="&lt;b&gt;Recorded data&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="400" y="80" width="210" height="130" as="geometry" />
+        <mxCell id="oyUO188eo5SSlazpLvbr-6" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Recorded data&lt;/b&gt;" vertex="1">
+          <mxGeometry height="130" width="210" x="400" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-7" value="&lt;div&gt;- Treated as immutable by PATKIT.&lt;/div&gt;&lt;div&gt;- Contains only one PATKIT file:&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- Patkit_manifest.yaml&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Can also contain TextGrids which&amp;nbsp;&lt;/div&gt;&lt;div&gt;&amp;nbsp; PATKIT will not change.&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="oyUO188eo5SSlazpLvbr-6" vertex="1">
-          <mxGeometry y="26" width="210" height="104" as="geometry" />
+        <mxCell id="oyUO188eo5SSlazpLvbr-7" parent="oyUO188eo5SSlazpLvbr-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- Treated as immutable by PATKIT.&lt;/div&gt;&lt;div&gt;- Contains only one PATKIT file:&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- Patkit_manifest.yaml&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Can also contain TextGrids which&amp;nbsp;&lt;/div&gt;&lt;div&gt;&amp;nbsp; PATKIT will not change.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="104" width="210" y="26" as="geometry" />
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-11" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" parent="1" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxCell id="oyUO188eo5SSlazpLvbr-11" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
             <mxPoint x="300" y="140" as="sourcePoint" />
             <mxPoint x="400" y="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-12" value="Copied to" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="oyUO188eo5SSlazpLvbr-11" vertex="1" connectable="0">
-          <mxGeometry x="-0.1159" y="1" relative="1" as="geometry">
+        <mxCell id="oyUO188eo5SSlazpLvbr-12" connectable="0" parent="oyUO188eo5SSlazpLvbr-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Copied to" vertex="1">
+          <mxGeometry relative="1" x="-0.1159" y="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-13" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxCell id="oyUO188eo5SSlazpLvbr-13" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
             <mxPoint x="610" y="170" as="sourcePoint" />
             <mxPoint x="690" y="170" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="20bblAZPWtE0MzBsQ15i-2" value="Refers to" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="oyUO188eo5SSlazpLvbr-13">
-          <mxGeometry x="-0.15" y="2" relative="1" as="geometry">
+        <mxCell id="20bblAZPWtE0MzBsQ15i-2" connectable="0" parent="oyUO188eo5SSlazpLvbr-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Refers to" vertex="1">
+          <mxGeometry relative="1" x="-0.15" y="2" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-18" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.005;exitY=0.21;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.154;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="oyUO188eo5SSlazpLvbr-9" target="oyUO188eo5SSlazpLvbr-7" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxCell id="oyUO188eo5SSlazpLvbr-18" edge="1" parent="1" source="oyUO188eo5SSlazpLvbr-9" style="endArrow=classic;html=1;rounded=0;exitX=0.005;exitY=0.21;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.154;entryDx=0;entryDy=0;entryPerimeter=0;" target="oyUO188eo5SSlazpLvbr-7" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
             <mxPoint x="620" y="330" as="sourcePoint" />
             <mxPoint x="630" y="110" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="20bblAZPWtE0MzBsQ15i-1" value="Refers to" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="oyUO188eo5SSlazpLvbr-18">
-          <mxGeometry x="0.087" y="-1" relative="1" as="geometry">
+        <mxCell id="20bblAZPWtE0MzBsQ15i-1" connectable="0" parent="oyUO188eo5SSlazpLvbr-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Refers to" vertex="1">
+          <mxGeometry relative="1" x="0.087" y="-1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-19" value="&lt;b&gt;SATKIT Scenario&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;strokeColor=#828282;fontColor=#828282;" parent="1" vertex="1">
-          <mxGeometry x="710" y="40" width="210" height="150" as="geometry" />
+        <mxCell id="oyUO188eo5SSlazpLvbr-19" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;strokeColor=#828282;fontColor=#828282;" value="&lt;b&gt;PATKIT Scenario&lt;/b&gt;" vertex="1">
+          <mxGeometry height="150" width="210" x="710" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-21" value="&lt;b&gt;SATKIT Scenario&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;strokeColor=#828282;fontColor=#828282;" parent="1" vertex="1">
-          <mxGeometry x="730" y="10" width="210" height="150" as="geometry" />
+        <mxCell id="oyUO188eo5SSlazpLvbr-21" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;strokeColor=#828282;fontColor=#828282;" value="&lt;b&gt;PATKIT Scenario&lt;/b&gt;" vertex="1">
+          <mxGeometry height="150" width="210" x="730" y="10" as="geometry" />
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-8" value="&lt;b&gt;SATKIT Scenario&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=default;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="690" y="70" width="210" height="150" as="geometry" />
+        <mxCell id="oyUO188eo5SSlazpLvbr-8" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=default;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;PATKIT Scenario&lt;/b&gt;" vertex="1">
+          <mxGeometry height="150" width="210" x="690" y="70" as="geometry" />
         </mxCell>
-        <mxCell id="oyUO188eo5SSlazpLvbr-9" value="&lt;div&gt;- Data generated by PATKIT&lt;/div&gt;&lt;div&gt;- Contain all sorts PATKIT files&lt;/div&gt;&lt;div&gt;- Can also contain TextGrids&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- This is where changed copies &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&amp;nbsp; will be saved.&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Each generated from their own&lt;/div&gt;&lt;div&gt;&amp;nbsp; satkit_scenario.yaml&lt;/div&gt;" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="oyUO188eo5SSlazpLvbr-8" vertex="1">
-          <mxGeometry y="26" width="210" height="124" as="geometry" />
+        <mxCell id="oyUO188eo5SSlazpLvbr-9" parent="oyUO188eo5SSlazpLvbr-8" style="text;strokeColor=none;fillColor=default;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- Data generated by PATKIT&lt;/div&gt;&lt;div&gt;- Contain all sorts PATKIT files&lt;/div&gt;&lt;div&gt;- Can also contain TextGrids&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;- This is where changed copies &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&amp;nbsp; will be saved.&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Each generated from their own&lt;/div&gt;&lt;div&gt;&amp;nbsp; satkit_scenario.yaml&lt;/div&gt;" vertex="1">
+          <mxGeometry height="124" width="210" y="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

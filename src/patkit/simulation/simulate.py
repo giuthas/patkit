@@ -310,7 +310,7 @@ def save_result_figures(
         ray_plot_params = sim_configuration.distance_metric_ray_plot
         for distance_metric_result in distance_metric_results:
             save_path = (
-                    save_dir / f"{distance_metric_result.metric}_contours.pdf")
+                save_dir / f"{distance_metric_result.metric}_contours.pdf")
             write_plot = _determine_plot_writing(save_path, sim_configuration)
             if write_plot:
                 with PdfPages(save_path) as pdf:
@@ -329,7 +329,7 @@ def save_result_figures(
         ray_plot_params = sim_configuration.shape_metric_ray_plot
         for shape_metric_result in shape_metric_results:
             save_path = (
-                    save_dir / f"{shape_metric_result.metric}_contours.pdf")
+                save_dir / f"{shape_metric_result.metric}_contours.pdf")
             write_plot = _determine_plot_writing(save_path, sim_configuration)
             if write_plot:
                 with PdfPages(save_path) as pdf:
@@ -375,6 +375,7 @@ def save_result_figures(
 
     if saved_figures:
         print(f"Saved simulation figures in {save_dir}.")
+
 
 def _determine_plot_writing(save_path, sim_configuration):
     if save_path.exists():

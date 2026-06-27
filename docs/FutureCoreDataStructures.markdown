@@ -1,4 +1,7 @@
-# Core Data Structures
+# Future Core Data Structures
+
+*This document describes a plan for the core data structures. It has not yet
+been implemented.*
 
 PATKIT has hierarchy of core data structures which take care of representing
 files that contain raw or processed data and directories which organise the
@@ -7,21 +10,23 @@ contain data from multiple files and the hierarchy of data structures is not
 necessarily exactly the same as the recommended directory structure (see [Data
 management](DataManagement.markdown)).
 
-## The basic idiom
-
-Most core data structures consist (at least in principle) of three main
-branches: binary data, file information, and metadata. The binary data is the
-actual data, the file information tells where the data was read from, saved to,
-or _should_ be saved to. The metadata helps interpret the data correctly. 
-
 ## Overview of data structures
 
-Sessions are lists of Recordings which are collections of Modalities. A
-Recording is a single synchronised trial. 
+Dataset is a collection of Sessions -- short for recording session. Sessions
+are lists of Trials which are collections of Sources. This is how PATKIT
+handles experiments with more than one data source -- say simultaneous
+recording of ultrasound and EMA. A Trial is a single synchronised trial which
+will have at least one Source. To allow some flexibility, not all Trials in a
+Session need to have the same Sources, even if in practice they almost always
+will.
 
-Modalities are the different, synchronised types of data recorded by a single
-program such as AAA recording sound, tongue ultrasound, and lip video. Finally,
-Modalities are collections of not only data but also Annotations of that data.
+Sources consist of Modalities. These are the different, synchronised types of
+data recorded by a single program such as AAA recording sound, tongue
+ultrasound, and lip video. Finally, Modalities are collections of not only data
+but also Annotations of that data.
+
+Representing more than one Participant in a Session or Trial is handled by
+having a separate Source(s) for each Participant.
 
 The below UML graph does not show all of the members of the classes, but rather
 only the most important ones. For a full description, please refer to the API
@@ -36,15 +41,18 @@ classes](base_classes.markdown).
 For ease of use all classes containing a list or a dict of their major
 components **are** Python lists and dicts of those components:
 
-* Session is a list of Recordings.
+* Dataset is a list of Sessions (either Sessions or possibly
+  TrialSessions).
+* Session is a list of Trials.
   * Session also contains a dictionary of Statistics, but is not a dictionary of
     Statistics in itself.
-* Recording is a dictionary of Modalities.
-  * Recording -- like Session -- also contains a dictionary of Statistics, but is not
+* Trial is a dictionary of Sources.
+* Source is a dictionary of Modalities.
+  * Source -- like Session -- also contains a dictionary of Statistics, but is not
     a dictionary of Statistics in itself.
 * Modalities are dictionaries of Annotations. This maybe slightly unintuitive,
   since the 'beef' of a Modality is its data. However, accessing the
-  Annotations is also important and this makes it convenient.
+  Annotations is also important.
 
 Accessing the components in a Pythonic manner is encouraged, but setting them
 that way may lead to problems. Use instead accessors like
@@ -52,12 +60,18 @@ that way may lead to problems. Use instead accessors like
 
 ## What Else is Contained: Metadata and Others
 
-A Recording represents a single recording in an experiment. It consists of one
-or more Sources. The different data types -- both recorded and derived -- are
-represented by direct subclasses of Modality.
+Dataset represents a single experiment with possibly multiple Participants and
+each with possibly multiple Sessions. While Dataset contains a full dictionary
+of all of the participants, the Sessions only have references to the
+Participants that took part in the Session.
 
-RecordingMetaData contains information on what was recorded and when, but not
-redundant information such as what kind of data. In addition, each Recording has
+A Trial represents a single recording in an experiment. It consists of one or
+more Sources. A Source represents data from one source -- for example ultrasound
+recorded with AAA along with an audio track. The different data types -- both
+recorded and derived -- are represented by direct subclasses of Modality.
+
+TrialMetaData contains information on what was recorded and when, but not
+redundant information such as what kind of data. In addition, each Trial has
 a TextGrid (or rather a PatGrid, see API docs), which is a dict of Tiers which
 are lists of either Intervals or Points.
 
@@ -75,21 +89,10 @@ example, splines from AAA have [time, x-y-confidence, spline points] or [time,
 r-phi-confidence, spline points] for data in polar coordinates.
 
 A special kind of data is represented by Statistic, which can be contained (in
-dictionaries) by Session, and Recording. Statistics represent time
-invariant derived data such as an average over a Recording.
+dictionaries) by Dataset, Session, Trial, or Source. Statistics represent time
+invariant derived data such as an average over a Trial.
 
-## Base classes and inheritance
+## Base classes
 
 There are some abstract base classes which all of the core data structures
 inherit from. These are described in [Base classes](base_classes.markdown).
-
-Most of the core structures inherit from these base classes, and in the case of
-Modality the actual Modalities like MonoAudio, Video, etc derive from Modality
-by direct inheritance. As tempting as it might be, we do not ever make these
-inheritance trees deeper than that. This does lead to code duplication, but
-also keeps the functionality much, much more manageable.
-
-## Future Data Structures
-
-A possible version of the core data structures is described in [Future Core
-Data Structures](FutureCoreDataStructures.markdown).

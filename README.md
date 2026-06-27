@@ -32,10 +32,7 @@ thesis](https://eresearch.qmu.ac.uk/handle/20.500.12289/10163).
   - See [uv](https://docs.astral.sh/uv/#getting-started) for more details.
 - On the commandline run `uv tool install patkit`
 - Run `patkit --help` for instructions.
-- If you want to run the example data, get the `recorded_data` and `scenarios` folders from
-  [github](https://github.com/giuthas/patkit).
-  - Run `patkit scenarios/minimal` in the folder where you downloaded the data
-    and experiment from there.
+- If you want to run the example data, see 'What's included' below for instructions.
 
 - If on Linux of the debian variety (ubuntu, popos, others), you may also need 
 to run the following:
@@ -69,8 +66,9 @@ contents of the directory.
 Place the unzipped directories in the same directory and after installing
 patkit try running 
 ```
-patkit scenarios minimal
+patkit scenarios/minimal
 ```
+and experiment from there.
 
 TODO 1.0: Move the data elsewhere to be optionally loaded.
 

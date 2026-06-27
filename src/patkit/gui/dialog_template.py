@@ -78,6 +78,6 @@ class DialogTemplate(QDialog):
         return result == QDialog.DialogCode.Accepted, result
 
 
-app = QApplication([])
-(ok, result) = DialogTemplate.getDateTime(filename='foobar.txt')
-print("{} {}".format(ok, result))
+# app = QApplication([])
+# (ok, result) = DialogTemplate.getDateTime(filename='foobar.txt')
+# print("{} {}".format(ok, result))

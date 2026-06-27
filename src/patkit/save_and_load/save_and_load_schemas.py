@@ -41,7 +41,7 @@ from pydantic import BaseModel, DirectoryPath
 
 from patkit.configuration import PathStructure
 from patkit.constants import (
-    DatasourceNames, SavedObjectTypes, SplineDiffsEnum,
+    DatasourceNames, ExerciseScrambler, SavedObjectTypes, SplineDiffsEnum,
     SplineNNDsEnum, SplineShapesEnum
 )
 from patkit.data_structures import RecordingMetaData
@@ -126,3 +126,33 @@ class SessionLoadSchema(BaseModel):
     format_version: str
     parameters: SessionParameterLoadSchema
     recordings: list[str]
+
+
+class AnswerLoadSchema(BaseModel):
+    """
+    Loading schema for a saved Answer.
+
+    Answers contain metadata about the user's progress and references to the
+    saved PatGrid (TextGrid) files on disk.
+    """
+    name: str
+    author: str
+    cursor: int
+    time_created: datetime
+    time_last_edited: datetime
+
+
+class ExerciseLoadSchema(BaseModel):
+    """
+    Loading schema for a saved Exercise.
+
+    Exercise links to the underlying Scenario (Session) and contains the
+    Example reference annotations and any user Answers.
+    """
+    name: str
+    scenario_path: DirectoryPath
+    time_created: datetime
+    scrambling_method: ExerciseScrambler
+    cursor: int
+    example_dir: Path
+    answers: list[str]

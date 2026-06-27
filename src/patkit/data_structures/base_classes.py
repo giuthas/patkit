@@ -385,7 +385,7 @@ class AbstractDataContainer(AbstractDataObject):
     """
     Abstract baseclass for Recording, Session, and DataSet.
 
-    This class collects behaviors that are shared by the data base classes i.e.
+    This class collects behaviors that are shared by the database classes i.e.
     classes which collect DataContainers and/or AbstractDataContainers.
     """
 

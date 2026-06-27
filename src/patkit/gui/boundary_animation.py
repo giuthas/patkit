@@ -120,10 +120,10 @@ class BoundaryAnimator:
                 if (animator is not self and
                         animator.segment.begin == self.segment.begin):
                     self.coincident_boundaries.append(animator)
-                    print(
-                        f"self: {self.segment.label} {self.segment.begin} "
-                        f"other:{animator.segment.label}"
-                        f" {animator.segment.begin}")
+                    # print(
+                    #     f"self: {self.segment.label} {self.segment.begin} "
+                    #     f"other:{animator.segment.label}"
+                    #     f" {animator.segment.begin}")
 
         is_inaxes = False
         for boundary in self.boundaries:

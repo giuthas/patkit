@@ -49,6 +49,7 @@ from patkit.external_class_extensions import (
 # TODO 1.0: Decouple program and file format versions at version 1.0.
 PATKIT_VERSION = version('patkit')
 PATKIT_FILE_VERSION = PATKIT_VERSION
+EXERCISE_FILE_VERSION = PATKIT_VERSION
 
 DEFAULT_ENCODING = 'utf-8'
 
@@ -192,6 +193,7 @@ class PatkitConfigFile(str, Enum):
     SESSION: how PATKIT should read a session based on recorded data
     SPLINE: spline formatting
     """
+    ANSWER = "patkit-answer.yaml"
     EXERCISE = "patkit-exercise.yaml"
     DATA = "patkit-data.yaml"
     GUI = "patkit-gui.yaml"
@@ -200,6 +202,21 @@ class PatkitConfigFile(str, Enum):
     MANIFEST = "patkit-manifest.yaml"
     SESSION = 'session-config.yaml'
     SPLINE = 'spline-config.yaml'
+
+    def __str__(self) -> str:
+        """
+        Ensure f-strings and print() output the string value.
+        """
+        return self.value
+
+
+class PatkitDirectory(str, Enum):
+    """
+    Standard directory names used in PATKIT.
+    """
+    ANSWERS = "answers"
+    EXAMPLE = "example"
+    EXERCISE = "exercise"
 
     def __str__(self) -> str:
         """
@@ -231,7 +248,7 @@ class SavedObjectTypes(Enum):
     """
     Represent type of a saved patkit object in .meta.
     """
-    # TODO 1.0: Check if this is actually in use.
+    EXERCISE = "Exercise"
     DATASET = "Dataset"
     MODALITY = "Modality"
     RECORDING = "Recording"
@@ -454,3 +471,49 @@ class ExerciseMode(ListablePrintableEnum, metaclass=ValueComparedEnumMeta):
     """
     ANSWER = "Answer"
     EXAMPLE = "Example"
+
+
+class ExerciseScrambler(
+    ListablePrintableEnum, metaclass=ValueComparedEnumMeta
+):
+    """
+    Ways of scrambling boundaries for an Exercise.
+    """
+    EQUIDISTANT = "Equidistant"
+
+
+class DefaultCanvasColors(str, Enum):
+    """
+    Default background colors for the Matplotlib figure canvas.
+
+    These represent the hardcoded default theme colors for different
+    annotator and exercise modes until config overrides are implemented.
+    """
+    ANNOTATOR_LIGHT = "white"
+    ANNOTATOR_DARK = "black"
+
+    EXAMPLE_LIGHT = "#e7eaff"
+    EXAMPLE_DARK = "#000212"
+
+    ANSWER_LIGHT = "#e6ffe9"
+    ANSWER_DARK = "#001202"
+
+    def __str__(self) -> str:
+        """
+        Ensure f-strings and print() output the string value.
+        """
+        return self.value
+
+
+class DefaultCursorColors(str, Enum):
+    """
+    Default colors for GUI cursor and selection elements.
+    """
+    SELECTION = "deepskyblue"
+    PLAYBACK = "red"
+
+    def __str__(self) -> str:
+        """
+        Ensure f-strings and print() output the string value.
+        """
+        return self.value

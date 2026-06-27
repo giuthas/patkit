@@ -34,6 +34,7 @@ Functions for saving patkit data.
 """
 
 from collections import OrderedDict
+from datetime import datetime
 import logging
 from pathlib import Path
 
@@ -41,16 +42,17 @@ import nestedtext
 import numpy as np
 
 from patkit.constants import (
-    OverwriteConfirmation, PatkitConfigFile, PATKIT_FILE_VERSION,
-    PatkitSuffix,
+    DEFAULT_ENCODING, OverwriteConfirmation, PatkitConfigFile,
+    PATKIT_FILE_VERSION,
+    PatkitDirectory, PatkitSuffix, SourceSuffix,
 )
 from patkit.data_structures import (
-    Manifest, Modality, Recording, Session, Statistic
+    Answer, Exercise, Manifest, Modality, Recording, Session, Statistic
 )
 from patkit.ui_callbacks import UiCallbacks
+from patkit.data_structures.base_classes import AbstractDataContainer
 
 from .save_and_load_schemas import nested_text_converters
-from ..data_structures.base_classes import AbstractDataContainer
 
 _logger = logging.getLogger('patkit.save')
 
@@ -378,7 +380,7 @@ def save_session_meta(
             confirmation = UiCallbacks.get_overwrite_confirmation(
                 str(filepath))
 
-    # TODO This should really be a model dump not a dict.
+    # TODO 1.0: This should really be a model dump not a dict.
     meta = OrderedDict()
     meta['object_type'] = type(session).__name__
     meta['name'] = session.name
@@ -421,7 +423,6 @@ def save_manifest(session: Session) -> None:
 
     manifest = Manifest(manifest_path)
     # Manifest.append is safe against duplicates.
-    print(f"trying to add {session.patkit_meta_path}")
     manifest.append(session.patkit_meta_path)
     # Always write in case there is an update to the file format.
     manifest.save()
@@ -453,3 +454,73 @@ def save_recording_session(
     save_manifest(session)
 
     return meta_name, confirmation
+
+
+def save_answer(answer: Answer) -> None:
+    """
+    Save an Answer's TextGrids and metadata to disk.
+    Path is natively computed by the Answer object.
+    """
+    output_dir = answer.patkit_data_path
+    # TODO 1.0: is this in the right place? should this not be updated in the
+    # ui rather than here?
+    answer.metadata.time_last_edited = datetime.now().isoformat()
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # TODO 1.0: This should really be a model dump not a dict.
+    metadata = {
+        "name": answer.name,
+        "author": answer.metadata.author,
+        "cursor": answer.cursor,
+        "time_created": answer.metadata.time_created,
+        "time_last_edited": answer.metadata.time_last_edited
+    }
+
+    meta_path = output_dir / PatkitConfigFile.ANSWER
+    nestedtext.dump(
+        metadata, meta_path, converters=nested_text_converters
+    )
+
+    for index, patgrid in enumerate(answer):
+        recording = answer.scenario.recordings[index]
+        grid_path = output_dir / (
+            recording.basename + SourceSuffix.TEXTGRID
+        )
+        with open(grid_path, 'w', encoding=DEFAULT_ENCODING) as outfile:
+            outfile.write(patgrid.format_long())
+
+
+def save_exercise(exercise: Exercise) -> None:
+    """
+    Save an Exercise, its metadata, example, and all Answers to disk.
+    """
+    base_dir = exercise.patkit_path
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    example_dir_name = PatkitDirectory.EXAMPLE
+    scenario_path_str = str(
+        exercise.scenario.patkit_path.relative_to(base_dir, walk_up=True)
+    )
+
+    answer_names = [answer.name for answer in exercise.values()]
+
+    # TODO 1.0: This should really be a model dump not a dict.
+    metadata = {
+        "name": exercise.name,
+        "scenario_path": scenario_path_str,
+        "time_created": exercise.metadata.time_created,
+        "scrambling_method": str(exercise.metadata.scrambling_method),
+        "cursor": exercise.cursor,
+        "example_dir": example_dir_name,
+        "answers": answer_names,
+    }
+
+    meta_path = base_dir / PatkitConfigFile.EXERCISE
+    nestedtext.dump(
+        metadata, meta_path, converters=nested_text_converters
+    )
+
+    save_answer(answer=exercise.example)
+
+    for answer in exercise.values():
+        save_answer(answer=answer)

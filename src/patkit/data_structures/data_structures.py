@@ -32,20 +32,6 @@
 """PATKIT's main datastructures."""
 
 from __future__ import annotations
-from .metadata_classes import (
-    FileInformation, ModalityData, ModalityMetaData, PointAnnotations,
-    RecordingMetaData
-)
-from .base_classes import AbstractDataContainer, AbstractData, Statistic
-from patkit.patgrid import PatGrid
-from patkit.utility_functions import stem_path
-from patkit.errors import (
-    DimensionMismatchError, MissingDataError, OverwriteError
-)
-from patkit.constants import AnnotationType, SourceSuffix
-from patkit.configuration import SessionConfig
-import textgrids
-import numpy as np
 
 import abc
 import logging
@@ -54,11 +40,30 @@ from copy import deepcopy
 from pathlib import Path
 from textwrap import indent
 
+import textgrids
+import numpy as np
+
+from patkit.configuration import SessionConfig
+from patkit.constants import (
+    AnnotationType, PatkitDirectory, SourceSuffix
+)
+from patkit.errors import (
+    DimensionMismatchError, MissingDataError, OverwriteError
+)
+from patkit.patgrid import PatGrid
+from patkit.utility_functions import stem_path
+
+from .metadata_classes import (
+    AnswerMetadata, ExerciseMetadata, FileInformation,
+    ModalityData, ModalityMetaData, PointAnnotations,
+    RecordingMetaData
+)
+from .base_classes import AbstractDataContainer, AbstractData, Statistic
 
 _logger = logging.getLogger('patkit.data_structures')
 
 
-class Answer(UserList):
+class Answer(AbstractDataContainer, UserList):
     """
     Answer is an answer to an Exercise and consists of PatGrids.
 
@@ -69,23 +74,42 @@ class Answer(UserList):
         self,
         container: Exercise,
         scenario: Session,
-        scramble: bool,
-        name: str = "",
-        author: str = "",
+        metadata: AnswerMetadata,
+        name: str,
         cursor: int = 0,
+        file_info: FileInformation | None = None,
     ):
-        super().__init__()
+        """
+        Initialize an Answer object containing PatGrids for an Exercise.
+
+        Parameters
+        ----------
+        container : Exercise
+            The Exercise this Answer belongs to.
+        scenario : Session
+            The Session containing the recordings.
+        name : str
+            The name of the answer.
+        cursor : int
+            The cursor index pointing to the active recording.
+        file_info : FileInformation | None
+            The FileInformation metadata for the answer.
+        """
+        if file_info is None:
+            file_info = FileInformation()
+
+        super().__init__(name=name, metadata=metadata,
+                         container=container, file_info=file_info)
         self.container = container
         self.scenario = scenario
-        self.name = name
-        self.author = author
         self.cursor = cursor
 
         for recording in self.scenario:
             patgrid = deepcopy(recording.patgrid)
             self.append(patgrid)
 
-        if scramble:
+        # TODO: this will probably break loading edited answers
+        if self.metadata.scramble:
             for patgrid in self:
                 for tier in patgrid:
                     patgrid[tier].scramble()
@@ -99,6 +123,20 @@ class Answer(UserList):
             patgrid_string = f"{patgrid}"
             representation += indent(text=patgrid_string, prefix="\t")
         return representation
+
+    @property
+    def patkit_data_path(self) -> Path:
+        """Dynamically compute the path to the answer directory."""
+        # Route example answers directly to the example directory
+        if (
+            self.container.example is not None and
+            self is self.container.example
+        ):
+            return self.container.patkit_path / PatkitDirectory.EXAMPLE
+
+        return (
+            self.container.patkit_path / PatkitDirectory.ANSWERS / self.name
+        )
 
     def current(self) -> PatGrid:
         """
@@ -151,7 +189,7 @@ class Answer(UserList):
         return self.cursor
 
 
-class Exercise(UserDict):
+class Exercise(AbstractDataContainer, UserDict):
     """
     Exercise is list of Answers relating to a Scenario (Session).
 
@@ -162,24 +200,46 @@ class Exercise(UserDict):
     def __init__(
         self,
         scenario: Session,
+        name: str,
+        metadata: ExerciseMetadata,
         answers: list[Answer] | None = None,
         example: dict[str, Answer] | None = None,
         index: int = 0,
+        file_info: FileInformation | None = None,
     ):
-        super().__init__()
+        """
+        Initialize an Exercise.
+
+        Parameters
+        ----------
+        scenario : Session
+            The Session containing the recordings for this exercise.
+        answers : list[Answer] | None
+            A list of Answer objects to populate the exercise.
+        example : dict[str, Answer] | None
+            The example scrambled Answer to present to the user.
+        index : int
+            The cursor index.
+        """
+        super().__init__(name=name, metadata=metadata, file_info=file_info)
         if example is None:
             _logger.debug("Creating an example answer")
+            metadata = AnswerMetadata(
+                scramble=False,
+            )
             self.example = Answer(
                 container=self,
                 scenario=scenario,
-                scramble=False,
+                metadata=metadata,
+                name=PatkitDirectory.EXAMPLE,
             )
         else:
             self.example = example
         self.scenario = scenario
 
         if answers is not None:
-            self.update(answers)
+            for answer in answers:
+                self[answer.name] = answer
 
         self.cursor = index
 
@@ -202,6 +262,14 @@ class Exercise(UserDict):
     def current_answer(self) -> Answer:
         return self[list(self.keys())[self.cursor]]
 
+    @property
+    def patkit_path(self) -> Path | None:
+        return self.file_info.patkit_path
+
+    @patkit_path.setter
+    def patkit_path(self, path: Path) -> None:
+        self.file_info.patkit_path = path
+
     def new_blank_answer(
         self,
         cursor: int = 0,
@@ -218,7 +286,7 @@ class Exercise(UserDict):
         name : str | None
             Name of the new Answer, by default None. If None is passed the new
             name will be autogenerated and have the form
-            `f"Answer {len(self)+1}"`.
+            `f"Answer_{len(self)+1}"`.
         author : str
             Name of the new Answer's author, by default an empty string.
         """
@@ -226,15 +294,19 @@ class Exercise(UserDict):
 
         # TODO 1.0: Is this the best place to name answers?
         if name is None:
-            name = f"Answer {len(self)+1}"
+            name = f"Answer_{len(self)+1}"
 
+        metadata = AnswerMetadata(
+            scramble=True,
+            author=author
+        )
         blank = Answer(
             container=self,
             scenario=self.scenario,
-            scramble=True,
+            name=name,
+            metadata=metadata,
             cursor=cursor,
         )
-        name = f"Answer {len(self)+1}"
         self[name] = blank
 
 
@@ -336,11 +408,15 @@ class Session(AbstractDataContainer, UserList):
             config: SessionConfig,
             file_info: FileInformation,
             recordings: list[Recording] | None = None,
-            statistics: dict[str, Statistic] | None = None
+            statistics: dict[str, Statistic] | None = None,
+            exercise: Exercise | None = None,
     ) -> None:
         super().__init__(
-            container=None, name=name, metadata=config,
-            file_info=file_info, statistics=statistics)
+            container=None,
+            name=name,
+            metadata=config,
+            file_info=file_info,
+            statistics=statistics)
 
         if recordings is not None:
             for recording in recordings:
@@ -349,6 +425,7 @@ class Session(AbstractDataContainer, UserList):
             self.extend(recordings)
 
         self.config = config
+        self.exercise = exercise
 
     def __repr__(self) -> str:
         representation = "Session:\n"

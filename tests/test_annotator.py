@@ -29,11 +29,43 @@
 # articles listed in README.md. They can also be found in
 # citations.bib in BibTeX format.
 #
-from .load import (
-    load_answer, load_exercise, load_recordings, load_recording_session
-)
-from .save import (
-    save_answer, save_exercise, save_manifest, save_recordings,
-    save_recording_session
-)
-from .save_and_load_schemas import nested_text_converters
+"""Unit and integration tests for the PdQtAnnotator window interface."""
+
+from unittest.mock import MagicMock
+
+from patkit.constants import AnnotatorMode
+from patkit.qt_annotator import PdQtAnnotator
+
+
+def test_annotator_initialization(annotator: PdQtAnnotator) -> None:
+    """
+    Verify that the annotator initializes with correct properties.
+
+    Parameters
+    ----------
+    annotator : PdQtAnnotator
+        The initialized annotator window fixture.
+    """
+    assert annotator.index == 0
+    assert annotator.annotator_mode == AnnotatorMode.ANALYSE
+    assert annotator.display_tongue is False
+
+
+def test_mode_change_updates_ui(
+    annotator: PdQtAnnotator,
+    mocker: MagicMock
+) -> None:
+    """
+    Verify that changing the dropdown text triggers the expected mode.
+
+    Parameters
+    ----------
+    annotator : PdQtAnnotator
+        The initialized annotator window fixture.
+    """
+    # Prevent the UI from attempting to redraw missing test
+    # data during fallback
+    mocker.patch.object(annotator, "update")
+
+    annotator.mode_drop_down.setCurrentText("Exercise")
+    assert annotator.annotator_mode == AnnotatorMode.EXERCISE
