@@ -36,7 +36,7 @@ def package_exercise_to_zip(
     include_root_textgrids : bool, optional
         Whether to include root-level `.TextGrid` files, by default False.
     include_wav_files : bool, optional
-        Whether to include wav files, by default True. 
+        Whether to include wav files, by default True.
     """
     with ZipFile(file=zip_path, mode='w', compression=ZIP_DEFLATED) as output:
         patkit_path = file_info.patkit_path
