@@ -150,7 +150,9 @@ def read_recorded_session_from_dir(
 
     file_info = FileInformation(
         recorded_path=recorded_data_path,
-        recorded_meta_file=session_config_path.name)
+        recorded_meta_file=session_config_path.name,
+        is_top_level_object=True,
+    )
     if session_config_path.is_file():
         session_config = load_session_config(
             recorded_data_path, session_config_path)
