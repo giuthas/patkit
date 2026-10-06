@@ -1,5 +1,10 @@
 # Automated exercises
 
+**Please note:** Exercise documentation is out of date. Expected to be fixed in
+version 0.24.3.
+
+<!-- TODO 0.24.3: update this  -->
+
 Exercises in Patkit are managed within a [Session
 directory](DataManagement.markdown), which serves as the base Scenario.
 
