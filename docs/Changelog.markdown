@@ -28,7 +28,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Added
 
 - 0.23 will add kymography on laryngoscopic and other video data. 
-- 0.24.x will improve the annotation GUI by adding missing features like interval
+- 0.24.x will improve the annotation GUI by adding features like interval
   selection
 - 0.25 will update configuration handling.
 - 0.26 adds simple ways of opening different kinds of data
@@ -36,11 +36,11 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - There will be a feature freeze at this point.
 
 
-## [0.22.3] - 2026-06-30
+## [0.22.3] - 2026-10-06
 
 ### Highlights
 
-- Exercises sharing support.
+- Experimental exercises sharing support.
 
 ### Added
 
@@ -54,14 +54,11 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - New tests for: 
   - Answer cursor saving and loading
   - Exercise sharing
-  - 
 
-### Documentation
-
-- Updated automated exercise documentation.
 
 ### Bugs
 
+- Exercise documentation is out of date. Expected to be fixed in version 0.24.3.
 - [All Bugs](Bugs.markdown).
 
 

@@ -730,7 +730,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Save derived modalities and annotations.
         """
-        # TODO 0.22.3: does this save textgrids too and how does it interact
+        # TODO 0.23.3: does this save textgrids too and how does it interact
         # with saving answers and exercises.
         save_recording_session(self.session)
 
@@ -758,7 +758,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Save the all TextGrids in this Session.
         """
-        # TODO 0.22.3: write a call back for asking for overwrite confirmation.
+        # TODO 0.23.3: write a call back for asking for overwrite confirmation.
         if self.annotator_mode is AnnotatorMode.EXERCISE:
             return
 
@@ -936,7 +936,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         if not ok or not answer_name:
             return
 
-        # TODO 0.22.3: The loading here might be redundant, if Exercise already
+        # TODO 0.23.3: The loading here might be redundant, if Exercise already
         # front loads every answer.
         directory = answers_dir / answer_name
         answer = load_answer(
