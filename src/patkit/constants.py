@@ -510,7 +510,21 @@ class DefaultCursorColors(str, Enum):
     Default colors for GUI cursor and selection elements.
     """
     SELECTION = "deepskyblue"
-    PLAYBACK = "red"
+    PLAYBACK = "#FD7400"
+
+    def __str__(self) -> str:
+        """
+        Ensure f-strings and print() output the string value.
+        """
+        return self.value
+
+
+class ColorPalettes(str, Enum):
+    """
+    Colors for plotting lines.
+    """
+    COLORBLIND_10 = 'tableau-colorblind10'
+    # COLORBLIND_6 = 'viscid-colorblind'
 
     def __str__(self) -> str:
         """

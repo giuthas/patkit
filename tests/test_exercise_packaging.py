@@ -1,0 +1,168 @@
+#
+# Copyright (c) 2019-2026
+# Pertti Palo, Scott Moisik, Matthew Faytak, and Motoki Saito.
+#
+# This file is part of the Phonetic Analysis ToolKIT
+# (see https://github.com/giuthas/patkit/).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# The example data packaged with this program is licensed under the
+# Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+# International (CC BY-NC-SA 4.0) License. You should have received a
+# copy of the Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+# International (CC BY-NC-SA 4.0) License along with the data. If not,
+# see <https://creativecommons.org/licenses/by-nc-sa/4.0/> for details.
+#
+# When using the toolkit for scientific publications, please cite the
+# articles listed in README.md. They can also be found in
+# citations.bib in BibTeX format.
+#
+from pathlib import Path
+
+from patkit.data_structures import FileInformation
+from patkit.save_and_load import (
+    package_exercise_to_zip,
+    unpackage_exercise_from_zip
+)
+
+# TODO 0.24: make sure we test that wavs from a recorded_data branch get
+# included in the package.
+
+
+def test_package_and_unpackage_exercise_filters_correctly(
+    tmp_path: Path
+) -> None:
+    """
+    Test that packaging an exercise correctly filters out root-level TextGrids
+    and non-active answers, while renaming the active answer to 'answer'.
+    """
+    # 1. Setup a mock session directory structure
+    session_path = tmp_path / "session"
+    session_path.mkdir()
+
+    # TODO 0.24: this is not a patkit file, fix it and see that non-patkit
+    # stuff does not get included in packages.
+    # Gemini thinks: This is a Normal file that should be included!
+    (session_path / "config.json").write_text('{"mock": "data"}')
+
+    # TODO 0.24: There should also be a correspondence between 'root textgrids'
+    # (totally a hallucination as a term) and those in answers.
+    #
+    # Root-level TextGrid (should be
+    # filtered out by default)
+    (session_path / "root_recording.TextGrid").write_text("root grid content")
+
+    # Setup exercise answers directory
+    answers_dir = session_path / "exercise" / "answers"
+    answers_dir.mkdir(parents=True)
+
+    # Active answer (should be included, but renamed to 'answer')
+    active_ans_dir = answers_dir / "target_user"
+    active_ans_dir.mkdir()
+    (active_ans_dir / "annotation.TextGrid").write_text("active grid content")
+
+    # Other answer (should be filtered out)
+    other_ans_dir = answers_dir / "other_user"
+    other_ans_dir.mkdir()
+    (other_ans_dir / "annotation.TextGrid").write_text("other grid content")
+
+    zip_path = tmp_path / "test_exercise.zip"
+
+    file_info = FileInformation(
+        patkit_path=session_path,
+    )
+
+    package_exercise_to_zip(
+        file_info=file_info,
+        zip_path=zip_path,
+        active_answer_name="target_user",
+        include_root_textgrids=False
+    )
+
+    assert zip_path.exists(), "The zip file was not created."
+
+    # Unpackage
+    extract_path = tmp_path / "extracted"
+    extract_path.mkdir()
+
+    unpackage_exercise_from_zip(
+        zip_filepath=zip_path,
+        destination_directory=extract_path
+    )
+
+    # TODO 0.24: irrelevant and wrong test. config.json is not a thing.
+    assert (extract_path /
+            "config.json").exists(), "Standard files should be retained."
+
+    # Check that root-level TextGrids were ignored
+    assert not (
+        extract_path / "root_recording.TextGrid"
+    ).exists(), "Root TextGrids should be filtered out by default."
+
+    # Check that the other user's answer was removed
+    assert not (extract_path / "exercise" / "answers" /
+                "other_user").exists(), "Inactive answers must be excluded."
+
+    # Check that the original target user folder name no longer exists...
+    assert not (
+        extract_path / "exercise" / "answers" / "target_user"
+    ).exists(), "The active answer should have been renamed."
+
+    # ...and was properly renamed to 'answer'
+    renamed_ans_dir = extract_path / "exercise" / "answers" / "answer"
+    assert renamed_ans_dir.exists(
+    ), "The target answer directory should be renamed to 'answer'."
+    assert (renamed_ans_dir / "annotation.TextGrid").exists()
+    assert (renamed_ans_dir /
+            "annotation.TextGrid").read_text() == "active grid content"
+
+
+def test_package_exercise_include_textgrids_flag(tmp_path: Path) -> None:
+    """
+    Test that setting include_textgrids=True bypasses the root-level
+    TextGrid filtering logic.
+    """
+    session_path = tmp_path / "session"
+    session_path.mkdir()
+
+    # Root-level TextGrid
+    (session_path / "root_recording.TextGrid").write_text("root grid content")
+
+    # Minimal answers dir setup
+    answers_dir = session_path / "exercise" / "answers" / "target_user"
+    answers_dir.mkdir(parents=True)
+    (answers_dir / "dummy.txt").write_text("data")
+
+    zip_path = tmp_path / "test_with_grids.zip"
+
+    file_info = FileInformation(
+        patkit_path=session_path
+    )
+
+    # Package with the flag set to True
+    package_exercise_to_zip(
+        file_info=file_info,
+        zip_path=zip_path,
+        active_answer_name="target_user",
+        include_root_textgrids=True
+    )
+
+    extract_path = tmp_path / "extracted"
+    extract_path.mkdir()
+    unpackage_exercise_from_zip(zip_path, extract_path)
+
+    # The root TextGrid should now be present in the extracted archive
+    assert (extract_path / "root_recording.TextGrid").exists(
+    ), "Root TextGrid should be included when include_textgrids=True."

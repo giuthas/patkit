@@ -76,14 +76,14 @@ from patkit.export import (
 from patkit.gui import (
     AudioPlayer, ImageSaveDialog, ListSaveDialog,
     NewAnswerDialog, NewExerciseDialog,
-    ListSelectionDialog, PlotController,
+    ListSelectionDialog, PackageExerciseDialog, PlotController,
     ReplaceDialog, UiMainWindow,
 )
 from patkit.initialise import initialise_config, initialise_patkit
 from patkit.path_resolution import get_manifest_scenarios, resolve_open_path
 from patkit.save_and_load import (
-    load_answer, save_answer, save_exercise,
-    save_recording_session,
+    load_answer, package_exercise_to_zip, unpackage_exercise_from_zip,
+    save_answer, save_exercise, save_recording_session,
 )
 from patkit.ui_callbacks import UiCallbacks
 
@@ -203,6 +203,9 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         self.action_new_exercise.triggered.connect(
             self.new_exercise)
         self.action_save_exercise.triggered.connect(self.save_exercise)
+        self.action_package_exercise.triggered.connect(self.package_exercise)
+        self.action_unpackage_exercise.triggered.connect(
+            self.unpackage_exercise)
         self.action_new_answer.triggered.connect(self.new_answer)
         self.action_save_answer.triggered.connect(self.save_answer)
         self.action_open_answer.triggered.connect(self.open_answer)
@@ -709,7 +712,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
 
         self.update()
         # In case labels change as new plots are drawn.
-        self.figure.align_ylabels()
+        self.plot_controller.figure.align_ylabels()
         self.update_ui()
 
     def open_file(self):
@@ -727,7 +730,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Save derived modalities and annotations.
         """
-        # TODO 0.22.3: does this save textgrids too and how does it interact
+        # TODO 0.23.3: does this save textgrids too and how does it interact
         # with saving answers and exercises.
         save_recording_session(self.session)
 
@@ -755,7 +758,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """
         Save the all TextGrids in this Session.
         """
-        # TODO 0.22.3: write a call back for asking for overwrite confirmation.
+        # TODO 0.23.3: write a call back for asking for overwrite confirmation.
         if self.annotator_mode is AnnotatorMode.EXERCISE:
             return
 
@@ -809,6 +812,85 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         """Save the active exercise to disk."""
         save_exercise(exercise=self.session.exercise)
 
+    def package_exercise(self) -> None:
+        """
+        Package the active exercise to a zip.
+        """
+        default_name = f"{self.session.patkit_path.name}.zip"
+        default_path = self.session.patkit_path.parent / default_name
+
+        zip_path, include_grids = PackageExerciseDialog.get_packaging_params(
+            parent=self,
+            default_path=default_path
+        )
+
+        if zip_path is None:
+            return
+
+        current_answer_name = self.session.exercise.current_answer.name
+
+        package_exercise_to_zip(
+            file_info=self.session.file_info,
+            zip_path=zip_path,
+            active_answer_name=current_answer_name,
+            include_root_textgrids=include_grids
+        )
+
+        # TODO: status message instead
+        # QMessageBox.information(
+        #     parent=self,
+        #     title="Export Successful",
+        #     text=f"Exercise successfully exported to:\n{zip_path}"
+        # )
+
+    def unpackage_exercise(self) -> None:
+        """
+        Prompt the user to extract a zipped exercise and load it.
+        """
+        zip_path_str, _ = QFileDialog.getOpenFileName(
+            parent=self,
+            caption="Open Zipped Exercise",
+            directory=str(Path.cwd()),
+            filter="Zip Files (*.zip)"
+        )
+
+        if not zip_path_str:
+            return
+
+        zip_path = Path(zip_path_str)
+
+        dest_dir_str = QFileDialog.getExistingDirectory(
+            parent=self,
+            caption="Select Destination for Extraction",
+            directory=str(zip_path.parent)
+        )
+
+        if not dest_dir_str:
+            return
+
+        dest_dir = Path(dest_dir_str) / zip_path.stem
+
+        # TODO 0.25: ask for confirmation before overwriting instead of just
+        # refusing. This should take the form of a callback handed to
+        # unpackage_exercise_from_zip, so that individual files can be
+        # confirmed as needed.
+        unpackage_exercise_from_zip(
+            zip_filepath=zip_path,
+            destination_directory=dest_dir
+        )
+
+        # TODO: status message instead
+        # msg_text = (
+        #     f"Exercise extracted to:\n{dest_dir}\n\n"
+        #     "Please open this directory as a new Session."
+        # )
+
+        # QMessageBox.information(
+        #     parent=self,
+        #     title="Import Successful",
+        #     text=msg_text
+        # )
+
     def new_answer(self) -> bool:
         """Create a new blank answer for the current exercise."""
         answer_name, author_name = NewAnswerDialog.get_answer_params(self)
@@ -854,7 +936,7 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
         if not ok or not answer_name:
             return
 
-        # TODO 0.22.3: The loading here might be redundant, if Exercise already
+        # TODO 0.23.3: The loading here might be redundant, if Exercise already
         # front loads every answer.
         directory = answers_dir / answer_name
         answer = load_answer(
@@ -990,7 +1072,8 @@ class PdQtAnnotator(QMainWindow, UiMainWindow):
             parent=self,
         )
         if filename is not None:
-            self.figure.savefig(filename, bbox_inches='tight', pad_inches=0.05)
+            self.plot_controller.figure.savefig(
+                filename, bbox_inches='tight', pad_inches=0.05)
             export_session_and_recording_meta(
                 filename=filename,
                 session=self.session,

@@ -406,30 +406,30 @@ Logging level, by default None.</li>
 
     </div>
     <a class="headerlink" href="#run_annotator"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="run_annotator-1480"><a href="#run_annotator-1480"><span class="linenos">1480</span></a><span class="k">def</span><span class="w"> </span><span class="nf">run_annotator</span><span class="p">(</span>
-</span><span id="run_annotator-1481"><a href="#run_annotator-1481"><span class="linenos">1481</span></a>        <span class="n">session</span><span class="p">:</span> <span class="n">Session</span><span class="p">,</span>
-</span><span id="run_annotator-1482"><a href="#run_annotator-1482"><span class="linenos">1482</span></a>        <span class="n">config</span><span class="p">:</span> <span class="n">Configuration</span><span class="p">,</span>
-</span><span id="run_annotator-1483"><a href="#run_annotator-1483"><span class="linenos">1483</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="run_annotator-1484"><a href="#run_annotator-1484"><span class="linenos">1484</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="run_annotator-1485"><a href="#run_annotator-1485"><span class="linenos">1485</span></a><span class="sd">    Start the Annotator GUI.</span>
-</span><span id="run_annotator-1486"><a href="#run_annotator-1486"><span class="linenos">1486</span></a>
-</span><span id="run_annotator-1487"><a href="#run_annotator-1487"><span class="linenos">1487</span></a><span class="sd">    Parameters</span>
-</span><span id="run_annotator-1488"><a href="#run_annotator-1488"><span class="linenos">1488</span></a><span class="sd">    ----------</span>
-</span><span id="run_annotator-1489"><a href="#run_annotator-1489"><span class="linenos">1489</span></a><span class="sd">    session : Session</span>
-</span><span id="run_annotator-1490"><a href="#run_annotator-1490"><span class="linenos">1490</span></a><span class="sd">        The Session to run the Annotator on.</span>
-</span><span id="run_annotator-1491"><a href="#run_annotator-1491"><span class="linenos">1491</span></a><span class="sd">    config : config.Configuration</span>
-</span><span id="run_annotator-1492"><a href="#run_annotator-1492"><span class="linenos">1492</span></a><span class="sd">        Configuration mainly for the GUI, but passing the complete</span>
-</span><span id="run_annotator-1493"><a href="#run_annotator-1493"><span class="linenos">1493</span></a><span class="sd">        Configuration, because other things are occasionally needed.</span>
-</span><span id="run_annotator-1494"><a href="#run_annotator-1494"><span class="linenos">1494</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="run_annotator-1495"><a href="#run_annotator-1495"><span class="linenos">1495</span></a>    <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
-</span><span id="run_annotator-1496"><a href="#run_annotator-1496"><span class="linenos">1496</span></a>    <span class="c1"># Apparently the assignment to an unused variable is needed</span>
-</span><span id="run_annotator-1497"><a href="#run_annotator-1497"><span class="linenos">1497</span></a>    <span class="c1"># to avoid a segfault.</span>
-</span><span id="run_annotator-1498"><a href="#run_annotator-1498"><span class="linenos">1498</span></a>    <span class="n">app</span><span class="o">.</span><span class="n">annotator</span> <span class="o">=</span> <span class="n">PdQtAnnotator</span><span class="p">(</span>
-</span><span id="run_annotator-1499"><a href="#run_annotator-1499"><span class="linenos">1499</span></a>        <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
-</span><span id="run_annotator-1500"><a href="#run_annotator-1500"><span class="linenos">1500</span></a>        <span class="n">display_tongue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="run_annotator-1501"><a href="#run_annotator-1501"><span class="linenos">1501</span></a>        <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-</span><span id="run_annotator-1502"><a href="#run_annotator-1502"><span class="linenos">1502</span></a>    <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">setApplicationName</span><span class="p">(</span><span class="s2">&quot;PATKIT&quot;</span><span class="p">)</span>
-</span><span id="run_annotator-1503"><a href="#run_annotator-1503"><span class="linenos">1503</span></a>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">())</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="run_annotator-1563"><a href="#run_annotator-1563"><span class="linenos">1563</span></a><span class="k">def</span><span class="w"> </span><span class="nf">run_annotator</span><span class="p">(</span>
+</span><span id="run_annotator-1564"><a href="#run_annotator-1564"><span class="linenos">1564</span></a>        <span class="n">session</span><span class="p">:</span> <span class="n">Session</span><span class="p">,</span>
+</span><span id="run_annotator-1565"><a href="#run_annotator-1565"><span class="linenos">1565</span></a>        <span class="n">config</span><span class="p">:</span> <span class="n">Configuration</span><span class="p">,</span>
+</span><span id="run_annotator-1566"><a href="#run_annotator-1566"><span class="linenos">1566</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="run_annotator-1567"><a href="#run_annotator-1567"><span class="linenos">1567</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="run_annotator-1568"><a href="#run_annotator-1568"><span class="linenos">1568</span></a><span class="sd">    Start the Annotator GUI.</span>
+</span><span id="run_annotator-1569"><a href="#run_annotator-1569"><span class="linenos">1569</span></a>
+</span><span id="run_annotator-1570"><a href="#run_annotator-1570"><span class="linenos">1570</span></a><span class="sd">    Parameters</span>
+</span><span id="run_annotator-1571"><a href="#run_annotator-1571"><span class="linenos">1571</span></a><span class="sd">    ----------</span>
+</span><span id="run_annotator-1572"><a href="#run_annotator-1572"><span class="linenos">1572</span></a><span class="sd">    session : Session</span>
+</span><span id="run_annotator-1573"><a href="#run_annotator-1573"><span class="linenos">1573</span></a><span class="sd">        The Session to run the Annotator on.</span>
+</span><span id="run_annotator-1574"><a href="#run_annotator-1574"><span class="linenos">1574</span></a><span class="sd">    config : config.Configuration</span>
+</span><span id="run_annotator-1575"><a href="#run_annotator-1575"><span class="linenos">1575</span></a><span class="sd">        Configuration mainly for the GUI, but passing the complete</span>
+</span><span id="run_annotator-1576"><a href="#run_annotator-1576"><span class="linenos">1576</span></a><span class="sd">        Configuration, because other things are occasionally needed.</span>
+</span><span id="run_annotator-1577"><a href="#run_annotator-1577"><span class="linenos">1577</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="run_annotator-1578"><a href="#run_annotator-1578"><span class="linenos">1578</span></a>    <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+</span><span id="run_annotator-1579"><a href="#run_annotator-1579"><span class="linenos">1579</span></a>    <span class="c1"># Apparently the assignment to an unused variable is needed</span>
+</span><span id="run_annotator-1580"><a href="#run_annotator-1580"><span class="linenos">1580</span></a>    <span class="c1"># to avoid a segfault.</span>
+</span><span id="run_annotator-1581"><a href="#run_annotator-1581"><span class="linenos">1581</span></a>    <span class="n">app</span><span class="o">.</span><span class="n">annotator</span> <span class="o">=</span> <span class="n">PdQtAnnotator</span><span class="p">(</span>
+</span><span id="run_annotator-1582"><a href="#run_annotator-1582"><span class="linenos">1582</span></a>        <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
+</span><span id="run_annotator-1583"><a href="#run_annotator-1583"><span class="linenos">1583</span></a>        <span class="n">display_tongue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="run_annotator-1584"><a href="#run_annotator-1584"><span class="linenos">1584</span></a>        <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+</span><span id="run_annotator-1585"><a href="#run_annotator-1585"><span class="linenos">1585</span></a>    <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">setApplicationName</span><span class="p">(</span><span class="s2">&quot;PATKIT&quot;</span><span class="p">)</span>
+</span><span id="run_annotator-1586"><a href="#run_annotator-1586"><span class="linenos">1586</span></a>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">())</span>
 </span></pre></div>
 
 

@@ -34,11 +34,13 @@ import os
 from pathlib import Path
 
 from PyQt6 import QtCore
-from PyQt6.QtGui import QFontMetrics, QIcon
+from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import (
     QCheckBox, QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout, QLabel,
     QLineEdit, QPushButton, QVBoxLayout, QWidget
 )
+
+# TODO 1.0: docstrings
 
 
 class ImageSaveDialog(QDialog):
@@ -68,14 +70,14 @@ class ImageSaveDialog(QDialog):
         option_box = None
         if options is not None:
             option_box = QHBoxLayout()
-            self.option_checkboxes = {}
+            self.checkboxes = {}
             for option, checked in options.items():
                 checkbox = QCheckBox(option)
                 check = (QtCore.Qt.CheckState.Checked
                          if checked else QtCore.Qt.CheckState.Unchecked)
                 checkbox.setCheckState(check)
-                self.option_checkboxes[option] = checkbox
-                option_box.addWidget(self.option_checkboxes[option])
+                self.checkboxes[option] = checkbox
+                option_box.addWidget(self.checkboxes[option])
         path_and_name_box = QHBoxLayout()
         self.path_label = QLabel(self)
         self.path_label.setText("Path:")
@@ -110,7 +112,7 @@ class ImageSaveDialog(QDialog):
             vbox.addLayout(option_box)
         vbox.addLayout(path_and_name_box)
         vbox.addWidget(self.ok_cancel_buttons)
-        
+
         self.setWindowTitle(self.name)
         if icon:
             self.setWindowIcon(icon)
@@ -118,19 +120,21 @@ class ImageSaveDialog(QDialog):
         self.adjustSize()
 
     def _browse(self):
-        directory = QFileDialog.getSaveFileName(
+        # TODO 0.23: getSaveFileName doesn't necessarily match the purpose
+        # here?
+        path, something = QFileDialog.getSaveFileName(
             parent=self,
-            caption="Select Directory to Export to",
+            caption="Select Path to Export to",
             directory=self.path_field.text(),
             options=QFileDialog.Option.DontResolveSymlinks
         )
-        if directory:
-            self.path_field.setText(directory)
+        if path:
+            self.path_field.setText(path)
 
     def _on_accepted(self):
         if self.options is not None:
             for option in self.options:
-                self.options[option] = self.option_checkboxes[option].isChecked()
+                self.options[option] = self.checkboxes[option].isChecked()
         self.save_path = Path(self.path_field.text())
         self.accept()
 

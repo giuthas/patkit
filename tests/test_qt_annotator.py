@@ -66,6 +66,7 @@ def mock_annotator() -> MagicMock:
     mock_self.go_to_line_edit = MagicMock()
     mock_self.figure = MagicMock()
     mock_self.mode = MagicMock()
+    mock_self.plot_controller = MagicMock()
 
     return mock_self
 

@@ -564,6 +564,15 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#ColorPalettes">ColorPalettes</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#ColorPalettes.COLORBLIND_10">COLORBLIND_10</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -1106,13 +1115,27 @@ and never are stored. In effect, they function as look-up tables.</p>
 </span><span id="L-510"><a href="#L-510"><span class="linenos">510</span></a><span class="sd">    Default colors for GUI cursor and selection elements.</span>
 </span><span id="L-511"><a href="#L-511"><span class="linenos">511</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-512"><a href="#L-512"><span class="linenos">512</span></a>    <span class="n">SELECTION</span> <span class="o">=</span> <span class="s2">&quot;deepskyblue&quot;</span>
-</span><span id="L-513"><a href="#L-513"><span class="linenos">513</span></a>    <span class="n">PLAYBACK</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+</span><span id="L-513"><a href="#L-513"><span class="linenos">513</span></a>    <span class="n">PLAYBACK</span> <span class="o">=</span> <span class="s2">&quot;#FD7400&quot;</span>
 </span><span id="L-514"><a href="#L-514"><span class="linenos">514</span></a>
 </span><span id="L-515"><a href="#L-515"><span class="linenos">515</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="L-516"><a href="#L-516"><span class="linenos">516</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-517"><a href="#L-517"><span class="linenos">517</span></a><span class="sd">        Ensure f-strings and print() output the string value.</span>
 </span><span id="L-518"><a href="#L-518"><span class="linenos">518</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-519"><a href="#L-519"><span class="linenos">519</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+</span><span id="L-520"><a href="#L-520"><span class="linenos">520</span></a>
+</span><span id="L-521"><a href="#L-521"><span class="linenos">521</span></a>
+</span><span id="L-522"><a href="#L-522"><span class="linenos">522</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ColorPalettes</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-523"><a href="#L-523"><span class="linenos">523</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-524"><a href="#L-524"><span class="linenos">524</span></a><span class="sd">    Colors for plotting lines.</span>
+</span><span id="L-525"><a href="#L-525"><span class="linenos">525</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-526"><a href="#L-526"><span class="linenos">526</span></a>    <span class="n">COLORBLIND_10</span> <span class="o">=</span> <span class="s1">&#39;tableau-colorblind10&#39;</span>
+</span><span id="L-527"><a href="#L-527"><span class="linenos">527</span></a>    <span class="c1"># COLORBLIND_6 = &#39;viscid-colorblind&#39;</span>
+</span><span id="L-528"><a href="#L-528"><span class="linenos">528</span></a>
+</span><span id="L-529"><a href="#L-529"><span class="linenos">529</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-530"><a href="#L-530"><span class="linenos">530</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-531"><a href="#L-531"><span class="linenos">531</span></a><span class="sd">        Ensure f-strings and print() output the string value.</span>
+</span><span id="L-532"><a href="#L-532"><span class="linenos">532</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-533"><a href="#L-533"><span class="linenos">533</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
 </span></pre></div>
 
 
@@ -1120,7 +1143,7 @@ and never are stored. In effect, they function as look-up tables.</p>
                 <section id="PATKIT_VERSION">
                     <div class="attr variable">
             <span class="name">PATKIT_VERSION</span>        =
-<span class="default_value">&#39;0.22.2&#39;</span>
+<span class="default_value">&#39;0.22.3&#39;</span>
 
         
     </div>
@@ -1132,7 +1155,7 @@ and never are stored. In effect, they function as look-up tables.</p>
                 <section id="PATKIT_FILE_VERSION">
                     <div class="attr variable">
             <span class="name">PATKIT_FILE_VERSION</span>        =
-<span class="default_value">&#39;0.22.2&#39;</span>
+<span class="default_value">&#39;0.22.3&#39;</span>
 
         
     </div>
@@ -1144,7 +1167,7 @@ and never are stored. In effect, they function as look-up tables.</p>
                 <section id="EXERCISE_FILE_VERSION">
                     <div class="attr variable">
             <span class="name">EXERCISE_FILE_VERSION</span>        =
-<span class="default_value">&#39;0.22.2&#39;</span>
+<span class="default_value">&#39;0.22.3&#39;</span>
 
         
     </div>
@@ -3604,7 +3627,7 @@ annotator and exercise modes until config overrides are implemented.</p>
 </span><span id="DefaultCursorColors-511"><a href="#DefaultCursorColors-511"><span class="linenos">511</span></a><span class="sd">    Default colors for GUI cursor and selection elements.</span>
 </span><span id="DefaultCursorColors-512"><a href="#DefaultCursorColors-512"><span class="linenos">512</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="DefaultCursorColors-513"><a href="#DefaultCursorColors-513"><span class="linenos">513</span></a>    <span class="n">SELECTION</span> <span class="o">=</span> <span class="s2">&quot;deepskyblue&quot;</span>
-</span><span id="DefaultCursorColors-514"><a href="#DefaultCursorColors-514"><span class="linenos">514</span></a>    <span class="n">PLAYBACK</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+</span><span id="DefaultCursorColors-514"><a href="#DefaultCursorColors-514"><span class="linenos">514</span></a>    <span class="n">PLAYBACK</span> <span class="o">=</span> <span class="s2">&quot;#FD7400&quot;</span>
 </span><span id="DefaultCursorColors-515"><a href="#DefaultCursorColors-515"><span class="linenos">515</span></a>
 </span><span id="DefaultCursorColors-516"><a href="#DefaultCursorColors-516"><span class="linenos">516</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="DefaultCursorColors-517"><a href="#DefaultCursorColors-517"><span class="linenos">517</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -3633,11 +3656,54 @@ annotator and exercise modes until config overrides are implemented.</p>
                             <div id="DefaultCursorColors.PLAYBACK" class="classattr">
                                 <div class="attr variable">
             <span class="name">PLAYBACK</span>        =
-<span class="default_value">&lt;<a href="#DefaultCursorColors.PLAYBACK">DefaultCursorColors.PLAYBACK</a>: &#39;red&#39;&gt;</span>
+<span class="default_value">&lt;<a href="#DefaultCursorColors.PLAYBACK">DefaultCursorColors.PLAYBACK</a>: &#39;#FD7400&#39;&gt;</span>
 
         
     </div>
     <a class="headerlink" href="#DefaultCursorColors.PLAYBACK"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="ColorPalettes">
+                            <input id="ColorPalettes-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ColorPalettes</span><wbr>(<span class="base">builtins.str</span>, <span class="base">enum.Enum</span>):
+
+                <label class="view-source-button" for="ColorPalettes-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ColorPalettes"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ColorPalettes-523"><a href="#ColorPalettes-523"><span class="linenos">523</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ColorPalettes</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+</span><span id="ColorPalettes-524"><a href="#ColorPalettes-524"><span class="linenos">524</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ColorPalettes-525"><a href="#ColorPalettes-525"><span class="linenos">525</span></a><span class="sd">    Colors for plotting lines.</span>
+</span><span id="ColorPalettes-526"><a href="#ColorPalettes-526"><span class="linenos">526</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ColorPalettes-527"><a href="#ColorPalettes-527"><span class="linenos">527</span></a>    <span class="n">COLORBLIND_10</span> <span class="o">=</span> <span class="s1">&#39;tableau-colorblind10&#39;</span>
+</span><span id="ColorPalettes-528"><a href="#ColorPalettes-528"><span class="linenos">528</span></a>    <span class="c1"># COLORBLIND_6 = &#39;viscid-colorblind&#39;</span>
+</span><span id="ColorPalettes-529"><a href="#ColorPalettes-529"><span class="linenos">529</span></a>
+</span><span id="ColorPalettes-530"><a href="#ColorPalettes-530"><span class="linenos">530</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="ColorPalettes-531"><a href="#ColorPalettes-531"><span class="linenos">531</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ColorPalettes-532"><a href="#ColorPalettes-532"><span class="linenos">532</span></a><span class="sd">        Ensure f-strings and print() output the string value.</span>
+</span><span id="ColorPalettes-533"><a href="#ColorPalettes-533"><span class="linenos">533</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="ColorPalettes-534"><a href="#ColorPalettes-534"><span class="linenos">534</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Colors for plotting lines.</p>
+</div>
+
+
+                            <div id="ColorPalettes.COLORBLIND_10" class="classattr">
+                                <div class="attr variable">
+            <span class="name">COLORBLIND_10</span>        =
+<span class="default_value">&lt;<a href="#ColorPalettes.COLORBLIND_10">ColorPalettes.COLORBLIND_10</a>: &#39;tableau-colorblind10&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ColorPalettes.COLORBLIND_10"></a>
     
     
 

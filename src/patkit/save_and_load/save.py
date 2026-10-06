@@ -387,7 +387,12 @@ def save_session_meta(
     meta['format_version'] = PATKIT_FILE_VERSION
 
     parameters = OrderedDict()
-    parameters['patkit_path'] = str(session.patkit_path.resolve())
+    if session.file_info.is_top_level_object:
+        parameters['patkit_path'] = '.'
+    else:
+        # TODO 0.23.3: The next two should probably not be resolved, but this
+        # may break something else, so test.
+        parameters['patkit_path'] = str(session.patkit_path.resolve())
     parameters['recorded_path'] = str(session.recorded_path.resolve())
     parameters['datasource_name'] = session.metadata.data_source_name.value
     parameters['path_structure'] = session.config.path_structure.model_dump()

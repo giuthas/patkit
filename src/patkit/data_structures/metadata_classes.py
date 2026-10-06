@@ -69,6 +69,8 @@ class FileInformation:
         Name of the patkit meta file, if it exists. Defaults to None.
     patkit_path : Path | None
         Path to the saved patkit data, if it exists. Defaults to None.
+    is_top_level_object : bool
+        Is this the top level container, by default False.
     """
     recorded_data_file: str | None = None
     recorded_meta_file: str | None = None
@@ -76,6 +78,7 @@ class FileInformation:
     patkit_data_file: str | None = None
     patkit_meta_file: str | None = None
     patkit_path: Path | None = None
+    is_top_level_object: bool = False
 
     @property
     def basename(self) -> str:

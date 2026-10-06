@@ -148,9 +148,13 @@ def read_recorded_session_from_dir(
         )
         return session
 
+    # TODO 1.0: if Sessions are no longer the highest possible container tier,
+    # this logic needs to change.
     file_info = FileInformation(
         recorded_path=recorded_data_path,
-        recorded_meta_file=session_config_path.name)
+        recorded_meta_file=session_config_path.name,
+        is_top_level_object=True,
+    )
     if session_config_path.is_file():
         session_config = load_session_config(
             recorded_data_path, session_config_path)

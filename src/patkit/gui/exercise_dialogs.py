@@ -36,8 +36,8 @@ Dialogs for Exercises and Answers.
 from pathlib import Path
 
 from PyQt6.QtWidgets import (
-    QComboBox, QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout,
-    QLabel, QLineEdit, QSizePolicy, QVBoxLayout, QWidget
+    QCheckBox, QComboBox, QDialog, QDialogButtonBox, QFileDialog, QHBoxLayout,
+    QLabel, QLineEdit, QPushButton, QSizePolicy, QVBoxLayout, QWidget
 )
 
 from patkit.constants import ExerciseScrambler
@@ -188,3 +188,121 @@ class NewAnswerDialog(QDialog):
         if dialog.exec() == QDialog.DialogCode.Rejected:
             return None, None
         return dialog.answer_name, dialog.author_name
+
+
+class PackageExerciseDialog(QDialog):
+    """
+    Dialog for configuring an Exercise packaging.
+
+    This dialog allows the user to specify a package path and choose whether
+    to include the unscrambled Session TextGrids in the resulting archive.
+    """
+
+    def __init__(
+        self,
+        parent: QWidget | None = None,
+        default_path: Path | None = None
+    ) -> None:
+        """
+        Initialize the PackageExerciseDialog.
+
+        Parameters
+        ----------
+        parent : QWidget | None, optional
+            The parent widget, by default None.
+        default_path : Path | None, optional
+            The default file path to populate the dialog, by default None.
+        """
+        super().__init__(parent=parent)
+        self.setWindowTitle("Package Exercise")
+        self.resize(700, 100)
+
+        self.package_path: Path | None = None
+        self.include_textgrids: bool = False
+
+        self.path_label = QLabel(text="Package Path:", parent=self)
+        self.path_field = QLineEdit(parent=self)
+        if default_path is not None:
+            self.path_field.setText(str(default_path))
+
+        self.browse_button = QPushButton(text="Browse...", parent=self)
+        self.browse_button.clicked.connect(slot=self._browse)
+
+        path_layout = QHBoxLayout()
+        path_layout.addWidget(self.path_label)
+        path_layout.addWidget(self.path_field)
+        path_layout.addWidget(self.browse_button)
+
+        self.textgrid_checkbox = QCheckBox(
+            text=(
+                "Include original TextGrids (this will make "
+                "them viewable when running the exercise)."
+            ),
+            parent=self
+        )
+
+        dialog_buttons = (
+            QDialogButtonBox.StandardButton.Ok |
+            QDialogButtonBox.StandardButton.Cancel
+        )
+        self.ok_cancel_buttons = QDialogButtonBox(dialog_buttons)
+        self.ok_cancel_buttons.accepted.connect(slot=self._on_accepted)
+        self.ok_cancel_buttons.rejected.connect(slot=self.reject)
+
+        main_layout = QVBoxLayout(self)
+        main_layout.addLayout(path_layout)
+        main_layout.addWidget(self.textgrid_checkbox)
+        main_layout.addWidget(self.ok_cancel_buttons)
+
+        self.setMinimumWidth(450)
+
+    def _browse(self) -> None:
+        """Open a file dialog to select the destination zip path."""
+        file_path, _ = QFileDialog.getSaveFileName(
+            parent=self,
+            caption="Select Packaging Destination",
+            directory=self.path_field.text(),
+            filter="Zip Files (*.zip)"
+        )
+        if file_path:
+            self.path_field.setText(file_path)
+
+    def _on_accepted(self) -> None:
+        """Validate input and accept the dialog."""
+        path_text = self.path_field.text()
+        if not path_text:
+            self.reject()
+            return
+
+        self.package_path = Path(path_text)
+        self.include_textgrids = self.textgrid_checkbox.isChecked()
+        self.accept()
+
+    @staticmethod
+    def get_packaging_params(
+        parent: QWidget | None = None,
+        default_path: Path | None = None
+    ) -> tuple[Path | None, bool]:
+        """
+        Open the package dialog and query the user for packaging parameters.
+
+        Parameters
+        ----------
+        parent : QWidget | None, optional
+            Parent window.
+        default_path : Path | None, optional
+            The default file path to populate the line edit.
+
+        Returns
+        -------
+        tuple[Path | None, bool]
+            The selected file path and boolean indicating if TextGrids
+            should be included. Path is None if the user cancelled.
+        """
+        dialog = PackageExerciseDialog(
+            parent=parent, default_path=default_path
+        )
+        if dialog.exec() == QDialog.DialogCode.Rejected:
+            return None, False
+
+        return dialog.package_path, dialog.include_textgrids

@@ -29,6 +29,9 @@
 # articles listed in README.md. They can also be found in
 # citations.bib in BibTeX format.
 #
+from .exercise_packaging import (
+    package_exercise_to_zip, unpackage_exercise_from_zip
+)
 from .load import (
     load_answer, load_exercise, load_recordings, load_recording_session
 )

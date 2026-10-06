@@ -1,7 +1,7 @@
 [![test](https://github.com/giuthas/patkit/actions/workflows/test.yaml/badge.svg)](https://github.com/giuthas/patkit/actions/workflows/test.yaml)
 # PATKIT - Phonetic Analysis ToolKIT 
 
-![PATKIT GUI](https://giuthas.github.io/patkit/PATKIT_UI_0.22.0.png)
+![PATKIT GUI](https://giuthas.github.io/patkit/PATKIT_UI_0.22.2.png)
 
 PATKIT provides tools for phonetic analysis of speech data. It includes a GUI
 for manual assessment/analysis/annotation (see picture above), command line
