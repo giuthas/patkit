@@ -48,9 +48,6 @@
                 </ul>
 
             </li>
-            <li>
-                    <a class="variable" href="#app">app</a>
-            </li>
     </ul>
 
 
@@ -154,9 +151,9 @@
 </span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>        <span class="k">return</span> <span class="n">result</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">DialogCode</span><span class="o">.</span><span class="n">Accepted</span><span class="p">,</span> <span class="n">result</span>
 </span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>
 </span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>
-</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a><span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a><span class="p">(</span><span class="n">ok</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="o">=</span> <span class="n">DialogTemplate</span><span class="o">.</span><span class="n">getDateTime</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;foobar.txt&#39;</span><span class="p">)</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ok</span><span class="p">,</span> <span class="n">result</span><span class="p">))</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a><span class="c1"># app = QApplication([])</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a><span class="c1"># (ok, result) = DialogTemplate.getDateTime(filename=&#39;foobar.txt&#39;)</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a><span class="c1"># print(&quot;{} {}&quot;.format(ok, result))</span>
 </span></pre></div>
 
 
@@ -312,18 +309,6 @@ different way of handling button presses.</p>
     
 
                             </div>
-                </section>
-                <section id="app">
-                    <div class="attr variable">
-            <span class="name">app</span>        =
-<span class="default_value">&lt;PyQt6.QtWidgets.QApplication object&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#app"></a>
-    
-    
-
                 </section>
     </main>
 <script>

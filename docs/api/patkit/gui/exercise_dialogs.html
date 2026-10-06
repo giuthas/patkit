@@ -87,6 +87,39 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#PackageExerciseDialog">PackageExerciseDialog</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#PackageExerciseDialog.__init__">PackageExerciseDialog</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#PackageExerciseDialog.package_path">package_path</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#PackageExerciseDialog.include_textgrids">include_textgrids</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#PackageExerciseDialog.path_label">path_label</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#PackageExerciseDialog.path_field">path_field</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#PackageExerciseDialog.browse_button">browse_button</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#PackageExerciseDialog.textgrid_checkbox">textgrid_checkbox</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#PackageExerciseDialog.ok_cancel_buttons">ok_cancel_buttons</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#PackageExerciseDialog.get_packaging_params">get_packaging_params</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -148,8 +181,8 @@
 </span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 </span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a>
 </span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">PyQt6.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>    <span class="n">QComboBox</span><span class="p">,</span> <span class="n">QDialog</span><span class="p">,</span> <span class="n">QDialogButtonBox</span><span class="p">,</span> <span class="n">QFileDialog</span><span class="p">,</span> <span class="n">QHBoxLayout</span><span class="p">,</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>    <span class="n">QLabel</span><span class="p">,</span> <span class="n">QLineEdit</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="p">,</span> <span class="n">QVBoxLayout</span><span class="p">,</span> <span class="n">QWidget</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>    <span class="n">QCheckBox</span><span class="p">,</span> <span class="n">QComboBox</span><span class="p">,</span> <span class="n">QDialog</span><span class="p">,</span> <span class="n">QDialogButtonBox</span><span class="p">,</span> <span class="n">QFileDialog</span><span class="p">,</span> <span class="n">QHBoxLayout</span><span class="p">,</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>    <span class="n">QLabel</span><span class="p">,</span> <span class="n">QLineEdit</span><span class="p">,</span> <span class="n">QPushButton</span><span class="p">,</span> <span class="n">QSizePolicy</span><span class="p">,</span> <span class="n">QVBoxLayout</span><span class="p">,</span> <span class="n">QWidget</span>
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="p">)</span>
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>
 </span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">patkit.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExerciseScrambler</span>
@@ -300,6 +333,124 @@
 </span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>        <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">DialogCode</span><span class="o">.</span><span class="n">Rejected</span><span class="p">:</span>
 </span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 </span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>        <span class="k">return</span> <span class="n">dialog</span><span class="o">.</span><span class="n">answer_name</span><span class="p">,</span> <span class="n">dialog</span><span class="o">.</span><span class="n">author_name</span>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="k">class</span><span class="w"> </span><span class="nc">PackageExerciseDialog</span><span class="p">(</span><span class="n">QDialog</span><span class="p">):</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="sd">    Dialog for configuring an Exercise packaging.</span>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a><span class="sd">    This dialog allows the user to specify a package path and choose whether</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a><span class="sd">    to include the unscrambled Session TextGrids in the resulting archive.</span>
+</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>
+</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a>        <span class="n">parent</span><span class="p">:</span> <span class="n">QWidget</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a>        <span class="n">default_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a><span class="sd">        Initialize the PackageExerciseDialog.</span>
+</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a>
+</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a><span class="sd">        Parameters</span>
+</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a><span class="sd">        ----------</span>
+</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a><span class="sd">        parent : QWidget | None, optional</span>
+</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a><span class="sd">            The parent widget, by default None.</span>
+</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a><span class="sd">        default_path : Path | None, optional</span>
+</span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a><span class="sd">            The default file path to populate the dialog, by default None.</span>
+</span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+</span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Package Exercise&quot;</span><span class="p">)</span>
+</span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a>
+</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">package_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">include_textgrids</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a>
+</span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Package Path:&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a>        <span class="k">if</span> <span class="n">default_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">default_path</span><span class="p">))</span>
+</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a>
+</span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Browse...&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse</span><span class="p">)</span>
+</span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a>
+</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a>        <span class="n">path_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_label</span><span class="p">)</span>
+</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="p">)</span>
+</span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span><span class="p">)</span>
+</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a>
+</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">textgrid_checkbox</span> <span class="o">=</span> <span class="n">QCheckBox</span><span class="p">(</span>
+</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>            <span class="n">text</span><span class="o">=</span><span class="p">(</span>
+</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a>                <span class="s2">&quot;Include original TextGrids (this will make &quot;</span>
+</span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>                <span class="s2">&quot;them viewable when running the exercise).&quot;</span>
+</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>            <span class="p">),</span>
+</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span>
+</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>        <span class="p">)</span>
+</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a>
+</span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a>        <span class="n">dialog_buttons</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>            <span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span>
+</span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>            <span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Cancel</span>
+</span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a>        <span class="p">)</span>
+</span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span> <span class="o">=</span> <span class="n">QDialogButtonBox</span><span class="p">(</span><span class="n">dialog_buttons</span><span class="p">)</span>
+</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_accepted</span><span class="p">)</span>
+</span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a>
+</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a>        <span class="n">main_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">path_layout</span><span class="p">)</span>
+</span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textgrid_checkbox</span><span class="p">)</span>
+</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="p">)</span>
+</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>
+</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">450</span><span class="p">)</span>
+</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a>
+</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_browse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Open a file dialog to select the destination zip path.&quot;&quot;&quot;</span>
+</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a>        <span class="n">file_path</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
+</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a>            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a>            <span class="n">caption</span><span class="o">=</span><span class="s2">&quot;Select Packaging Destination&quot;</span><span class="p">,</span>
+</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>            <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span>
+</span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>            <span class="nb">filter</span><span class="o">=</span><span class="s2">&quot;Zip Files (*.zip)&quot;</span>
+</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a>        <span class="p">)</span>
+</span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a>        <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
+</span><span id="L-268"><a href="#L-268"><span class="linenos">268</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a>
+</span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_on_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate input and accept the dialog.&quot;&quot;&quot;</span>
+</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>        <span class="n">path_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">path_text</span><span class="p">:</span>
+</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">()</span>
+</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>            <span class="k">return</span>
+</span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a>
+</span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">package_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path_text</span><span class="p">)</span>
+</span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">include_textgrids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textgrid_checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()</span>
+</span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a>
+</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a>    <span class="nd">@staticmethod</span>
+</span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_packaging_params</span><span class="p">(</span>
+</span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>        <span class="n">parent</span><span class="p">:</span> <span class="n">QWidget</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>        <span class="n">default_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+</span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a><span class="sd">        Open the package dialog and query the user for packaging parameters.</span>
+</span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a>
+</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a><span class="sd">        Parameters</span>
+</span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a><span class="sd">        ----------</span>
+</span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a><span class="sd">        parent : QWidget | None, optional</span>
+</span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a><span class="sd">            Parent window.</span>
+</span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a><span class="sd">        default_path : Path | None, optional</span>
+</span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a><span class="sd">            The default file path to populate the line edit.</span>
+</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a>
+</span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a><span class="sd">        Returns</span>
+</span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a><span class="sd">        -------</span>
+</span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a><span class="sd">        tuple[Path | None, bool]</span>
+</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a><span class="sd">            The selected file path and boolean indicating if TextGrids</span>
+</span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a><span class="sd">            should be included. Path is None if the user cancelled.</span>
+</span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a>        <span class="n">dialog</span> <span class="o">=</span> <span class="n">PackageExerciseDialog</span><span class="p">(</span>
+</span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a>            <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">default_path</span><span class="o">=</span><span class="n">default_path</span>
+</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a>        <span class="p">)</span>
+</span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>        <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">DialogCode</span><span class="o">.</span><span class="n">Rejected</span><span class="p">:</span>
+</span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">False</span>
+</span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a>
+</span><span id="L-308"><a href="#L-308"><span class="linenos">308</span></a>        <span class="k">return</span> <span class="n">dialog</span><span class="o">.</span><span class="n">package_path</span><span class="p">,</span> <span class="n">dialog</span><span class="o">.</span><span class="n">include_textgrids</span>
 </span></pre></div>
 
 
@@ -797,6 +948,369 @@ Parent window.</li>
 <ul>
 <li><strong>tuple[str | None, str | None]</strong>: Either the Answer name and optionally the author name, or a pair of
 Nones if the user cancelled.</li>
+</ul>
+</div>
+
+
+                            </div>
+                </section>
+                <section id="PackageExerciseDialog">
+                            <input id="PackageExerciseDialog-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">PackageExerciseDialog</span><wbr>(<span class="base">PyQt6.QtWidgets.QDialog</span>):
+
+                <label class="view-source-button" for="PackageExerciseDialog-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="PackageExerciseDialog-194"><a href="#PackageExerciseDialog-194"><span class="linenos">194</span></a><span class="k">class</span><span class="w"> </span><span class="nc">PackageExerciseDialog</span><span class="p">(</span><span class="n">QDialog</span><span class="p">):</span>
+</span><span id="PackageExerciseDialog-195"><a href="#PackageExerciseDialog-195"><span class="linenos">195</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog-196"><a href="#PackageExerciseDialog-196"><span class="linenos">196</span></a><span class="sd">    Dialog for configuring an Exercise packaging.</span>
+</span><span id="PackageExerciseDialog-197"><a href="#PackageExerciseDialog-197"><span class="linenos">197</span></a>
+</span><span id="PackageExerciseDialog-198"><a href="#PackageExerciseDialog-198"><span class="linenos">198</span></a><span class="sd">    This dialog allows the user to specify a package path and choose whether</span>
+</span><span id="PackageExerciseDialog-199"><a href="#PackageExerciseDialog-199"><span class="linenos">199</span></a><span class="sd">    to include the unscrambled Session TextGrids in the resulting archive.</span>
+</span><span id="PackageExerciseDialog-200"><a href="#PackageExerciseDialog-200"><span class="linenos">200</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog-201"><a href="#PackageExerciseDialog-201"><span class="linenos">201</span></a>
+</span><span id="PackageExerciseDialog-202"><a href="#PackageExerciseDialog-202"><span class="linenos">202</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog-203"><a href="#PackageExerciseDialog-203"><span class="linenos">203</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="PackageExerciseDialog-204"><a href="#PackageExerciseDialog-204"><span class="linenos">204</span></a>        <span class="n">parent</span><span class="p">:</span> <span class="n">QWidget</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="PackageExerciseDialog-205"><a href="#PackageExerciseDialog-205"><span class="linenos">205</span></a>        <span class="n">default_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="PackageExerciseDialog-206"><a href="#PackageExerciseDialog-206"><span class="linenos">206</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog-207"><a href="#PackageExerciseDialog-207"><span class="linenos">207</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog-208"><a href="#PackageExerciseDialog-208"><span class="linenos">208</span></a><span class="sd">        Initialize the PackageExerciseDialog.</span>
+</span><span id="PackageExerciseDialog-209"><a href="#PackageExerciseDialog-209"><span class="linenos">209</span></a>
+</span><span id="PackageExerciseDialog-210"><a href="#PackageExerciseDialog-210"><span class="linenos">210</span></a><span class="sd">        Parameters</span>
+</span><span id="PackageExerciseDialog-211"><a href="#PackageExerciseDialog-211"><span class="linenos">211</span></a><span class="sd">        ----------</span>
+</span><span id="PackageExerciseDialog-212"><a href="#PackageExerciseDialog-212"><span class="linenos">212</span></a><span class="sd">        parent : QWidget | None, optional</span>
+</span><span id="PackageExerciseDialog-213"><a href="#PackageExerciseDialog-213"><span class="linenos">213</span></a><span class="sd">            The parent widget, by default None.</span>
+</span><span id="PackageExerciseDialog-214"><a href="#PackageExerciseDialog-214"><span class="linenos">214</span></a><span class="sd">        default_path : Path | None, optional</span>
+</span><span id="PackageExerciseDialog-215"><a href="#PackageExerciseDialog-215"><span class="linenos">215</span></a><span class="sd">            The default file path to populate the dialog, by default None.</span>
+</span><span id="PackageExerciseDialog-216"><a href="#PackageExerciseDialog-216"><span class="linenos">216</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog-217"><a href="#PackageExerciseDialog-217"><span class="linenos">217</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-218"><a href="#PackageExerciseDialog-218"><span class="linenos">218</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Package Exercise&quot;</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-219"><a href="#PackageExerciseDialog-219"><span class="linenos">219</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-220"><a href="#PackageExerciseDialog-220"><span class="linenos">220</span></a>
+</span><span id="PackageExerciseDialog-221"><a href="#PackageExerciseDialog-221"><span class="linenos">221</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">package_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="PackageExerciseDialog-222"><a href="#PackageExerciseDialog-222"><span class="linenos">222</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">include_textgrids</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="PackageExerciseDialog-223"><a href="#PackageExerciseDialog-223"><span class="linenos">223</span></a>
+</span><span id="PackageExerciseDialog-224"><a href="#PackageExerciseDialog-224"><span class="linenos">224</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Package Path:&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-225"><a href="#PackageExerciseDialog-225"><span class="linenos">225</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-226"><a href="#PackageExerciseDialog-226"><span class="linenos">226</span></a>        <span class="k">if</span> <span class="n">default_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog-227"><a href="#PackageExerciseDialog-227"><span class="linenos">227</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">default_path</span><span class="p">))</span>
+</span><span id="PackageExerciseDialog-228"><a href="#PackageExerciseDialog-228"><span class="linenos">228</span></a>
+</span><span id="PackageExerciseDialog-229"><a href="#PackageExerciseDialog-229"><span class="linenos">229</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Browse...&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-230"><a href="#PackageExerciseDialog-230"><span class="linenos">230</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-231"><a href="#PackageExerciseDialog-231"><span class="linenos">231</span></a>
+</span><span id="PackageExerciseDialog-232"><a href="#PackageExerciseDialog-232"><span class="linenos">232</span></a>        <span class="n">path_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+</span><span id="PackageExerciseDialog-233"><a href="#PackageExerciseDialog-233"><span class="linenos">233</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_label</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-234"><a href="#PackageExerciseDialog-234"><span class="linenos">234</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-235"><a href="#PackageExerciseDialog-235"><span class="linenos">235</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-236"><a href="#PackageExerciseDialog-236"><span class="linenos">236</span></a>
+</span><span id="PackageExerciseDialog-237"><a href="#PackageExerciseDialog-237"><span class="linenos">237</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">textgrid_checkbox</span> <span class="o">=</span> <span class="n">QCheckBox</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog-238"><a href="#PackageExerciseDialog-238"><span class="linenos">238</span></a>            <span class="n">text</span><span class="o">=</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog-239"><a href="#PackageExerciseDialog-239"><span class="linenos">239</span></a>                <span class="s2">&quot;Include original TextGrids (this will make &quot;</span>
+</span><span id="PackageExerciseDialog-240"><a href="#PackageExerciseDialog-240"><span class="linenos">240</span></a>                <span class="s2">&quot;them viewable when running the exercise).&quot;</span>
+</span><span id="PackageExerciseDialog-241"><a href="#PackageExerciseDialog-241"><span class="linenos">241</span></a>            <span class="p">),</span>
+</span><span id="PackageExerciseDialog-242"><a href="#PackageExerciseDialog-242"><span class="linenos">242</span></a>            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span>
+</span><span id="PackageExerciseDialog-243"><a href="#PackageExerciseDialog-243"><span class="linenos">243</span></a>        <span class="p">)</span>
+</span><span id="PackageExerciseDialog-244"><a href="#PackageExerciseDialog-244"><span class="linenos">244</span></a>
+</span><span id="PackageExerciseDialog-245"><a href="#PackageExerciseDialog-245"><span class="linenos">245</span></a>        <span class="n">dialog_buttons</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="PackageExerciseDialog-246"><a href="#PackageExerciseDialog-246"><span class="linenos">246</span></a>            <span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span>
+</span><span id="PackageExerciseDialog-247"><a href="#PackageExerciseDialog-247"><span class="linenos">247</span></a>            <span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Cancel</span>
+</span><span id="PackageExerciseDialog-248"><a href="#PackageExerciseDialog-248"><span class="linenos">248</span></a>        <span class="p">)</span>
+</span><span id="PackageExerciseDialog-249"><a href="#PackageExerciseDialog-249"><span class="linenos">249</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span> <span class="o">=</span> <span class="n">QDialogButtonBox</span><span class="p">(</span><span class="n">dialog_buttons</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-250"><a href="#PackageExerciseDialog-250"><span class="linenos">250</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_accepted</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-251"><a href="#PackageExerciseDialog-251"><span class="linenos">251</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-252"><a href="#PackageExerciseDialog-252"><span class="linenos">252</span></a>
+</span><span id="PackageExerciseDialog-253"><a href="#PackageExerciseDialog-253"><span class="linenos">253</span></a>        <span class="n">main_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-254"><a href="#PackageExerciseDialog-254"><span class="linenos">254</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">path_layout</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-255"><a href="#PackageExerciseDialog-255"><span class="linenos">255</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textgrid_checkbox</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-256"><a href="#PackageExerciseDialog-256"><span class="linenos">256</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-257"><a href="#PackageExerciseDialog-257"><span class="linenos">257</span></a>
+</span><span id="PackageExerciseDialog-258"><a href="#PackageExerciseDialog-258"><span class="linenos">258</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">450</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-259"><a href="#PackageExerciseDialog-259"><span class="linenos">259</span></a>
+</span><span id="PackageExerciseDialog-260"><a href="#PackageExerciseDialog-260"><span class="linenos">260</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_browse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog-261"><a href="#PackageExerciseDialog-261"><span class="linenos">261</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Open a file dialog to select the destination zip path.&quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog-262"><a href="#PackageExerciseDialog-262"><span class="linenos">262</span></a>        <span class="n">file_path</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog-263"><a href="#PackageExerciseDialog-263"><span class="linenos">263</span></a>            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="PackageExerciseDialog-264"><a href="#PackageExerciseDialog-264"><span class="linenos">264</span></a>            <span class="n">caption</span><span class="o">=</span><span class="s2">&quot;Select Packaging Destination&quot;</span><span class="p">,</span>
+</span><span id="PackageExerciseDialog-265"><a href="#PackageExerciseDialog-265"><span class="linenos">265</span></a>            <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span>
+</span><span id="PackageExerciseDialog-266"><a href="#PackageExerciseDialog-266"><span class="linenos">266</span></a>            <span class="nb">filter</span><span class="o">=</span><span class="s2">&quot;Zip Files (*.zip)&quot;</span>
+</span><span id="PackageExerciseDialog-267"><a href="#PackageExerciseDialog-267"><span class="linenos">267</span></a>        <span class="p">)</span>
+</span><span id="PackageExerciseDialog-268"><a href="#PackageExerciseDialog-268"><span class="linenos">268</span></a>        <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog-269"><a href="#PackageExerciseDialog-269"><span class="linenos">269</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-270"><a href="#PackageExerciseDialog-270"><span class="linenos">270</span></a>
+</span><span id="PackageExerciseDialog-271"><a href="#PackageExerciseDialog-271"><span class="linenos">271</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_on_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog-272"><a href="#PackageExerciseDialog-272"><span class="linenos">272</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate input and accept the dialog.&quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog-273"><a href="#PackageExerciseDialog-273"><span class="linenos">273</span></a>        <span class="n">path_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+</span><span id="PackageExerciseDialog-274"><a href="#PackageExerciseDialog-274"><span class="linenos">274</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">path_text</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog-275"><a href="#PackageExerciseDialog-275"><span class="linenos">275</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">()</span>
+</span><span id="PackageExerciseDialog-276"><a href="#PackageExerciseDialog-276"><span class="linenos">276</span></a>            <span class="k">return</span>
+</span><span id="PackageExerciseDialog-277"><a href="#PackageExerciseDialog-277"><span class="linenos">277</span></a>
+</span><span id="PackageExerciseDialog-278"><a href="#PackageExerciseDialog-278"><span class="linenos">278</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">package_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path_text</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog-279"><a href="#PackageExerciseDialog-279"><span class="linenos">279</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">include_textgrids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textgrid_checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()</span>
+</span><span id="PackageExerciseDialog-280"><a href="#PackageExerciseDialog-280"><span class="linenos">280</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</span><span id="PackageExerciseDialog-281"><a href="#PackageExerciseDialog-281"><span class="linenos">281</span></a>
+</span><span id="PackageExerciseDialog-282"><a href="#PackageExerciseDialog-282"><span class="linenos">282</span></a>    <span class="nd">@staticmethod</span>
+</span><span id="PackageExerciseDialog-283"><a href="#PackageExerciseDialog-283"><span class="linenos">283</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_packaging_params</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog-284"><a href="#PackageExerciseDialog-284"><span class="linenos">284</span></a>        <span class="n">parent</span><span class="p">:</span> <span class="n">QWidget</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="PackageExerciseDialog-285"><a href="#PackageExerciseDialog-285"><span class="linenos">285</span></a>        <span class="n">default_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="PackageExerciseDialog-286"><a href="#PackageExerciseDialog-286"><span class="linenos">286</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+</span><span id="PackageExerciseDialog-287"><a href="#PackageExerciseDialog-287"><span class="linenos">287</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog-288"><a href="#PackageExerciseDialog-288"><span class="linenos">288</span></a><span class="sd">        Open the package dialog and query the user for packaging parameters.</span>
+</span><span id="PackageExerciseDialog-289"><a href="#PackageExerciseDialog-289"><span class="linenos">289</span></a>
+</span><span id="PackageExerciseDialog-290"><a href="#PackageExerciseDialog-290"><span class="linenos">290</span></a><span class="sd">        Parameters</span>
+</span><span id="PackageExerciseDialog-291"><a href="#PackageExerciseDialog-291"><span class="linenos">291</span></a><span class="sd">        ----------</span>
+</span><span id="PackageExerciseDialog-292"><a href="#PackageExerciseDialog-292"><span class="linenos">292</span></a><span class="sd">        parent : QWidget | None, optional</span>
+</span><span id="PackageExerciseDialog-293"><a href="#PackageExerciseDialog-293"><span class="linenos">293</span></a><span class="sd">            Parent window.</span>
+</span><span id="PackageExerciseDialog-294"><a href="#PackageExerciseDialog-294"><span class="linenos">294</span></a><span class="sd">        default_path : Path | None, optional</span>
+</span><span id="PackageExerciseDialog-295"><a href="#PackageExerciseDialog-295"><span class="linenos">295</span></a><span class="sd">            The default file path to populate the line edit.</span>
+</span><span id="PackageExerciseDialog-296"><a href="#PackageExerciseDialog-296"><span class="linenos">296</span></a>
+</span><span id="PackageExerciseDialog-297"><a href="#PackageExerciseDialog-297"><span class="linenos">297</span></a><span class="sd">        Returns</span>
+</span><span id="PackageExerciseDialog-298"><a href="#PackageExerciseDialog-298"><span class="linenos">298</span></a><span class="sd">        -------</span>
+</span><span id="PackageExerciseDialog-299"><a href="#PackageExerciseDialog-299"><span class="linenos">299</span></a><span class="sd">        tuple[Path | None, bool]</span>
+</span><span id="PackageExerciseDialog-300"><a href="#PackageExerciseDialog-300"><span class="linenos">300</span></a><span class="sd">            The selected file path and boolean indicating if TextGrids</span>
+</span><span id="PackageExerciseDialog-301"><a href="#PackageExerciseDialog-301"><span class="linenos">301</span></a><span class="sd">            should be included. Path is None if the user cancelled.</span>
+</span><span id="PackageExerciseDialog-302"><a href="#PackageExerciseDialog-302"><span class="linenos">302</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog-303"><a href="#PackageExerciseDialog-303"><span class="linenos">303</span></a>        <span class="n">dialog</span> <span class="o">=</span> <span class="n">PackageExerciseDialog</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog-304"><a href="#PackageExerciseDialog-304"><span class="linenos">304</span></a>            <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">default_path</span><span class="o">=</span><span class="n">default_path</span>
+</span><span id="PackageExerciseDialog-305"><a href="#PackageExerciseDialog-305"><span class="linenos">305</span></a>        <span class="p">)</span>
+</span><span id="PackageExerciseDialog-306"><a href="#PackageExerciseDialog-306"><span class="linenos">306</span></a>        <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">DialogCode</span><span class="o">.</span><span class="n">Rejected</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog-307"><a href="#PackageExerciseDialog-307"><span class="linenos">307</span></a>            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">False</span>
+</span><span id="PackageExerciseDialog-308"><a href="#PackageExerciseDialog-308"><span class="linenos">308</span></a>
+</span><span id="PackageExerciseDialog-309"><a href="#PackageExerciseDialog-309"><span class="linenos">309</span></a>        <span class="k">return</span> <span class="n">dialog</span><span class="o">.</span><span class="n">package_path</span><span class="p">,</span> <span class="n">dialog</span><span class="o">.</span><span class="n">include_textgrids</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Dialog for configuring an Exercise packaging.</p>
+
+<p>This dialog allows the user to specify a package path and choose whether
+to include the unscrambled Session TextGrids in the resulting archive.</p>
+</div>
+
+
+                            <div id="PackageExerciseDialog.__init__" class="classattr">
+                                        <input id="PackageExerciseDialog.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">PackageExerciseDialog</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">parent</span><span class="p">:</span> <span class="n">PyQt6</span><span class="o">.</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">default_path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">_local</span><span class="o">.</span><span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+
+                <label class="view-source-button" for="PackageExerciseDialog.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="PackageExerciseDialog.__init__-202"><a href="#PackageExerciseDialog.__init__-202"><span class="linenos">202</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog.__init__-203"><a href="#PackageExerciseDialog.__init__-203"><span class="linenos">203</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="PackageExerciseDialog.__init__-204"><a href="#PackageExerciseDialog.__init__-204"><span class="linenos">204</span></a>        <span class="n">parent</span><span class="p">:</span> <span class="n">QWidget</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="PackageExerciseDialog.__init__-205"><a href="#PackageExerciseDialog.__init__-205"><span class="linenos">205</span></a>        <span class="n">default_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="PackageExerciseDialog.__init__-206"><a href="#PackageExerciseDialog.__init__-206"><span class="linenos">206</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog.__init__-207"><a href="#PackageExerciseDialog.__init__-207"><span class="linenos">207</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog.__init__-208"><a href="#PackageExerciseDialog.__init__-208"><span class="linenos">208</span></a><span class="sd">        Initialize the PackageExerciseDialog.</span>
+</span><span id="PackageExerciseDialog.__init__-209"><a href="#PackageExerciseDialog.__init__-209"><span class="linenos">209</span></a>
+</span><span id="PackageExerciseDialog.__init__-210"><a href="#PackageExerciseDialog.__init__-210"><span class="linenos">210</span></a><span class="sd">        Parameters</span>
+</span><span id="PackageExerciseDialog.__init__-211"><a href="#PackageExerciseDialog.__init__-211"><span class="linenos">211</span></a><span class="sd">        ----------</span>
+</span><span id="PackageExerciseDialog.__init__-212"><a href="#PackageExerciseDialog.__init__-212"><span class="linenos">212</span></a><span class="sd">        parent : QWidget | None, optional</span>
+</span><span id="PackageExerciseDialog.__init__-213"><a href="#PackageExerciseDialog.__init__-213"><span class="linenos">213</span></a><span class="sd">            The parent widget, by default None.</span>
+</span><span id="PackageExerciseDialog.__init__-214"><a href="#PackageExerciseDialog.__init__-214"><span class="linenos">214</span></a><span class="sd">        default_path : Path | None, optional</span>
+</span><span id="PackageExerciseDialog.__init__-215"><a href="#PackageExerciseDialog.__init__-215"><span class="linenos">215</span></a><span class="sd">            The default file path to populate the dialog, by default None.</span>
+</span><span id="PackageExerciseDialog.__init__-216"><a href="#PackageExerciseDialog.__init__-216"><span class="linenos">216</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog.__init__-217"><a href="#PackageExerciseDialog.__init__-217"><span class="linenos">217</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-218"><a href="#PackageExerciseDialog.__init__-218"><span class="linenos">218</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Package Exercise&quot;</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-219"><a href="#PackageExerciseDialog.__init__-219"><span class="linenos">219</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-220"><a href="#PackageExerciseDialog.__init__-220"><span class="linenos">220</span></a>
+</span><span id="PackageExerciseDialog.__init__-221"><a href="#PackageExerciseDialog.__init__-221"><span class="linenos">221</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">package_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="PackageExerciseDialog.__init__-222"><a href="#PackageExerciseDialog.__init__-222"><span class="linenos">222</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">include_textgrids</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="PackageExerciseDialog.__init__-223"><a href="#PackageExerciseDialog.__init__-223"><span class="linenos">223</span></a>
+</span><span id="PackageExerciseDialog.__init__-224"><a href="#PackageExerciseDialog.__init__-224"><span class="linenos">224</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Package Path:&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-225"><a href="#PackageExerciseDialog.__init__-225"><span class="linenos">225</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-226"><a href="#PackageExerciseDialog.__init__-226"><span class="linenos">226</span></a>        <span class="k">if</span> <span class="n">default_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog.__init__-227"><a href="#PackageExerciseDialog.__init__-227"><span class="linenos">227</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">default_path</span><span class="p">))</span>
+</span><span id="PackageExerciseDialog.__init__-228"><a href="#PackageExerciseDialog.__init__-228"><span class="linenos">228</span></a>
+</span><span id="PackageExerciseDialog.__init__-229"><a href="#PackageExerciseDialog.__init__-229"><span class="linenos">229</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Browse...&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-230"><a href="#PackageExerciseDialog.__init__-230"><span class="linenos">230</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_browse</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-231"><a href="#PackageExerciseDialog.__init__-231"><span class="linenos">231</span></a>
+</span><span id="PackageExerciseDialog.__init__-232"><a href="#PackageExerciseDialog.__init__-232"><span class="linenos">232</span></a>        <span class="n">path_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+</span><span id="PackageExerciseDialog.__init__-233"><a href="#PackageExerciseDialog.__init__-233"><span class="linenos">233</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_label</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-234"><a href="#PackageExerciseDialog.__init__-234"><span class="linenos">234</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_field</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-235"><a href="#PackageExerciseDialog.__init__-235"><span class="linenos">235</span></a>        <span class="n">path_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_button</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-236"><a href="#PackageExerciseDialog.__init__-236"><span class="linenos">236</span></a>
+</span><span id="PackageExerciseDialog.__init__-237"><a href="#PackageExerciseDialog.__init__-237"><span class="linenos">237</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">textgrid_checkbox</span> <span class="o">=</span> <span class="n">QCheckBox</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog.__init__-238"><a href="#PackageExerciseDialog.__init__-238"><span class="linenos">238</span></a>            <span class="n">text</span><span class="o">=</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog.__init__-239"><a href="#PackageExerciseDialog.__init__-239"><span class="linenos">239</span></a>                <span class="s2">&quot;Include original TextGrids (this will make &quot;</span>
+</span><span id="PackageExerciseDialog.__init__-240"><a href="#PackageExerciseDialog.__init__-240"><span class="linenos">240</span></a>                <span class="s2">&quot;them viewable when running the exercise).&quot;</span>
+</span><span id="PackageExerciseDialog.__init__-241"><a href="#PackageExerciseDialog.__init__-241"><span class="linenos">241</span></a>            <span class="p">),</span>
+</span><span id="PackageExerciseDialog.__init__-242"><a href="#PackageExerciseDialog.__init__-242"><span class="linenos">242</span></a>            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span>
+</span><span id="PackageExerciseDialog.__init__-243"><a href="#PackageExerciseDialog.__init__-243"><span class="linenos">243</span></a>        <span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-244"><a href="#PackageExerciseDialog.__init__-244"><span class="linenos">244</span></a>
+</span><span id="PackageExerciseDialog.__init__-245"><a href="#PackageExerciseDialog.__init__-245"><span class="linenos">245</span></a>        <span class="n">dialog_buttons</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="PackageExerciseDialog.__init__-246"><a href="#PackageExerciseDialog.__init__-246"><span class="linenos">246</span></a>            <span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span>
+</span><span id="PackageExerciseDialog.__init__-247"><a href="#PackageExerciseDialog.__init__-247"><span class="linenos">247</span></a>            <span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">StandardButton</span><span class="o">.</span><span class="n">Cancel</span>
+</span><span id="PackageExerciseDialog.__init__-248"><a href="#PackageExerciseDialog.__init__-248"><span class="linenos">248</span></a>        <span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-249"><a href="#PackageExerciseDialog.__init__-249"><span class="linenos">249</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span> <span class="o">=</span> <span class="n">QDialogButtonBox</span><span class="p">(</span><span class="n">dialog_buttons</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-250"><a href="#PackageExerciseDialog.__init__-250"><span class="linenos">250</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_accepted</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-251"><a href="#PackageExerciseDialog.__init__-251"><span class="linenos">251</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-252"><a href="#PackageExerciseDialog.__init__-252"><span class="linenos">252</span></a>
+</span><span id="PackageExerciseDialog.__init__-253"><a href="#PackageExerciseDialog.__init__-253"><span class="linenos">253</span></a>        <span class="n">main_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-254"><a href="#PackageExerciseDialog.__init__-254"><span class="linenos">254</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">path_layout</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-255"><a href="#PackageExerciseDialog.__init__-255"><span class="linenos">255</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textgrid_checkbox</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-256"><a href="#PackageExerciseDialog.__init__-256"><span class="linenos">256</span></a>        <span class="n">main_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ok_cancel_buttons</span><span class="p">)</span>
+</span><span id="PackageExerciseDialog.__init__-257"><a href="#PackageExerciseDialog.__init__-257"><span class="linenos">257</span></a>
+</span><span id="PackageExerciseDialog.__init__-258"><a href="#PackageExerciseDialog.__init__-258"><span class="linenos">258</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">setMinimumWidth</span><span class="p">(</span><span class="mi">450</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Initialize the PackageExerciseDialog.</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<ul>
+<li><strong>parent</strong> (QWidget | None, optional):
+The parent widget, by default None.</li>
+<li><strong>default_path</strong> (Path | None, optional):
+The default file path to populate the dialog, by default None.</li>
+</ul>
+</div>
+
+
+                            </div>
+                            <div id="PackageExerciseDialog.package_path" class="classattr">
+                                <div class="attr variable">
+            <span class="name">package_path</span><span class="annotation">: pathlib._local.Path | None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.package_path"></a>
+    
+    
+
+                            </div>
+                            <div id="PackageExerciseDialog.include_textgrids" class="classattr">
+                                <div class="attr variable">
+            <span class="name">include_textgrids</span><span class="annotation">: bool</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.include_textgrids"></a>
+    
+    
+
+                            </div>
+                            <div id="PackageExerciseDialog.path_label" class="classattr">
+                                <div class="attr variable">
+            <span class="name">path_label</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.path_label"></a>
+    
+    
+
+                            </div>
+                            <div id="PackageExerciseDialog.path_field" class="classattr">
+                                <div class="attr variable">
+            <span class="name">path_field</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.path_field"></a>
+    
+    
+
+                            </div>
+                            <div id="PackageExerciseDialog.browse_button" class="classattr">
+                                <div class="attr variable">
+            <span class="name">browse_button</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.browse_button"></a>
+    
+    
+
+                            </div>
+                            <div id="PackageExerciseDialog.textgrid_checkbox" class="classattr">
+                                <div class="attr variable">
+            <span class="name">textgrid_checkbox</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.textgrid_checkbox"></a>
+    
+    
+
+                            </div>
+                            <div id="PackageExerciseDialog.ok_cancel_buttons" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ok_cancel_buttons</span>
+
+        
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.ok_cancel_buttons"></a>
+    
+    
+
+                            </div>
+                            <div id="PackageExerciseDialog.get_packaging_params" class="classattr">
+                                        <input id="PackageExerciseDialog.get_packaging_params-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+                    <div class="decorator decorator-staticmethod">@staticmethod</div>
+
+        <span class="def">def</span>
+        <span class="name">get_packaging_params</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">parent</span><span class="p">:</span> <span class="n">PyQt6</span><span class="o">.</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">default_path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">_local</span><span class="o">.</span><span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">) -> <span class="nb">tuple</span><span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">_local</span><span class="o">.</span><span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span>:</span></span>
+
+                <label class="view-source-button" for="PackageExerciseDialog.get_packaging_params-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#PackageExerciseDialog.get_packaging_params"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="PackageExerciseDialog.get_packaging_params-282"><a href="#PackageExerciseDialog.get_packaging_params-282"><span class="linenos">282</span></a>    <span class="nd">@staticmethod</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-283"><a href="#PackageExerciseDialog.get_packaging_params-283"><span class="linenos">283</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_packaging_params</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-284"><a href="#PackageExerciseDialog.get_packaging_params-284"><span class="linenos">284</span></a>        <span class="n">parent</span><span class="p">:</span> <span class="n">QWidget</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-285"><a href="#PackageExerciseDialog.get_packaging_params-285"><span class="linenos">285</span></a>        <span class="n">default_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-286"><a href="#PackageExerciseDialog.get_packaging_params-286"><span class="linenos">286</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-287"><a href="#PackageExerciseDialog.get_packaging_params-287"><span class="linenos">287</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-288"><a href="#PackageExerciseDialog.get_packaging_params-288"><span class="linenos">288</span></a><span class="sd">        Open the package dialog and query the user for packaging parameters.</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-289"><a href="#PackageExerciseDialog.get_packaging_params-289"><span class="linenos">289</span></a>
+</span><span id="PackageExerciseDialog.get_packaging_params-290"><a href="#PackageExerciseDialog.get_packaging_params-290"><span class="linenos">290</span></a><span class="sd">        Parameters</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-291"><a href="#PackageExerciseDialog.get_packaging_params-291"><span class="linenos">291</span></a><span class="sd">        ----------</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-292"><a href="#PackageExerciseDialog.get_packaging_params-292"><span class="linenos">292</span></a><span class="sd">        parent : QWidget | None, optional</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-293"><a href="#PackageExerciseDialog.get_packaging_params-293"><span class="linenos">293</span></a><span class="sd">            Parent window.</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-294"><a href="#PackageExerciseDialog.get_packaging_params-294"><span class="linenos">294</span></a><span class="sd">        default_path : Path | None, optional</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-295"><a href="#PackageExerciseDialog.get_packaging_params-295"><span class="linenos">295</span></a><span class="sd">            The default file path to populate the line edit.</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-296"><a href="#PackageExerciseDialog.get_packaging_params-296"><span class="linenos">296</span></a>
+</span><span id="PackageExerciseDialog.get_packaging_params-297"><a href="#PackageExerciseDialog.get_packaging_params-297"><span class="linenos">297</span></a><span class="sd">        Returns</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-298"><a href="#PackageExerciseDialog.get_packaging_params-298"><span class="linenos">298</span></a><span class="sd">        -------</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-299"><a href="#PackageExerciseDialog.get_packaging_params-299"><span class="linenos">299</span></a><span class="sd">        tuple[Path | None, bool]</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-300"><a href="#PackageExerciseDialog.get_packaging_params-300"><span class="linenos">300</span></a><span class="sd">            The selected file path and boolean indicating if TextGrids</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-301"><a href="#PackageExerciseDialog.get_packaging_params-301"><span class="linenos">301</span></a><span class="sd">            should be included. Path is None if the user cancelled.</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-302"><a href="#PackageExerciseDialog.get_packaging_params-302"><span class="linenos">302</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-303"><a href="#PackageExerciseDialog.get_packaging_params-303"><span class="linenos">303</span></a>        <span class="n">dialog</span> <span class="o">=</span> <span class="n">PackageExerciseDialog</span><span class="p">(</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-304"><a href="#PackageExerciseDialog.get_packaging_params-304"><span class="linenos">304</span></a>            <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span> <span class="n">default_path</span><span class="o">=</span><span class="n">default_path</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-305"><a href="#PackageExerciseDialog.get_packaging_params-305"><span class="linenos">305</span></a>        <span class="p">)</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-306"><a href="#PackageExerciseDialog.get_packaging_params-306"><span class="linenos">306</span></a>        <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span> <span class="o">==</span> <span class="n">QDialog</span><span class="o">.</span><span class="n">DialogCode</span><span class="o">.</span><span class="n">Rejected</span><span class="p">:</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-307"><a href="#PackageExerciseDialog.get_packaging_params-307"><span class="linenos">307</span></a>            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">False</span>
+</span><span id="PackageExerciseDialog.get_packaging_params-308"><a href="#PackageExerciseDialog.get_packaging_params-308"><span class="linenos">308</span></a>
+</span><span id="PackageExerciseDialog.get_packaging_params-309"><a href="#PackageExerciseDialog.get_packaging_params-309"><span class="linenos">309</span></a>        <span class="k">return</span> <span class="n">dialog</span><span class="o">.</span><span class="n">package_path</span><span class="p">,</span> <span class="n">dialog</span><span class="o">.</span><span class="n">include_textgrids</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Open the package dialog and query the user for packaging parameters.</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<ul>
+<li><strong>parent</strong> (QWidget | None, optional):
+Parent window.</li>
+<li><strong>default_path</strong> (Path | None, optional):
+The default file path to populate the line edit.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<ul>
+<li><strong>tuple[Path | None, bool]</strong>: The selected file path and boolean indicating if TextGrids
+should be included. Path is None if the user cancelled.</li>
 </ul>
 </div>
 
