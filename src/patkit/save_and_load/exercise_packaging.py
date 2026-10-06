@@ -2,11 +2,14 @@
 Utility functions for packaging and importing Patkit Exercises.
 """
 
+import logging
 from zipfile import ZipFile, ZIP_DEFLATED
 from pathlib import Path
 
 from patkit.constants import SourceSuffix
 from patkit.data_structures import FileInformation
+
+_logger = logging.getLogger('patkit.exercise_packaging')
 
 
 def package_exercise_to_zip(
@@ -26,8 +29,8 @@ def package_exercise_to_zip(
 
     Parameters
     ----------
-    session_path : Path
-        The root directory of the Session.
+    file_info : FileInformation
+        The FileInformation for the Session.
     zip_filepath : Path
         The destination path for the output `.zip` file.
     active_answer_name : str
@@ -38,6 +41,7 @@ def package_exercise_to_zip(
     include_wav_files : bool, optional
         Whether to include wav files, by default True.
     """
+    _logger.info('Packing an exercise.')
     with ZipFile(file=zip_path, mode='w', compression=ZIP_DEFLATED) as output:
         patkit_path = file_info.patkit_path
         for item in patkit_path.rglob('*'):
@@ -48,10 +52,13 @@ def package_exercise_to_zip(
             # Skip root-level TextGrids if they are not being included.
             if (
                 not include_root_textgrids and
-                len(item.parts) == 1 and
+                item.parent == file_info.patkit_path and
                 (item.suffix.lower() == SourceSuffix.TEXTGRID.lower())
             ):
+                _logger.info('skipping: %s', str(item))
                 continue
+            else:
+                _logger.info('including: %s', str(item))
 
             relative_path = item.relative_to(patkit_path)
 
@@ -74,13 +81,14 @@ def package_exercise_to_zip(
             output.write(filename=item, arcname=relative_path)
 
         recorded_path = file_info.recorded_path
-        for item in recorded_path.glob('*' + SourceSuffix.WAV):
-            if not item.is_file():
-                continue
+        if recorded_path is not None:
+            for item in recorded_path.glob('*' + SourceSuffix.WAV):
+                if not item.is_file():
+                    continue
 
-            output.write(filename=item, arcname=item.name)
+                output.write(filename=item, arcname=item.name)
 
-        # TODO 0.23: verify that wavs or in future other data files are
+        # TODO 0.24: verify that wavs or in future other data files are
         # included
 
 

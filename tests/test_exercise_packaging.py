@@ -1,10 +1,13 @@
 from pathlib import Path
 
-# Importing from save_and_load as requested
+from patkit.data_structures import FileInformation
 from patkit.save_and_load import (
     package_exercise_to_zip,
     unpackage_exercise_from_zip
 )
+
+# TODO 0.24: make sure we test that wavs from a recorded_data branch get
+# included in the package.
 
 
 def test_package_and_unpackage_exercise_filters_correctly(
@@ -18,10 +21,16 @@ def test_package_and_unpackage_exercise_filters_correctly(
     session_path = tmp_path / "session"
     session_path.mkdir()
 
-    # Normal file that should be included
+    # TODO 0.24: this is not a patkit file, fix it and see that non-patkit
+    # stuff does not get included in packages.
+    # Gemini thinks: This is a Normal file that should be included!
     (session_path / "config.json").write_text('{"mock": "data"}')
 
-    # Root-level TextGrid (should be filtered out by default)
+    # TODO 0.24: There should also be a correspondence between 'root textgrids'
+    # (totally a hallucination as a term) and those in answers.
+    #
+    # Root-level TextGrid (should be
+    # filtered out by default)
     (session_path / "root_recording.TextGrid").write_text("root grid content")
 
     # Setup exercise answers directory
@@ -40,17 +49,20 @@ def test_package_and_unpackage_exercise_filters_correctly(
 
     zip_path = tmp_path / "test_exercise.zip"
 
-    # 2. Execute the packaging
+    file_info = FileInformation(
+        patkit_path=session_path,
+    )
+
     package_exercise_to_zip(
-        session_path=session_path,
+        file_info=file_info,
         zip_path=zip_path,
         active_answer_name="target_user",
-        include_textgrids=False
+        include_root_textgrids=False
     )
 
     assert zip_path.exists(), "The zip file was not created."
 
-    # 3. Execute the unpackaging
+    # Unpackage
     extract_path = tmp_path / "extracted"
     extract_path.mkdir()
 
@@ -59,13 +71,14 @@ def test_package_and_unpackage_exercise_filters_correctly(
         destination_directory=extract_path
     )
 
-    # 4. Assertions on the unpacked directory structure
+    # TODO 0.24: irrelevant and wrong test. config.json is not a thing.
     assert (extract_path /
             "config.json").exists(), "Standard files should be retained."
 
     # Check that root-level TextGrids were ignored
-    assert not (extract_path / "root_recording.TextGrid").exists(
-    ), "Root TextGrids should be filtered out by default."
+    assert not (
+        extract_path / "root_recording.TextGrid"
+    ).exists(), "Root TextGrids should be filtered out by default."
 
     # Check that the other user's answer was removed
     assert not (extract_path / "exercise" / "answers" /
@@ -103,12 +116,16 @@ def test_package_exercise_include_textgrids_flag(tmp_path: Path) -> None:
 
     zip_path = tmp_path / "test_with_grids.zip"
 
+    file_info = FileInformation(
+        patkit_path=session_path
+    )
+
     # Package with the flag set to True
     package_exercise_to_zip(
-        session_path=session_path,
+        file_info=file_info,
         zip_path=zip_path,
         active_answer_name="target_user",
-        include_textgrids=True
+        include_root_textgrids=True
     )
 
     extract_path = tmp_path / "extracted"
