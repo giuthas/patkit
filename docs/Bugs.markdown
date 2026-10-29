@@ -48,6 +48,10 @@
 - After playing a recording the plot cursors may take some time to function
   properly again.
 
+## Documentation
+- Exercise documentation is out of date. Expected to be fixed in version
+  0.24.3.
+
 ## Misc
 - Some perturbation related plotting functions have hard-coded subplot
   divisions because Comparison is not yet sortable.

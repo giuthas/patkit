@@ -36,6 +36,30 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - There will be a feature freeze at this point.
 
 
+## [0.22.4] - 2026-10-29
+
+### Highlights
+
+- Security and installation fixes.
+
+### Changed
+
+- Upgraded some package versions to fix security issues.
+- Also upgraded Python version from 3.11 to 3.13 as 3.11 support has ended.
+
+### Removed
+
+- Removed the dipy package and its dependencies.
+  - These were causing installation issues on MacOS and Windows.
+  - These are used by the optic flow module which is currently not in use. It
+    is planned to be included in a version after 1.0 and the installation
+    issues will be fixed at that time.
+
+### Bugs
+
+- [All Bugs](Bugs.markdown).
+
+
 ## [0.22.3] - 2026-10-06
 
 ### Highlights
