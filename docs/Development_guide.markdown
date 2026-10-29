@@ -160,8 +160,10 @@ In the main repository (done by Pertti or other maintainers):
 8. Release housekeeping:
    - Delete the now defunct release branch (`git push -d <remote_name>
    <branchname>` and `git branch -d <branchname`)
+   - Push the changes to github without the tag so that the testing workflow
+     can run and generate the banner before actual release.
    - Tag the commit in main with the release title ('vX.Y.Z') and push it to
-     remote with `git push --atomic origin main vX.Y.Z`
+     remote with `git push --tags`
    - If any commits were made to the release branch, merge `main` into `devel`.
 9. Check that the new version shows correctly on GitHub as 'latest' in the
    sidebar.
