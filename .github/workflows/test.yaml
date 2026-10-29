@@ -25,10 +25,13 @@ jobs:
       - name: Install Qt and Audio system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgl1 libegl1 libxkbcommon-x11-0 libxcb-cursor0 xvfb libportaudio2 libpulse0
+          sudo apt-get install -y libgl1 libegl1 libxkbcommon-x11-0 libxcb-cursor0 xvfb libportaudio2 pulseaudio
 
       - name: Install dependencies
         run: uv sync --all-extras --dev
+
+      - name: Start dummy audio server
+        run: pulseaudio -D --exit-idle-time=-1
 
       - name: Run Tests
         run: xvfb-run uv run pytest tests
