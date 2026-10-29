@@ -43,6 +43,7 @@ dependencies = [
   "sk-video>=1.1.10",
   "sounddevice>=0.5.5",
   "strictyaml>=1.7.3",
+  "tqdm>=4.70.1",
 ]
 
 
