@@ -82,6 +82,30 @@ doing something else). This means we have the following kinds of branches:
 
 A release of PATKIT is created as following these steps.
 
+<!-- 
+TODO 0.24: The release order is not quite right it should be: 
+1. check everything is done 
+2. check tests run correctly 
+3. update manual docs
+4. update automated docs, later on move this to a work flow
+5. pull request to main repo
+
+in main repo
+1. process pull request
+2. if there are heavier tests then the regular set, create a release branch and 
+  do the testing and debugging there
+3. merge to main
+4. push to github without tagging, this runs the 'tests passing' etc banner 
+  creation *before* releasing
+5. tag and push tag, this runs the release workflows
+6. merge back to devel
+
+in working repo
+1. pull any changes back to working repo
+
+-->
+
+
 In the fork repository:
 1. If planning a major or minor release (first or second version number
    increments), check that all features in the current roadmap are either done,
